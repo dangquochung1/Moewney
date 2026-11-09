@@ -169,8 +169,16 @@ interface MoneyDao {
     )
     suspend fun loanSumsExcluding(txnId: Long): List<LoanSum>
 
-    /** What was spent today out of the given jars (positive number). */
-    @Query("SELECT COALESCE(-SUM(amount), 0) FROM jar_entry WHERE day = :day AND kind = 'SPEND' AND jarId IN (:jarIds)")
+    /**
+     * What was spent today out of the given jars (positive number). Recurring bills are left
+     * out: their money was set aside before they were due, it is not today's spending.
+     */
+    @Query(
+        """
+        SELECT COALESCE(-SUM(amount), 0) FROM jar_entry WHERE day = :day AND kind = 'SPEND' AND jarId IN (:jarIds)
+        AND (txnId IS NULL OR txnId NOT IN (SELECT id FROM txn WHERE source = 'RECURRING'))
+        """,
+    )
     fun spentOn(day: Long, jarIds: List<Long>): Flow<Long>
 
     @Query("SELECT COUNT(*) FROM txn WHERE day = :day AND type IN ('EXPENSE', 'INCOME', 'TRANSFER')")
@@ -199,7 +207,7 @@ interface MoneyDao {
     @Query(
         """
         SELECT categoryId, amount, COUNT(*) AS n FROM txn
-        WHERE type = 'EXPENSE' AND day >= :since AND categoryId IS NOT NULL
+        WHERE type = 'EXPENSE' AND day >= :since AND categoryId IS NOT NULL AND source NOT IN ('RECURRING', 'GOAL')
         GROUP BY categoryId, amount ORDER BY n DESC, MAX(occurredAt) DESC LIMIT :limit
         """,
     )

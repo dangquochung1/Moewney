@@ -18,8 +18,14 @@ interface ReportDao {
     @Query("SELECT DISTINCT day FROM coin_entry WHERE day BETWEEN :from AND :to AND reason = :reason")
     suspend fun coinDays(reason: String, from: Long, to: Long): List<Long>
 
-    /** Spending out of the given jars, per day. */
-    @Query("SELECT day, -SUM(amount) AS total FROM jar_entry WHERE kind = 'SPEND' AND jarId IN (:jarIds) AND day BETWEEN :from AND :to GROUP BY day")
+    /** Day-to-day spending out of the given jars (recurring bills left out, like "hôm nay còn"). */
+    @Query(
+        """
+        SELECT day, -SUM(amount) AS total FROM jar_entry WHERE kind = 'SPEND' AND jarId IN (:jarIds) AND day BETWEEN :from AND :to
+        AND (txnId IS NULL OR txnId NOT IN (SELECT id FROM txn WHERE source = 'RECURRING'))
+        GROUP BY day
+        """,
+    )
     suspend fun spentByDayInJars(jarIds: List<Long>, from: Long, to: Long): List<DaySum>
 
     @Query("SELECT day, SUM(amount) AS total FROM txn WHERE type = 'EXPENSE' AND day BETWEEN :from AND :to GROUP BY day")

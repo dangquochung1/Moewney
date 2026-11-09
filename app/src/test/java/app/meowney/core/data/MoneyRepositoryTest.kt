@@ -190,6 +190,26 @@ class MoneyRepositoryTest {
         assertThat(repo.recurringNow().single().nextDueDay).isEqualTo(java.time.LocalDate.of(2027, 3, 31).toEpochDay())
     }
 
+    @Test fun payingABillIsNotTodaysSpending() = runBlocking {
+        val nec = jar(JarCode.NEC)
+        val spendIds = listOf(nec, jar(JarCode.PLAY))
+        val period = MoneyEngine.period(today, 0)
+        suspend fun left(reserved: Long): Long {
+            val balance = repo.balancesNow().filterKeys { it in spendIds }.values.sum()
+            return MoneyEngine.allowance(today, period, balance, repo.spentOn(today, spendIds).first(), reserved).left
+        }
+        repo.addExpense(TxnDraft(50_000, cash(), categoryId = cat("Ăn uống"), jarId = nec, date = today), app.meowney.core.money.BorrowPlan(emptyList(), 0))
+        val before = left(reserved = 3_000_000) // the rent is set aside while it is due
+        repo.addExpense(
+            TxnDraft(3_000_000, cash(), categoryId = cat("Nhà & hoá đơn"), jarId = nec, date = today, source = "RECURRING"),
+            app.meowney.core.money.BorrowPlan(emptyList(), 0),
+        )
+        assertThat(repo.spentOn(today, spendIds).first()).isEqualTo(50_000)
+        assertThat(left(reserved = 0)).isEqualTo(before)
+        // and a bill is not offered as a one-tap expense
+        assertThat(repo.frequentExpenses(today.minusDays(60), 8).first().map { it.amount }).doesNotContain(3_000_000L)
+    }
+
     @Test fun noSpendOnlyOnceAndOnlyWithoutSpending() = runBlocking {
         assertThat(repo.claimNoSpend(today, 0)).isEqualTo(5)
         assertThat(repo.claimNoSpend(today, 0)).isEqualTo(0)
