@@ -41,6 +41,9 @@ class Cat(
     /** "santa", "santa2", "antlers" (sprites hat/<name>/<anim>), or null. */
     var hat: String? = null
 
+    /** Sprites of the bed, bowl and toy Sen picked in the wardrobe. */
+    var propSprites: Map<Prop, String> = emptyMap()
+
     private val visible = linkedSetOf<Prop>()
     private val steps = ArrayDeque<Step>()
     private var current: Step? = null
@@ -233,7 +236,7 @@ class Cat(
         for (prop in Prop.entries) {
             if (prop !in visible) continue
             val (px, py) = spot(prop.spot)
-            atlas.getOrNull(prop.sprite)?.let { scope.drawSprite(it, 0, px, py) }
+            (atlas.getOrNull(propSprites[prop] ?: prop.sprite) ?: atlas.getOrNull(prop.sprite))?.let { scope.drawSprite(it, 0, px, py) }
         }
         val sprite = atlas.getOrNull("cat/$color/$anim") ?: atlas["cat/$color/sit"]
         val elapsed = now - animStart

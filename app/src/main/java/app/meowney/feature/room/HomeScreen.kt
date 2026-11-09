@@ -106,6 +106,9 @@ class HomeActions(
     val onDiary: (Int?) -> Unit,
     val onNote: (Long) -> Unit,
     val onCheck: (Long) -> Unit,
+    val onGift: () -> Unit,
+    val onShop: () -> Unit,
+    val onWardrobe: () -> Unit,
 )
 
 @Composable
@@ -127,9 +130,13 @@ fun HomeScreen(
         }
     }
     LaunchedEffect(state.mood) { cat.mood = state.mood }
+    LaunchedEffect(cat, state.look) {
+        cat.propSprites = mapOf(Prop.Bed to state.look.bed, Prop.Bowl to state.look.bowl, Prop.Yarn to state.look.toy)
+        if (state.birthday == null) cat.hat = state.look.hat
+    }
     // a birthday today: the cat wears a hat and says so (after the wake-up intro)
     LaunchedEffect(state.birthday) {
-        cat.hat = if (state.birthday != null) "santa" else null
+        cat.hat = if (state.birthday != null) "santa" else state.look.hat
         if (state.birthday != null) {
             delay(3_000)
             bubble = CatLines.birthday(state.birthday)
@@ -148,6 +155,7 @@ fun HomeScreen(
     val zoomHabits = rememberZoomSource()
     val zoomCalendar = rememberZoomSource()
     val zoomNotes = rememberZoomSource()
+    val zoomGift = rememberZoomSource()
     val zoomAdd = rememberZoomSource()
     var counting by remember { mutableStateOf<HabitToday?>(null) }
     counting?.let { h ->
@@ -197,6 +205,10 @@ fun HomeScreen(
                 bubble = e.text
             }
             is CatEvent.Say -> bubble = e.text
+            is CatEvent.Treat -> {
+                cat.feed()
+                bubble = CatLines.ate(e.name)
+            }
             is CatEvent.Mood -> {
                 if (e.level >= 3) cat.cheer() else cat.comfort()
                 bubble = e.text
@@ -214,7 +226,7 @@ fun HomeScreen(
         val maxWidth = constraints.maxWidth
         val scale = stageScale(maxWidth, constraints.maxHeight, corner.circle.diameter)
         Column(Modifier.fillMaxSize().padding(horizontal = m.unit * 2)) {
-            Hud(state.coins, zoomSettings, actions.onSettings)
+            Hud(state.coins, zoomSettings, actions.onSettings, actions.onShop)
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
                 CatStage(
                     corner = corner,
@@ -224,10 +236,8 @@ fun HomeScreen(
                         cat.poke()
                         bubble = if (state.hasLoans) CatLines.worriedLoans() else CatLines.onTap()
                     },
-                    onCatLongPress = {
-                        cat.forceSleep = !cat.forceSleep
-                        bubble = CatLines.sleepToggle(cat.forceSleep)
-                    },
+                    onCatLongPress = actions.onWardrobe,
+                    look = state.look,
                 )
                 bubble?.let {
                     SpeechBubble(
@@ -249,8 +259,11 @@ fun HomeScreen(
                 habitsZoom = zoomHabits,
                 calendarZoom = zoomCalendar,
                 notesZoom = zoomNotes,
+                giftZoom = zoomGift,
                 diaryEmote = app.meowney.core.notes.Mood.of(state.diaryMood)?.emote,
                 diaryDone = state.diaryWritten,
+                tower = state.look.tower,
+                giftBadge = state.spinReady,
                 onToy = { toy ->
                     when (toy) {
                         Toy.Money -> {
@@ -268,6 +281,10 @@ fun HomeScreen(
                         Toy.Notes -> {
                             zoomNotes.mark()
                             actions.onNotes()
+                        }
+                        Toy.Gift -> {
+                            zoomGift.mark()
+                            actions.onGift()
                         }
                         else -> bubble = CatLines.onToy(toy)
                     }
@@ -306,7 +323,7 @@ private fun coinsSuffix(coins: Int) = if (coins > 0) " (+$coins xu)" else ""
 // ------------------------------------------------------------------ HUD
 
 @Composable
-private fun Hud(coins: Long, zoom: ZoomSource, onSettings: () -> Unit) {
+private fun Hud(coins: Long, zoom: ZoomSource, onSettings: () -> Unit, onCoins: () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val atlas = LocalSprites.current
@@ -332,7 +349,7 @@ private fun Hud(coins: Long, zoom: ZoomSource, onSettings: () -> Unit) {
             RavenIcon(1, scale = m.ui - 1)
         }
         Spacer(Modifier.size(m.unit * 2))
-        PixelPanel {
+        PixelPanel(Modifier.clickable(onClick = onCoins)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 CoinIcon(atlas)
                 PixelText(" $coins", style = type.bodyBold, color = Pal.Ink)
@@ -373,8 +390,11 @@ private fun ToyRow(
     habitsZoom: ZoomSource,
     calendarZoom: ZoomSource,
     notesZoom: ZoomSource,
+    giftZoom: ZoomSource,
     diaryEmote: String?,
     diaryDone: Boolean,
+    tower: String,
+    giftBadge: Boolean,
     onToy: (Toy) -> Unit,
 ) {
     val m = LocalPixelMetrics.current
@@ -383,8 +403,8 @@ private fun ToyRow(
     val scale = (m.ui - 1).coerceAtLeast(2)
     // quantise the level so the jar image is not rebuilt for every đồng
     val level = (jarLevel * 16).toInt() / 16f
-    val images = remember(atlas, typeface, level, today, habitLevel, catColor, calendarCount, diaryEmote, diaryDone) {
-        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today, habitLevel, catColor, calendarCount, diaryEmote, diaryDone) }
+    val images = remember(atlas, typeface, level, today, habitLevel, catColor, calendarCount, diaryEmote, diaryDone, tower, giftBadge) {
+        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today, habitLevel, catColor, calendarCount, diaryEmote, diaryDone, tower, giftBadge) }
     }
     val tallest = images.values.maxOf { it.height }
     Row(
@@ -400,6 +420,7 @@ private fun ToyRow(
                     Toy.Habits -> Modifier.zoomSource(habitsZoom)
                     Toy.Calendar -> Modifier.zoomSource(calendarZoom)
                     Toy.Notes -> Modifier.zoomSource(notesZoom)
+                    Toy.Gift -> Modifier.zoomSource(giftZoom)
                     else -> Modifier
                 },
             ) { onToy(toy) }

@@ -47,13 +47,15 @@ fun CatStage(
     onCatTap: () -> Unit,
     onCatLongPress: () -> Unit,
     modifier: Modifier = Modifier,
+    look: RoomLook = RoomLook(),
 ) {
     val atlas = LocalSprites.current
     val m = LocalPixelMetrics.current
     val circle = corner.circle
     val d = circle.diameter
     val stagePx = d * scale
-    val ring = remember(stagePx, scale, m.ui) { WoodRing.build(stagePx, scale, m.ui) }
+    val ring = remember(stagePx, scale, m.ui, look.frame) { WoodRing.build(stagePx, scale, m.ui, look.frame) }
+    val base = remember(look.wall, look.floor) { corner.baked(look.wall, look.floor) }
     val pad = (ring.sizePx - stagePx) / 2
 
     val clock = remember { mutableLongStateOf(0L) }
@@ -97,8 +99,10 @@ fun CatStage(
         val now = clock.longValue
         frameScope.draw(Density(1f), LayoutDirection.Ltr, frameCanvas, Size(d.toFloat(), d.toFloat())) {
             translate(-originX, -originY) {
-                drawImage(corner.base)
+                drawImage(base)
                 corner.drawAnimatedTiles(this, now)
+                look.rug?.let { with(RoomPaint) { rug(it) } }
+                look.decor?.let { with(RoomPaint) { decor(atlas, it) } }
                 cat.draw(this, atlas, now)
             }
             drawImage(mask)
@@ -143,7 +147,11 @@ class WoodRing private constructor(val image: ImageBitmap, val sizePx: Int) {
          * [stagePx]: scaled circle diameter; [stageScale]: its pixel size (the ring covers one
          * stage pixel inwards to hide the stair-step edge); [ui]: the ring's own pixel size.
          */
-        fun build(stagePx: Int, stageScale: Int, ui: Int): WoodRing {
+        fun build(stagePx: Int, stageScale: Int, ui: Int, tint: Long? = null): WoodRing {
+            val light = tint?.let { RoomPaint.shade(it, 1.3f) } ?: LIGHT
+            val wood = tint?.let { RoomPaint.shade(it, 1f) } ?: WOOD
+            val dark = tint?.let { RoomPaint.shade(it, 0.7f) } ?: DARK
+            val shadow = tint?.let { RoomPaint.shade(it, 0.4f) } ?: SHADOW
             val outer = stagePx / 2f + 4 * ui
             val inner = stagePx / 2f - stageScale
             val cells = ceil(2 * outer / ui).toInt() + 1
@@ -161,10 +169,10 @@ class WoodRing private constructor(val image: ImageBitmap, val sizePx: Int) {
                 val lit = (-px - py) / (dist * 1.4142f) > 0.35f
                 val color = when {
                     fromOut == 0 -> OUTLINE
-                    fromIn == 0 -> SHADOW
-                    fromIn == 1 -> DARK
-                    fromOut == 1 -> if (lit) LIGHT else WOOD
-                    else -> if (lit) WOOD else DARK
+                    fromIn == 0 -> shadow
+                    fromIn == 1 -> dark
+                    fromOut == 1 -> if (lit) light else wood
+                    else -> if (lit) wood else dark
                 }
                 bmp.setPixel(i, j, color.toArgb())
             }

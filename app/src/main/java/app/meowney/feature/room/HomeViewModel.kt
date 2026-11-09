@@ -71,6 +71,10 @@ data class HomeState(
     val diaryWritten: Boolean = false,
     /** Pinned notes (checklists can be ticked from home). */
     val pinned: List<NoteFull> = emptyList(),
+    /** What the cat's corner is dressed in. */
+    val look: RoomLook = RoomLook(),
+    /** A lucky-wheel spin is waiting today. */
+    val spinReady: Boolean = false,
 ) {
     /** Events not over yet (all-day ones count all day). */
     fun eventsLeft(nowMinute: Int) = events.filter { e ->
@@ -150,6 +154,16 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                 val diary = c.notes.diaries.map { l -> l.firstOrNull { it.note.day == day.toEpochDay() } }
                 combine(withCal, diary, c.notes.pinned) { state, page, pinned ->
                     state.copy(diaryMood = page?.note?.mood, diaryWritten = page?.hasContent == true, pinned = pinned.take(3))
+                }
+            }.let { withNotes ->
+                combine(withNotes, c.game.state, c.game.lastFeedAt, c.game.spinsUsed(day)) { state, game, fedAt, spins ->
+                    val allDone = state.habits.isNotEmpty() && state.habits.all { it.done }
+                    val fed = fedAt != null && System.currentTimeMillis() - fedAt < app.meowney.core.data.GameRepository.HAPPY_MS
+                    state.copy(
+                        look = game.look(app.meowney.core.game.SeasonEngine.seasonOn(day)),
+                        spinReady = spins < app.meowney.core.game.WheelEngine.spinsToday(allDone),
+                        mood = if (fed && state.mood != Mood.Happy) Mood.Happy else state.mood,
+                    )
                 }
             }
         }

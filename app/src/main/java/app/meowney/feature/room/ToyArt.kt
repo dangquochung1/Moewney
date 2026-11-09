@@ -48,13 +48,15 @@ object ToyArt {
     fun image(
         toy: Toy, atlas: SpriteAtlas, typeface: Typeface, jarLevel: Float, today: LocalDate, habitLevel: Float? = null,
         catColor: Int = 5, calendarCount: Int = 0, diaryEmote: String? = null, diaryDone: Boolean = false,
+        tower: String = "prop/tower_white",
+        giftBadge: Boolean = false,
     ): ImageBitmap =
         when (toy) {
-            Toy.Habits -> towerImage(atlas, habitLevel, catColor)
+            Toy.Habits -> towerImage(atlas, habitLevel, catColor, tower)
             Toy.Notes -> paint(36, 44) { notebook(atlas, diaryEmote, diaryDone, typeface) }
             Toy.Money -> jarImage(jarLevel, typeface)
             Toy.Calendar -> paint(38, 42) { calendar(today, typeface, calendarCount) }
-            Toy.Gift -> paint(38, 38) { gift() }
+            Toy.Gift -> paint(38, 42) { gift(typeface, giftBadge) }
         }
 
     /** A coin jar (34 x 44 art px) filled to [level]; [liquid] colours the fill (gold coins by default). */
@@ -68,8 +70,8 @@ object ToyArt {
      * from the floor as [level] grows (the missing part is a faint outline). At 100% the cat
      * sits on the low platform. [level] null = no habits today: the plain tower.
      */
-    fun towerImage(atlas: SpriteAtlas, level: Float?, catColor: Int): ImageBitmap {
-        val t = atlas["prop/tower_white"]
+    fun towerImage(atlas: SpriteAtlas, level: Float?, catColor: Int, tower: String = "prop/tower_white"): ImageBitmap {
+        val t = atlas.getOrNull(tower) ?: atlas["prop/tower_white"]
         val h = t.height + TOWER_PAD
         return paint(t.width, h) {
             fun tower(alpha: Float) = drawImage(
@@ -224,7 +226,7 @@ object ToyArt {
     }
 
     /** Red present with a gold ribbon and bow. */
-    private fun DrawScope.gift() {
+    private fun DrawScope.gift(tf: Typeface, badge: Boolean) {
         // bow
         px(8, 1, 10, 9, OUT)
         px(20, 1, 10, 9, OUT)
@@ -246,5 +248,11 @@ object ToyArt {
         px(16, 11, 6, 26, GOLD)
         px(16, 11, 1, 26, Color(0xFFFFE08A))
         px(21, 11, 1, 26, GOLD_DARK)
+        // a spin is waiting today
+        if (badge) {
+            px(26, 30, 12, 12, OUT)
+            px(27, 31, 10, 10, RED)
+            text("!", 32f, 39f, 9f, Pal.Cream, tf)
+        }
     }
 }

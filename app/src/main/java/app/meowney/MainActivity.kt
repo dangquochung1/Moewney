@@ -43,6 +43,9 @@ import app.meowney.feature.notes.NoteSearchScreen
 import app.meowney.feature.notes.NoteSearchViewModel
 import app.meowney.feature.notes.NotesActions
 import app.meowney.feature.notes.NotesGate
+import app.meowney.feature.game.GiftScreen
+import app.meowney.feature.game.GiftTab
+import app.meowney.feature.game.GiftViewModel
 import app.meowney.feature.notes.NotesScreen
 import app.meowney.feature.notes.NotesViewModel
 import app.meowney.feature.calendar.CalendarScreen
@@ -59,6 +62,8 @@ import app.meowney.widget.EXTRA_HABIT
 import app.meowney.core.sprite.SpriteAtlas
 import app.meowney.core.ui.LocalIcons
 import app.meowney.core.ui.MeowneyTheme
+import app.meowney.core.ui.Pal
+import app.meowney.core.ui.PixelText
 import app.meowney.core.ui.vmFactory
 import app.meowney.feature.entry.BorrowDialog
 import app.meowney.feature.entry.EntryMode
@@ -156,6 +161,7 @@ class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 @Serializable object NoteSearchRoute
 @Serializable object MoodStatsRoute
 @Serializable data class NoteBinRoute(val archive: Boolean = false)
+@Serializable data class GiftRoute(val tab: String = "WHEEL")
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -316,6 +322,9 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                         onDiary = { mood -> nav.navigate(DiaryRoute(mood = mood ?: -1)) },
                         onNote = { nav.navigate(NoteEditRoute(it)) },
                         onCheck = { vm.toggleCheck(it) },
+                        onGift = { nav.navigate(GiftRoute()) },
+                        onShop = { nav.navigate(GiftRoute("SHOP")) },
+                        onWardrobe = { nav.navigate(GiftRoute("WARDROBE")) },
                         onTodo = vm::todoToggle,
                     ),
                 )
@@ -448,6 +457,13 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             val archive = entry.toRoute<NoteBinRoute>().archive
             val vm: NoteBinViewModel = viewModel(factory = vmFactory { NoteBinViewModel(c, archive) })
             NotesGate(back) { NoteBinScreen(vm, onBack = back, onOpen = { nav.navigate(NoteEditRoute(it)) }) }
+        }
+        composable<GiftRoute> { entry ->
+            val tab = runCatching { GiftTab.valueOf(entry.toRoute<GiftRoute>().tab) }.getOrDefault(GiftTab.WHEEL)
+            val vm: GiftViewModel = viewModel(factory = vmFactory { GiftViewModel(c, tab) })
+            GiftScreen(vm, game.corner, onBack = back) { t ->
+                PixelText("${t.label}: sắp có", color = Pal.Paper)
+            }
         }
         composable<LabelsRoute> {
             val vm: LabelsViewModel = viewModel(factory = vmFactory { LabelsViewModel(c) })

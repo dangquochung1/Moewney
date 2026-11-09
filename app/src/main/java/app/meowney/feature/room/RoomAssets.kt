@@ -83,6 +83,38 @@ class RoomAssets private constructor(
 
     fun hotspotAt(x: Float, y: Float): Hotspot? = file.hotspots.firstOrNull { it.contains(x, y) }
 
+    private val bakes = HashMap<Pair<Long?, Long?>, ImageBitmap>()
+
+    /** The static room with the walls and the floor recoloured (cached per pair of tints). */
+    fun baked(wall: Long?, floor: Long?): ImageBitmap {
+        if (wall == null && floor == null) return base
+        return bakes.getOrPut(wall to floor) {
+            val out = ImageBitmap(widthPx, heightPx)
+            val size = Size(widthPx.toFloat(), heightPx.toFloat())
+            CanvasDrawScope().draw(Density(1f), LayoutDirection.Ltr, Canvas(out), size) {
+                drawRect(Pal.Night)
+                for (layer in file.layers) {
+                    val img = ImageBitmap(widthPx, heightPx)
+                    CanvasDrawScope().draw(Density(1f), LayoutDirection.Ltr, Canvas(img), size) {
+                        layer.tiles.forEachIndexed { i, v ->
+                            if (v == 0) return@forEachIndexed
+                            val ts = (v - 1) / 10000
+                            val index = (v - 1) % 10000
+                            if (file.anims["$ts:$index"] == null) drawTile(this, ts, index, i % file.width, i / file.width)
+                        }
+                    }
+                    when (layer.name) {
+                        "walls" -> wall
+                        "floor" -> floor
+                        else -> null
+                    }?.let { RoomPaint.colorize(img, it) }
+                    drawImage(img)
+                }
+            }
+            out
+        }
+    }
+
     fun drawAnimatedTiles(scope: DrawScope, ms: Long) {
         for (a in animated) drawTile(scope, a.tileset, a.tileAt(ms), a.col, a.row)
     }

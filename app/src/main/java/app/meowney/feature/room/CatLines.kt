@@ -100,4 +100,22 @@ object CatLines {
             streak > 1 -> " · $streak ngày liền"
             else -> ""
         }
+
+    // ------------------------------------------------------------------ game (GĐ6)
+
+    fun bought(name: String) = listOf(
+        "$name về nhà rồi! Sen khéo chọn đấy.",
+        "Trẫm duyệt món $name. Đặt ở đâu đây Sen?",
+        "Có $name rồi, góc của trẫm sang hẳn lên.",
+    ).random()
+
+    fun notEnough(missing: Long) = "Còn thiếu $missing xu. Sen ghi sổ, làm thói quen thêm chút nữa nhé."
+
+    fun treat(name: String, affection: Int) = "Ngon quá! $name đúng ý trẫm. Thân thiết lên $affection tim rồi đó."
+
+    fun ate(name: String) = listOf("Măm măm... $name ngon tuyệt!", "Sen chiều trẫm quá. $name hết sạch rồi.", "Trẫm no rồi, cảm ơn Sen nha.").random()
+
+    fun adopted(name: String) = "Chào mừng $name về nhà! Vào Tủ đồ để cho bé ra phòng nhé."
+
+    fun trophy(name: String, tier: Int) = "Sen mở được cúp \"$name\" bậc ${listOf("Đồng", "Bạc", "Vàng")[tier - 1]}!"
 }

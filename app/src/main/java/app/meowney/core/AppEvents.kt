@@ -11,6 +11,8 @@ sealed interface CatEvent {
     data class Say(val text: String) : CatEvent
     /** Sen picked a diary mood (1..5): the cat cheers or lies down beside them. */
     data class Mood(val level: Int, val text: String) : CatEvent
+    /** Sen gave a treat from the wardrobe: the cat eats. */
+    data class Treat(val name: String) : CatEvent
 }
 
 /**
