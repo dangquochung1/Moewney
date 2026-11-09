@@ -93,6 +93,7 @@ fun MoneyScreen(
     onTxn: (Long) -> Unit,
     onAdd: () -> Unit,
     onGoal: (Long) -> Unit,
+    onDebts: () -> Unit,
 ) {
     val s by vm.state.collectAsState()
     var newGoal by remember { mutableStateOf(false) }
@@ -102,6 +103,7 @@ fun MoneyScreen(
     val days = remember(s.txns) { s.txns.groupBy { it.day }.toList() }
 
     PixelScreen("Tiền", onBack = onBack, actions = {
+        PixelTextButton("Nợ", onClick = onDebts, look = ButtonLook.Light)
         PixelTextButton("Ví", onClick = onWallets, look = ButtonLook.Light)
         PixelTextButton("+", onClick = onAdd)
     }) {
@@ -136,7 +138,7 @@ fun MoneyScreen(
                         if (exp > 0) PixelText("-${formatVndShort(exp)}", style = type.caption, color = Pal.Cream)
                     }
                 }
-                items(rows, key = { it.id }) { t -> TxnLine(t, onClick = { onTxn(t.id) }) }
+                items(rows, key = { it.id }) { t -> TxnLine(t, onClick = { if (t.type.startsWith("DEBT")) onDebts() else onTxn(t.id) }) }
             }
         }
     }
@@ -195,6 +197,8 @@ private fun TxnLine(t: TxnRow, onClick: () -> Unit) {
             val title = when (t.type) {
                 "TRANSFER" -> "Chuyển ${t.walletName} > ${t.toWalletName}"
                 "ADJUST" -> "Điều chỉnh ${t.walletName}"
+                "DEBT_OUT" -> if (t.source == "DEBT") "Cho ${t.debtPerson} vay" else "Trả nợ ${t.debtPerson}"
+                "DEBT_IN" -> if (t.source == "DEBT") "Vay của ${t.debtPerson}" else "${t.debtPerson} trả nợ"
                 else -> t.categoryName ?: "Khác"
             }
             PixelText(title, style = type.body, color = Pal.Cream, maxLines = 1)
@@ -232,6 +236,7 @@ private fun kindLabel(e: JarEntryEntity) = when (e.kind) {
     "BORROW" -> if (e.amount > 0) "Mượn vào" else "Cho mượn"
     "REPAY" -> if (e.amount > 0) "Được trả nợ" else "Trả nợ"
     "ADJUST" -> "Điều chỉnh ví"
+    "DEBT" -> if (e.amount > 0) "Tiền vay / được trả" else "Cho vay / trả nợ"
     else -> e.kind
 }
 

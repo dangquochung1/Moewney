@@ -110,6 +110,8 @@ object CsvExporter {
                     "TRANSFER" -> "Chuyển"
                     "OPENING" -> "Số dư đầu"
                     "ADJUST" -> "Điều chỉnh"
+                    "DEBT_OUT" -> if (r.debtPerson != null) "Nợ ra (${r.debtPerson})" else "Nợ ra"
+                    "DEBT_IN" -> if (r.debtPerson != null) "Nợ vào (${r.debtPerson})" else "Nợ vào"
                     else -> r.type
                 }
                 val signed = if (r.type == "EXPENSE") -r.amount else r.amount

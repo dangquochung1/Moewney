@@ -30,6 +30,8 @@ data class TxnRow(
     val toWalletName: String?,
     val jarName: String?,
     val jarCode: String?,
+    val debtPerson: String? = null,
+    val source: String = "MANUAL",
 )
 
 @Dao
@@ -82,12 +84,13 @@ interface MoneyDao {
         """
         SELECT t.id, t.type, t.amount, t.walletId, t.toWalletId, t.categoryId, t.jarId, t.note, t.occurredAt, t.day,
                c.name AS categoryName, c.icon AS categoryIcon, w.name AS walletName, w2.name AS toWalletName,
-               j.name AS jarName, j.code AS jarCode
+               j.name AS jarName, j.code AS jarCode, d.person AS debtPerson, t.source AS source
         FROM txn t
         LEFT JOIN category c ON c.id = t.categoryId
         LEFT JOIN wallet w ON w.id = t.walletId
         LEFT JOIN wallet w2 ON w2.id = t.toWalletId
         LEFT JOIN jar j ON j.id = t.jarId
+        LEFT JOIN debt d ON d.id = t.debtId
         WHERE t.type != 'OPENING'
         ORDER BY t.occurredAt DESC, t.id DESC
         LIMIT :limit
@@ -99,12 +102,13 @@ interface MoneyDao {
         """
         SELECT t.id, t.type, t.amount, t.walletId, t.toWalletId, t.categoryId, t.jarId, t.note, t.occurredAt, t.day,
                c.name AS categoryName, c.icon AS categoryIcon, w.name AS walletName, w2.name AS toWalletName,
-               j.name AS jarName, j.code AS jarCode
+               j.name AS jarName, j.code AS jarCode, d.person AS debtPerson, t.source AS source
         FROM txn t
         LEFT JOIN category c ON c.id = t.categoryId
         LEFT JOIN wallet w ON w.id = t.walletId
         LEFT JOIN wallet w2 ON w2.id = t.toWalletId
         LEFT JOIN jar j ON j.id = t.jarId
+        LEFT JOIN debt d ON d.id = t.debtId
         ORDER BY t.occurredAt, t.id
         """,
     )
@@ -129,8 +133,8 @@ interface MoneyDao {
         """
         SELECT w.id AS id,
           COALESCE((SELECT SUM(CASE
-              WHEN t.type IN ('INCOME', 'OPENING', 'ADJUST') THEN t.amount
-              WHEN t.type IN ('EXPENSE', 'TRANSFER') THEN -t.amount
+              WHEN t.type IN ('INCOME', 'OPENING', 'ADJUST', 'DEBT_IN') THEN t.amount
+              WHEN t.type IN ('EXPENSE', 'TRANSFER', 'DEBT_OUT') THEN -t.amount
               ELSE 0 END) FROM txn t WHERE t.walletId = w.id), 0)
           + COALESCE((SELECT SUM(t.amount) FROM txn t WHERE t.type = 'TRANSFER' AND t.toWalletId = w.id), 0) AS total
         FROM wallet w

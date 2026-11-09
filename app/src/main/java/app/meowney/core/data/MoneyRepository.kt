@@ -3,6 +3,7 @@ package app.meowney.core.data
 import androidx.room.withTransaction
 import app.meowney.core.db.CategoryEntity
 import app.meowney.core.db.CoinEntryEntity
+import app.meowney.core.db.DebtEntity
 import app.meowney.core.db.DefaultData
 import app.meowney.core.db.GoalEntity
 import app.meowney.core.db.GoalEntryEntity
@@ -205,6 +206,54 @@ class MoneyRepository(private val db: MeowneyDb) {
             coins += rewards.sumOf { it.delta }
         }
         SaveResult(id, coins, notes)
+    }
+
+    // ------------------------------------------------------------------ debts
+
+    val debts = plans.debts()
+
+    /**
+     * Lending ([lent] = true) takes money out of a wallet and a jar; borrowing puts it in.
+     * Neither is an expense or income.
+     */
+    suspend fun createDebt(
+        person: String, lent: Boolean, amount: Long, walletId: Long, jarId: Long,
+        dueDay: Long?, note: String, today: LocalDate = LocalDate.now(),
+    ): Long = db.withTransaction {
+        val debtId = plans.insertDebt(
+            DebtEntity(person = person, direction = if (lent) "LENT" else "BORROWED", principal = amount, walletId = walletId, jarId = jarId, day = today.toEpochDay(), dueDay = dueDay, note = note),
+        )
+        debtTxn(debtId, if (lent) "DEBT_OUT" else "DEBT_IN", amount, walletId, jarId, "DEBT", note, today)
+        debtId
+    }
+
+    /** A repayment: they pay Sen back (LENT) or Sen pays them (BORROWED). Settles the debt when done. */
+    suspend fun payDebt(debtId: Long, amount: Long, walletId: Long, today: LocalDate = LocalDate.now()) = db.withTransaction {
+        val d = plans.debt(debtId) ?: return@withTransaction
+        val lent = d.direction == "LENT"
+        debtTxn(debtId, if (lent) "DEBT_IN" else "DEBT_OUT", amount, walletId, d.jarId, "DEBT_PAY", "", today)
+        if (d.paid + amount >= d.principal) {
+            plans.debt(debtId)?.let { row ->
+                plans.updateDebt(DebtEntity(row.id, row.person, row.direction, row.principal, row.walletId, row.jarId, row.day, row.dueDay, row.note, today.toEpochDay()))
+            }
+        }
+    }
+
+    suspend fun deleteDebt(debtId: Long) = db.withTransaction {
+        for (t in plans.txnIdsOfDebt(debtId)) {
+            dao.deleteEntriesOf(t)
+            dao.deleteTxn(t)
+        }
+        plans.deleteDebt(debtId)
+    }
+
+    private suspend fun debtTxn(debtId: Long, type: String, amount: Long, walletId: Long, jarId: Long, source: String, note: String, today: LocalDate) {
+        val now = System.currentTimeMillis()
+        val id = dao.insertTxn(
+            TxnEntity(type = type, amount = amount, walletId = walletId, jarId = jarId, note = note, occurredAt = now, day = today.toEpochDay(), createdAt = now, source = source, debtId = debtId),
+        )
+        val signed = if (type == "DEBT_IN") amount else -amount
+        dao.insertEntries(listOf(JarEntryEntity(jarId = jarId, amount = signed, kind = EntryKind.DEBT.name, txnId = id, day = today.toEpochDay())))
     }
 
     // ------------------------------------------------------------------ goals

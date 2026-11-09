@@ -31,6 +31,8 @@ import app.meowney.feature.entry.EntryScreen
 import app.meowney.feature.entry.EntryViewModel
 import app.meowney.feature.entry.PourScreen
 import app.meowney.feature.entry.PourViewModel
+import app.meowney.feature.money.DebtsScreen
+import app.meowney.feature.money.DebtsViewModel
 import app.meowney.feature.money.GoalScreen
 import app.meowney.feature.money.GoalViewModel
 import app.meowney.feature.money.JarDetailScreen
@@ -72,6 +74,7 @@ class GameAssets(
 @Serializable object MoneyRoute
 @Serializable data class JarRoute(val id: Long)
 @Serializable data class GoalRoute(val id: Long)
+@Serializable object DebtsRoute
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -181,7 +184,12 @@ private fun App(game: GameAssets, c: AppContainer) {
                 onTxn = { nav.navigate(EntryRoute(txnId = it)) },
                 onAdd = { nav.navigate(EntryRoute()) },
                 onGoal = { nav.navigate(GoalRoute(it)) },
+                onDebts = { nav.navigate(DebtsRoute) },
             )
+        }
+        composable<DebtsRoute> {
+            val vm: DebtsViewModel = viewModel(factory = vmFactory { DebtsViewModel(c) })
+            DebtsScreen(vm, onBack = back)
         }
         composable<GoalRoute> { entry ->
             val id = entry.toRoute<GoalRoute>().id

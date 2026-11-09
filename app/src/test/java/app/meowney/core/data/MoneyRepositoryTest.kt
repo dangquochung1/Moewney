@@ -154,6 +154,29 @@ class MoneyRepositoryTest {
         assertThat(free[ltss]).isEqualTo(200_000)
     }
 
+    @Test fun debtsMoveWalletsAndJarsButAreNotSpending() = runBlocking {
+        val nec = jar(JarCode.NEC)
+        val lend = repo.createDebt("Lan", lent = true, amount = 500_000, walletId = cash(), jarId = nec, dueDay = null, note = "")
+        assertThat(repo.walletStates.first().first { it.wallet.id == cash() }.balance).isEqualTo(1_500_000)
+        assertThat(repo.balancesNow()[nec]).isEqualTo(8_850_000)
+        repo.payDebt(lend, 200_000, cash())
+        var lan = repo.debts.first().single()
+        assertThat(lan.left).isEqualTo(300_000)
+        assertThat(lan.settledDay).isNull()
+        repo.payDebt(lend, 300_000, cash())
+        lan = repo.debts.first().single()
+        assertThat(lan.settledDay).isNotNull()
+        assertThat(repo.balancesNow()[nec]).isEqualTo(9_350_000)
+        // borrowing into "Chưa phân bổ", then deleting it, leaves no trace
+        val borrow = repo.createDebt("Mẹ", lent = false, amount = 1_000_000, walletId = cash(), jarId = jar(JarCode.UNALLOC), dueDay = null, note = "")
+        assertBalanced()
+        repo.deleteDebt(borrow)
+        assertThat(repo.balancesNow()[jar(JarCode.UNALLOC)] ?: 0).isEqualTo(0)
+        // nothing here counts as spending today
+        assertThat(repo.spentOn(today, listOf(nec)).first()).isEqualTo(0)
+        assertBalanced()
+    }
+
     @Test fun noSpendOnlyOnceAndOnlyWithoutSpending() = runBlocking {
         assertThat(repo.claimNoSpend(today, 0)).isEqualTo(5)
         assertThat(repo.claimNoSpend(today, 0)).isEqualTo(0)

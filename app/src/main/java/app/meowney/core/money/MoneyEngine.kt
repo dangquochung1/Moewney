@@ -15,7 +15,7 @@ enum class JarCode(val isSavings: Boolean, val spending: Boolean) {
 }
 
 /** Why a jar balance moved. Every row of the jar ledger has one. */
-enum class EntryKind { OPENING, ALLOC, SPEND, MOVE, BORROW, REPAY, ADJUST }
+enum class EntryKind { OPENING, ALLOC, SPEND, MOVE, BORROW, REPAY, ADJUST, DEBT }
 
 data class JarInfo(val id: Long, val code: JarCode, val percent: Int)
 
