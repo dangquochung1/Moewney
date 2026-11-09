@@ -59,6 +59,15 @@ ITEM_SHEETS = [
     ("packs/DOG_HOUSE.png", "prop/house", ["blue", "red", "green"]),
 ]
 
+# Short sound effects -> assets/sfx/<name> (Sfx.kt plays them by these names).
+SOUNDS = {
+    "audio/sfx/bonus/coin.wav": "coin.wav",
+    "audio/sfx/bonus/gold1.wav": "gold.wav",
+    "audio/sfx/alert/alert2.wav": "alert.wav",
+    "audio/sfx/menu/menu5.wav": "click.wav",
+    "audio/jingles/success1.wav": "success.wav",
+}
+
 # Licence files that must ship with the app (shown on the Credits screen).
 LICENSES = {
     "packs/Cozy_Cat_Pixel_Art_Pack/Cozy_Cat_Pixel_Art_Pack/LICENSE.txt": "cozy_cat_pack_FOTOPIXY.txt",
@@ -257,6 +266,10 @@ def write(items, pages):
     licenses.mkdir(parents=True, exist_ok=True)
     for src, dst in LICENSES.items():
         shutil.copyfile(ART / src, licenses / dst)
+    sfx = OUT / "sfx"
+    sfx.mkdir(parents=True, exist_ok=True)
+    for src, dst in SOUNDS.items():
+        shutil.copyfile(ART / src, sfx / dst)
     return entries
 
 

@@ -48,10 +48,14 @@ object ToyArt {
         when (toy) {
             Toy.Habits -> sprite(atlas, "prop/tower_white")
             Toy.Notes -> sprite(atlas, "prop/house_red")
-            Toy.Money -> paint(34, 44) { jar(jarLevel, typeface) }
+            Toy.Money -> jarImage(jarLevel, typeface)
             Toy.Calendar -> paint(34, 40) { calendar(today, typeface) }
             Toy.Gift -> paint(38, 38) { gift() }
         }
+
+    /** A coin jar (34 x 44 art px) filled to [level]; [liquid] colours the fill (gold coins by default). */
+    fun jarImage(level: Float, typeface: Typeface, liquid: Color = GOLD, label: String = "đ", empty: Boolean = false): ImageBitmap =
+        paint(34, 44) { jar(level, typeface, liquid, label, empty) }
 
     private fun sprite(atlas: SpriteAtlas, key: String): ImageBitmap {
         val s = atlas[key]
@@ -81,7 +85,7 @@ object ToyArt {
     }
 
     /** Glass jar of coins with a wooden lid and a paper label. */
-    private fun DrawScope.jar(level: Float, tf: Typeface) {
+    private fun DrawScope.jar(level: Float, tf: Typeface, liquid: Color, label: String, alarm: Boolean) {
         // lid
         px(9, 0, 16, 6, OUT)
         px(10, 1, 14, 4, WOOD)
@@ -96,9 +100,10 @@ object ToyArt {
         val h = (inside * level.coerceIn(0f, 1f)).roundToInt()
         if (h > 0) {
             val top = 42 - h
-            px(4, top, 26, h, GOLD)
+            px(4, top, 26, h, liquid)
+            val shade = Color(liquid.red * 0.75f, liquid.green * 0.75f, liquid.blue * 0.75f)
             for (row in top until 42 step 4) {
-                for (col in 5 until 29 step 6) px(col + (row / 4 % 2) * 3, row, 4, 1, GOLD_DARK)
+                for (col in 5 until 29 step 6) px(col + (row / 4 % 2) * 3, row, 4, 1, shade)
             }
             px(5, top, 6, 1, Color.White.copy(alpha = 0.6f))
         }
@@ -107,8 +112,8 @@ object ToyArt {
         px(28, 12, 2, 26, GLASS_DARK.copy(alpha = 0.6f))
         // label with a đ
         px(10, 18, 14, 11, OUT)
-        px(11, 19, 12, 9, Pal.Cream)
-        text("đ", 17f, 27f, 9f, Pal.Ink, tf)
+        px(11, 19, 12, 9, if (alarm) RED else Pal.Cream)
+        text(label, 17f, 27f, 9f, if (alarm) Pal.Cream else Pal.Ink, tf)
     }
 
     /** Desk calendar showing today's day number. */

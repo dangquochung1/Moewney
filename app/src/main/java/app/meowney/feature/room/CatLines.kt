@@ -30,13 +30,23 @@ object CatLines {
         Toy.Gift to "Quà và cửa hàng mở ở giai đoạn 6. Để dành xu đi Sen.",
     )
 
-    fun greeting(hour: Int): String = when (hour) {
-        in 5..10 -> "Chào buổi sáng, Sen! Hôm nay liệu mà tiêu."
+    fun greeting(hour: Int, name: String = "trẫm"): String = when (hour) {
+        in 5..10 -> "Chào buổi sáng, Sen! $name đây. Hôm nay liệu mà tiêu."
         in 11..13 -> "Trưa rồi, Sen ăn gì nhớ ghi sổ nha."
         in 14..17 -> "Chiều rồi. Sen còn bao nhiêu tiền thế?"
         in 18..21 -> "Tối rồi, Sen ghi lại chi tiêu hôm nay đi."
-        else -> "Khuya rồi, Sen ngủ đi. Trẫm cũng ngủ đây... zZ"
+        else -> "Khuya rồi, Sen ngủ đi. $name cũng ngủ đây... zZ"
     }
+
+    fun poured(amount: String) = "Có tiền vào! Trẫm rót $amount vào 6 lọ rồi đó."
+
+    fun worriedLoans() = "Lọ này đang nợ lọ kia đó Sen. Khoản thu sau trẫm trả lại trước."
+
+    fun evening() = listOf(
+        "Sen ơi, hôm nay chưa ghi sổ. Tiêu gì thì khai mau!",
+        "Trẫm chờ Sen ghi sổ nãy giờ. Hôm nay tiêu những gì?",
+        "Hôm nay không tiêu gì thì bấm 'không tiêu' cũng được xu đó.",
+    ).random()
 
     fun onTap(random: Random = Random.Default) = tap.random(random)
 
