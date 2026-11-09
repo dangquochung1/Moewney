@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Meowney</string>
+    <string name="widget_small_desc">Mèo và số tiền hôm nay còn</string>
+    <string name="widget_wide_desc">Mèo, hôm nay còn bao nhiêu và 3 nút ghi nhanh</string>
 </resources>

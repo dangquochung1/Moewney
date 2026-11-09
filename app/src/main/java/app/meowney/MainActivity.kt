@@ -1,11 +1,13 @@
 package app.meowney
 
+import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +20,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.toRoute
 import app.meowney.core.data.TxnDraft
 import app.meowney.core.notify.EveningReminder
@@ -55,6 +58,8 @@ import app.meowney.feature.settings.SettingsScreen
 import app.meowney.feature.settings.SettingsViewModel
 import app.meowney.feature.settings.XiaomiGuideScreen
 import app.meowney.feature.uikit.UiKitScreen
+import app.meowney.widget.EXTRA_OPEN
+import app.meowney.widget.OPEN_ENTRY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -88,12 +93,21 @@ class GameAssets(
 class MainActivity : ComponentActivity() {
     private var loaded by mutableStateOf<GameAssets?>(null)
 
+    /** A screen asked for from outside (the widget "+"), consumed once shown. */
+    private var openRequest by mutableStateOf<String?>(null)
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        openRequest = intent.getStringExtra(EXTRA_OPEN)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         val splash = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         splash.setKeepOnScreenCondition { loaded == null }
         val c = container
+        if (savedInstanceState == null) openRequest = intent.getStringExtra(EXTRA_OPEN)
 
         lifecycleScope.launch {
             loaded = withContext(Dispatchers.IO) {
@@ -104,10 +118,10 @@ class MainActivity : ComponentActivity() {
                 MorningReminder.createChannel(this@MainActivity)
                 MorningReminder.schedule(this@MainActivity)
                 GameAssets(
-                    sprites = SpriteAtlas.load(assets),
+                    sprites = c.sprites,
                     corner = RoomAssets.load(assets),
-                    icons = SpriteAtlas.loadBitmap(assets, "icons/raven16.png"),
-                    pixelTypeface = ResourcesCompat.getFont(this@MainActivity, R.font.meowney_pixel_regular)!!,
+                    icons = c.icons,
+                    pixelTypeface = c.typeface,
                     onboarded = settings.onboarded,
                 )
             }
@@ -117,7 +131,7 @@ class MainActivity : ComponentActivity() {
             val game = loaded ?: return@setContent
             MeowneyTheme(game.sprites) {
                 CompositionLocalProvider(LocalIcons provides game.icons) {
-                    App(game, c)
+                    App(game, c, openRequest) { openRequest = null }
                 }
             }
         }
@@ -125,9 +139,16 @@ class MainActivity : ComponentActivity() {
 }
 
 @androidx.compose.runtime.Composable
-private fun App(game: GameAssets, c: AppContainer) {
+private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpened: () -> Unit) {
     val nav = rememberNavController()
     val back: () -> Unit = { nav.popBackStack() }
+    LaunchedEffect(openRequest) {
+        if (openRequest == OPEN_ENTRY) {
+            val onboarding = nav.currentBackStackEntry?.destination?.hasRoute(OnboardingRoute::class) ?: !game.onboarded
+            if (!onboarding) nav.navigate(EntryRoute()) { launchSingleTop = true }
+        }
+        if (openRequest != null) onOpened()
+    }
     NavHost(nav, startDestination = if (game.onboarded) HomeRoute else OnboardingRoute) {
         composable<OnboardingRoute> {
             val vm: OnboardingViewModel = viewModel(factory = vmFactory { OnboardingViewModel(c) })
