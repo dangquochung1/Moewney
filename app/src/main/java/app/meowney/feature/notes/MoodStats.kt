@@ -80,8 +80,8 @@ fun MoodStatsScreen(vm: MoodStatsViewModel, onBack: () -> Unit) {
                     for (md in Mood.entries.reversed()) {
                         val n = s.counts[md.level - 1]
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                            MoodIcon(md, scale = (m.ui - 1).coerceAtLeast(2))
-                            PixelText(md.label, style = type.caption, color = Pal.Ink, modifier = Modifier.width(m.unit * 34), maxLines = 1)
+                            MoodIcon(md, scale = (m.ui - 2).coerceAtLeast(2), framed = true)
+                            PixelText(md.label, style = type.caption, color = Pal.Ink, modifier = Modifier.width(m.unit * 46), maxLines = 1)
                             PixelProgress(n / most.toFloat(), Modifier.weight(1f), color = moodTint(md))
                             PixelText("$n", style = type.caption, color = Pal.Ink, modifier = Modifier.width(m.unit * 8), align = TextAlign.End)
                         }

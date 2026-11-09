@@ -59,6 +59,7 @@ import app.meowney.core.ui.PixelDialog
 import app.meowney.core.ui.PixelKeypad
 import app.meowney.core.format.formatVnd
 import app.meowney.core.format.formatVndShort
+import app.meowney.feature.notes.paperSheet
 import app.meowney.core.sprite.Sprite
 import app.meowney.core.sprite.SpriteAtlas
 import app.meowney.core.sprite.drawNinePatch
@@ -101,6 +102,10 @@ class HomeActions(
     val onCalendar: () -> Unit,
     val onTodo: (TodoItem) -> Unit,
     val onNotes: () -> Unit,
+    /** Today's diary page; a mood picked on the panel comes along. */
+    val onDiary: (Int?) -> Unit,
+    val onNote: (Long) -> Unit,
+    val onCheck: (Long) -> Unit,
 )
 
 @Composable
@@ -244,6 +249,8 @@ fun HomeScreen(
                 habitsZoom = zoomHabits,
                 calendarZoom = zoomCalendar,
                 notesZoom = zoomNotes,
+                diaryEmote = app.meowney.core.notes.Mood.of(state.diaryMood)?.emote,
+                diaryDone = state.diaryWritten,
                 onToy = { toy ->
                     when (toy) {
                         Toy.Money -> {
@@ -366,6 +373,8 @@ private fun ToyRow(
     habitsZoom: ZoomSource,
     calendarZoom: ZoomSource,
     notesZoom: ZoomSource,
+    diaryEmote: String?,
+    diaryDone: Boolean,
     onToy: (Toy) -> Unit,
 ) {
     val m = LocalPixelMetrics.current
@@ -374,8 +383,8 @@ private fun ToyRow(
     val scale = (m.ui - 1).coerceAtLeast(2)
     // quantise the level so the jar image is not rebuilt for every đồng
     val level = (jarLevel * 16).toInt() / 16f
-    val images = remember(atlas, typeface, level, today, habitLevel, catColor, calendarCount) {
-        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today, habitLevel, catColor, calendarCount) }
+    val images = remember(atlas, typeface, level, today, habitLevel, catColor, calendarCount, diaryEmote, diaryDone) {
+        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today, habitLevel, catColor, calendarCount, diaryEmote, diaryDone) }
     }
     val tallest = images.values.maxOf { it.height }
     Row(
@@ -481,6 +490,8 @@ private fun TodayPanel(
             }
             if (state.events.isNotEmpty() || state.todos.isNotEmpty() || state.overdue > 0) CalendarToday(state, habitActions)
             if (state.habits.isNotEmpty()) HabitsToday(state.habits, habitActions, onCountEdit)
+            DiaryToday(state, habitActions)
+            if (state.pinned.isNotEmpty()) PinnedNotes(state, habitActions)
             if (state.templates.isNotEmpty()) {
                 PixelText("Ghi nhanh (giữ lâu để ghim)", style = type.bodyBold)
                 FlowRow(
@@ -607,6 +618,78 @@ private fun HabitRow(h: HabitToday, actions: HomeActions, onCountEdit: (HabitTod
             }
             HabitType.QUIT -> PixelButton(onClick = { actions.onHabitFailed(h, !h.failed) }, look = ButtonLook.Light) {
                 PixelText(if (h.failed) "Hoàn tác" else "Lỡ rồi", style = type.caption)
+            }
+        }
+    }
+}
+
+// ------------------------------------------------------------------ notebook
+
+@Composable
+private fun DiaryToday(state: HomeState, actions: HomeActions) {
+    val m = LocalPixelMetrics.current
+    val type = LocalPixelType.current
+    val mood = app.meowney.core.notes.Mood.of(state.diaryMood)
+    Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
+        PixelText("NHẬT KÝ", style = type.caption, color = Pal.InkSoft, modifier = Modifier.clickable { actions.onDiary(null) })
+        if (mood == null) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                PixelText("Hôm nay Sen thấy sao?", style = type.bodyBold, modifier = Modifier.weight(1f), maxLines = 2)
+                for (md in app.meowney.core.notes.Mood.entries) {
+                    app.meowney.feature.notes.MoodIcon(md, scale = (m.ui - 2).coerceAtLeast(2), Modifier.clickable { actions.onDiary(md.level) }, framed = true)
+                }
+            }
+        } else {
+            Row(
+                Modifier.fillMaxWidth().clickable { actions.onDiary(null) },
+                verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
+            ) {
+                app.meowney.feature.notes.MoodIcon(mood, scale = (m.ui - 2).coerceAtLeast(2), framed = true)
+                PixelText(mood.label, style = type.bodyBold)
+                PixelText(if (state.diaryWritten) "· đã viết" else "· viết vài dòng nhé", style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f))
+            }
+        }
+    }
+}
+
+@Composable
+private fun PinnedNotes(state: HomeState, actions: HomeActions) {
+    val m = LocalPixelMetrics.current
+    val type = LocalPixelType.current
+    Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
+        PixelText("GHIM", style = type.caption, color = Pal.InkSoft)
+        for (n in state.pinned) {
+            Column(
+                Modifier.fillMaxWidth()
+                    .paperSheet(app.meowney.feature.notes.paper(n.note.color), m.ui.toFloat())
+                    .padding(horizontal = m.unit * 3, vertical = m.unit * 2),
+                verticalArrangement = Arrangement.spacedBy(m.unit),
+            ) {
+                PixelText(
+                    n.note.title.ifBlank { "Ghi chú" }, style = type.bodyBold, maxLines = 1,
+                    modifier = Modifier.fillMaxWidth().clickable { actions.onNote(n.id) },
+                )
+                val checks = n.checks
+                val open = checks.filter { !it.checked }
+                for (b in (open + checks.filter { it.checked }).take(6)) {
+                    Row(
+                        Modifier.fillMaxWidth().clickable { actions.onCheck(b.id) },
+                        verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
+                    ) {
+                        app.meowney.feature.notes.MiniCheck(b.checked, px = 9)
+                        PixelText(
+                            b.text, style = type.body.copy(textDecoration = if (b.checked) androidx.compose.ui.text.style.TextDecoration.LineThrough else null),
+                            color = if (b.checked) Pal.InkSoft else Pal.Ink, maxLines = 1,
+                        )
+                    }
+                }
+                if (checks.isEmpty()) {
+                    n.blocks.firstOrNull { it.text.isNotBlank() }?.let {
+                        PixelText(it.text.trim(), style = type.caption, color = Pal.Ink, maxLines = 2, modifier = Modifier.clickable { actions.onNote(n.id) })
+                    }
+                } else if (checks.size > 6) {
+                    PixelText("${open.size} việc còn lại", style = type.caption, color = Pal.InkSoft, modifier = Modifier.clickable { actions.onNote(n.id) })
+                }
             }
         }
     }

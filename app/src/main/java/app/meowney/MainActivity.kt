@@ -302,6 +302,9 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                         onTimer = { nav.navigate(PomodoroRoute(it.habit.id)) },
                         onCalendar = { nav.navigate(CalendarRoute()) },
                         onNotes = { nav.navigate(NotesRoute()) },
+                        onDiary = { mood -> nav.navigate(DiaryRoute(mood = mood ?: -1)) },
+                        onNote = { nav.navigate(NoteEditRoute(it)) },
+                        onCheck = { vm.toggleCheck(it) },
                         onTodo = vm::todoToggle,
                     ),
                 )

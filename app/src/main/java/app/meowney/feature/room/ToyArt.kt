@@ -45,10 +45,13 @@ object ToyArt {
     private val RED = Color(0xFFD9534F)
     private val RED_DARK = Color(0xFFA33A3A)
 
-    fun image(toy: Toy, atlas: SpriteAtlas, typeface: Typeface, jarLevel: Float, today: LocalDate, habitLevel: Float? = null, catColor: Int = 5, calendarCount: Int = 0): ImageBitmap =
+    fun image(
+        toy: Toy, atlas: SpriteAtlas, typeface: Typeface, jarLevel: Float, today: LocalDate, habitLevel: Float? = null,
+        catColor: Int = 5, calendarCount: Int = 0, diaryEmote: String? = null, diaryDone: Boolean = false,
+    ): ImageBitmap =
         when (toy) {
             Toy.Habits -> towerImage(atlas, habitLevel, catColor)
-            Toy.Notes -> sprite(atlas, "prop/house_red")
+            Toy.Notes -> paint(36, 44) { notebook(atlas, diaryEmote, diaryDone, typeface) }
             Toy.Money -> jarImage(jarLevel, typeface)
             Toy.Calendar -> paint(38, 42) { calendar(today, typeface, calendarCount) }
             Toy.Gift -> paint(38, 38) { gift() }
@@ -173,6 +176,51 @@ object ToyArt {
             px(27, 31, 10, 10, RED)
             text(if (count > 9) "9" else "$count", 32f, 39f, 9f, Pal.Cream, tf)
         }
+    }
+
+    /**
+     * A ring-bound notebook. The label shows today's mood emote, or a red "!" while today's
+     * diary is not written yet.
+     */
+    private fun DrawScope.notebook(atlas: SpriteAtlas, emote: String?, done: Boolean, tf: Typeface) {
+        val cover = Color(0xFF3F6E9C)
+        val coverLight = Color(0xFF6FA8DC)
+        val coverDark = Color(0xFF2C4F73)
+        // pages peeking out on the right and bottom
+        px(6, 3, 29, 38, OUT)
+        px(7, 4, 27, 36, Pal.Cream)
+        for (y in 8 until 38 step 4) px(30, y, 3, 1, Color(0xFFD9C7A3))
+        // cover
+        px(1, 1, 31, 40, OUT)
+        px(2, 2, 29, 38, cover)
+        px(2, 2, 29, 1, coverLight)
+        px(2, 2, 1, 38, coverLight)
+        px(2, 36, 29, 4, coverDark)
+        // spine rings
+        for (y in 5 until 38 step 6) {
+            px(0, y, 5, 3, OUT)
+            px(1, y + 1, 3, 1, Color(0xFFB0B0B0))
+        }
+        // label
+        px(9, 8, 19, 18, OUT)
+        px(10, 9, 17, 16, Pal.Cream)
+        val e = emote?.let { atlas.getOrNull(it) }
+        if (e != null) {
+            drawImage(
+                e.page, e.srcOffset(0), e.srcSize,
+                dstOffset = androidx.compose.ui.unit.IntOffset(11, 10),
+                dstSize = androidx.compose.ui.unit.IntSize(e.width, e.height),
+            )
+        } else if (!done) {
+            text("!", 18.5f, 23f, 18f, RED, tf)
+        } else {
+            px(14, 14, 9, 1, Pal.InkSoft)
+            px(14, 17, 9, 1, Pal.InkSoft)
+            px(14, 20, 6, 1, Pal.InkSoft)
+        }
+        // bookmark ribbon
+        px(22, 38, 5, 6, OUT)
+        px(23, 38, 3, 5, RED)
     }
 
     /** Red present with a gold ribbon and bow. */

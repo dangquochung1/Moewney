@@ -26,6 +26,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import app.meowney.core.data.NoteFull
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
@@ -64,6 +66,11 @@ data class HomeState(
     val todos: List<TodoItem> = emptyList(),
     val overdue: Int = 0,
     val birthday: String? = null,
+    /** Today's diary: its mood (1..5) and whether something is written. */
+    val diaryMood: Int? = null,
+    val diaryWritten: Boolean = false,
+    /** Pinned notes (checklists can be ticked from home). */
+    val pinned: List<NoteFull> = emptyList(),
 ) {
     /** Events not over yet (all-day ones count all day). */
     fun eventsLeft(nowMinute: Int) = events.filter { e ->
@@ -139,6 +146,11 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                     overdue = io.second.size,
                     birthday = cal?.events?.firstOrNull { it.birthday && it.occ.start == day }?.event?.title,
                 )
+            }.let { withCal ->
+                val diary = c.notes.diaries.map { l -> l.firstOrNull { it.note.day == day.toEpochDay() } }
+                combine(withCal, diary, c.notes.pinned) { state, page, pinned ->
+                    state.copy(diaryMood = page?.note?.mood, diaryWritten = page?.hasContent == true, pinned = pinned.take(3))
+                }
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
@@ -267,6 +279,8 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
         c.sfx.play(if (r.allDone) Sfx.Sound.Success else Sfx.Sound.Coin)
         c.events.post(CatEvent.Coins(r.coins, CatLines.habitDone(h.habit.name, r)))
     }
+
+    fun toggleCheck(blockId: Long) = viewModelScope.launch { c.notes.toggleCheck(blockId) }
 
     fun todoToggle(t: TodoItem) = viewModelScope.launch {
         val coins = c.calendar.toggleTodo(t.todo.id)

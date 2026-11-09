@@ -154,6 +154,7 @@ fun ReportScreen(vm: ReportViewModel, catColor: Int, onBack: () -> Unit) {
                 ChartPanel("Chi nhiều nhất") { HBars(r.data.byCategory) { Pal.Orange } }
             }
             item { ChartPanel("Chi theo ngày") { DayChart(r.data) } }
+            r.data.mood?.let { mood -> item { ChartPanel("Tâm trạng") { MoodRow(mood) } } }
         }
     }
 }
@@ -264,6 +265,32 @@ private fun ChartPanel(title: String, content: @Composable () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         PixelText(title.uppercase(), style = LocalPixelType.current.bodyBold, color = Pal.Gold)
         content()
+    }
+}
+
+/** The diary moods of the month: days written and the share of good, ok and bad days (not graded). */
+@Composable
+private fun MoodRow(mood: app.meowney.core.notes.MoodSummary) {
+    val m = LocalPixelMetrics.current
+    val type = LocalPixelType.current
+    Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+        PixelText("Sen viết nhật ký ${mood.written} ngày", style = type.body, color = Pal.Cream)
+        for ((label, n, md) in listOf(
+            Triple("Vui", mood.good, app.meowney.core.notes.Mood.GOOD),
+            Triple("Bình thường", mood.ok, app.meowney.core.notes.Mood.OK),
+            Triple("Buồn", mood.bad, app.meowney.core.notes.Mood.BAD),
+        )) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                app.meowney.feature.notes.MoodIcon(md, scale = (m.ui - 2).coerceAtLeast(2), framed = true)
+                Column(Modifier.weight(1f)) {
+                    Row {
+                        PixelText(label, style = type.body, color = Pal.Cream, modifier = Modifier.weight(1f))
+                        PixelText("$n ngày", style = type.caption, color = Pal.Paper)
+                    }
+                    PixelProgress(n.toFloat() / mood.written.coerceAtLeast(1), color = app.meowney.feature.notes.moodTint(md), heightPx = 4)
+                }
+            }
+        }
     }
 }
 
