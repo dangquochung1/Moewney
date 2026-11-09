@@ -69,4 +69,23 @@ class MigrationTest {
         }
         db.close()
     }
+
+    @Test fun v3DataSurvivesMigrationTo4() {
+        helper.createDatabase(3).apply {
+            execSQL("INSERT INTO habit (id, name, type, icon, target, unit, schedule, weekdays, timesPerWeek, partOfDay, difficulty, moneyAmount, strength, streak, bestStreak, tickets, closedThrough, createdDay, archived, sort) VALUES (1, 'Đọc sách', 'TIMER', 100, 45, 'phút', 'DAILY', 127, 0, 'EVENING', 2, 0, 12.5, 1, 1, 0, 20400, 20401, 0, 0)")
+            close()
+        }
+        val db = helper.runMigrationsAndValidate(4)
+        db.prepare("SELECT strength FROM habit WHERE id = 1").use {
+            it.step()
+            assertThat(it.getDouble(0)).isWithin(0.01).of(12.5)
+        }
+        db.execSQL("INSERT INTO todo (id, title, difficulty, starred, note, repeat, remind, createdAt, sort) VALUES (1, 'Nộp báo cáo', 2, 0, '', 'NONE', 1, 0, 0)")
+        db.execSQL("INSERT INTO todo_step (todoId, text, done, sort) VALUES (1, 'Viết', 0, 0)")
+        db.prepare("SELECT COUNT(*) FROM event").use {
+            it.step()
+            assertThat(it.getLong(0)).isEqualTo(0)
+        }
+        db.close()
+    }
 }

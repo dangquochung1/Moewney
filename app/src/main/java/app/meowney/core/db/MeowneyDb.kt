@@ -14,20 +14,22 @@ import app.meowney.core.money.JarCode
         GoalEntity::class, GoalEntryEntity::class, DebtEntity::class, RecurringEntity::class,
         DayStatEntity::class, MonthReportEntity::class,
         HabitEntity::class, HabitLogEntity::class, FocusSessionEntity::class,
+        CalLabelEntity::class, EventEntity::class, TodoEntity::class, TodoStepEntity::class,
     ],
-    version = 3,
+    version = 4,
     exportSchema = true,
-    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3)],
+    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3), AutoMigration(from = 3, to = 4)],
 )
 abstract class MeowneyDb : RoomDatabase() {
     abstract fun money(): MoneyDao
     abstract fun plans(): PlanDao
     abstract fun reports(): ReportDao
     abstract fun habits(): HabitDao
+    abstract fun calendar(): CalendarDao
 
     companion object {
         const val FILE = "meowney.db"
-        const val SCHEMA_VERSION = 3
+        const val SCHEMA_VERSION = 4
 
         fun open(context: Context): MeowneyDb =
             Room.databaseBuilder(context.applicationContext, MeowneyDb::class.java, FILE).build()
