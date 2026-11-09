@@ -104,7 +104,7 @@ fun HomeScreen(
             }
             is CatEvent.Poured -> {
                 cat.play()
-                bubble = CatLines.poured(formatVndShort(e.amount)) + coinsSuffix(e.coins)
+                bubble = (e.notes.firstOrNull() ?: CatLines.poured(formatVndShort(e.amount))) + coinsSuffix(e.coins)
             }
             is CatEvent.Coins -> {
                 cat.play()

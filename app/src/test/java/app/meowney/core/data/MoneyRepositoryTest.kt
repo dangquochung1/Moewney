@@ -115,6 +115,45 @@ class MoneyRepositoryTest {
         assertBalanced()
     }
 
+    @Test fun goalsFillFromIncomeRewardOnceAndBuy() = runBlocking {
+        val ltss = jar(JarCode.LTSS)
+        val goalId = repo.saveGoal(
+            app.meowney.core.db.GoalEntity(name = "Laptop", jarId = ltss, target = 2_000_000, autoPercent = 50, createdDay = today.toEpochDay()),
+        )
+        // 10tr income -> LTSS gets 1tr -> goal gets 500k (25%)
+        val income = repo.addIncome(TxnDraft(10_000_000, cash(), date = today), MoneyEngine.allocateIncome(10_000_000, repo.jarInfos(), repo.loansNow()))
+        var goal = repo.goals.first().single()
+        assertThat(goal.saved).isEqualTo(500_000)
+        assertThat(income.notes.single()).contains("25%")
+        assertThat(income.coins).isEqualTo(7 + 10 + 50) // first log + log, income, 25% milestone
+
+        // deleting the income removes its automatic part; re-adding does not pay the milestone twice
+        repo.deleteTxn(income.txnId)
+        assertThat(repo.goals.first().single().saved).isEqualTo(0)
+        val again = repo.addIncome(TxnDraft(10_000_000, cash(), date = today), MoneyEngine.allocateIncome(10_000_000, repo.jarInfos(), repo.loansNow()))
+        assertThat(again.notes).isEmpty()
+
+        // manual top-up to the target, then buy it
+        val top = repo.fundGoal(goalId, 1_500_000)
+        assertThat(top.notes).hasSize(3) // 50, 75, 100
+        goal = repo.goals.first().single()
+        assertThat(goal.saved).isEqualTo(2_000_000)
+        repo.buyGoal(goalId, cash(), cat("Mua sắm"))
+        assertThat(repo.goals.first()).isEmpty()
+        assertBalanced()
+    }
+
+    @Test fun savingsJarLendsOnlyFreeMoney() = runBlocking {
+        val ltss = jar(JarCode.LTSS)
+        val goalId = repo.saveGoal(
+            app.meowney.core.db.GoalEntity(name = "Quỹ", jarId = ltss, target = 10_000_000, createdDay = today.toEpochDay()),
+        )
+        repo.fundGoal(goalId, 1_500_000) // LTSS 1.7tr, 1.5tr held -> 200k free
+        assertThat(repo.freeInJar(ltss)).isEqualTo(200_000)
+        val free = app.meowney.core.money.GoalEngine.freeBalances(repo.balancesNow(), repo.goalTotalsByJarNow())
+        assertThat(free[ltss]).isEqualTo(200_000)
+    }
+
     @Test fun noSpendOnlyOnceAndOnlyWithoutSpending() = runBlocking {
         assertThat(repo.claimNoSpend(today, 0)).isEqualTo(5)
         assertThat(repo.claimNoSpend(today, 0)).isEqualTo(0)

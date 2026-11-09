@@ -31,6 +31,8 @@ import app.meowney.feature.entry.EntryScreen
 import app.meowney.feature.entry.EntryViewModel
 import app.meowney.feature.entry.PourScreen
 import app.meowney.feature.entry.PourViewModel
+import app.meowney.feature.money.GoalScreen
+import app.meowney.feature.money.GoalViewModel
 import app.meowney.feature.money.JarDetailScreen
 import app.meowney.feature.money.JarDetailViewModel
 import app.meowney.feature.money.MoneyScreen
@@ -69,6 +71,7 @@ class GameAssets(
 @Serializable data class PourRoute(val amount: Long, val walletId: Long, val categoryId: Long, val note: String, val day: Long, val editing: Long = -1)
 @Serializable object MoneyRoute
 @Serializable data class JarRoute(val id: Long)
+@Serializable data class GoalRoute(val id: Long)
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -177,7 +180,13 @@ private fun App(game: GameAssets, c: AppContainer) {
                 onWallets = { nav.navigate(WalletsRoute) },
                 onTxn = { nav.navigate(EntryRoute(txnId = it)) },
                 onAdd = { nav.navigate(EntryRoute()) },
+                onGoal = { nav.navigate(GoalRoute(it)) },
             )
+        }
+        composable<GoalRoute> { entry ->
+            val id = entry.toRoute<GoalRoute>().id
+            val vm: GoalViewModel = viewModel(factory = vmFactory { GoalViewModel(c, id) })
+            GoalScreen(vm, onBack = back)
         }
         composable<JarRoute> { entry ->
             val id = entry.toRoute<JarRoute>().id

@@ -213,4 +213,7 @@ interface MoneyDao {
 
     @Query("SELECT COUNT(*) FROM coin_entry WHERE day = :day AND reason = :reason")
     fun countCoinsOn(day: Long, reason: String): Flow<Int>
+
+    @Query("SELECT COUNT(*) FROM coin_entry WHERE reason = :reason")
+    suspend fun countReason(reason: String): Int
 }

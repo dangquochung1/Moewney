@@ -4,6 +4,9 @@ import androidx.room.withTransaction
 import app.meowney.core.db.CategoryEntity
 import app.meowney.core.db.CoinEntryEntity
 import app.meowney.core.db.DefaultData
+import app.meowney.core.db.GoalEntity
+import app.meowney.core.db.GoalEntryEntity
+import app.meowney.core.db.GoalRow
 import app.meowney.core.db.JarEntity
 import app.meowney.core.db.JarEntryEntity
 import app.meowney.core.db.MeowneyDb
@@ -15,6 +18,7 @@ import app.meowney.core.game.RewardRules
 import app.meowney.core.money.BorrowPlan
 import app.meowney.core.money.EntryDraft
 import app.meowney.core.money.EntryKind
+import app.meowney.core.money.GoalEngine
 import app.meowney.core.money.JarCode
 import app.meowney.core.money.JarInfo
 import app.meowney.core.money.Loan
@@ -48,8 +52,8 @@ data class TxnDraft(
     val source: String = "MANUAL",
 )
 
-/** What a save earned, so the UI can show it. */
-data class SaveResult(val txnId: Long, val coins: Int)
+/** What a save earned, so the UI can show it. [notes] are celebrations (goal milestones). */
+data class SaveResult(val txnId: Long, val coins: Int, val notes: List<String> = emptyList())
 
 /**
  * All money writes. Each operation is one database transaction, so the ledger is never
@@ -57,6 +61,7 @@ data class SaveResult(val txnId: Long, val coins: Int)
  */
 class MoneyRepository(private val db: MeowneyDb) {
     private val dao = db.money()
+    private val plans = db.plans()
 
     // ------------------------------------------------------------------ reads
 
@@ -183,21 +188,102 @@ class MoneyRepository(private val db: MeowneyDb) {
         } else {
             dao.insertTxn(base)
         }
-        dao.insertEntries(entries(id).map { it.toEntity(id, d.date) })
+        val written = entries(id)
+        dao.insertEntries(written.map { it.toEntity(id, d.date) })
+        val notes = mutableListOf<String>()
         var coins = 0
+        if (type == "INCOME") {
+            plans.deleteGoalEntriesOf(id)
+            coins += fillGoalsFromIncome(id, written, d.date, notes)
+        }
         if (editing == null) {
             val today = LocalDate.now()
             val day = today.toEpochDay()
             val first = dao.countOnNow(day) == 1 && d.date == today
             val rewards = RewardRules.onLog(dao.coinsOn(day, RewardRules.R_LOG), first) + listOfNotNull(extraReward)
             dao.insertCoins(rewards.map { it.toEntity(today, id) })
-            coins = rewards.sumOf { it.delta }
+            coins += rewards.sumOf { it.delta }
         }
-        SaveResult(id, coins)
+        SaveResult(id, coins, notes)
+    }
+
+    // ------------------------------------------------------------------ goals
+
+    val goals = plans.goals()
+    fun goalEntries(goalId: Long) = plans.goalEntries(goalId)
+    val goalTotalsByJar: Flow<Map<Long, Long>> = plans.goalTotalsByJarFlow().map { r -> r.associate { it.id to it.total } }
+
+    suspend fun goalTotalsByJarNow(): Map<Long, Long> = plans.goalTotalsByJar().associate { it.id to it.total }
+
+    suspend fun saveGoal(g: GoalEntity): Long = if (g.id == 0L) plans.insertGoal(g) else g.id.also { plans.updateGoal(g) }
+
+    suspend fun goal(id: Long) = plans.goal(id)
+
+    suspend fun archiveGoal(id: Long) = plans.goal(id)?.let { plans.updateGoal(it.copy(archived = true)) }
+
+    /** Jar money not held by any goal. */
+    suspend fun freeInJar(jarId: Long): Long = (balancesNow()[jarId] ?: 0) - (goalTotalsByJarNow()[jarId] ?: 0)
+
+    /** "Nạp thêm" (amount > 0) or "Rút" (amount < 0). Notes are milestone celebrations. */
+    suspend fun fundGoal(goalId: Long, amount: Long, today: LocalDate = LocalDate.now()): SaveResult = db.withTransaction {
+        val goal = plans.goalsNow().first { it.id == goalId }
+        plans.insertGoalEntries(
+            listOf(GoalEntryEntity(goalId = goalId, amount = amount, kind = if (amount >= 0) "MANUAL" else "WITHDRAW", day = today.toEpochDay())),
+        )
+        val notes = mutableListOf<String>()
+        val coins = rewardMilestones(goal, goal.saved, goal.saved + amount, today, notes)
+        SaveResult(0, coins, notes)
+    }
+
+    /** "Mua rồi!": spend the goal's money from its jar and close the goal. */
+    suspend fun buyGoal(goalId: Long, walletId: Long, categoryId: Long?, today: LocalDate = LocalDate.now()): SaveResult = db.withTransaction {
+        val goal = plans.goalsNow().first { it.id == goalId }
+        val now = System.currentTimeMillis()
+        val id = dao.insertTxn(
+            TxnEntity(
+                type = "EXPENSE", amount = goal.saved, walletId = walletId, categoryId = categoryId, jarId = goal.jarId,
+                note = goal.name, occurredAt = now, day = today.toEpochDay(), createdAt = now, source = "GOAL",
+            ),
+        )
+        dao.insertEntries(listOf(JarEntryEntity(jarId = goal.jarId, amount = -goal.saved, kind = EntryKind.SPEND.name, txnId = id, day = today.toEpochDay())))
+        plans.insertGoalEntries(listOf(GoalEntryEntity(goalId = goalId, amount = -goal.saved, kind = "WITHDRAW", txnId = id, day = today.toEpochDay())))
+        plans.goal(goalId)?.let { plans.updateGoal(it.copy(achievedDay = today.toEpochDay(), archived = true)) }
+        SaveResult(id, 0, listOf("Sen mua được ${goal.name} rồi! Trẫm tự hào ghê."))
+    }
+
+    /** Splits an income's share of each savings jar into that jar's open goals. */
+    private suspend fun fillGoalsFromIncome(txnId: Long, entries: List<EntryDraft>, date: LocalDate, notes: MutableList<String>): Int {
+        val open = plans.goalsNow().filter { it.achievedDay == null && it.autoPercent > 0 }
+        if (open.isEmpty()) return 0
+        var coins = 0
+        for ((jarId, goals) in open.groupBy { it.jarId }) {
+            val share = entries.filter { it.jarId == jarId }.sumOf { it.amount }
+            val parts = GoalEngine.autoShares(share, goals.map { it.id to it.autoPercent })
+            if (parts.isEmpty()) continue
+            plans.insertGoalEntries(
+                parts.map { (g, v) -> GoalEntryEntity(goalId = g, amount = v, kind = "AUTO", txnId = txnId, day = date.toEpochDay()) },
+            )
+            for (g in goals) coins += rewardMilestones(g, g.saved, g.saved + (parts[g.id] ?: 0), LocalDate.now(), notes)
+        }
+        return coins
+    }
+
+    private suspend fun rewardMilestones(goal: GoalRow, before: Long, after: Long, today: LocalDate, notes: MutableList<String>): Int {
+        var coins = 0
+        for (m in GoalEngine.crossed(goal.target, before, after)) {
+            val reason = "goal_${goal.id}_$m"
+            if (dao.countReason(reason) > 0) continue
+            val c = GoalEngine.MILESTONE_COINS.getValue(m)
+            dao.insertCoins(listOf(CoinEntryEntity(delta = c, reason = reason, refId = goal.id, day = today.toEpochDay())))
+            coins += c
+            notes += if (m == 100) "Mục tiêu ${goal.name} đủ tiền rồi! Sen giỏi quá. +$c xu" else "${goal.name} đạt $m%! +$c xu"
+        }
+        return coins
     }
 
     suspend fun deleteTxn(id: Long) = db.withTransaction {
         dao.deleteEntriesOf(id)
+        plans.deleteGoalEntriesOf(id)
         dao.deleteTxn(id)
     }
 

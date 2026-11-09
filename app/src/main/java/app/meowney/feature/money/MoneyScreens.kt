@@ -29,6 +29,8 @@ import androidx.lifecycle.viewModelScope
 import app.meowney.AppContainer
 import app.meowney.core.data.JarState
 import app.meowney.core.data.WalletState
+import app.meowney.core.db.GoalEntity
+import app.meowney.core.db.GoalRow
 import app.meowney.core.db.JarEntryEntity
 import app.meowney.core.db.TxnRow
 import app.meowney.core.format.formatVnd
@@ -67,12 +69,15 @@ data class MoneyState(
     val jars: List<JarState> = emptyList(),
     val loans: List<Loan> = emptyList(),
     val txns: List<TxnRow> = emptyList(),
+    val goals: List<GoalRow> = emptyList(),
 )
 
-class MoneyViewModel(c: AppContainer) : ViewModel() {
-    val state: StateFlow<MoneyState> = combine(c.money.jarStates, c.money.loans, c.money.recentTxns(400)) { j, l, t ->
-        MoneyState(j, l, t)
+class MoneyViewModel(private val c: AppContainer) : ViewModel() {
+    val state: StateFlow<MoneyState> = combine(c.money.jarStates, c.money.loans, c.money.recentTxns(400), c.money.goals) { j, l, t, g ->
+        MoneyState(j, l, t, g)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MoneyState())
+
+    fun saveGoal(g: GoalEntity) = viewModelScope.launch { c.money.saveGoal(g) }
 }
 
 private const val TRANSFER_ICON = 9 // floppy with arrow: money moving between wallets
@@ -87,8 +92,10 @@ fun MoneyScreen(
     onWallets: () -> Unit,
     onTxn: (Long) -> Unit,
     onAdd: () -> Unit,
+    onGoal: (Long) -> Unit,
 ) {
     val s by vm.state.collectAsState()
+    var newGoal by remember { mutableStateOf(false) }
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val names = s.jars.associate { it.jar.id to it.jar.name }
@@ -115,6 +122,7 @@ fun MoneyScreen(
                     )
                 }
             }
+            item { GoalsSection(s.goals, s.jars, onGoal = onGoal, onNew = { newGoal = true }) }
             if (days.isEmpty()) {
                 item { PixelText("Chưa có giao dịch nào. Bấm + để ghi khoản đầu tiên.", style = type.body, color = Pal.Paper) }
             }
@@ -131,6 +139,15 @@ fun MoneyScreen(
                 items(rows, key = { it.id }) { t -> TxnLine(t, onClick = { onTxn(t.id) }) }
             }
         }
+    }
+
+    if (newGoal) {
+        GoalEditDialog(
+            initial = null,
+            savingsJars = s.jars.filter { it.code.isSavings },
+            onSave = { vm.saveGoal(it); newGoal = false },
+            onDismiss = { newGoal = false },
+        )
     }
 }
 

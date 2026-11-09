@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.StateFlow
 /** Something the cat should react to the next time the home screen is shown. */
 sealed interface CatEvent {
     data class Fed(val label: String, val amount: Long, val coins: Int) : CatEvent
-    data class Poured(val amount: Long, val coins: Int) : CatEvent
+    data class Poured(val amount: Long, val coins: Int, val notes: List<String> = emptyList()) : CatEvent
     data class Coins(val coins: Int, val text: String) : CatEvent
     data class Say(val text: String) : CatEvent
 }

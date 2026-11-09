@@ -5,6 +5,7 @@ import app.meowney.core.CatEvent
 import app.meowney.core.data.SaveResult
 import app.meowney.core.data.TxnDraft
 import app.meowney.core.money.BorrowPlan
+import app.meowney.core.money.GoalEngine
 import app.meowney.core.money.MoneyEngine
 import app.meowney.core.sound.Sfx
 
@@ -26,7 +27,8 @@ class ExpenseSaver(private val c: AppContainer) {
     /** Null when the jar can pay by itself (save right away), else what the borrow dialog shows. */
     suspend fun prepare(draft: TxnDraft, editing: Long?, label: String): PendingExpense? {
         val jarId = draft.jarId ?: return null
-        val balances = c.money.balancesNow(excludingTxn = editing)
+        // savings jars only lend what their goals do not hold
+        val balances = GoalEngine.freeBalances(c.money.balancesNow(excludingTxn = editing), c.money.goalTotalsByJarNow())
         val shortfall = MoneyEngine.shortfall(draft.amount, jarId, balances)
         if (shortfall == 0L) return null
         val jars = c.money.jarInfos()

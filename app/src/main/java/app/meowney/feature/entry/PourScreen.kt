@@ -150,7 +150,7 @@ class PourViewModel(private val c: AppContainer, val draft: TxnDraft, private va
         val entries = MoneyEngine.allocateIncome(draft.amount, c.money.jarInfos(), s.loans, byId)
         val result = c.money.addIncome(draft, entries, editing)
         c.sfx.play(Sfx.Sound.Gold)
-        if (editing == null) c.events.post(CatEvent.Poured(draft.amount, result.coins))
+        if (editing == null) c.events.post(CatEvent.Poured(draft.amount, result.coins, result.notes))
         done.emit(Unit)
     }
 }
