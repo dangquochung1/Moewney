@@ -51,6 +51,7 @@ import app.meowney.core.habit.PartOfDay
 import app.meowney.core.habit.Schedule
 import app.meowney.core.money.AmountInput
 import app.meowney.core.money.JarCode
+import app.meowney.core.notify.HabitReminder
 import app.meowney.core.ui.ButtonLook
 import app.meowney.core.ui.LocalPixelMetrics
 import app.meowney.core.ui.LocalPixelType
@@ -191,11 +192,13 @@ class HabitEditViewModel(private val c: AppContainer, private val id: Long) : Vi
 
     fun save(h: HabitEntity) = viewModelScope.launch {
         c.habits.save(h)
+        HabitReminder.schedule(c.context)
         closed.value = true
     }
 
     fun archive() = viewModelScope.launch {
         c.habits.archive(id)
+        HabitReminder.schedule(c.context)
         closed.value = true
     }
 }

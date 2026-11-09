@@ -45,6 +45,8 @@ import java.time.LocalDate
 /** Intent extra telling MainActivity to open the entry screen. */
 const val EXTRA_OPEN = "open"
 const val OPEN_ENTRY = "entry"
+const val OPEN_POMODORO = "pomodoro"
+const val EXTRA_HABIT = "habit"
 
 private fun entryIntent(context: Context) =
     Intent(context, MainActivity::class.java).putExtra(EXTRA_OPEN, OPEN_ENTRY).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)

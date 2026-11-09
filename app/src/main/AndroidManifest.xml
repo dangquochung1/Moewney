@@ -25,6 +25,10 @@
         </activity>
 
         <receiver
+            android:name=".core.notify.HabitReminder$ActionReceiver"
+            android:exported="false" />
+
+        <receiver
             android:name=".widget.MeowneySmallWidgetReceiver"
             android:exported="true"
             android:label="Meowney nhỏ">

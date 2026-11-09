@@ -87,7 +87,12 @@ object EveningReminder {
                 val today = LocalDate.now()
                 val logged = c.money.countOn(today).first() > 0
                 val claimed = c.money.noSpendClaims(today).first() > 0
-                if (!logged && !claimed) notify(applicationContext, CatLines.evening())
+                val open = c.habits.todayNow(today).filter { !it.done }.map { it.habit.name }
+                val habits = if (open.isEmpty()) "" else "Còn ${open.size} thói quen chưa xong: ${open.joinToString(", ")}."
+                when {
+                    !logged && !claimed -> notify(applicationContext, listOf(CatLines.evening(), habits).filter { it.isNotEmpty() }.joinToString(" "))
+                    habits.isNotEmpty() -> notify(applicationContext, "Sen ơi, $habits")
+                }
             }
             schedule(applicationContext, settings.reminderMinute, settings.reminderOn)
             return Result.success()

@@ -86,6 +86,16 @@ class HabitRepository(private val db: MeowneyDb, private val money: MoneyReposit
         if (log.status == "DONE") undone(h, log.copy(value = 0), today) else done(h, log.copy(value = maxOf(1, h.target)), today)
     }
 
+    /** Marks a habit done if it is not yet (a notification's "Xong": never undoes). */
+    suspend fun complete(habitId: Long, today: LocalDate = LocalDate.now()): HabitResult = db.withTransaction {
+        val h = dao.habit(habitId) ?: return@withTransaction HabitResult()
+        val log = logOf(h, today)
+        if (log.status == "DONE") HabitResult() else done(h, log.copy(value = maxOf(log.value, h.target)), today)
+    }
+
+    /** Today's due habits, read once (reminders, evening message). */
+    suspend fun todayNow(today: LocalDate = LocalDate.now()) = dueToday(today)
+
     /** Đếm số lượng: +[delta] (may be negative) or exactly [value]. */
     suspend fun count(habitId: Long, delta: Int = 1, value: Int? = null, today: LocalDate = LocalDate.now()): HabitResult = db.withTransaction {
         val h = dao.habit(habitId) ?: return@withTransaction HabitResult()

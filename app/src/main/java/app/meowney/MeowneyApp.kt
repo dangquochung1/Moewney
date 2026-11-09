@@ -24,7 +24,7 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.launch
 
 /** Manual dependency injection: one of each, created on first use. */
-class AppContainer(private val context: Context) {
+class AppContainer(val context: Context) {
     val db: MeowneyDb by lazy { MeowneyDb.open(context) }
     val money: MoneyRepository by lazy { MoneyRepository(db) }
     val reports: Reports by lazy { Reports(db) }

@@ -25,6 +25,9 @@ import androidx.navigation.toRoute
 import app.meowney.core.data.TxnDraft
 import app.meowney.core.notify.EveningReminder
 import app.meowney.core.notify.MorningReminder
+import app.meowney.core.notify.HabitReminder
+import app.meowney.widget.OPEN_POMODORO
+import app.meowney.widget.EXTRA_HABIT
 import app.meowney.core.sprite.SpriteAtlas
 import app.meowney.core.ui.LocalIcons
 import app.meowney.core.ui.MeowneyTheme
@@ -146,6 +149,9 @@ class MainActivity : ComponentActivity() {
                 EveningReminder.schedule(this@MainActivity, settings.reminderMinute, settings.reminderOn)
                 MorningReminder.createChannel(this@MainActivity)
                 MorningReminder.schedule(this@MainActivity)
+                HabitReminder.createChannel(this@MainActivity)
+                HabitReminder.schedule(this@MainActivity)
+                HabitReminder.scheduleClose(this@MainActivity)
                 GameAssets(
                     sprites = c.sprites,
                     corner = RoomAssets.load(assets),
