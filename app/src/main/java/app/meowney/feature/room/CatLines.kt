@@ -61,4 +61,6 @@ object CatLines {
 
     fun sleepToggle(asleep: Boolean) =
         if (asleep) "Trẫm đi ngủ đây... zZ (giữ lâu lần nữa để gọi trẫm dậy)" else "Ai đánh thức trẫm đấy? Hừm."
+
+    fun backup(days: Int) = "Sen ơi, $days ngày chưa sao lưu rồi. Lỡ mất máy là mất hết sổ đó!"
 }

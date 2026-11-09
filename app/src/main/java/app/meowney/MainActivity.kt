@@ -62,6 +62,17 @@ import app.meowney.feature.settings.SettingsViewModel
 import app.meowney.feature.settings.XiaomiGuideScreen
 import app.meowney.feature.uikit.UiKitScreen
 import app.meowney.widget.EXTRA_OPEN
+import app.meowney.core.data.Settings
+import app.meowney.core.data.todaySnapshot
+import app.meowney.core.format.formatVnd
+import app.meowney.core.ui.Zoom
+import app.meowney.feature.room.WakeIntro
+import app.meowney.feature.room.wakeGreeting
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import java.time.LocalTime
 import app.meowney.widget.OPEN_ENTRY
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -76,7 +87,12 @@ class GameAssets(
     val icons: ImageBitmap,
     val pixelTypeface: Typeface,
     val onboarded: Boolean,
+    /** Null = no intro (onboarding shows instead). */
+    val intro: IntroPlan?,
 )
+
+/** [full] = the first open of the day: the cat wakes up. */
+class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 
 @Serializable object HomeRoute
 @Serializable object OnboardingRoute
@@ -127,6 +143,7 @@ class MainActivity : ComponentActivity() {
                     icons = c.icons,
                     pixelTypeface = c.typeface,
                     onboarded = settings.onboarded,
+                    intro = introPlan(c, settings, fromWidget = openRequest != null),
                 )
             }
         }
@@ -135,11 +152,27 @@ class MainActivity : ComponentActivity() {
             val game = loaded ?: return@setContent
             MeowneyTheme(game.sprites) {
                 CompositionLocalProvider(LocalIcons provides game.icons) {
-                    App(game, c, openRequest) { openRequest = null }
+                    Box(Modifier.fillMaxSize()) {
+                        App(game, c, openRequest) { openRequest = null }
+                        var intro by remember { mutableStateOf(game.intro) }
+                        intro?.let { plan ->
+                            WakeIntro(plan.full, plan.catColor, plan.greeting, onDone = { intro = null })
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+private suspend fun introPlan(c: AppContainer, settings: Settings, fromWidget: Boolean): IntroPlan? {
+    if (!settings.onboarded) return null
+    val today = LocalDate.now().toEpochDay()
+    val full = !fromWidget && settings.lastIntroDay != today
+    if (full) c.settings.markIntro(today)
+    val left = if (full) runCatching { todaySnapshot(c).left }.getOrNull() else null
+    val greeting = wakeGreeting(LocalTime.now().hour, settings.catName, left, ::formatVnd)
+    return IntroPlan(full, settings.catColor, greeting)
 }
 
 @androidx.compose.runtime.Composable
@@ -160,7 +193,14 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
             if (pending != null) nav.navigate(ReportRoute(pending.code())) { launchSingleTop = true }
         }
     }
-    NavHost(nav, startDestination = if (game.onboarded) HomeRoute else OnboardingRoute) {
+    NavHost(
+        nav,
+        startDestination = if (game.onboarded) HomeRoute else OnboardingRoute,
+        enterTransition = Zoom.enter,
+        exitTransition = Zoom.exit,
+        popEnterTransition = Zoom.popEnter,
+        popExitTransition = Zoom.popExit,
+    ) {
         composable<OnboardingRoute> {
             val vm: OnboardingViewModel = viewModel(factory = vmFactory { OnboardingViewModel(c) })
             OnboardingScreen(vm, game.pixelTypeface, onFinished = {
@@ -188,6 +228,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
                         onNoSpend = vm::claimNoSpend,
                         onPayBill = { bill, amount -> vm.payBill(bill, amount) },
                         onSkipBill = { vm.skipBill(it) },
+                        onBackupNudged = vm::markBackupNudge,
                     ),
                 )
             }

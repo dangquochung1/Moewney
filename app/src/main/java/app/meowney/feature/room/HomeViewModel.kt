@@ -46,6 +46,10 @@ data class HomeState(
     val billsDue: List<RecurringEntity> = emptyList(),
     /** Money set aside for bills due before the period ends. */
     val reserved: Long = 0,
+    /** Days since the last backup when it is 7 or more, else 0. */
+    val backupDays: Int = 0,
+    /** The cat already reminded about the backup today. */
+    val backupNudged: Boolean = false,
 )
 
 private data class DayNumbers(val spent: Long, val count: Int, val noSpendClaims: Int, val allocated: Long)
@@ -70,6 +74,9 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
         .flatMapLatest { (day, settings, jars) ->
             val spendIds = jars.filter { it.code == JarCode.NEC || it.code == JarCode.PLAY }.map { it.jar.id }
             val period = MoneyEngine.period(day, settings.payday)
+            // never backed up: count from the first entry
+            val backupSince = settings.lastBackupDay ?: c.db.reports().firstDay() ?: day.toEpochDay()
+            val backupDays = (day.toEpochDay() - backupSince).toInt().takeIf { it >= 7 } ?: 0
             val dayNumbers = combine(
                 money.spentOn(day, spendIds),
                 money.countOn(day),
@@ -91,7 +98,11 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                 val active = bills.filter { it.active }
                 val reserved = active.filter { it.jarId in spendIds && it.nextDueDay <= period.end.toEpochDay() }.sumOf { it.amount }
                 build(day, settings.catName, settings.catColor, period, jars, spendIds, n, t, coins, loans.isNotEmpty(), reserved)
-                    .copy(billsDue = active.filter { it.nextDueDay <= day.toEpochDay() })
+                    .copy(
+                        billsDue = active.filter { it.nextDueDay <= day.toEpochDay() },
+                        backupDays = backupDays,
+                        backupNudged = settings.lastBackupNudgeDay == day.toEpochDay(),
+                    )
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
@@ -183,6 +194,8 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
     fun togglePin(t: QuickTemplate) = viewModelScope.launch {
         if (t.pinned && t.id != null) money.unpinTemplate(t.id) else money.pinTemplate(t.label, t.amount, t.categoryId)
     }
+
+    fun markBackupNudge() = viewModelScope.launch { c.settings.markBackupNudge(LocalDate.now().toEpochDay()) }
 
     fun claimNoSpend() = viewModelScope.launch {
         val coins = money.claimNoSpend(LocalDate.now(), state.value.spentToday)

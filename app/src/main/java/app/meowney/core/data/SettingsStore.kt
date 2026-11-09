@@ -22,6 +22,10 @@ data class Settings(
     /** Minutes after midnight, default 21:00. */
     val reminderMinute: Int = 21 * 60,
     val soundOn: Boolean = true,
+    /** Epoch days; null = never. Read-only here, written by the mark* functions. */
+    val lastBackupDay: Long? = null,
+    val lastBackupNudgeDay: Long? = null,
+    val lastIntroDay: Long? = null,
 )
 
 val Context.settingsDataStore by preferencesDataStore(name = "settings")
@@ -36,6 +40,8 @@ class SettingsStore(private val context: Context) {
         val reminderMinute = intPreferencesKey("reminder_minute")
         val soundOn = booleanPreferencesKey("sound_on")
         val lastBackupDay = longPreferencesKey("last_backup_day")
+        val lastBackupNudgeDay = longPreferencesKey("last_backup_nudge_day")
+        val lastIntroDay = longPreferencesKey("last_intro_day")
     }
 
     val flow: Flow<Settings> = context.settingsDataStore.data.map { it.toSettings() }
@@ -59,6 +65,14 @@ class SettingsStore(private val context: Context) {
         context.settingsDataStore.edit { it[K.lastBackupDay] = day }
     }
 
+    suspend fun markBackupNudge(day: Long) {
+        context.settingsDataStore.edit { it[K.lastBackupNudgeDay] = day }
+    }
+
+    suspend fun markIntro(day: Long) {
+        context.settingsDataStore.edit { it[K.lastIntroDay] = day }
+    }
+
     private fun Preferences.toSettings() = Settings(
         onboarded = this[K.onboarded] ?: false,
         catName = this[K.catName] ?: "Mít",
@@ -67,5 +81,8 @@ class SettingsStore(private val context: Context) {
         reminderOn = this[K.reminderOn] ?: true,
         reminderMinute = this[K.reminderMinute] ?: (21 * 60),
         soundOn = this[K.soundOn] ?: true,
+        lastBackupDay = this[K.lastBackupDay],
+        lastBackupNudgeDay = this[K.lastBackupNudgeDay],
+        lastIntroDay = this[K.lastIntroDay],
     )
 }

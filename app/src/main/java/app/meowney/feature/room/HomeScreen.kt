@@ -65,6 +65,9 @@ import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelText
 import app.meowney.core.ui.RavenIcon
 import app.meowney.core.ui.SpeechBubble
+import app.meowney.core.ui.ZoomSource
+import app.meowney.core.ui.rememberZoomSource
+import app.meowney.core.ui.zoomSource
 import kotlinx.coroutines.delay
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -81,6 +84,7 @@ class HomeActions(
     val onNoSpend: () -> Unit,
     val onPayBill: (RecurringEntity, Long) -> Unit,
     val onSkipBill: (RecurringEntity) -> Unit,
+    val onBackupNudged: () -> Unit,
 )
 
 @Composable
@@ -102,6 +106,17 @@ fun HomeScreen(
         }
     }
     LaunchedEffect(state.mood) { cat.mood = state.mood }
+    // once a day, a week after the last backup (after the wake-up intro is over)
+    LaunchedEffect(state.backupDays > 0 && !state.backupNudged) {
+        if (state.backupDays > 0 && !state.backupNudged) {
+            delay(4_000)
+            bubble = CatLines.backup(state.backupDays)
+            actions.onBackupNudged()
+        }
+    }
+    val zoomSettings = rememberZoomSource()
+    val zoomMoney = rememberZoomSource()
+    val zoomAdd = rememberZoomSource()
     var paying by remember { mutableStateOf<RecurringEntity?>(null) }
     paying?.let { bill ->
         var amount by remember(bill) { mutableStateOf(AmountInput(bill.amount)) }
@@ -145,7 +160,7 @@ fun HomeScreen(
         val maxWidth = constraints.maxWidth
         val scale = stageScale(maxWidth, constraints.maxHeight, corner.circle.diameter)
         Column(Modifier.fillMaxSize().padding(horizontal = m.unit * 2)) {
-            Hud(state.coins, actions.onSettings)
+            Hud(state.coins, zoomSettings, actions.onSettings)
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
                 CatStage(
                     corner = corner,
@@ -173,9 +188,13 @@ fun HomeScreen(
             ToyRow(
                 typeface = pixelTypeface,
                 jarLevel = state.jarLevel,
+                moneyZoom = zoomMoney,
                 onToy = { toy ->
                     when (toy) {
-                        Toy.Money -> actions.onMoney()
+                        Toy.Money -> {
+                            zoomMoney.mark()
+                            actions.onMoney()
+                        }
                         Toy.Habits -> {
                             cat.play()
                             bubble = CatLines.onToy(toy)
@@ -192,7 +211,15 @@ fun HomeScreen(
                     actions.onPin(t)
                     bubble = if (t.pinned) "Bỏ ghim ${t.label} rồi." else "Ghim ${t.label} ${formatVndShort(t.amount)} lên đầu nha."
                 },
-                onAdd = actions.onAdd,
+                addZoom = zoomAdd,
+                onAdd = {
+                    zoomAdd.mark()
+                    actions.onAdd()
+                },
+                onSettings = {
+                    zoomSettings.mark()
+                    actions.onSettings()
+                },
                 onNoSpend = actions.onNoSpend,
                 onPayBill = { paying = it },
                 onSkipBill = actions.onSkipBill,
@@ -207,7 +234,7 @@ private fun coinsSuffix(coins: Int) = if (coins > 0) " (+$coins xu)" else ""
 // ------------------------------------------------------------------ HUD
 
 @Composable
-private fun Hud(coins: Long, onSettings: () -> Unit) {
+private fun Hud(coins: Long, zoom: ZoomSource, onSettings: () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val atlas = LocalSprites.current
@@ -223,7 +250,13 @@ private fun Hud(coins: Long, onSettings: () -> Unit) {
             )
         }
         Spacer(Modifier.weight(1f))
-        PixelButton(onClick = onSettings, look = ButtonLook.Light, padded = false, modifier = Modifier.size(m.unit * 14)) {
+        PixelButton(
+            onClick = {
+                zoom.mark()
+                onSettings()
+            },
+            look = ButtonLook.Light, padded = false, modifier = Modifier.size(m.unit * 14).zoomSource(zoom),
+        ) {
             RavenIcon(1, scale = m.ui - 1)
         }
         Spacer(Modifier.size(m.unit * 2))
@@ -258,7 +291,7 @@ private fun CoinIcon(atlas: SpriteAtlas) {
 // ------------------------------------------------------------------ toys
 
 @Composable
-private fun ToyRow(typeface: Typeface, jarLevel: Float, onToy: (Toy) -> Unit) {
+private fun ToyRow(typeface: Typeface, jarLevel: Float, moneyZoom: ZoomSource, onToy: (Toy) -> Unit) {
     val m = LocalPixelMetrics.current
     val atlas = LocalSprites.current
     val today = LocalDate.now()
@@ -275,19 +308,22 @@ private fun ToyRow(typeface: Typeface, jarLevel: Float, onToy: (Toy) -> Unit) {
         verticalAlignment = Alignment.Bottom,
     ) {
         for (toy in Toy.entries) {
-            ToyButton(toy, images.getValue(toy), scale, tallest) { onToy(toy) }
+            ToyButton(
+                toy, images.getValue(toy), scale, tallest,
+                modifier = if (toy == Toy.Money) Modifier.zoomSource(moneyZoom) else Modifier,
+            ) { onToy(toy) }
         }
     }
 }
 
 @Composable
-private fun ToyButton(toy: Toy, image: ImageBitmap, scale: Int, tallest: Int, onClick: () -> Unit) {
+private fun ToyButton(toy: Toy, image: ImageBitmap, scale: Int, tallest: Int, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val source = remember { MutableInteractionSource() }
     val pressed by source.collectIsPressedAsState()
     Column(
-        Modifier.clickable(interactionSource = source, indication = null, role = Role.Button, onClick = onClick),
+        modifier.clickable(interactionSource = source, indication = null, role = Role.Button, onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(Modifier.height(m.dp(tallest * scale)), contentAlignment = Alignment.BottomCenter) {
@@ -317,7 +353,9 @@ private fun TodayPanel(
     modifier: Modifier,
     onQuick: (QuickTemplate) -> Unit,
     onPin: (QuickTemplate) -> Unit,
+    addZoom: ZoomSource,
     onAdd: () -> Unit,
+    onSettings: () -> Unit,
     onNoSpend: () -> Unit,
     onPayBill: (RecurringEntity) -> Unit,
     onSkipBill: (RecurringEntity) -> Unit,
@@ -368,8 +406,13 @@ private fun TodayPanel(
                     }
                 }
             }
-            PixelButton(onClick = onAdd, modifier = Modifier.fillMaxWidth()) {
+            PixelButton(onClick = onAdd, modifier = Modifier.fillMaxWidth().zoomSource(addZoom)) {
                 PixelText("+ Ghi chi tiêu", style = type.title, color = Pal.Cream)
+            }
+            if (state.backupDays > 0) {
+                PixelButton(onClick = onSettings, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
+                    PixelText("Sao lưu dữ liệu (${state.backupDays} ngày chưa lưu)", style = type.bodyBold, color = Pal.Ink)
+                }
             }
             if (state.canClaimNoSpend) {
                 PixelButton(onClick = onNoSpend, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
