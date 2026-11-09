@@ -322,6 +322,32 @@ class MoneyRepository(private val db: MeowneyDb) {
         SaveResult(id, 0, listOf("Sen mua được ${goal.name} rồi! Trẫm tự hào ghê."))
     }
 
+    /**
+     * A habit's money link: moves [amount] from [fromJar] into a goal (inside its jar) or a jar,
+     * as one JAR_MOVE transaction so it can be undone. Wallets do not change. Returns null
+     * when the source jar has not got that much (savings jars only lend their free part).
+     */
+    suspend fun habitMove(label: String, amount: Long, fromJar: Long, toJar: Long?, goalId: Long?, day: LocalDate): SaveResult? = db.withTransaction {
+        val goal = goalId?.let { id -> plans.goalsNow().firstOrNull { it.id == id && it.achievedDay == null } }
+        val target = goal?.jarId ?: toJar ?: return@withTransaction null
+        val jar = dao.jarsNow().firstOrNull { it.id == fromJar } ?: return@withTransaction null
+        val available = if (jar.isSavings) freeInJar(fromJar) else balancesNow()[fromJar] ?: 0
+        if (amount <= 0 || available < amount) return@withTransaction null
+        val wallet = defaultWalletId() ?: return@withTransaction null
+        val now = System.currentTimeMillis()
+        val id = dao.insertTxn(
+            TxnEntity(type = "JAR_MOVE", amount = amount, walletId = wallet, note = label, occurredAt = occurredAt(day), day = day.toEpochDay(), createdAt = now, source = "HABIT"),
+        )
+        if (fromJar != target) dao.insertEntries(MoneyEngine.moveEntries(fromJar, target, amount).map { it.toEntity(id, day) })
+        val notes = mutableListOf<String>()
+        var coins = 0
+        if (goal != null) {
+            plans.insertGoalEntries(listOf(GoalEntryEntity(goalId = goal.id, amount = amount, kind = "MANUAL", txnId = id, day = day.toEpochDay())))
+            coins = rewardMilestones(goal, goal.saved, goal.saved + amount, LocalDate.now(), notes)
+        }
+        SaveResult(id, coins, notes)
+    }
+
     /** Splits an income's share of each savings jar into that jar's open goals. */
     private suspend fun fillGoalsFromIncome(txnId: Long, entries: List<EntryDraft>, date: LocalDate, notes: MutableList<String>): Int {
         val open = plans.goalsNow().filter { it.achievedDay == null && it.autoPercent > 0 }

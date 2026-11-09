@@ -45,6 +45,12 @@ import app.meowney.feature.money.MoneyScreen
 import app.meowney.feature.money.RecurringScreen
 import app.meowney.feature.money.RecurringViewModel
 import app.meowney.feature.money.ReportScreen
+import app.meowney.feature.habit.HabitDetailScreen
+import app.meowney.feature.habit.HabitDetailViewModel
+import app.meowney.feature.habit.HabitEditScreen
+import app.meowney.feature.habit.HabitEditViewModel
+import app.meowney.feature.habit.HabitsScreen
+import app.meowney.feature.habit.HabitsViewModel
 import app.meowney.feature.money.ReportViewModel
 import app.meowney.core.data.code
 import app.meowney.feature.money.MoneyViewModel
@@ -104,6 +110,9 @@ class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 @Serializable object DebtsRoute
 @Serializable object RecurringRoute
 @Serializable data class ReportRoute(val yyyymm: Int = -1)
+@Serializable object HabitsRoute
+@Serializable data class HabitRoute(val id: Long)
+@Serializable data class HabitEditRoute(val id: Long = -1)
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -229,6 +238,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
                         onPayBill = { bill, amount -> vm.payBill(bill, amount) },
                         onSkipBill = { vm.skipBill(it) },
                         onBackupNudged = vm::markBackupNudge,
+                        onHabits = { nav.navigate(HabitsRoute) },
                     ),
                 )
             }
@@ -269,6 +279,25 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
                 onRecurring = { nav.navigate(RecurringRoute) },
                 onReport = { nav.navigate(ReportRoute()) },
             )
+        }
+        composable<HabitsRoute> {
+            val vm: HabitsViewModel = viewModel(factory = vmFactory { HabitsViewModel(c) })
+            HabitsScreen(
+                vm, onBack = back,
+                onNew = { nav.navigate(HabitEditRoute()) },
+                onOpen = { nav.navigate(HabitRoute(it)) },
+                onPomodoro = { },
+            )
+        }
+        composable<HabitRoute> { entry ->
+            val id = entry.toRoute<HabitRoute>().id
+            val vm: HabitDetailViewModel = viewModel(factory = vmFactory { HabitDetailViewModel(c, id) })
+            HabitDetailScreen(vm, onBack = back, onEdit = { nav.navigate(HabitEditRoute(id)) })
+        }
+        composable<HabitEditRoute> { entry ->
+            val id = entry.toRoute<HabitEditRoute>().id
+            val vm: HabitEditViewModel = viewModel(factory = vmFactory { HabitEditViewModel(c, id) })
+            HabitEditScreen(vm, onBack = back, onDone = { nav.popBackStack() })
         }
         composable<ReportRoute> { entry ->
             val month = entry.toRoute<ReportRoute>().yyyymm

@@ -85,6 +85,7 @@ class HomeActions(
     val onPayBill: (RecurringEntity, Long) -> Unit,
     val onSkipBill: (RecurringEntity) -> Unit,
     val onBackupNudged: () -> Unit,
+    val onHabits: () -> Unit,
 )
 
 @Composable
@@ -116,6 +117,7 @@ fun HomeScreen(
     }
     val zoomSettings = rememberZoomSource()
     val zoomMoney = rememberZoomSource()
+    val zoomHabits = rememberZoomSource()
     val zoomAdd = rememberZoomSource()
     var paying by remember { mutableStateOf<RecurringEntity?>(null) }
     paying?.let { bill ->
@@ -189,6 +191,7 @@ fun HomeScreen(
                 typeface = pixelTypeface,
                 jarLevel = state.jarLevel,
                 moneyZoom = zoomMoney,
+                habitsZoom = zoomHabits,
                 onToy = { toy ->
                     when (toy) {
                         Toy.Money -> {
@@ -196,8 +199,8 @@ fun HomeScreen(
                             actions.onMoney()
                         }
                         Toy.Habits -> {
-                            cat.play()
-                            bubble = CatLines.onToy(toy)
+                            zoomHabits.mark()
+                            actions.onHabits()
                         }
                         else -> bubble = CatLines.onToy(toy)
                     }
@@ -291,7 +294,7 @@ private fun CoinIcon(atlas: SpriteAtlas) {
 // ------------------------------------------------------------------ toys
 
 @Composable
-private fun ToyRow(typeface: Typeface, jarLevel: Float, moneyZoom: ZoomSource, onToy: (Toy) -> Unit) {
+private fun ToyRow(typeface: Typeface, jarLevel: Float, moneyZoom: ZoomSource, habitsZoom: ZoomSource, onToy: (Toy) -> Unit) {
     val m = LocalPixelMetrics.current
     val atlas = LocalSprites.current
     val today = LocalDate.now()
@@ -310,7 +313,11 @@ private fun ToyRow(typeface: Typeface, jarLevel: Float, moneyZoom: ZoomSource, o
         for (toy in Toy.entries) {
             ToyButton(
                 toy, images.getValue(toy), scale, tallest,
-                modifier = if (toy == Toy.Money) Modifier.zoomSource(moneyZoom) else Modifier,
+                modifier = when (toy) {
+                    Toy.Money -> Modifier.zoomSource(moneyZoom)
+                    Toy.Habits -> Modifier.zoomSource(habitsZoom)
+                    else -> Modifier
+                },
             ) { onToy(toy) }
         }
     }
