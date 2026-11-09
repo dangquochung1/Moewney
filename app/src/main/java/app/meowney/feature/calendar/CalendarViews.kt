@@ -176,8 +176,10 @@ private fun HourGrid(
                                 drawRect(Color(e.color), Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
                             }
                             Column(Modifier.padding(m.unit)) {
-                                PixelText(e.event.title, style = type.caption, color = Pal.Ink, maxLines = 2)
-                                if (days.size == 1) PixelText(hhmm(start) + "–" + hhmm(end), style = type.caption, color = Pal.Ink)
+                                PixelText(
+                                    if (days.size == 1) "${hhmm(start)}–${hhmm(end)}  ${e.event.title}" else e.event.title,
+                                    style = type.caption, color = Pal.Ink, maxLines = 2,
+                                )
                             }
                         }
                     }
