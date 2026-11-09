@@ -333,7 +333,7 @@ fun PhotoAdder(open: Boolean, onDismiss: () -> Unit, onAdded: (String) -> Unit) 
                 PixelTextButton("Chụp ảnh", onClick = {
                     onDismiss()
                     ctx.container.notesLock.ownTrip()
-                    runCatching { shoot.launch(cameraUri) }
+                    runCatching { shoot.launch(cameraUri) }.onFailure { android.util.Log.w("Meowney", "camera", it) }
                 }, modifier = Modifier.weight(1f))
             }
         }

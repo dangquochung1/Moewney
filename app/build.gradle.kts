@@ -83,6 +83,8 @@ dependencies {
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.androidx.glance.appwidget)
     implementation(libs.androidx.biometric)
+    // biometric 1.1.0 pulls an old fragment that rejects activity-result request codes
+    implementation(libs.androidx.fragment)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.kotlinx.coroutines.android)
 
