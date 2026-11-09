@@ -461,7 +461,9 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         composable<GiftRoute> { entry ->
             val tab = runCatching { GiftTab.valueOf(entry.toRoute<GiftRoute>().tab) }.getOrDefault(GiftTab.WHEEL)
             val vm: GiftViewModel = viewModel(factory = vmFactory { GiftViewModel(c, tab) })
-            GiftScreen(vm, game.corner, onBack = back) { t ->
+            GiftScreen(vm, game.corner, onBack = back, onUseVoucher = { v ->
+                nav.navigate(EntryRoute(amount = v.amount, note = v.name, categoryId = v.categoryId ?: -1))
+            }) { t ->
                 PixelText("${t.label}: sắp có", color = Pal.Paper)
             }
         }

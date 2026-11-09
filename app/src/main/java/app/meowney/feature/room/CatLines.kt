@@ -118,4 +118,8 @@ object CatLines {
     fun adopted(name: String) = "Chào mừng $name về nhà! Vào Tủ đồ để cho bé ra phòng nhé."
 
     fun trophy(name: String, tier: Int) = "Sen mở được cúp \"$name\" bậc ${listOf("Đồng", "Bạc", "Vàng")[tier - 1]}!"
+
+    fun lixi(coins: Int) = "Lì xì đầu năm! Trẫm mừng tuổi Sen $coins xu. An khang thịnh vượng nha."
+
+    fun redeemed(name: String) = "Đổi \"$name\" rồi! Lúc nào thưởng thì bấm Dùng, trẫm ghi sổ giúp."
 }

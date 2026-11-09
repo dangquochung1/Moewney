@@ -94,10 +94,54 @@ class GiftViewModel(val c: AppContainer, initial: GiftTab) : ViewModel() {
     /** A line from the cat at the top of the screen. */
     val message = MutableStateFlow<String?>(null)
 
+    val allHabitsDone: StateFlow<Boolean> = c.habits.today(today).map { h -> h.isNotEmpty() && h.all { it.done } }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, false)
+    val spinsLeft: StateFlow<Int> = kotlinx.coroutines.flow.combine(c.game.spinsUsed(today), allHabitsDone) { used, done ->
+        (app.meowney.core.game.WheelEngine.spinsToday(done) - used).coerceAtLeast(0)
+    }.stateIn(viewModelScope, SharingStarted.Eagerly, 0)
+    val lixiReady = MutableStateFlow(false)
+    val rewards = c.game.rewards.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val vouchers = c.game.vouchers.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val expenseCategories = c.money.categories.map { l -> l.filter { it.type == "EXPENSE" } }
+        .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+
+    suspend fun spin(): Pair<Int, app.meowney.core.game.SpinOutcome>? {
+        val r = c.game.spin(allHabitsDone.value, today) ?: return null
+        checkAchievements()
+        return r
+    }
+
+    fun claimLixi() = viewModelScope.launch {
+        val coins = c.game.claimLixi(today) ?: return@launch
+        lixiReady.value = false
+        c.sfx.play(app.meowney.core.sound.Sfx.Sound.Gold)
+        say(CatLines.lixi(coins))
+    }
+
+    fun saveReward(r: app.meowney.core.db.RealRewardEntity) = viewModelScope.launch { c.game.saveReward(r) }
+    fun archiveReward(r: app.meowney.core.db.RealRewardEntity) = viewModelScope.launch { c.game.archiveReward(r.id) }
+
+    fun redeem(r: app.meowney.core.db.RealRewardEntity) = viewModelScope.launch {
+        when (val res = c.game.redeem(r.id, today)) {
+            is BuyResult.Ok -> {
+                c.sfx.play(app.meowney.core.sound.Sfx.Sound.Success)
+                say(CatLines.redeemed(r.name))
+            }
+            is BuyResult.NotEnough -> say(CatLines.notEnough(res.missing))
+            else -> Unit
+        }
+    }
+
+    fun useVoucher(v: app.meowney.core.db.VoucherEntity) = viewModelScope.launch {
+        c.game.useVoucher(v.id, today)
+        checkAchievements()
+    }
+
     init {
         viewModelScope.launch {
             c.game.ensureStarter(today)
             adoptPrice.value = c.game.adoptPrice()
+            lixiReady.value = app.meowney.core.game.SeasonEngine.lixiDay(today) && !c.game.lixiTakenToday(today)
         }
     }
 
@@ -156,6 +200,7 @@ fun GiftScreen(
     vm: GiftViewModel,
     corner: RoomAssets,
     onBack: () -> Unit,
+    onUseVoucher: (app.meowney.core.db.VoucherEntity) -> Unit,
     content: @Composable (GiftTab) -> Unit,
 ) {
     val tab by vm.tab.collectAsState()
@@ -182,6 +227,8 @@ fun GiftScreen(
             when (tab) {
                 GiftTab.SHOP -> ShopTab(vm)
                 GiftTab.WARDROBE -> WardrobeTab(vm, corner)
+                GiftTab.WHEEL -> WheelTab(vm)
+                GiftTab.REAL -> RewardsTab(vm, onUseVoucher)
                 else -> content(tab)
             }
         }
