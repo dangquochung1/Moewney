@@ -13,6 +13,8 @@ import app.meowney.core.money.MoneyEngine
 import app.meowney.core.money.MonthNumbers
 import app.meowney.core.money.MonthScore
 import app.meowney.core.money.ReportEngine
+import app.meowney.core.notes.MoodEngine
+import app.meowney.core.notes.MoodSummary
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import java.time.LocalDate
@@ -42,6 +44,8 @@ data class ReportData(
     val byCategory: List<Bar>,
     /** Spending per day of the month, index 0 = the 1st. */
     val byDay: List<Long>,
+    /** Diary moods of the month; null when nothing was written (and on cards kept before GĐ5). */
+    val mood: MoodSummary? = null,
 ) {
     val numbers get() = MonthNumbers(days, loggedDays, saved, planned, statDays, daysWithin, hasJarLoans, hasNegativeJar)
     val score: MonthScore get() = ReportEngine.score(numbers)
@@ -146,6 +150,8 @@ class Reports(private val db: MeowneyDb) {
         }
         val perDay = dao.expenseByDay(from, to).associate { it.day to it.total }
         val byDay = (monthStart..monthEnd).map { perDay[it] ?: 0L }
+        val moods = db.notes().diariesNow(from, to).mapNotNull { it.day?.let { d -> it.mood?.let { m -> d to m } } }.toMap()
+        val mood = MoodEngine.month(moods, from, to, emptyMap(), emptyMap()).summary.takeIf { it.written > 0 }
 
         return ReportData(
             yyyymm = month.code(),
@@ -164,6 +170,7 @@ class Reports(private val db: MeowneyDb) {
             byJar = byJar,
             byCategory = byCategory,
             byDay = byDay,
+            mood = mood,
         )
     }
 

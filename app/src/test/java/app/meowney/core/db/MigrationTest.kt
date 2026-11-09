@@ -88,4 +88,19 @@ class MigrationTest {
         }
         db.close()
     }
+
+    @Test fun v4DataSurvivesMigrationTo5() {
+        helper.createDatabase(4).apply {
+            execSQL("INSERT INTO todo (id, title, difficulty, starred, note, repeat, remind, createdAt, sort) VALUES (1, 'Nộp báo cáo', 2, 0, '', 'NONE', 1, 0, 0)")
+            close()
+        }
+        val db = helper.runMigrationsAndValidate(5)
+        db.prepare("SELECT title FROM todo WHERE id = 1").use {
+            it.step()
+            assertThat(it.getText(0)).isEqualTo("Nộp báo cáo")
+        }
+        db.execSQL("INSERT INTO note (id, kind, title, day, mood, prompt, color, pinned, archived, createdAt, updatedAt, search) VALUES (1, 'DIARY', '', 20401, 4, '', 0, 0, 0, 0, 0, '')")
+        db.execSQL("INSERT INTO note_block (noteId, sort, type, text, checked) VALUES (1, 0, 'TEXT', 'Vui', 0)")
+        db.close()
+    }
 }
