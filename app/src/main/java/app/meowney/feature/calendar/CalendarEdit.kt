@@ -143,11 +143,13 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
 
     var title by remember { mutableStateOf(init?.title ?: "") }
     var label by remember { mutableStateOf(init?.labelId) }
-    var allDay by remember { mutableStateOf(init?.allDay ?: (presetMinute == null)) }
+    var allDay by remember { mutableStateOf(init?.allDay ?: false) }
+    // a new event starts at the tapped hour, else the next full hour today, else 9:00
+    val defaultStart = presetMinute ?: if (presetDay == LocalDate.now()) ((java.time.LocalTime.now().hour + 1).coerceAtMost(23) * 60) else 9 * 60
     var startDay by remember { mutableStateOf(init?.startDay?.let(LocalDate::ofEpochDay) ?: presetDay) }
     var endDay by remember { mutableStateOf(init?.endDay?.let(LocalDate::ofEpochDay) ?: presetDay) }
-    var startMinute by remember { mutableStateOf(init?.startMinute ?: presetMinute ?: (9 * 60)) }
-    var endMinute by remember { mutableStateOf(init?.endMinute ?: ((presetMinute ?: (9 * 60)) + 60).coerceAtMost(23 * 60 + 59)) }
+    var startMinute by remember { mutableStateOf(init?.startMinute ?: defaultStart) }
+    var endMinute by remember { mutableStateOf(init?.endMinute ?: (defaultStart + 60).coerceAtMost(23 * 60 + 59)) }
     var repeat by remember { mutableStateOf(init?.rep ?: EventRepeat.NONE) }
     var until by remember { mutableStateOf(init?.repeatUntil?.let(LocalDate::ofEpochDay)) }
     var remind by remember { mutableStateOf(init?.remind ?: true) }
@@ -178,12 +180,12 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
                 PixelChip("Cả ngày", selected = allDay) { allDay = true }
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelText("Từ", style = type.body, color = Pal.Cream, modifier = Modifier.width(m.unit * 10))
+                PixelText("Từ", style = type.body, color = Pal.Cream, maxLines = 1, modifier = Modifier.width(m.unit * 22))
                 PixelTextButton(shortDate(startDay), onClick = { picking = "startDay" }, look = ButtonLook.Light)
                 if (!allDay) PixelTextButton(hhmm(startMinute), onClick = { picking = "startMinute" }, look = ButtonLook.Light)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelText("Đến", style = type.body, color = Pal.Cream, modifier = Modifier.width(m.unit * 10))
+                PixelText("Đến", style = type.body, color = Pal.Cream, maxLines = 1, modifier = Modifier.width(m.unit * 22))
                 PixelTextButton(shortDate(endDay), onClick = { picking = "endDay" }, look = ButtonLook.Light)
                 if (!allDay) PixelTextButton(hhmm(endMinute), onClick = { picking = "endMinute" }, look = ButtonLook.Light)
             }

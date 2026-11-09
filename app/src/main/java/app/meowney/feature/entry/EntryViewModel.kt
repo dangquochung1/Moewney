@@ -52,7 +52,10 @@ sealed interface EntryNav {
     data class Pour(val draft: TxnDraft, val editing: Long?) : EntryNav
 }
 
-class EntryViewModel(private val c: AppContainer, startMode: EntryMode, txnId: Long?) : ViewModel() {
+/** Pre-filled expense (from an event's expected cost). */
+data class EntryPrefill(val amount: Long, val note: String, val categoryId: Long?)
+
+class EntryViewModel(private val c: AppContainer, startMode: EntryMode, txnId: Long?, prefill: EntryPrefill? = null) : ViewModel() {
     private val saver = ExpenseSaver(c)
     private val _state = MutableStateFlow(EntryState(mode = startMode, editing = txnId))
     val state: StateFlow<EntryState> = _state
@@ -89,6 +92,9 @@ class EntryViewModel(private val c: AppContainer, startMode: EntryMode, txnId: L
                     note = old.note,
                     editing = old.id,
                 )
+            }
+            if (old == null && prefill != null && prefill.amount > 0) {
+                s = s.copy(amount = AmountInput(prefill.amount), note = prefill.note, categoryId = prefill.categoryId)
             }
             if (s.mode == EntryMode.TRANSFER && s.toWalletId == null) {
                 s = s.copy(toWalletId = wallets.firstOrNull { !it.archived && it.id != s.walletId }?.id)

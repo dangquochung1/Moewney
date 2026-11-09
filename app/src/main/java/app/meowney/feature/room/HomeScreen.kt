@@ -96,6 +96,7 @@ class HomeActions(
     val onHabitCount: (HabitToday, Int) -> Unit,
     val onHabitFailed: (HabitToday, Boolean) -> Unit,
     val onTimer: (HabitToday) -> Unit,
+    val onCalendar: () -> Unit,
 )
 
 @Composable
@@ -128,6 +129,7 @@ fun HomeScreen(
     val zoomSettings = rememberZoomSource()
     val zoomMoney = rememberZoomSource()
     val zoomHabits = rememberZoomSource()
+    val zoomCalendar = rememberZoomSource()
     val zoomAdd = rememberZoomSource()
     var counting by remember { mutableStateOf<HabitToday?>(null) }
     counting?.let { h ->
@@ -222,6 +224,7 @@ fun HomeScreen(
                 catColor = state.catColor,
                 moneyZoom = zoomMoney,
                 habitsZoom = zoomHabits,
+                calendarZoom = zoomCalendar,
                 onToy = { toy ->
                     when (toy) {
                         Toy.Money -> {
@@ -231,6 +234,10 @@ fun HomeScreen(
                         Toy.Habits -> {
                             zoomHabits.mark()
                             actions.onHabits()
+                        }
+                        Toy.Calendar -> {
+                            zoomCalendar.mark()
+                            actions.onCalendar()
                         }
                         else -> bubble = CatLines.onToy(toy)
                     }
@@ -333,6 +340,7 @@ private fun ToyRow(
     catColor: Int,
     moneyZoom: ZoomSource,
     habitsZoom: ZoomSource,
+    calendarZoom: ZoomSource,
     onToy: (Toy) -> Unit,
 ) {
     val m = LocalPixelMetrics.current
@@ -356,6 +364,7 @@ private fun ToyRow(
                 modifier = when (toy) {
                     Toy.Money -> Modifier.zoomSource(moneyZoom)
                     Toy.Habits -> Modifier.zoomSource(habitsZoom)
+                    Toy.Calendar -> Modifier.zoomSource(calendarZoom)
                     else -> Modifier
                 },
             ) { onToy(toy) }

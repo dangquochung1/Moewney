@@ -27,7 +27,17 @@ import app.meowney.core.notify.EveningReminder
 import app.meowney.core.notify.MorningReminder
 import app.meowney.core.notify.HabitReminder
 import app.meowney.core.notify.PomodoroTimer
+import app.meowney.core.notify.CalendarReminder
 import app.meowney.feature.habit.PomodoroScreen
+import app.meowney.feature.calendar.CalendarActions
+import app.meowney.feature.calendar.CalendarScreen
+import app.meowney.feature.calendar.CalendarViewModel
+import app.meowney.feature.calendar.EventEditScreen
+import app.meowney.feature.calendar.EventEditViewModel
+import app.meowney.feature.calendar.LabelsScreen
+import app.meowney.feature.calendar.LabelsViewModel
+import app.meowney.feature.calendar.TodoEditScreen
+import app.meowney.feature.calendar.TodoEditViewModel
 import app.meowney.feature.habit.PomodoroViewModel
 import app.meowney.widget.OPEN_POMODORO
 import app.meowney.widget.EXTRA_HABIT
@@ -37,6 +47,7 @@ import app.meowney.core.ui.MeowneyTheme
 import app.meowney.core.ui.vmFactory
 import app.meowney.feature.entry.BorrowDialog
 import app.meowney.feature.entry.EntryMode
+import app.meowney.feature.entry.EntryPrefill
 import app.meowney.feature.entry.EntryScreen
 import app.meowney.feature.entry.EntryViewModel
 import app.meowney.feature.entry.PourScreen
@@ -108,7 +119,7 @@ class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 
 @Serializable object HomeRoute
 @Serializable object OnboardingRoute
-@Serializable data class EntryRoute(val mode: String = "EXPENSE", val txnId: Long = -1)
+@Serializable data class EntryRoute(val mode: String = "EXPENSE", val txnId: Long = -1, val amount: Long = 0, val note: String = "", val categoryId: Long = -1)
 @Serializable data class PourRoute(val amount: Long, val walletId: Long, val categoryId: Long, val note: String, val day: Long, val editing: Long = -1)
 @Serializable object MoneyRoute
 @Serializable data class JarRoute(val id: Long)
@@ -120,6 +131,10 @@ class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 @Serializable data class HabitRoute(val id: Long)
 @Serializable data class HabitEditRoute(val id: Long = -1)
 @Serializable data class PomodoroRoute(val habitId: Long = -1)
+@Serializable data class CalendarRoute(val day: Long = Long.MIN_VALUE)
+@Serializable data class EventEditRoute(val id: Long = -1, val day: Long = Long.MIN_VALUE, val minute: Int = -1)
+@Serializable data class TodoEditRoute(val id: Long = -1, val day: Long = Long.MIN_VALUE)
+@Serializable object LabelsRoute
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -162,6 +177,9 @@ class MainActivity : ComponentActivity() {
                 HabitReminder.schedule(this@MainActivity)
                 HabitReminder.scheduleClose(this@MainActivity)
                 PomodoroTimer.createChannels(this@MainActivity)
+                CalendarReminder.createChannel(this@MainActivity)
+                c.calendar.ensureLabels()
+                CalendarReminder.schedule(this@MainActivity)
                 PomodoroTimer.catchUp(this@MainActivity)
                 GameAssets(
                     sprites = c.sprites,
@@ -261,6 +279,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                         onHabitCount = vm::habitCount,
                         onHabitFailed = vm::habitFailed,
                         onTimer = { nav.navigate(PomodoroRoute(it.habit.id)) },
+                        onCalendar = { nav.navigate(CalendarRoute()) },
                     ),
                 )
             }
@@ -269,7 +288,10 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         composable<EntryRoute> { entry ->
             val r = entry.toRoute<EntryRoute>()
             val vm: EntryViewModel = viewModel(factory = vmFactory {
-                EntryViewModel(c, EntryMode.valueOf(r.mode), r.txnId.takeIf { it >= 0 })
+                EntryViewModel(
+                    c, EntryMode.valueOf(r.mode), r.txnId.takeIf { it >= 0 },
+                    EntryPrefill(r.amount, r.note, r.categoryId.takeIf { it >= 0 }).takeIf { r.amount > 0 },
+                )
             })
             EntryScreen(vm, onBack = back, onDone = back, onPour = { p ->
                 nav.navigate(
@@ -310,6 +332,48 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                 onOpen = { nav.navigate(HabitRoute(it)) },
                 onPomodoro = { nav.navigate(PomodoroRoute()) },
             )
+        }
+        composable<CalendarRoute> { entry ->
+            val day = entry.toRoute<CalendarRoute>().day
+            val vm: CalendarViewModel = viewModel(factory = vmFactory {
+                CalendarViewModel(c, if (day == Long.MIN_VALUE) LocalDate.now() else LocalDate.ofEpochDay(day))
+            })
+            CalendarScreen(
+                vm,
+                CalendarActions(
+                    onBack = back,
+                    onNewEvent = { d, minute -> nav.navigate(EventEditRoute(day = d.toEpochDay(), minute = minute ?: -1)) },
+                    onNewTodo = { d -> nav.navigate(TodoEditRoute(day = d?.toEpochDay() ?: Long.MIN_VALUE)) },
+                    onEvent = { nav.navigate(EventEditRoute(id = it)) },
+                    onTodo = { nav.navigate(TodoEditRoute(id = it)) },
+                    onLabels = { nav.navigate(LabelsRoute) },
+                    onSpend = { e -> nav.navigate(EntryRoute(amount = e.event.cost, note = e.event.title, categoryId = e.event.costCategoryId ?: -1)) },
+                    onMoney = { nav.navigate(MoneyRoute) },
+                ),
+            )
+        }
+        composable<EventEditRoute> { entry ->
+            val r = entry.toRoute<EventEditRoute>()
+            val vm: EventEditViewModel = viewModel(factory = vmFactory { EventEditViewModel(c, r.id) })
+            EventEditScreen(
+                vm,
+                presetDay = if (r.day == Long.MIN_VALUE) LocalDate.now() else LocalDate.ofEpochDay(r.day),
+                presetMinute = r.minute.takeIf { it >= 0 },
+                onBack = back, onDone = { nav.popBackStack() },
+            )
+        }
+        composable<TodoEditRoute> { entry ->
+            val r = entry.toRoute<TodoEditRoute>()
+            val vm: TodoEditViewModel = viewModel(factory = vmFactory { TodoEditViewModel(c, r.id) })
+            TodoEditScreen(
+                vm,
+                presetDay = if (r.day == Long.MIN_VALUE) null else LocalDate.ofEpochDay(r.day),
+                onBack = back, onDone = { nav.popBackStack() },
+            )
+        }
+        composable<LabelsRoute> {
+            val vm: LabelsViewModel = viewModel(factory = vmFactory { LabelsViewModel(c) })
+            LabelsScreen(vm, onBack = back)
         }
         composable<PomodoroRoute> { entry ->
             val habitId = entry.toRoute<PomodoroRoute>().habitId
