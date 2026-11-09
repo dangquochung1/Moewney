@@ -63,4 +63,17 @@ class NotesCoreTest {
         assertThat(m.written).isEqualTo(3)
         assertThat(m.days).isEqualTo(30)
     }
+
+    @Test fun lockClosesAfterAMinuteAwayButNotForOwnTrips() {
+        var now = 0L
+        val lock = NotesLock { now }
+        assertThat(lock.unlocked.value).isFalse()
+        lock.unlock()
+        lock.onAppHidden(); now += 30_000; lock.onAppShown()
+        assertThat(lock.unlocked.value).isTrue()
+        lock.ownTrip(); lock.onAppHidden(); now += 300_000; lock.onAppShown()
+        assertThat(lock.unlocked.value).isTrue()
+        lock.onAppHidden(); now += 61_000; lock.onAppShown()
+        assertThat(lock.unlocked.value).isFalse()
+    }
 }

@@ -327,10 +327,12 @@ fun PhotoAdder(open: Boolean, onDismiss: () -> Unit, onAdded: (String) -> Unit) 
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelTextButton("Thư viện", onClick = {
                     onDismiss()
+                    ctx.container.notesLock.ownTrip()
                     pick.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 }, modifier = Modifier.weight(1f))
                 PixelTextButton("Chụp ảnh", onClick = {
                     onDismiss()
+                    ctx.container.notesLock.ownTrip()
                     runCatching { shoot.launch(cameraUri) }
                 }, modifier = Modifier.weight(1f))
             }

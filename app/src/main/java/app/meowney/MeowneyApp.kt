@@ -35,6 +35,7 @@ class AppContainer(val context: Context) {
     val calendar: CalendarRepository by lazy { CalendarRepository(db) }
     val noteImages: NoteImages by lazy { NoteImages(context) }
     val notes: NoteRepository by lazy { NoteRepository(db, noteImages) }
+    val notesLock = app.meowney.core.notes.NotesLock()
     val settings = SettingsStore(context)
     val events = AppEvents()
     val sfx: Sfx by lazy { Sfx(context) }

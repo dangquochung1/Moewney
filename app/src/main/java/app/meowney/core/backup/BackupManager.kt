@@ -18,18 +18,20 @@ import java.time.format.DateTimeFormatter
 import java.util.zip.ZipEntry
 import java.util.zip.ZipInputStream
 import java.util.zip.ZipOutputStream
+import app.meowney.core.notes.NoteImages
 
 @Serializable
 data class BackupManifest(val app: String = "meowney", val schemaVersion: Int, val appVersion: String, val createdAt: Long)
 
 /**
- * Manual backup: one .zip with the database, the settings file and a manifest. Restoring
+ * Manual backup: one .zip with the database, the settings file, the notebook photos and a manifest. Restoring
  * checks the manifest, swaps the files and restarts the app.
  */
 class BackupManager(private val context: Context, private val container: AppContainer) {
     private val json = Json { ignoreUnknownKeys = true }
     private val dbFile get() = context.getDatabasePath(MeowneyDb.FILE)
     private val settingsFile get() = File(context.filesDir, "datastore/settings.preferences_pb")
+    private val notesDir get() = File(context.filesDir, NoteImages.DIR)
 
     suspend fun export(uri: Uri) = withContext(Dispatchers.IO) {
         // fold the write-ahead log into the main file so one file is the whole database
@@ -48,6 +50,12 @@ class BackupManager(private val context: Context, private val container: AppCont
                     settingsFile.inputStream().use { it.copyTo(zip) }
                     zip.closeEntry()
                 }
+                // notebook photos
+                notesDir.listFiles()?.filter { it.isFile && NoteImages.isSafeName(it.name) }?.forEach { f ->
+                    zip.putNextEntry(ZipEntry("${NoteImages.DIR}/${f.name}"))
+                    f.inputStream().use { it.copyTo(zip) }
+                    zip.closeEntry()
+                }
             }
         }
     }
@@ -62,6 +70,8 @@ class BackupManager(private val context: Context, private val container: AppCont
                     val name = File(e.name).name // no paths from the archive
                     if (name in setOf("manifest.json", MeowneyDb.FILE, "settings.preferences_pb")) {
                         File(dir, name).outputStream().use { zip.copyTo(it) }
+                    } else if (e.name == "${NoteImages.DIR}/$name" && NoteImages.isSafeName(name)) {
+                        File(File(dir, NoteImages.DIR).apply { mkdirs() }, name).outputStream().use { zip.copyTo(it) }
                     }
                 }
             }
@@ -76,6 +86,9 @@ class BackupManager(private val context: Context, private val container: AppCont
         listOf("", "-wal", "-shm").forEach { File(dbFile.path + it).delete() }
         File(dir, MeowneyDb.FILE).copyTo(dbFile, overwrite = true)
         File(dir, "settings.preferences_pb").takeIf { it.exists() }?.copyTo(settingsFile.apply { parentFile?.mkdirs() }, overwrite = true)
+        // the photos of the restored notebook replace the current ones
+        notesDir.deleteRecursively()
+        File(dir, NoteImages.DIR).takeIf { it.isDirectory }?.copyRecursively(notesDir, overwrite = true)
         dir.deleteRecursively()
         restart()
     }

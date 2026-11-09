@@ -160,6 +160,8 @@ object HabitReminder {
     class CloseWorker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
         override suspend fun doWork(): Result {
             applicationContext.container.habits.closeThrough(LocalDate.now().minusDays(1))
+            // the notebook bin empties itself after 30 days
+            runCatching { applicationContext.container.notes.purge() }
             scheduleClose(applicationContext)
             return Result.success()
         }

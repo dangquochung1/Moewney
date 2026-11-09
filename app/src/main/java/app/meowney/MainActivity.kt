@@ -3,7 +3,7 @@ package app.meowney
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.fragment.app.FragmentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.CompositionLocalProvider
@@ -42,6 +42,7 @@ import app.meowney.feature.notes.NoteEditViewModel
 import app.meowney.feature.notes.NoteSearchScreen
 import app.meowney.feature.notes.NoteSearchViewModel
 import app.meowney.feature.notes.NotesActions
+import app.meowney.feature.notes.NotesGate
 import app.meowney.feature.notes.NotesScreen
 import app.meowney.feature.notes.NotesViewModel
 import app.meowney.feature.calendar.CalendarScreen
@@ -161,12 +162,22 @@ class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 @Serializable object CreditsRoute
 @Serializable object UiKitRoute
 
-class MainActivity : ComponentActivity() {
+class MainActivity : FragmentActivity() {
     private var loaded by mutableStateOf<GameAssets?>(null)
 
     /** A screen asked for from outside (the widget "+"), consumed once shown. */
     private var openRequest by mutableStateOf<String?>(null)
     private var openHabit = -1L
+
+    override fun onStart() {
+        super.onStart()
+        container.notesLock.onAppShown()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        container.notesLock.onAppHidden()
+    }
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
@@ -401,7 +412,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             val tab = entry.toRoute<NotesRoute>().tab
             val vm: NotesViewModel = viewModel(factory = vmFactory { NotesViewModel(c, tab) })
             val diary: DiaryViewModel = viewModel(factory = vmFactory { DiaryViewModel(c) })
-            NotesScreen(
+            NotesGate(back) { NotesScreen(
                 vm, diary,
                 NotesActions(
                     onBack = back,
@@ -412,31 +423,31 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                     onStats = { nav.navigate(MoodStatsRoute) },
                     onBin = { nav.navigate(NoteBinRoute(it)) },
                 ),
-            )
+            ) }
         }
         composable<NoteEditRoute> { entry ->
             val id = entry.toRoute<NoteEditRoute>().id
             val vm: NoteEditViewModel = viewModel(factory = vmFactory { NoteEditViewModel(c, id) })
-            NoteEditScreen(vm, onBack = back)
+            NotesGate(back) { NoteEditScreen(vm, onBack = back) }
         }
         composable<DiaryRoute> { entry ->
             val r = entry.toRoute<DiaryRoute>()
             val day = if (r.day == Long.MIN_VALUE) LocalDate.now() else LocalDate.ofEpochDay(r.day)
             val vm: DiaryPageViewModel = viewModel(factory = vmFactory { DiaryPageViewModel(c, day, r.mood.takeIf { it in 1..5 }) })
-            DiaryPageScreen(vm, onBack = back)
+            NotesGate(back) { DiaryPageScreen(vm, onBack = back) }
         }
         composable<NoteSearchRoute> {
             val vm: NoteSearchViewModel = viewModel(factory = vmFactory { NoteSearchViewModel(c) })
-            NoteSearchScreen(vm, onBack = back, onNote = { nav.navigate(NoteEditRoute(it)) }, onDiary = { nav.navigate(DiaryRoute(it.toEpochDay())) })
+            NotesGate(back) { NoteSearchScreen(vm, onBack = back, onNote = { nav.navigate(NoteEditRoute(it)) }, onDiary = { nav.navigate(DiaryRoute(it.toEpochDay())) }) }
         }
         composable<MoodStatsRoute> {
             val vm: MoodStatsViewModel = viewModel(factory = vmFactory { MoodStatsViewModel(c) })
-            MoodStatsScreen(vm, onBack = back)
+            NotesGate(back) { MoodStatsScreen(vm, onBack = back) }
         }
         composable<NoteBinRoute> { entry ->
             val archive = entry.toRoute<NoteBinRoute>().archive
             val vm: NoteBinViewModel = viewModel(factory = vmFactory { NoteBinViewModel(c, archive) })
-            NoteBinScreen(vm, onBack = back, onOpen = { nav.navigate(NoteEditRoute(it)) })
+            NotesGate(back) { NoteBinScreen(vm, onBack = back, onOpen = { nav.navigate(NoteEditRoute(it)) }) }
         }
         composable<LabelsRoute> {
             val vm: LabelsViewModel = viewModel(factory = vmFactory { LabelsViewModel(c) })

@@ -35,6 +35,7 @@ import app.meowney.core.backup.CsvExporter
 import app.meowney.core.data.Settings
 import app.meowney.core.notify.EveningReminder
 import app.meowney.core.ui.ButtonLook
+import app.meowney.container
 import app.meowney.core.ui.LocalPixelMetrics
 import app.meowney.core.ui.LocalPixelType
 import app.meowney.core.ui.Pal
@@ -130,6 +131,9 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
                     vm.update { it.copy(calendarRemindOn = !it.calendarRemindOn) }
                 }
                 PixelText("Sự kiện có giờ nhắc đúng phút; cả ngày và việc trong thông báo 8:00.", style = type.caption, color = Pal.InkSoft)
+            }
+            Section("Sổ tay") {
+                NotesPrivacy(s.notesLock, s.diaryHidePreview, vm)
             }
             Section("Ngày lương") {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
@@ -265,5 +269,33 @@ fun CreditsScreen(onBack: () -> Unit) {
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun NotesPrivacy(lockOn: Boolean, hidePreview: Boolean, vm: SettingsViewModel) {
+    val ctx = androidx.compose.ui.platform.LocalContext.current
+    val type = LocalPixelType.current
+    val m = LocalPixelMetrics.current
+    var error by remember { mutableStateOf<String?>(null) }
+    Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+        PixelChip(if (lockOn) "Khoá vân tay: bật" else "Khoá vân tay: tắt", selected = lockOn) {
+            error = null
+            if (!lockOn && !app.meowney.feature.notes.canLockNotes(ctx)) {
+                error = "Máy chưa cài vân tay hay mã khoá màn hình."
+            } else {
+                // turning it on or off both need the owner's finger or PIN
+                app.meowney.feature.notes.askToUnlock(ctx, onOk = {
+                    ctx.container.notesLock.unlock()
+                    vm.update { it.copy(notesLock = !lockOn) }
+                }, onFail = { error = it })
+            }
+        }
+        PixelText("Mở Sổ tay phải dùng vân tay hoặc mã khoá máy. Rời app quá 1 phút thì khoá lại.", style = type.caption, color = Pal.InkSoft)
+        error?.let { PixelText(it, style = type.caption, color = Pal.Red) }
+        PixelChip(if (hidePreview) "Che xem trước nhật ký: bật" else "Che xem trước nhật ký: tắt", selected = hidePreview) {
+            vm.update { it.copy(diaryHidePreview = !hidePreview) }
+        }
+        PixelText("Lịch nhật ký và kết quả tìm chỉ hiện ngày và tâm trạng, chạm vào mới đọc.", style = type.caption, color = Pal.InkSoft)
     }
 }
