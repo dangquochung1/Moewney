@@ -103,4 +103,19 @@ class MigrationTest {
         db.execSQL("INSERT INTO note_block (noteId, sort, type, text, checked) VALUES (1, 0, 'TEXT', 'Vui', 0)")
         db.close()
     }
+
+    @Test fun v5DataSurvivesMigrationTo6() {
+        helper.createDatabase(5).apply {
+            execSQL("INSERT INTO note (id, kind, title, day, mood, prompt, color, pinned, archived, createdAt, updatedAt, search) VALUES (1, 'DIARY', '', 20401, 4, '', 0, 0, 0, 0, 0, '')")
+            close()
+        }
+        val db = helper.runMigrationsAndValidate(6)
+        db.prepare("SELECT mood FROM note WHERE id = 1").use {
+            it.step()
+            assertThat(it.getLong(0)).isEqualTo(4)
+        }
+        db.execSQL("INSERT INTO pet (color, name, affection, adoptedDay) VALUES (5, 'Mít', 0, 20401)")
+        db.execSQL("INSERT INTO owned_item (itemId, qty, acquiredDay) VALUES ('bowl_blue', 1, 20401)")
+        db.close()
+    }
 }

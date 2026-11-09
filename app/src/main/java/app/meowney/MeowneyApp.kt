@@ -36,6 +36,14 @@ class AppContainer(val context: Context) {
     val noteImages: NoteImages by lazy { NoteImages(context) }
     val notes: NoteRepository by lazy { NoteRepository(db, noteImages) }
     val notesLock = app.meowney.core.notes.NotesLock()
+    val game: app.meowney.core.data.GameRepository by lazy {
+        app.meowney.core.data.GameRepository(db, object : app.meowney.core.data.CatProfile {
+            override suspend fun current() = settings.now().let { it.catColor to it.catName }
+            override suspend fun set(color: Int, name: String) {
+                settings.update { it.copy(catColor = color, catName = name) }
+            }
+        })
+    }
     val settings = SettingsStore(context)
     val events = AppEvents()
     val sfx: Sfx by lazy { Sfx(context) }

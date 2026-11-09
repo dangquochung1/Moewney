@@ -16,10 +16,12 @@ import app.meowney.core.money.JarCode
         HabitEntity::class, HabitLogEntity::class, FocusSessionEntity::class,
         CalLabelEntity::class, EventEntity::class, TodoEntity::class, TodoStepEntity::class,
         NoteEntity::class, NoteBlockEntity::class, NoteTagEntity::class, NoteTagRef::class,
+        OwnedItemEntity::class, PetEntity::class, EquipEntity::class, RealRewardEntity::class, VoucherEntity::class,
+        AchievementEntity::class, ChallengeEntity::class, GameLogEntity::class,
     ],
-    version = 5,
+    version = 6,
     exportSchema = true,
-    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3), AutoMigration(from = 3, to = 4), AutoMigration(from = 4, to = 5)],
+    autoMigrations = [AutoMigration(from = 1, to = 2), AutoMigration(from = 2, to = 3), AutoMigration(from = 3, to = 4), AutoMigration(from = 4, to = 5), AutoMigration(from = 5, to = 6)],
 )
 abstract class MeowneyDb : RoomDatabase() {
     abstract fun money(): MoneyDao
@@ -28,10 +30,11 @@ abstract class MeowneyDb : RoomDatabase() {
     abstract fun habits(): HabitDao
     abstract fun calendar(): CalendarDao
     abstract fun notes(): NoteDao
+    abstract fun game(): GameDao
 
     companion object {
         const val FILE = "meowney.db"
-        const val SCHEMA_VERSION = 5
+        const val SCHEMA_VERSION = 6
 
         fun open(context: Context): MeowneyDb =
             Room.databaseBuilder(context.applicationContext, MeowneyDb::class.java, FILE).build()

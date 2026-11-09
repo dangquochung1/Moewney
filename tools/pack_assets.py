@@ -46,7 +46,30 @@ SOURCES = [
     ("coin", "gfx/props/depths/coin/coin.png", True),
     ("chest", "gfx/props/depths/chest/*.png", True),
     ("prop", "packs/Cozy_Cat_Pixel_Art_Pack/Cozy_Cat_Pixel_Art_Pack/props/*.png", False),
+    # lucky wheel: 48 turning frames kept as single images (a 48-frame strip is wider than a page)
+    ("ui/wheel", "gfx/ui/wheel/*.png", False),
+    # small things drawn for Meowney (tools: see git history), same style as the packs
+    ("decor", "gfx/custom/*.png", False),
 ]
+
+# Single items cut out of a bigger sheet: key -> (sheet, (x, y, w, h)).
+CROPS = {
+    "decor/vase": ("gfx/tiles/home/interior.png", (18, 373, 10, 19)),
+    "decor/pot": ("gfx/tiles/home/interior.png", (87, 377, 16, 17)),
+    "decor/flower": ("gfx/tiles/home/interior.png", (113, 378, 14, 15)),
+    "decor/herbs": ("gfx/tiles/home/interior.png", (147, 218, 22, 31)),
+    "decor/jug": ("gfx/tiles/home/interior.png", (34, 376, 14, 16)),
+}
+
+# Background music -> assets/music/<name> (Music.kt picks by season).
+MUSIC = {
+    "audio/music/27_chill.ogg": "chill.ogg",
+    "audio/music/33_calm_village.ogg": "village.ogg",
+    "audio/music/31_sunny.ogg": "autumn.ogg",
+    "audio/music/20_good_time.ogg": "tet.ogg",
+    "audio/christmas/winter_loop.mp3": "noel.mp3",
+    "audio/halloween/whimsical_witches.ogg": "halloween.ogg",
+}
 
 # Sheets of loose items: each connected blob of pixels is one item, read top-to-bottom
 # (in 16 px bands) then left-to-right, and named in that order.
@@ -172,6 +195,9 @@ def collect():
     for it in items:
         if it["key"].startswith(("cat/", "hat/")) and it["key"] not in FRAME_OVERRIDES:
             it["n"] = by_anim[it["key"].split("/", 2)[2]]
+    for key, (src, (x, y, w, h)) in CROPS.items():
+        sheet = Image.open(ART / src).convert("RGBA")
+        items.append({"key": key, "im": sheet.crop((x, y, x + w, y + h)), "n": 1, "fps": 0})
     for path, prefix, names in ITEM_SHEETS:
         sheet = Image.open(ART / path).convert("RGBA")
         boxes = blobs(sheet)
@@ -271,6 +297,10 @@ def write(items, pages):
     sfx.mkdir(parents=True, exist_ok=True)
     for src, dst in SOUNDS.items():
         shutil.copyfile(ART / src, sfx / dst)
+    music = OUT / "music"
+    music.mkdir(parents=True, exist_ok=True)
+    for src, dst in MUSIC.items():
+        shutil.copyfile(ART / src, music / dst)
     return entries
 
 

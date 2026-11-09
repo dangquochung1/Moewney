@@ -204,7 +204,11 @@ class MoneyRepository(private val db: MeowneyDb) {
             val today = LocalDate.now()
             val day = today.toEpochDay()
             val first = dao.countOnNow(day) == 1 && d.date == today
-            val rewards = RewardRules.onLog(dao.coinsOn(day, RewardRules.R_LOG), first) + listOfNotNull(extraReward)
+            val logRewards = RewardRules.onLog(dao.coinsOn(day, RewardRules.R_LOG), first)
+            // a "x2 xu ghi sổ" from the lucky wheel doubles what logging pays today
+            val boost = if (db.game().countOn(GameRepository.K_BOOST, day) > 0) logRewards.sumOf { it.delta } else 0
+            val rewards = logRewards + listOfNotNull(extraReward) +
+                listOfNotNull(Reward(boost, GameRepository.R_BOOST).takeIf { boost > 0 })
             dao.insertCoins(rewards.map { it.toEntity(today, id) })
             coins += rewards.sumOf { it.delta }
         }
