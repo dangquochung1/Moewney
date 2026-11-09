@@ -9,6 +9,8 @@ sealed interface CatEvent {
     data class Poured(val amount: Long, val coins: Int, val notes: List<String> = emptyList()) : CatEvent
     data class Coins(val coins: Int, val text: String) : CatEvent
     data class Say(val text: String) : CatEvent
+    /** Sen picked a diary mood (1..5): the cat cheers or lies down beside them. */
+    data class Mood(val level: Int, val text: String) : CatEvent
 }
 
 /**

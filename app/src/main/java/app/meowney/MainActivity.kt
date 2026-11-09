@@ -30,6 +30,20 @@ import app.meowney.core.notify.PomodoroTimer
 import app.meowney.core.notify.CalendarReminder
 import app.meowney.feature.habit.PomodoroScreen
 import app.meowney.feature.calendar.CalendarActions
+import app.meowney.feature.notes.DiaryPageScreen
+import app.meowney.feature.notes.DiaryPageViewModel
+import app.meowney.feature.notes.DiaryViewModel
+import app.meowney.feature.notes.MoodStatsScreen
+import app.meowney.feature.notes.MoodStatsViewModel
+import app.meowney.feature.notes.NoteBinScreen
+import app.meowney.feature.notes.NoteBinViewModel
+import app.meowney.feature.notes.NoteEditScreen
+import app.meowney.feature.notes.NoteEditViewModel
+import app.meowney.feature.notes.NoteSearchScreen
+import app.meowney.feature.notes.NoteSearchViewModel
+import app.meowney.feature.notes.NotesActions
+import app.meowney.feature.notes.NotesScreen
+import app.meowney.feature.notes.NotesViewModel
 import app.meowney.feature.calendar.CalendarScreen
 import app.meowney.feature.calendar.CalendarViewModel
 import app.meowney.feature.calendar.EventEditScreen
@@ -135,6 +149,12 @@ class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 @Serializable data class EventEditRoute(val id: Long = -1, val day: Long = Long.MIN_VALUE, val minute: Int = -1)
 @Serializable data class TodoEditRoute(val id: Long = -1, val day: Long = Long.MIN_VALUE)
 @Serializable object LabelsRoute
+@Serializable data class NotesRoute(val tab: Int = 0)
+@Serializable data class NoteEditRoute(val id: Long = -1)
+@Serializable data class DiaryRoute(val day: Long = Long.MIN_VALUE, val mood: Int = -1)
+@Serializable object NoteSearchRoute
+@Serializable object MoodStatsRoute
+@Serializable data class NoteBinRoute(val archive: Boolean = false)
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -179,6 +199,7 @@ class MainActivity : ComponentActivity() {
                 PomodoroTimer.createChannels(this@MainActivity)
                 CalendarReminder.createChannel(this@MainActivity)
                 c.calendar.ensureLabels()
+                runCatching { c.notes.purge() }
                 CalendarReminder.schedule(this@MainActivity)
                 PomodoroTimer.catchUp(this@MainActivity)
                 GameAssets(
@@ -280,6 +301,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                         onHabitFailed = vm::habitFailed,
                         onTimer = { nav.navigate(PomodoroRoute(it.habit.id)) },
                         onCalendar = { nav.navigate(CalendarRoute()) },
+                        onNotes = { nav.navigate(NotesRoute()) },
                         onTodo = vm::todoToggle,
                     ),
                 )
@@ -371,6 +393,47 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                 presetDay = if (r.day == Long.MIN_VALUE) null else LocalDate.ofEpochDay(r.day),
                 onBack = back, onDone = { nav.popBackStack() },
             )
+        }
+        composable<NotesRoute> { entry ->
+            val tab = entry.toRoute<NotesRoute>().tab
+            val vm: NotesViewModel = viewModel(factory = vmFactory { NotesViewModel(c, tab) })
+            val diary: DiaryViewModel = viewModel(factory = vmFactory { DiaryViewModel(c) })
+            NotesScreen(
+                vm, diary,
+                NotesActions(
+                    onBack = back,
+                    onNote = { nav.navigate(NoteEditRoute(it)) },
+                    onNewNote = { nav.navigate(NoteEditRoute()) },
+                    onDiary = { d, mood -> nav.navigate(DiaryRoute(d.toEpochDay(), mood ?: -1)) },
+                    onSearch = { nav.navigate(NoteSearchRoute) },
+                    onStats = { nav.navigate(MoodStatsRoute) },
+                    onBin = { nav.navigate(NoteBinRoute(it)) },
+                ),
+            )
+        }
+        composable<NoteEditRoute> { entry ->
+            val id = entry.toRoute<NoteEditRoute>().id
+            val vm: NoteEditViewModel = viewModel(factory = vmFactory { NoteEditViewModel(c, id) })
+            NoteEditScreen(vm, onBack = back)
+        }
+        composable<DiaryRoute> { entry ->
+            val r = entry.toRoute<DiaryRoute>()
+            val day = if (r.day == Long.MIN_VALUE) LocalDate.now() else LocalDate.ofEpochDay(r.day)
+            val vm: DiaryPageViewModel = viewModel(factory = vmFactory { DiaryPageViewModel(c, day, r.mood.takeIf { it in 1..5 }) })
+            DiaryPageScreen(vm, onBack = back)
+        }
+        composable<NoteSearchRoute> {
+            val vm: NoteSearchViewModel = viewModel(factory = vmFactory { NoteSearchViewModel(c) })
+            NoteSearchScreen(vm, onBack = back, onNote = { nav.navigate(NoteEditRoute(it)) }, onDiary = { nav.navigate(DiaryRoute(it.toEpochDay())) })
+        }
+        composable<MoodStatsRoute> {
+            val vm: MoodStatsViewModel = viewModel(factory = vmFactory { MoodStatsViewModel(c) })
+            MoodStatsScreen(vm, onBack = back)
+        }
+        composable<NoteBinRoute> { entry ->
+            val archive = entry.toRoute<NoteBinRoute>().archive
+            val vm: NoteBinViewModel = viewModel(factory = vmFactory { NoteBinViewModel(c, archive) })
+            NoteBinScreen(vm, onBack = back, onOpen = { nav.navigate(NoteEditRoute(it)) })
         }
         composable<LabelsRoute> {
             val vm: LabelsViewModel = viewModel(factory = vmFactory { LabelsViewModel(c) })

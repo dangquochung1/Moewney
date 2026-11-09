@@ -27,6 +27,10 @@ data class Settings(
     val soundOn: Boolean = true,
     /** Exact reminders for events and to-dos. */
     val calendarRemindOn: Boolean = true,
+    /** Ask for the phone's fingerprint / screen lock before opening the notebook. */
+    val notesLock: Boolean = false,
+    /** Diary calendar and search show only the day and mood, not the words. */
+    val diaryHidePreview: Boolean = true,
     /** Epoch days; null = never. Read-only here, written by the mark* functions. */
     val lastBackupDay: Long? = null,
     val lastBackupNudgeDay: Long? = null,
@@ -45,6 +49,8 @@ class SettingsStore(private val context: Context) {
         val reminderMinute = intPreferencesKey("reminder_minute")
         val soundOn = booleanPreferencesKey("sound_on")
         val calendarRemindOn = booleanPreferencesKey("calendar_remind_on")
+        val notesLock = booleanPreferencesKey("notes_lock")
+        val diaryHidePreview = booleanPreferencesKey("diary_hide_preview")
         val lastBackupDay = longPreferencesKey("last_backup_day")
         val lastBackupNudgeDay = longPreferencesKey("last_backup_nudge_day")
         val lastIntroDay = longPreferencesKey("last_intro_day")
@@ -74,6 +80,8 @@ class SettingsStore(private val context: Context) {
             prefs[K.reminderMinute] = s.reminderMinute
             prefs[K.soundOn] = s.soundOn
             prefs[K.calendarRemindOn] = s.calendarRemindOn
+            prefs[K.notesLock] = s.notesLock
+            prefs[K.diaryHidePreview] = s.diaryHidePreview
         }
     }
 
@@ -138,6 +146,8 @@ class SettingsStore(private val context: Context) {
         reminderMinute = this[K.reminderMinute] ?: (21 * 60),
         soundOn = this[K.soundOn] ?: true,
         calendarRemindOn = this[K.calendarRemindOn] ?: true,
+        notesLock = this[K.notesLock] ?: false,
+        diaryHidePreview = this[K.diaryHidePreview] ?: true,
         lastBackupDay = this[K.lastBackupDay],
         lastBackupNudgeDay = this[K.lastBackupNudgeDay],
         lastIntroDay = this[K.lastIntroDay],

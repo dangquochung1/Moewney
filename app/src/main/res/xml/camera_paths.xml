@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Photos taken for the notebook land here first, then get copied into filesDir/notes. -->
+<paths>
+    <cache-path name="camera" path="camera/" />
+</paths>

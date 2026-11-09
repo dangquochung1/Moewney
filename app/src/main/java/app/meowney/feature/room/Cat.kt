@@ -86,6 +86,21 @@ class Cat(
         add(Step.Anim("meow_sit", loop = false))
     }
 
+    /** A happy diary page: meows standing up, then sits proudly. */
+    fun cheer() = interrupt {
+        add(Step.Anim("meow_stand", loop = false))
+        add(Step.Anim("meow_sit", loop = false))
+        add(Step.Anim("sit", loop = true, ms = 3_000))
+    }
+
+    /** A sad diary page: comes to the front and lies down close by for a while. */
+    fun comfort() = interrupt {
+        val (cx, cy) = stage.clamp(stage.cx, stage.cy + 24f)
+        add(Step.Walk(cx, cy))
+        add(Step.Anim("lie", loop = true, ms = 7_000))
+        add(Step.Anim("wash_lie", loop = true, ms = 2_500))
+    }
+
     /** Tap on the cat: it stops and meows. */
     fun poke() = interrupt {
         add(Step.Anim("meow_sit", loop = false))

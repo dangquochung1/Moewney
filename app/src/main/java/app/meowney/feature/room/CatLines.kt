@@ -26,7 +26,7 @@ object CatLines {
         Toy.Money to "Hũ xu của Sen. Giai đoạn 1 mới rót tiền vào 6 lọ được.",
         Toy.Habits to "Xong thói quen là trẫm được vờn len!",
         Toy.Calendar to "Lịch của Sen nè.",
-        Toy.Notes to "Nhà của trẫm... à không, sổ tay của Sen. Giai đoạn 5 nhé.",
+        Toy.Notes to "Sổ tay của Sen đó. Trẫm không đọc trộm đâu... chắc vậy.",
         Toy.Gift to "Quà và cửa hàng mở ở giai đoạn 6. Để dành xu đi Sen.",
     )
 
@@ -83,4 +83,21 @@ object CatLines {
     }.joinToString(" ")
 
     fun birthday(title: String) = "Hôm nay là $title! Trẫm đội mũ rồi, Sen nhớ chúc mừng nha."
+
+    /** Reaction to the diary mood (1 rất tệ .. 5 rất vui); [low] = three bad days in a row. */
+    fun mood(level: Int, low: Boolean = false): String = when {
+        low -> "Mấy hôm nay Sen buồn nhiều. Nghỉ ngơi chút, hay gọi cho ai đó Sen thương nhé. Trẫm vẫn ở đây."
+        level >= 5 -> "Sen vui là trẫm vui! Kể thêm đi, trẫm nghe nè."
+        level == 4 -> "Ngày tốt đấy chứ. Trẫm ghi công cho Sen."
+        level == 3 -> "Bình thường cũng là một ngày ổn. Trẫm ngồi đây nghe Sen kể."
+        level == 2 -> "Thôi nào, trẫm nằm cạnh Sen đây. Viết ra cho nhẹ lòng."
+        else -> "Hôm nay khó khăn hả Sen? Trẫm không đi đâu hết, cứ kể trẫm nghe."
+    }
+
+    fun diaryCoins(coins: Int, streak: Int, bonus: Int): String =
+        "Viết nhật ký rồi! +$coins xu" + when {
+            bonus > 0 -> ". Chuỗi $streak ngày, thưởng thêm $bonus xu!"
+            streak > 1 -> " · $streak ngày liền"
+            else -> ""
+        }
 }

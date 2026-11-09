@@ -100,6 +100,7 @@ class HomeActions(
     val onTimer: (HabitToday) -> Unit,
     val onCalendar: () -> Unit,
     val onTodo: (TodoItem) -> Unit,
+    val onNotes: () -> Unit,
 )
 
 @Composable
@@ -141,6 +142,7 @@ fun HomeScreen(
     val zoomMoney = rememberZoomSource()
     val zoomHabits = rememberZoomSource()
     val zoomCalendar = rememberZoomSource()
+    val zoomNotes = rememberZoomSource()
     val zoomAdd = rememberZoomSource()
     var counting by remember { mutableStateOf<HabitToday?>(null) }
     counting?.let { h ->
@@ -190,6 +192,10 @@ fun HomeScreen(
                 bubble = e.text
             }
             is CatEvent.Say -> bubble = e.text
+            is CatEvent.Mood -> {
+                if (e.level >= 3) cat.cheer() else cat.comfort()
+                bubble = e.text
+            }
         }
         onCatEventHandled()
     }
@@ -237,6 +243,7 @@ fun HomeScreen(
                 moneyZoom = zoomMoney,
                 habitsZoom = zoomHabits,
                 calendarZoom = zoomCalendar,
+                notesZoom = zoomNotes,
                 onToy = { toy ->
                     when (toy) {
                         Toy.Money -> {
@@ -250,6 +257,10 @@ fun HomeScreen(
                         Toy.Calendar -> {
                             zoomCalendar.mark()
                             actions.onCalendar()
+                        }
+                        Toy.Notes -> {
+                            zoomNotes.mark()
+                            actions.onNotes()
                         }
                         else -> bubble = CatLines.onToy(toy)
                     }
@@ -354,6 +365,7 @@ private fun ToyRow(
     moneyZoom: ZoomSource,
     habitsZoom: ZoomSource,
     calendarZoom: ZoomSource,
+    notesZoom: ZoomSource,
     onToy: (Toy) -> Unit,
 ) {
     val m = LocalPixelMetrics.current
@@ -378,6 +390,7 @@ private fun ToyRow(
                     Toy.Money -> Modifier.zoomSource(moneyZoom)
                     Toy.Habits -> Modifier.zoomSource(habitsZoom)
                     Toy.Calendar -> Modifier.zoomSource(calendarZoom)
+                    Toy.Notes -> Modifier.zoomSource(notesZoom)
                     else -> Modifier
                 },
             ) { onToy(toy) }
