@@ -25,7 +25,7 @@ object CatLines {
     private val toy = mapOf(
         Toy.Money to "Hũ xu của Sen. Giai đoạn 1 mới rót tiền vào 6 lọ được.",
         Toy.Habits to "Xong thói quen là trẫm được vờn len!",
-        Toy.Calendar to "Lịch của Sen mở ở giai đoạn 4.",
+        Toy.Calendar to "Lịch của Sen nè.",
         Toy.Notes to "Nhà của trẫm... à không, sổ tay của Sen. Giai đoạn 5 nhé.",
         Toy.Gift to "Quà và cửa hàng mở ở giai đoạn 6. Để dành xu đi Sen.",
     )
@@ -81,4 +81,6 @@ object CatLines {
         addAll(s.notes)
         if (s.coins > 0) add("+${s.coins} xu")
     }.joinToString(" ")
+
+    fun birthday(title: String) = "Hôm nay là $title! Trẫm đội mũ rồi, Sen nhớ chúc mừng nha."
 }

@@ -38,6 +38,9 @@ class Cat(
     /** When true the cat sleeps regardless of the clock (demo / sad mood). */
     var forceSleep = false
 
+    /** "santa", "santa2", "antlers" (sprites hat/<name>/<anim>), or null. */
+    var hat: String? = null
+
     private val visible = linkedSetOf<Prop>()
     private val steps = ArrayDeque<Step>()
     private var current: Step? = null
@@ -225,6 +228,8 @@ class Cat(
             sprite.frameAt(elapsed)
         }
         scope.drawSprite(sprite, frame, x, y)
+        // a hat drawn on top, frame by frame (birthdays now, seasons later)
+        hat?.let { h -> atlas.getOrNull("hat/$h/$anim")?.let { scope.drawSprite(it, frame.coerceAtMost(it.frames - 1), x, y) } }
     }
 
     fun hit(px: Float, py: Float) = abs(px - x) <= 12 && py <= y + 2 && py >= y - 26

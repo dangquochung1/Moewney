@@ -280,6 +280,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                         onHabitFailed = vm::habitFailed,
                         onTimer = { nav.navigate(PomodoroRoute(it.habit.id)) },
                         onCalendar = { nav.navigate(CalendarRoute()) },
+                        onTodo = vm::todoToggle,
                     ),
                 )
             }

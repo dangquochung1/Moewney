@@ -47,6 +47,8 @@ import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import app.meowney.core.CatEvent
 import app.meowney.core.data.HabitToday
+import app.meowney.core.data.TodoItem
+import app.meowney.core.ui.hhmm
 import app.meowney.core.data.kind
 import app.meowney.core.data.part
 import app.meowney.core.db.RecurringEntity
@@ -97,6 +99,7 @@ class HomeActions(
     val onHabitFailed: (HabitToday, Boolean) -> Unit,
     val onTimer: (HabitToday) -> Unit,
     val onCalendar: () -> Unit,
+    val onTodo: (TodoItem) -> Unit,
 )
 
 @Composable
@@ -118,6 +121,14 @@ fun HomeScreen(
         }
     }
     LaunchedEffect(state.mood) { cat.mood = state.mood }
+    // a birthday today: the cat wears a hat and says so (after the wake-up intro)
+    LaunchedEffect(state.birthday) {
+        cat.hat = if (state.birthday != null) "santa" else null
+        if (state.birthday != null) {
+            delay(3_000)
+            bubble = CatLines.birthday(state.birthday)
+        }
+    }
     // once a day, a week after the last backup (after the wake-up intro is over)
     LaunchedEffect(state.backupDays > 0 && !state.backupNudged) {
         if (state.backupDays > 0 && !state.backupNudged) {
@@ -221,6 +232,7 @@ fun HomeScreen(
                 typeface = pixelTypeface,
                 jarLevel = state.jarLevel,
                 habitLevel = state.habitLevel,
+                calendarCount = state.calendarCount(LocalDateTime.now().let { it.hour * 60 + it.minute }),
                 catColor = state.catColor,
                 moneyZoom = zoomMoney,
                 habitsZoom = zoomHabits,
@@ -337,6 +349,7 @@ private fun ToyRow(
     typeface: Typeface,
     jarLevel: Float,
     habitLevel: Float?,
+    calendarCount: Int,
     catColor: Int,
     moneyZoom: ZoomSource,
     habitsZoom: ZoomSource,
@@ -349,8 +362,8 @@ private fun ToyRow(
     val scale = (m.ui - 1).coerceAtLeast(2)
     // quantise the level so the jar image is not rebuilt for every đồng
     val level = (jarLevel * 16).toInt() / 16f
-    val images = remember(atlas, typeface, level, today, habitLevel, catColor) {
-        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today, habitLevel, catColor) }
+    val images = remember(atlas, typeface, level, today, habitLevel, catColor, calendarCount) {
+        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today, habitLevel, catColor, calendarCount) }
     }
     val tallest = images.values.maxOf { it.height }
     Row(
@@ -453,6 +466,7 @@ private fun TodayPanel(
                     PixelText("Đã chừa ${formatVnd(state.reserved)} cho khoản định kỳ", style = type.caption, color = Pal.InkSoft)
                 }
             }
+            if (state.events.isNotEmpty() || state.todos.isNotEmpty() || state.overdue > 0) CalendarToday(state, habitActions)
             if (state.habits.isNotEmpty()) HabitsToday(state.habits, habitActions, onCountEdit)
             if (state.templates.isNotEmpty()) {
                 PixelText("Ghi nhanh (giữ lâu để ghim)", style = type.bodyBold)
@@ -581,6 +595,48 @@ private fun HabitRow(h: HabitToday, actions: HomeActions, onCountEdit: (HabitTod
             HabitType.QUIT -> PixelButton(onClick = { actions.onHabitFailed(h, !h.failed) }, look = ButtonLook.Light) {
                 PixelText(if (h.failed) "Hoàn tác" else "Lỡ rồi", style = type.caption)
             }
+        }
+    }
+}
+
+// ------------------------------------------------------------------ calendar
+
+@Composable
+private fun CalendarToday(state: HomeState, actions: HomeActions) {
+    val m = LocalPixelMetrics.current
+    val type = LocalPixelType.current
+    val now = LocalDateTime.now().let { it.hour * 60 + it.minute }
+    Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
+        PixelText("LỊCH", style = type.caption, color = Pal.InkSoft, modifier = Modifier.clickable { actions.onCalendar() })
+        for (e in state.eventsLeft(now)) {
+            Row(
+                Modifier.fillMaxWidth().clickable { actions.onCalendar() },
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
+            ) {
+                Canvas(Modifier.size(m.unit * 3)) { drawRect(androidx.compose.ui.graphics.Color(e.color)) }
+                val time = when {
+                    e.occ.multiDay -> "Ngày ${java.time.temporal.ChronoUnit.DAYS.between(e.occ.start, java.time.LocalDate.now()) + 1}"
+                    e.occ.allDay || e.occ.startMinute == null -> "Cả ngày"
+                    else -> hhmm(e.occ.startMinute)
+                }
+                PixelText(time, style = type.caption, color = Pal.InkSoft)
+                PixelText(e.event.title, style = type.bodyBold, maxLines = 1, modifier = Modifier.weight(1f))
+            }
+        }
+        for (t in state.todos) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                PixelText(
+                    (if (t.todo.starred) "★ " else "") + t.todo.title + (t.todo.dueMinute?.let { " · " + hhmm(it) } ?: "") +
+                        if (t.steps.isNotEmpty()) " · ${t.steps.count { it.done }}/${t.steps.size}" else "",
+                    style = type.bodyBold, maxLines = 1, color = if (t.done) Pal.InkSoft else Pal.Ink,
+                    modifier = Modifier.weight(1f).clickable { actions.onCalendar() },
+                )
+                PixelCheckbox(t.done, onCheckedChange = { actions.onTodo(t) })
+            }
+        }
+        if (state.overdue > 0) {
+            PixelText("Quá hạn: ${state.overdue} việc >", style = type.caption, color = Pal.Red, modifier = Modifier.clickable { actions.onCalendar() })
         }
     }
 }

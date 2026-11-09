@@ -45,12 +45,12 @@ object ToyArt {
     private val RED = Color(0xFFD9534F)
     private val RED_DARK = Color(0xFFA33A3A)
 
-    fun image(toy: Toy, atlas: SpriteAtlas, typeface: Typeface, jarLevel: Float, today: LocalDate, habitLevel: Float? = null, catColor: Int = 5): ImageBitmap =
+    fun image(toy: Toy, atlas: SpriteAtlas, typeface: Typeface, jarLevel: Float, today: LocalDate, habitLevel: Float? = null, catColor: Int = 5, calendarCount: Int = 0): ImageBitmap =
         when (toy) {
             Toy.Habits -> towerImage(atlas, habitLevel, catColor)
             Toy.Notes -> sprite(atlas, "prop/house_red")
             Toy.Money -> jarImage(jarLevel, typeface)
-            Toy.Calendar -> paint(34, 40) { calendar(today, typeface) }
+            Toy.Calendar -> paint(38, 42) { calendar(today, typeface, calendarCount) }
             Toy.Gift -> paint(38, 38) { gift() }
         }
 
@@ -153,7 +153,7 @@ object ToyArt {
     }
 
     /** Desk calendar showing today's day number. */
-    private fun DrawScope.calendar(today: LocalDate, tf: Typeface) {
+    private fun DrawScope.calendar(today: LocalDate, tf: Typeface, count: Int) {
         px(1, 4, 32, 36, OUT)
         px(2, 5, 30, 34, Pal.Cream)
         px(2, 5, 30, 9, RED)
@@ -167,6 +167,12 @@ object ToyArt {
         text("T${today.monthValue}", 17f, 13f, 9f, Pal.Cream, tf)
         // day number at 2 px per font pixel stays crisp
         text("%02d".format(today.dayOfMonth), 17f, 35f, 18f, Pal.Ink, tf)
+        // how many things are left today, as a red tag on the corner
+        if (count > 0) {
+            px(26, 30, 12, 12, OUT)
+            px(27, 31, 10, 10, RED)
+            text(if (count > 9) "9" else "$count", 32f, 39f, 9f, Pal.Cream, tf)
+        }
     }
 
     /** Red present with a gold ribbon and bow. */

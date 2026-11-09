@@ -6,7 +6,10 @@ import app.meowney.AppContainer
 import app.meowney.core.CatEvent
 import app.meowney.core.data.HabitResult
 import app.meowney.core.data.HabitToday
+import app.meowney.core.data.EventItem
 import app.meowney.core.data.JarState
+import app.meowney.core.data.TodoItem
+import app.meowney.core.notify.CalendarReminder
 import app.meowney.core.habit.HabitType
 import app.meowney.core.data.TxnDraft
 import app.meowney.core.db.RecurringEntity
@@ -56,7 +59,20 @@ data class HomeState(
     val backupNudged: Boolean = false,
     /** Today's habits (due and not finished for the week). */
     val habits: List<HabitToday> = emptyList(),
-)
+    /** Today's events and to-dos, unfinished to-dos from past days, a birthday today. */
+    val events: List<EventItem> = emptyList(),
+    val todos: List<TodoItem> = emptyList(),
+    val overdue: Int = 0,
+    val birthday: String? = null,
+) {
+    /** Events not over yet (all-day ones count all day). */
+    fun eventsLeft(nowMinute: Int) = events.filter { e ->
+        e.occ.allDay || e.occ.multiDay || e.occ.startMinute == null || (e.occ.endMinute ?: (e.occ.startMinute + 60)) > nowMinute
+    }
+
+    /** The number on the desk calendar toy. */
+    fun calendarCount(nowMinute: Int) = todos.count { !it.done } + eventsLeft(nowMinute).count { !it.birthday }
+}
 
 /** Share of today's habits done, null when there are none (the tower then stands complete). */
 val HomeState.habitLevel: Float?
@@ -114,7 +130,16 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                         backupNudged = settings.lastBackupNudgeDay == day.toEpochDay(),
                     )
             }
-            combine(moneyState, c.habits.today(day)) { state, habits -> state.copy(habits = habits) }
+            combine(moneyState, c.habits.today(day), c.calendar.days(day, day), c.calendar.inboxAndOverdue(day)) { state, habits, days, io ->
+                val cal = days[day]
+                state.copy(
+                    habits = habits,
+                    events = cal?.events.orEmpty(),
+                    todos = cal?.todos.orEmpty(),
+                    overdue = io.second.size,
+                    birthday = cal?.events?.firstOrNull { it.birthday && it.occ.start == day }?.event?.title,
+                )
+            }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
 
@@ -241,6 +266,15 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
         if (r.coins <= 0 && r.notes.isEmpty()) return
         c.sfx.play(if (r.allDone) Sfx.Sound.Success else Sfx.Sound.Coin)
         c.events.post(CatEvent.Coins(r.coins, CatLines.habitDone(h.habit.name, r)))
+    }
+
+    fun todoToggle(t: TodoItem) = viewModelScope.launch {
+        val coins = c.calendar.toggleTodo(t.todo.id)
+        if (coins > 0) {
+            c.sfx.play(Sfx.Sound.Coin)
+            c.events.post(CatEvent.Coins(coins, "Xong \"${t.todo.title}\" rồi! Trẫm vờn len ăn mừng. +$coins xu"))
+        }
+        CalendarReminder.schedule(c.context)
     }
 
     fun markBackupNudge() = viewModelScope.launch { c.settings.markBackupNudge(LocalDate.now().toEpochDay()) }

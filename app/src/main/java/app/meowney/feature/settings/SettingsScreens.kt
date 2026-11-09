@@ -59,6 +59,7 @@ class SettingsViewModel(private val c: AppContainer, private val context: Contex
         val s = c.settings.now()
         c.sfx.enabled = s.soundOn
         EveningReminder.schedule(context, s.reminderMinute, s.reminderOn)
+        app.meowney.core.notify.CalendarReminder.schedule(context)
     }
 
     suspend fun export(uri: Uri): String = runCatching {
@@ -123,6 +124,12 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
                     PixelTextButton("+", onClick = { vm.update { it.copy(reminderMinute = (it.reminderMinute + 15).mod(24 * 60)) } }, look = ButtonLook.Light)
                 }
                 PixelText("Chỉ nhắc khi hôm nay chưa ghi khoản nào.", style = type.caption, color = Pal.InkSoft)
+            }
+            Section("Nhắc lịch") {
+                PixelChip(if (s.calendarRemindOn) "Đang bật" else "Đang tắt", selected = s.calendarRemindOn) {
+                    vm.update { it.copy(calendarRemindOn = !it.calendarRemindOn) }
+                }
+                PixelText("Sự kiện có giờ nhắc đúng phút; cả ngày và việc trong thông báo 8:00.", style = type.caption, color = Pal.InkSoft)
             }
             Section("Ngày lương") {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {

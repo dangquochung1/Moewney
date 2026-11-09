@@ -20,6 +20,7 @@ import app.meowney.MainActivity
 import app.meowney.R
 import app.meowney.container
 import app.meowney.core.format.formatVndShort
+import kotlinx.coroutines.flow.first
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
@@ -54,8 +55,20 @@ object MorningReminder {
         val c = context.container
         val bills = c.money.recurringNow().filter { it.nextDueDay <= today.toEpochDay() }
         val debts = c.money.debtsDue(today)
+        val calendar = if (c.settings.now().calendarRemindOn) {
+            val day = c.calendar.days(today, today).first()[today]
+            val labels = c.calendar.labels.first().associateBy { it.id }
+            val events = day?.events.orEmpty().filter { it.event.remind && (it.occ.allDay || it.occ.multiDay) }
+                .map { e -> if (labels[e.event.labelId]?.kind == "BIRTHDAY") "${e.event.title} hôm nay!" else e.event.title }
+            val todos = day?.todos.orEmpty().filter { !it.done && it.todo.remind }
+                .map { t -> "Việc: ${t.todo.title}" + (t.todo.dueMinute?.let { " (${app.meowney.core.ui.hhmm(it)})" } ?: "") }
+            events + todos
+        } else {
+            emptyList()
+        }
         return bills.map { "${it.name} ${formatVndShort(it.amount)}" } +
-            debts.map { if (it.direction == "LENT") "${it.person} trả Sen ${formatVndShort(it.left)}" else "Trả ${it.person} ${formatVndShort(it.left)}" }
+            debts.map { if (it.direction == "LENT") "${it.person} trả Sen ${formatVndShort(it.left)}" else "Trả ${it.person} ${formatVndShort(it.left)}" } +
+            calendar
     }
 
     private fun notify(context: Context, lines: List<String>) {
@@ -68,7 +81,7 @@ object MorningReminder {
             context, 1, Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
             PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
-        val title = "Sen ơi, hôm nay đến hạn ${lines.size} khoản"
+        val title = "Sen ơi, hôm nay có ${lines.size} việc"
         val text = lines.joinToString(" · ")
         val n = NotificationCompat.Builder(context, CHANNEL)
             .setSmallIcon(R.drawable.ic_launcher_foreground)
