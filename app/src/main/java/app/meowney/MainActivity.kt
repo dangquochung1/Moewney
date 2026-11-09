@@ -239,6 +239,10 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
                         onSkipBill = { vm.skipBill(it) },
                         onBackupNudged = vm::markBackupNudge,
                         onHabits = { nav.navigate(HabitsRoute) },
+                        onHabitTap = vm::habitTap,
+                        onHabitCount = vm::habitCount,
+                        onHabitFailed = vm::habitFailed,
+                        onTimer = { nav.navigate(HabitRoute(it.habit.id)) },
                     ),
                 )
             }

@@ -24,7 +24,7 @@ object CatLines {
 
     private val toy = mapOf(
         Toy.Money to "Hũ xu của Sen. Giai đoạn 1 mới rót tiền vào 6 lọ được.",
-        Toy.Habits to "Xong thói quen là trẫm được vờn len! Thử trước nè.",
+        Toy.Habits to "Xong thói quen là trẫm được vờn len!",
         Toy.Calendar to "Lịch của Sen mở ở giai đoạn 4.",
         Toy.Notes to "Nhà của trẫm... à không, sổ tay của Sen. Giai đoạn 5 nhé.",
         Toy.Gift to "Quà và cửa hàng mở ở giai đoạn 6. Để dành xu đi Sen.",
@@ -63,4 +63,22 @@ object CatLines {
         if (asleep) "Trẫm đi ngủ đây... zZ (giữ lâu lần nữa để gọi trẫm dậy)" else "Ai đánh thức trẫm đấy? Hừm."
 
     fun backup(days: Int) = "Sen ơi, $days ngày chưa sao lưu rồi. Lỡ mất máy là mất hết sổ đó!"
+
+    fun habitDone(name: String, r: app.meowney.core.data.HabitResult): String {
+        val head = if (r.allDone) "Xong hết thói quen hôm nay! Tháp xây xong, trẫm lên ngồi rồi nè." else "Xong $name! Trẫm vờn len đây."
+        val money = if (r.moved > 0) " Chuyển ${app.meowney.core.format.formatVndShort(r.moved)} rồi." else ""
+        val coins = if (r.coins > 0) " +${r.coins} xu" else ""
+        return (listOf(head + money + coins) + r.notes).joinToString(" ")
+    }
+
+    fun habitSlip(name: String) = "Lỡ $name à? Không sao, Sen thật thà là trẫm thương. Mai làm lại nha."
+
+    /** The morning words about the days that were just closed. */
+    fun habitSummary(s: app.meowney.core.data.CloseSummary): String = buildList {
+        if (s.kept.isNotEmpty()) add("Hôm qua Sen giữ được ${s.kept.joinToString(", ")}.")
+        if (s.rested.isNotEmpty()) add("Trẫm cho Sen nghỉ ${s.rested.joinToString(", ")} (dùng vé).")
+        if (s.missed.isNotEmpty()) add("Lỡ ${s.missed.joinToString(", ")} rồi, hôm nay làm lại nha.")
+        addAll(s.notes)
+        if (s.coins > 0) add("+${s.coins} xu")
+    }.joinToString(" ")
 }

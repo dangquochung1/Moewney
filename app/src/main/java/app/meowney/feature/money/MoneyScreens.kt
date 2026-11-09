@@ -81,6 +81,7 @@ class MoneyViewModel(private val c: AppContainer) : ViewModel() {
 }
 
 private const val TRANSFER_ICON = 9 // floppy with arrow: money moving between wallets
+private const val HABIT_MOVE_ICON = 11 // star: a habit's reward moving between jars
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -145,7 +146,13 @@ fun MoneyScreen(
                         if (exp > 0) PixelText("-${formatVndShort(exp)}", style = type.caption, color = Pal.Cream)
                     }
                 }
-                items(rows, key = { it.id }) { t -> TxnLine(t, onClick = { if (t.type.startsWith("DEBT")) onDebts() else onTxn(t.id) }) }
+                items(rows, key = { it.id }) { t -> TxnLine(t, onClick = {
+                    when {
+                        t.type.startsWith("DEBT") -> onDebts()
+                        t.type == "JAR_MOVE" -> Unit // undone by unticking the habit today
+                        else -> onTxn(t.id)
+                    }
+                }) }
             }
         }
     }
@@ -199,18 +206,27 @@ private fun TxnLine(t: TxnRow, onClick: () -> Unit) {
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
     ) {
-        RavenIcon(if (t.type == "TRANSFER") TRANSFER_ICON else t.categoryIcon ?: 12, scale = (m.ui - 1).coerceAtLeast(2))
+        RavenIcon(
+            when (t.type) {
+                "TRANSFER" -> TRANSFER_ICON
+                "JAR_MOVE" -> HABIT_MOVE_ICON
+                else -> t.categoryIcon ?: 12
+            },
+            scale = (m.ui - 1).coerceAtLeast(2),
+        )
         Column(Modifier.weight(1f)) {
             val title = when (t.type) {
                 "TRANSFER" -> "Chuyển ${t.walletName} > ${t.toWalletName}"
                 "ADJUST" -> "Điều chỉnh ${t.walletName}"
                 "DEBT_OUT" -> if (t.source == "DEBT") "Cho ${t.debtPerson} vay" else "Trả nợ ${t.debtPerson}"
                 "DEBT_IN" -> if (t.source == "DEBT") "Vay của ${t.debtPerson}" else "${t.debtPerson} trả nợ"
+                "JAR_MOVE" -> "Thói quen: ${t.note}"
                 else -> t.categoryName ?: "Khác"
             }
             PixelText(title, style = type.body, color = Pal.Cream, maxLines = 1)
             val sub = listOfNotNull(
-                t.note.takeIf { it.isNotBlank() },
+                t.note.takeIf { it.isNotBlank() && t.type != "JAR_MOVE" },
+                "chuyển lọ, ví không đổi".takeIf { t.type == "JAR_MOVE" },
                 t.walletName.takeIf { t.type == "EXPENSE" || t.type == "INCOME" },
                 t.jarName.takeIf { t.type == "EXPENSE" },
             ).joinToString(" · ")

@@ -4,12 +4,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.meowney.AppContainer
 import app.meowney.core.CatEvent
+import app.meowney.core.data.HabitResult
+import app.meowney.core.data.HabitToday
 import app.meowney.core.data.JarState
+import app.meowney.core.habit.HabitType
 import app.meowney.core.data.TxnDraft
 import app.meowney.core.db.RecurringEntity
 import app.meowney.core.game.MoodEngine
 import app.meowney.core.money.JarCode
 import app.meowney.core.money.MoneyEngine
+import app.meowney.core.data.kind
 import app.meowney.core.sound.Sfx
 import app.meowney.feature.entry.ExpenseSaver
 import app.meowney.feature.entry.PendingExpense
@@ -50,7 +54,13 @@ data class HomeState(
     val backupDays: Int = 0,
     /** The cat already reminded about the backup today. */
     val backupNudged: Boolean = false,
+    /** Today's habits (due and not finished for the week). */
+    val habits: List<HabitToday> = emptyList(),
 )
+
+/** Share of today's habits done, null when there are none (the tower then stands complete). */
+val HomeState.habitLevel: Float?
+    get() = if (habits.isEmpty()) null else habits.count { it.done }.toFloat() / habits.size
 
 private data class DayNumbers(val spent: Long, val count: Int, val noSpendClaims: Int, val allocated: Long)
 
@@ -94,7 +104,7 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                 }
                 list
             }
-            combine(dayNumbers, templates, money.coins, money.loans, money.recurring) { n, t, coins, loans, bills ->
+            val moneyState = combine(dayNumbers, templates, money.coins, money.loans, money.recurring) { n, t, coins, loans, bills ->
                 val active = bills.filter { it.active }
                 val reserved = active.filter { it.jarId in spendIds && it.nextDueDay <= period.end.toEpochDay() }.sumOf { it.amount }
                 build(day, settings.catName, settings.catColor, period, jars, spendIds, n, t, coins, loans.isNotEmpty(), reserved)
@@ -104,10 +114,23 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                         backupNudged = settings.lastBackupNudgeDay == day.toEpochDay(),
                     )
             }
+            combine(moneyState, c.habits.today(day)) { state, habits -> state.copy(habits = habits) }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
 
     init {
+        // close the habit days that ended; the cat sums them up
+        viewModelScope.launch {
+            var first = true
+            today.collect { day ->
+                val summary = c.habits.closeThrough(day.minusDays(1))
+                if (!summary.isEmpty) {
+                    if (first) delay(3_000) // let the wake-up intro finish first
+                    c.events.post(CatEvent.Coins(summary.coins, CatLines.habitSummary(summary)))
+                }
+                first = false
+            }
+        }
         // remember today's limit for the monthly report card
         viewModelScope.launch {
             state.collect { s ->
@@ -193,6 +216,31 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
 
     fun togglePin(t: QuickTemplate) = viewModelScope.launch {
         if (t.pinned && t.id != null) money.unpinTemplate(t.id) else money.pinTemplate(t.label, t.amount, t.categoryId)
+    }
+
+    // ------------------------------------------------------------------ habits
+
+    /** Có/không toggles, Đếm số lượng adds one. */
+    fun habitTap(h: HabitToday) = viewModelScope.launch {
+        val r = when (h.habit.kind) {
+            HabitType.CHECK -> c.habits.toggle(h.habit.id)
+            HabitType.COUNT -> c.habits.count(h.habit.id)
+            else -> return@launch
+        }
+        celebrate(h, r)
+    }
+
+    fun habitCount(h: HabitToday, value: Int) = viewModelScope.launch { celebrate(h, c.habits.count(h.habit.id, value = value)) }
+
+    fun habitFailed(h: HabitToday, failed: Boolean) = viewModelScope.launch {
+        c.habits.setFailed(h.habit.id, failed)
+        if (failed) c.events.post(CatEvent.Say(CatLines.habitSlip(h.habit.name)))
+    }
+
+    private fun celebrate(h: HabitToday, r: HabitResult) {
+        if (r.coins <= 0 && r.notes.isEmpty()) return
+        c.sfx.play(if (r.allDone) Sfx.Sound.Success else Sfx.Sound.Coin)
+        c.events.post(CatEvent.Coins(r.coins, CatLines.habitDone(h.habit.name, r)))
     }
 
     fun markBackupNudge() = viewModelScope.launch { c.settings.markBackupNudge(LocalDate.now().toEpochDay()) }

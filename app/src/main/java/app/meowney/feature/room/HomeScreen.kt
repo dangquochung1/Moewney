@@ -46,7 +46,12 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import app.meowney.core.CatEvent
+import app.meowney.core.data.HabitToday
+import app.meowney.core.data.kind
+import app.meowney.core.data.part
 import app.meowney.core.db.RecurringEntity
+import app.meowney.core.habit.HabitType
+import app.meowney.core.habit.PartOfDay
 import app.meowney.core.money.AmountInput
 import app.meowney.core.ui.PixelDialog
 import app.meowney.core.ui.PixelKeypad
@@ -61,6 +66,7 @@ import app.meowney.core.ui.LocalPixelType
 import app.meowney.core.ui.LocalSprites
 import app.meowney.core.ui.Pal
 import app.meowney.core.ui.PixelButton
+import app.meowney.core.ui.PixelCheckbox
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelText
 import app.meowney.core.ui.RavenIcon
@@ -86,6 +92,10 @@ class HomeActions(
     val onSkipBill: (RecurringEntity) -> Unit,
     val onBackupNudged: () -> Unit,
     val onHabits: () -> Unit,
+    val onHabitTap: (HabitToday) -> Unit,
+    val onHabitCount: (HabitToday, Int) -> Unit,
+    val onHabitFailed: (HabitToday, Boolean) -> Unit,
+    val onTimer: (HabitToday) -> Unit,
 )
 
 @Composable
@@ -119,6 +129,24 @@ fun HomeScreen(
     val zoomMoney = rememberZoomSource()
     val zoomHabits = rememberZoomSource()
     val zoomAdd = rememberZoomSource()
+    var counting by remember { mutableStateOf<HabitToday?>(null) }
+    counting?.let { h ->
+        var value by remember(h.habit.id) { mutableStateOf(h.value) }
+        PixelDialog(onDismiss = { counting = null }) {
+            PixelText(h.habit.name, style = LocalPixelType.current.title)
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                PixelButton(onClick = { value = (value - 1).coerceAtLeast(0) }, look = ButtonLook.Light) { PixelText("-", style = LocalPixelType.current.title) }
+                PixelText("$value / ${h.habit.target} ${h.habit.unit}", style = LocalPixelType.current.title, modifier = Modifier.weight(1f), align = TextAlign.Center)
+                PixelButton(onClick = { value += 1 }, look = ButtonLook.Light) { PixelText("+", style = LocalPixelType.current.title) }
+            }
+            PixelButton(onClick = {
+                actions.onHabitCount(h, value)
+                counting = null
+            }, modifier = Modifier.fillMaxWidth()) {
+                PixelText("Lưu", style = LocalPixelType.current.title, color = Pal.Cream)
+            }
+        }
+    }
     var paying by remember { mutableStateOf<RecurringEntity?>(null) }
     paying?.let { bill ->
         var amount by remember(bill) { mutableStateOf(AmountInput(bill.amount)) }
@@ -190,6 +218,8 @@ fun HomeScreen(
             ToyRow(
                 typeface = pixelTypeface,
                 jarLevel = state.jarLevel,
+                habitLevel = state.habitLevel,
+                catColor = state.catColor,
                 moneyZoom = zoomMoney,
                 habitsZoom = zoomHabits,
                 onToy = { toy ->
@@ -226,6 +256,8 @@ fun HomeScreen(
                 onNoSpend = actions.onNoSpend,
                 onPayBill = { paying = it },
                 onSkipBill = actions.onSkipBill,
+                habitActions = actions,
+                onCountEdit = { counting = it },
             )
             Spacer(Modifier.height(m.unit * 2))
         }
@@ -294,15 +326,23 @@ private fun CoinIcon(atlas: SpriteAtlas) {
 // ------------------------------------------------------------------ toys
 
 @Composable
-private fun ToyRow(typeface: Typeface, jarLevel: Float, moneyZoom: ZoomSource, habitsZoom: ZoomSource, onToy: (Toy) -> Unit) {
+private fun ToyRow(
+    typeface: Typeface,
+    jarLevel: Float,
+    habitLevel: Float?,
+    catColor: Int,
+    moneyZoom: ZoomSource,
+    habitsZoom: ZoomSource,
+    onToy: (Toy) -> Unit,
+) {
     val m = LocalPixelMetrics.current
     val atlas = LocalSprites.current
     val today = LocalDate.now()
     val scale = (m.ui - 1).coerceAtLeast(2)
     // quantise the level so the jar image is not rebuilt for every đồng
     val level = (jarLevel * 16).toInt() / 16f
-    val images = remember(atlas, typeface, level, today) {
-        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today) }
+    val images = remember(atlas, typeface, level, today, habitLevel, catColor) {
+        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today, habitLevel, catColor) }
     }
     val tallest = images.values.maxOf { it.height }
     Row(
@@ -366,6 +406,8 @@ private fun TodayPanel(
     onNoSpend: () -> Unit,
     onPayBill: (RecurringEntity) -> Unit,
     onSkipBill: (RecurringEntity) -> Unit,
+    habitActions: HomeActions,
+    onCountEdit: (HabitToday) -> Unit,
 ) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
@@ -402,6 +444,7 @@ private fun TodayPanel(
                     PixelText("Đã chừa ${formatVnd(state.reserved)} cho khoản định kỳ", style = type.caption, color = Pal.InkSoft)
                 }
             }
+            if (state.habits.isNotEmpty()) HabitsToday(state.habits, habitActions, onCountEdit)
             if (state.templates.isNotEmpty()) {
                 PixelText("Ghi nhanh (giữ lâu để ghim)", style = type.bodyBold)
                 FlowRow(
@@ -454,4 +497,81 @@ private fun TemplateChip(t: QuickTemplate, onClick: () -> Unit, onLongClick: () 
 
 private fun Modifier.drawNine(sprite: Sprite, scale: Int) = drawBehind {
     drawNinePatch(sprite, IntOffset.Zero, IntSize(size.width.toInt(), size.height.toInt()), scale)
+}
+
+// ------------------------------------------------------------------ habits
+
+/** Habits grouped by part of the day: the current part first, then the rest, done ones last. */
+@Composable
+private fun HabitsToday(items: List<HabitToday>, actions: HomeActions, onCountEdit: (HabitToday) -> Unit) {
+    val m = LocalPixelMetrics.current
+    val type = LocalPixelType.current
+    val now = PartOfDay.now(LocalDateTime.now().hour)
+    val order = listOf(now, PartOfDay.ALL) + PartOfDay.entries.filter { it != now && it != PartOfDay.ALL }
+    // quit habits stay in their part (they are "being held" all day)
+    val open = items.filter { !it.done || it.habit.kind == HabitType.QUIT }
+    val finished = items.filter { it.done && it.habit.kind != HabitType.QUIT }
+    Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
+        PixelText("THÓI QUEN ${items.count { it.done }}/${items.size}", style = type.caption, color = Pal.InkSoft)
+        for (part in order) {
+            val group = open.filter { it.habit.part == part }
+            if (group.isEmpty()) continue
+            PixelText("- ${part.label} -", style = type.caption, color = Pal.Wood)
+            for (h in group) HabitRow(h, actions, onCountEdit)
+        }
+        if (finished.isNotEmpty()) {
+            PixelText("- Đã xong -", style = type.caption, color = Pal.Wood)
+            for (h in finished) HabitRow(h, actions, onCountEdit)
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+@Composable
+private fun HabitRow(h: HabitToday, actions: HomeActions, onCountEdit: (HabitToday) -> Unit) {
+    val m = LocalPixelMetrics.current
+    val type = LocalPixelType.current
+    val habit = h.habit
+    Row(
+        Modifier
+            .fillMaxWidth()
+            .combinedClickable(
+                onClick = {
+                    when (habit.kind) {
+                        HabitType.CHECK, HabitType.COUNT -> actions.onHabitTap(h)
+                        HabitType.TIMER -> actions.onTimer(h)
+                        HabitType.QUIT -> Unit
+                    }
+                },
+                onLongClick = { if (habit.kind == HabitType.COUNT) onCountEdit(h) },
+            ),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
+    ) {
+        RavenIcon(habit.icon, scale = (m.ui - 1).coerceAtLeast(2))
+        Column(Modifier.weight(1f)) {
+            PixelText(habit.name, style = type.bodyBold, maxLines = 1, color = if (h.done && habit.kind != HabitType.QUIT) Pal.InkSoft else Pal.Ink)
+            val sub = when (habit.kind) {
+                HabitType.CHECK -> if (h.done) "xong" else null
+                HabitType.COUNT -> "${h.value}/${habit.target} ${habit.unit}".trim()
+                HabitType.TIMER -> "${h.value}/${habit.target} phút"
+                HabitType.QUIT -> if (h.failed) "lỡ rồi" else "đang giữ"
+            }
+            val week = if (habit.timesPerWeek > 0) "${h.weekDone}/${habit.timesPerWeek} tuần này" else null
+            val line = listOfNotNull(sub, week).joinToString(" · ")
+            if (line.isNotEmpty()) PixelText(line, style = type.caption, color = if (h.failed) Pal.Red else Pal.InkSoft)
+        }
+        when (habit.kind) {
+            HabitType.CHECK -> PixelCheckbox(h.done, onCheckedChange = { actions.onHabitTap(h) })
+            HabitType.COUNT -> PixelButton(onClick = { actions.onHabitTap(h) }, look = if (h.done) ButtonLook.Light else ButtonLook.Orange) {
+                PixelText("+1", style = type.caption, color = if (h.done) Pal.Ink else Pal.Cream)
+            }
+            HabitType.TIMER -> PixelButton(onClick = { actions.onTimer(h) }, look = if (h.done) ButtonLook.Light else ButtonLook.Orange) {
+                PixelText(if (h.done) "xong" else "Bắt đầu", style = type.caption, color = if (h.done) Pal.Ink else Pal.Cream)
+            }
+            HabitType.QUIT -> PixelButton(onClick = { actions.onHabitFailed(h, !h.failed) }, look = ButtonLook.Light) {
+                PixelText(if (h.failed) "Hoàn tác" else "Lỡ rồi", style = type.caption)
+            }
+        }
+    }
 }

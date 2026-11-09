@@ -9,6 +9,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.drawscope.DrawScope
+import androidx.compose.ui.graphics.drawscope.clipRect
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
@@ -44,9 +45,9 @@ object ToyArt {
     private val RED = Color(0xFFD9534F)
     private val RED_DARK = Color(0xFFA33A3A)
 
-    fun image(toy: Toy, atlas: SpriteAtlas, typeface: Typeface, jarLevel: Float, today: LocalDate): ImageBitmap =
+    fun image(toy: Toy, atlas: SpriteAtlas, typeface: Typeface, jarLevel: Float, today: LocalDate, habitLevel: Float? = null, catColor: Int = 5): ImageBitmap =
         when (toy) {
-            Toy.Habits -> sprite(atlas, "prop/tower_white")
+            Toy.Habits -> towerImage(atlas, habitLevel, catColor)
             Toy.Notes -> sprite(atlas, "prop/house_red")
             Toy.Money -> jarImage(jarLevel, typeface)
             Toy.Calendar -> paint(34, 40) { calendar(today, typeface) }
@@ -56,6 +57,41 @@ object ToyArt {
     /** A coin jar (34 x 44 art px) filled to [level]; [liquid] colours the fill (gold coins by default). */
     fun jarImage(level: Float, typeface: Typeface, liquid: Color = GOLD, label: String = "đ", empty: Boolean = false): ImageBitmap =
         paint(34, 44) { jar(level, typeface, liquid, label, empty) }
+
+    private const val TOWER_PAD = 3 // room above the tower for the cat's ears
+
+    /**
+     * The cat tower builds up with today's habits: the base is always there, the rest rises
+     * from the floor as [level] grows (the missing part is a faint outline). At 100% the cat
+     * sits on the low platform. [level] null = no habits today: the plain tower.
+     */
+    fun towerImage(atlas: SpriteAtlas, level: Float?, catColor: Int): ImageBitmap {
+        val t = atlas["prop/tower_white"]
+        val h = t.height + TOWER_PAD
+        return paint(t.width, h) {
+            fun tower(alpha: Float) = drawImage(
+                t.page, t.srcOffset(0), t.srcSize, dstOffset = androidx.compose.ui.unit.IntOffset(0, TOWER_PAD),
+                dstSize = androidx.compose.ui.unit.IntSize(t.width, t.height), alpha = alpha,
+            )
+            if (level == null) {
+                tower(1f)
+                return@paint
+            }
+            val base = 12
+            val shown = base + ((t.height - base) * level.coerceIn(0f, 1f)).roundToInt()
+            tower(0.22f)
+            clipRect(top = (h - shown).toFloat()) { tower(1f) }
+            if (level >= 1f) {
+                val cat = atlas.getOrNull("cat/$catColor/sit") ?: return@paint
+                // feet on the low left platform (its top is 23 px below the tower's top)
+                drawImage(
+                    cat.page, cat.srcOffset(0), cat.srcSize,
+                    dstOffset = androidx.compose.ui.unit.IntOffset(2, TOWER_PAD + 24 - cat.height),
+                    dstSize = androidx.compose.ui.unit.IntSize(cat.width, cat.height),
+                )
+            }
+        }
+    }
 
     private fun sprite(atlas: SpriteAtlas, key: String): ImageBitmap {
         val s = atlas[key]

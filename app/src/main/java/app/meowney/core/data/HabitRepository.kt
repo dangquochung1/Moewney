@@ -220,7 +220,10 @@ class HabitRepository(private val db: MeowneyDb, private val money: MoneyReposit
                                     if (r != null) {
                                         txnId = r.txnId
                                         coins += r.coins
+                                        notes += "${h.name}: chuyển ${formatVndShort(h.moneyAmount)} rồi."
                                         notes += r.notes
+                                    } else {
+                                        notes += "${h.name}: lọ không đủ nên chưa chuyển ${formatVndShort(h.moneyAmount)}."
                                     }
                                 }
                                 dao.updateLog(log.copy(status = "KEPT", txnId = txnId))
