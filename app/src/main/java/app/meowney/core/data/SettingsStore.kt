@@ -25,6 +25,8 @@ data class Settings(
     /** Minutes after midnight, default 21:00. */
     val reminderMinute: Int = 21 * 60,
     val soundOn: Boolean = true,
+    /** Exact reminders for events and to-dos. */
+    val calendarRemindOn: Boolean = true,
     /** Epoch days; null = never. Read-only here, written by the mark* functions. */
     val lastBackupDay: Long? = null,
     val lastBackupNudgeDay: Long? = null,
@@ -42,6 +44,7 @@ class SettingsStore(private val context: Context) {
         val reminderOn = booleanPreferencesKey("reminder_on")
         val reminderMinute = intPreferencesKey("reminder_minute")
         val soundOn = booleanPreferencesKey("sound_on")
+        val calendarRemindOn = booleanPreferencesKey("calendar_remind_on")
         val lastBackupDay = longPreferencesKey("last_backup_day")
         val lastBackupNudgeDay = longPreferencesKey("last_backup_nudge_day")
         val lastIntroDay = longPreferencesKey("last_intro_day")
@@ -70,6 +73,7 @@ class SettingsStore(private val context: Context) {
             prefs[K.reminderOn] = s.reminderOn
             prefs[K.reminderMinute] = s.reminderMinute
             prefs[K.soundOn] = s.soundOn
+            prefs[K.calendarRemindOn] = s.calendarRemindOn
         }
     }
 
@@ -133,6 +137,7 @@ class SettingsStore(private val context: Context) {
         reminderOn = this[K.reminderOn] ?: true,
         reminderMinute = this[K.reminderMinute] ?: (21 * 60),
         soundOn = this[K.soundOn] ?: true,
+        calendarRemindOn = this[K.calendarRemindOn] ?: true,
         lastBackupDay = this[K.lastBackupDay],
         lastBackupNudgeDay = this[K.lastBackupNudgeDay],
         lastIntroDay = this[K.lastIntroDay],

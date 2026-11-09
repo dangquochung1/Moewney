@@ -10,6 +10,7 @@ import app.meowney.core.AppEvents
 import app.meowney.core.data.MoneyRepository
 import app.meowney.core.data.Reports
 import app.meowney.core.data.HabitRepository
+import app.meowney.core.data.CalendarRepository
 import app.meowney.core.data.SettingsStore
 import app.meowney.core.db.MeowneyDb
 import app.meowney.core.sound.Sfx
@@ -29,6 +30,7 @@ class AppContainer(val context: Context) {
     val money: MoneyRepository by lazy { MoneyRepository(db) }
     val reports: Reports by lazy { Reports(db) }
     val habits: HabitRepository by lazy { HabitRepository(db, money) }
+    val calendar: CalendarRepository by lazy { CalendarRepository(db) }
     val settings = SettingsStore(context)
     val events = AppEvents()
     val sfx: Sfx by lazy { Sfx(context) }
