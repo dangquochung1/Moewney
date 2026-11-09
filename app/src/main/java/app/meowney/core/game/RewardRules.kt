@@ -21,6 +21,29 @@ object RewardRules {
     const val R_INCOME = "income"
     const val R_WELCOME = "welcome"
 
+    // habits (GĐ3): coins by the difficulty Sen picked
+    const val ALL_HABITS_DONE = 10
+    const val FOCUS_SESSION = 5
+    const val R_HABIT = "habit"
+    const val R_HABITS_ALL = "habits_all"
+    const val R_HABIT_STREAK = "habit_streak"
+    const val R_FOCUS = "focus"
+
+    /** Dễ / Vừa / Khó. */
+    fun habitCoins(difficulty: Int) = when (difficulty) {
+        1 -> 2
+        3 -> 6
+        else -> 4
+    }
+
+    /** Coins for reaching a streak of 7 / 30 / 100, else null. */
+    fun streakMilestone(streak: Int): Int? = when (streak) {
+        7 -> 20
+        30 -> 50
+        100 -> 150
+        else -> null
+    }
+
     /** Coins for logging one transaction, given what logging already earned today. */
     fun onLog(logCoinsToday: Int, firstLogToday: Boolean): List<Reward> = buildList {
         if (firstLogToday) add(Reward(FIRST_LOG_OF_DAY, R_FIRST))
