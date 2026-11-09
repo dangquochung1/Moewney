@@ -109,6 +109,7 @@ class HomeActions(
     val onGift: () -> Unit,
     val onShop: () -> Unit,
     val onWardrobe: () -> Unit,
+    val onChallenge: () -> Unit,
 )
 
 @Composable
@@ -512,6 +513,7 @@ private fun TodayPanel(
             if (state.events.isNotEmpty() || state.todos.isNotEmpty() || state.overdue > 0) CalendarToday(state, habitActions)
             if (state.habits.isNotEmpty()) HabitsToday(state.habits, habitActions, onCountEdit)
             DiaryToday(state, habitActions)
+            state.challenge?.let { ChallengeToday(it, habitActions) }
             if (state.pinned.isNotEmpty()) PinnedNotes(state, habitActions)
             if (state.templates.isNotEmpty()) {
                 PixelText("Ghi nhanh (giữ lâu để ghim)", style = type.bodyBold)
@@ -640,6 +642,35 @@ private fun HabitRow(h: HabitToday, actions: HomeActions, onCountEdit: (HabitTod
             HabitType.QUIT -> PixelButton(onClick = { actions.onHabitFailed(h, !h.failed) }, look = ButtonLook.Light) {
                 PixelText(if (h.failed) "Hoàn tác" else "Lỡ rồi", style = type.caption)
             }
+        }
+    }
+}
+
+// ------------------------------------------------------------------ monthly challenge
+
+@Composable
+private fun ChallengeToday(v: app.meowney.core.data.ChallengeView, actions: HomeActions) {
+    val m = LocalPixelMetrics.current
+    val type = LocalPixelType.current
+    Column(Modifier.fillMaxWidth().clickable { actions.onChallenge() }, verticalArrangement = Arrangement.spacedBy(m.unit)) {
+        PixelText("THỬ THÁCH THÁNG", style = type.caption, color = Pal.InkSoft)
+        val p = v.picked
+        if (p == null) {
+            PixelText("Chọn thử thách tháng này >", style = type.bodyBold, color = Pal.Orange)
+        } else {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                PixelText(p.label, style = type.bodyBold, modifier = Modifier.weight(1f), maxLines = 1)
+                PixelText(
+                    when {
+                        v.claimed -> "đã nhận"
+                        v.done -> "mở rương!"
+                        app.meowney.core.game.ChallengeEngine.settledAtMonthEnd(p.kind) -> if (v.value >= p.target) "đang giữ" else "lỡ rồi"
+                        else -> "${v.value}/${p.target}"
+                    },
+                    style = type.caption, color = if (v.done && !v.claimed) Pal.Orange else Pal.InkSoft,
+                )
+            }
+            app.meowney.core.ui.PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Gold, heightPx = 4)
         }
     }
 }

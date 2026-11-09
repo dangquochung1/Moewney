@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.map
 import app.meowney.core.data.NoteFull
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -75,6 +76,8 @@ data class HomeState(
     val look: RoomLook = RoomLook(),
     /** A lucky-wheel spin is waiting today. */
     val spinReady: Boolean = false,
+    /** The month's challenge (null until loaded). */
+    val challenge: app.meowney.core.data.ChallengeView? = null,
 ) {
     /** Events not over yet (all-day ones count all day). */
     fun eventsLeft(nowMinute: Int) = events.filter { e ->
@@ -91,7 +94,7 @@ val HomeState.habitLevel: Float?
 
 private data class DayNumbers(val spent: Long, val count: Int, val noSpendClaims: Int, val allocated: Long)
 
-@OptIn(ExperimentalCoroutinesApi::class)
+@OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
 class HomeViewModel(private val c: AppContainer) : ViewModel() {
     private val money = c.money
     private val saver = ExpenseSaver(c)
@@ -156,20 +159,38 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                     state.copy(diaryMood = page?.note?.mood, diaryWritten = page?.hasContent == true, pinned = pinned.take(3))
                 }
             }.let { withNotes ->
-                combine(withNotes, c.game.state, c.game.lastFeedAt, c.game.spinsUsed(day)) { state, game, fedAt, spins ->
+                combine(withNotes, c.game.state, c.game.lastFeedAt, c.game.spinsUsed(day), challenge) { state, game, fedAt, spins, ch ->
                     val allDone = state.habits.isNotEmpty() && state.habits.all { it.done }
                     val fed = fedAt != null && System.currentTimeMillis() - fedAt < app.meowney.core.data.GameRepository.HAPPY_MS
                     state.copy(
                         look = game.look(app.meowney.core.game.SeasonEngine.seasonOn(day)),
                         spinReady = spins < app.meowney.core.game.WheelEngine.spinsToday(allDone),
                         mood = if (fed && state.mood != Mood.Happy) Mood.Happy else state.mood,
+                        challenge = ch,
                     )
                 }
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
 
+    private val challenge = MutableStateFlow<app.meowney.core.data.ChallengeView?>(null)
+
     init {
+        // the game: first cat of the collection, the month's challenge, trophies earned so far
+        viewModelScope.launch {
+            c.game.ensureStarter()
+            var first = true
+            c.money.coins.debounce(1_500).collect {
+                val day = LocalDate.now()
+                challenge.value = runCatching { c.game.challengeView(java.time.YearMonth.from(day), day) }.getOrNull()
+                val fresh = runCatching { c.game.checkAchievements(day) }.getOrDefault(emptyList())
+                fresh.firstOrNull()?.let { (a, tier) ->
+                    if (first) delay(4_000)
+                    c.events.post(CatEvent.Coins(app.meowney.core.game.AchievementEngine.TIER_COINS[tier - 1], CatLines.trophy(a.name, tier)))
+                }
+                first = false
+            }
+        }
         // close the habit days that ended; the cat sums them up
         viewModelScope.launch {
             var first = true

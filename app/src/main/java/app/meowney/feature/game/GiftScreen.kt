@@ -105,6 +105,42 @@ class GiftViewModel(val c: AppContainer, initial: GiftTab) : ViewModel() {
     val expenseCategories = c.money.categories.map { l -> l.filter { it.type == "EXPENSE" } }
         .stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
 
+    val trophies = c.game.achievements.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
+    val metrics = MutableStateFlow<Map<String, Long>>(emptyMap())
+    val challenge = MutableStateFlow<app.meowney.core.data.ChallengeView?>(null)
+    val quest = MutableStateFlow<app.meowney.core.data.QuestView?>(null)
+    private val month = java.time.YearMonth.from(today)
+
+    fun loadMetrics() = viewModelScope.launch { metrics.value = c.game.metrics() }
+
+    fun loadChallenge() = viewModelScope.launch {
+        challenge.value = c.game.challengeView(month, today)
+        quest.value = c.game.questView(today)
+    }
+
+    fun pickChallenge(i: Int) = viewModelScope.launch {
+        c.game.pickChallenge(month, i)
+        challenge.value = c.game.challengeView(month, today)
+        say("Chốt! Trẫm theo dõi giúp Sen cả tháng.")
+    }
+
+    fun claimChallenge() = viewModelScope.launch {
+        val coins = c.game.claimChallenge(month, today)
+        if (coins > 0) {
+            c.sfx.play(app.meowney.core.sound.Sfx.Sound.Gold)
+            say(CatLines.chest(coins))
+            checkAchievements()
+        }
+        challenge.value = c.game.challengeView(month, today)
+    }
+
+    fun claimQuest() = viewModelScope.launch {
+        val got = c.game.claimQuest(today) ?: return@launch
+        c.sfx.play(app.meowney.core.sound.Sfx.Sound.Success)
+        say(if (got.isEmpty()) "Nhiệm vụ xong! Sen có món đó rồi nên trẫm đổi ra 100 xu." else "Nhiệm vụ xong! ${Catalog[got]?.name} vào Tủ đồ rồi.")
+        quest.value = c.game.questView(today)
+    }
+
     suspend fun spin(): Pair<Int, app.meowney.core.game.SpinOutcome>? {
         val r = c.game.spin(allHabitsDone.value, today) ?: return null
         checkAchievements()
@@ -229,6 +265,8 @@ fun GiftScreen(
                 GiftTab.WARDROBE -> WardrobeTab(vm, corner)
                 GiftTab.WHEEL -> WheelTab(vm)
                 GiftTab.REAL -> RewardsTab(vm, onUseVoucher)
+                GiftTab.TROPHY -> TrophyTab(vm)
+                GiftTab.CHALLENGE -> ChallengeTab(vm)
                 else -> content(tab)
             }
         }

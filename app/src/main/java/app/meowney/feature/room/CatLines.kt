@@ -122,4 +122,6 @@ object CatLines {
     fun lixi(coins: Int) = "Lì xì đầu năm! Trẫm mừng tuổi Sen $coins xu. An khang thịnh vượng nha."
 
     fun redeemed(name: String) = "Đổi \"$name\" rồi! Lúc nào thưởng thì bấm Dùng, trẫm ghi sổ giúp."
+
+    fun chest(coins: Int) = "Rương mở rồi! $coins xu và đồ ăn cho trẫm. Sen giỏi nhất tháng."
 }

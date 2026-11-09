@@ -325,6 +325,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                         onGift = { nav.navigate(GiftRoute()) },
                         onShop = { nav.navigate(GiftRoute("SHOP")) },
                         onWardrobe = { nav.navigate(GiftRoute("WARDROBE")) },
+                        onChallenge = { nav.navigate(GiftRoute("CHALLENGE")) },
                         onTodo = vm::todoToggle,
                     ),
                 )
