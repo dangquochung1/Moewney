@@ -8,6 +8,9 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
+import app.meowney.core.habit.Phase
+import app.meowney.core.habit.PomodoroConfig
+import app.meowney.core.habit.PomodoroState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
@@ -42,6 +45,15 @@ class SettingsStore(private val context: Context) {
         val lastBackupDay = longPreferencesKey("last_backup_day")
         val lastBackupNudgeDay = longPreferencesKey("last_backup_nudge_day")
         val lastIntroDay = longPreferencesKey("last_intro_day")
+        val pomoFocus = intPreferencesKey("pomo_focus")
+        val pomoShort = intPreferencesKey("pomo_short")
+        val pomoLong = intPreferencesKey("pomo_long")
+        val pomoEvery = intPreferencesKey("pomo_every")
+        val pomoPhase = stringPreferencesKey("pomo_phase")
+        val pomoStart = longPreferencesKey("pomo_start")
+        val pomoDone = intPreferencesKey("pomo_done")
+        val pomoHabit = longPreferencesKey("pomo_habit")
+        val pomoPaused = longPreferencesKey("pomo_paused")
     }
 
     val flow: Flow<Settings> = context.settingsDataStore.data.map { it.toSettings() }
@@ -67,6 +79,46 @@ class SettingsStore(private val context: Context) {
 
     suspend fun markBackupNudge(day: Long) {
         context.settingsDataStore.edit { it[K.lastBackupNudgeDay] = day }
+    }
+
+    // ------------------------------------------------------------------ Pomodoro
+
+    /** The config and the running timer (null when none). */
+    val pomodoro: Flow<Pair<PomodoroConfig, PomodoroState?>> = context.settingsDataStore.data.map { p ->
+        val cfg = PomodoroConfig(p[K.pomoFocus] ?: 45, p[K.pomoShort] ?: 10, p[K.pomoLong] ?: 20, p[K.pomoEvery] ?: 4)
+        val state = p[K.pomoPhase]?.let { phase ->
+            PomodoroState(Phase.valueOf(phase), p[K.pomoStart] ?: 0L, p[K.pomoDone] ?: 0, p[K.pomoHabit]?.takeIf { it > 0 }, p[K.pomoPaused])
+        }
+        cfg to state
+    }
+
+    suspend fun pomodoroNow() = pomodoro.first()
+
+    suspend fun savePomodoroConfig(cfg: PomodoroConfig) {
+        context.settingsDataStore.edit {
+            it[K.pomoFocus] = cfg.focus
+            it[K.pomoShort] = cfg.shortBreak
+            it[K.pomoLong] = cfg.longBreak
+            it[K.pomoEvery] = cfg.longEvery
+        }
+    }
+
+    suspend fun savePomodoroState(state: PomodoroState?) {
+        context.settingsDataStore.edit {
+            if (state == null) {
+                listOf(K.pomoPhase).forEach { k -> it.remove(k) }
+                it.remove(K.pomoStart)
+                it.remove(K.pomoDone)
+                it.remove(K.pomoHabit)
+                it.remove(K.pomoPaused)
+            } else {
+                it[K.pomoPhase] = state.phase.name
+                it[K.pomoStart] = state.phaseStart
+                it[K.pomoDone] = state.focusDone
+                if (state.habitId != null) it[K.pomoHabit] = state.habitId else it.remove(K.pomoHabit)
+                if (state.pausedAt != null) it[K.pomoPaused] = state.pausedAt else it.remove(K.pomoPaused)
+            }
+        }
     }
 
     suspend fun markIntro(day: Long) {

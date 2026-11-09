@@ -26,6 +26,9 @@ import app.meowney.core.data.TxnDraft
 import app.meowney.core.notify.EveningReminder
 import app.meowney.core.notify.MorningReminder
 import app.meowney.core.notify.HabitReminder
+import app.meowney.core.notify.PomodoroTimer
+import app.meowney.feature.habit.PomodoroScreen
+import app.meowney.feature.habit.PomodoroViewModel
 import app.meowney.widget.OPEN_POMODORO
 import app.meowney.widget.EXTRA_HABIT
 import app.meowney.core.sprite.SpriteAtlas
@@ -116,6 +119,7 @@ class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 @Serializable object HabitsRoute
 @Serializable data class HabitRoute(val id: Long)
 @Serializable data class HabitEditRoute(val id: Long = -1)
+@Serializable data class PomodoroRoute(val habitId: Long = -1)
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -127,9 +131,11 @@ class MainActivity : ComponentActivity() {
 
     /** A screen asked for from outside (the widget "+"), consumed once shown. */
     private var openRequest by mutableStateOf<String?>(null)
+    private var openHabit = -1L
 
     override fun onNewIntent(intent: Intent) {
         super.onNewIntent(intent)
+        openHabit = intent.getLongExtra(EXTRA_HABIT, -1L)
         openRequest = intent.getStringExtra(EXTRA_OPEN)
     }
 
@@ -139,7 +145,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         splash.setKeepOnScreenCondition { loaded == null }
         val c = container
-        if (savedInstanceState == null) openRequest = intent.getStringExtra(EXTRA_OPEN)
+        if (savedInstanceState == null) {
+            openHabit = intent.getLongExtra(EXTRA_HABIT, -1L)
+            openRequest = intent.getStringExtra(EXTRA_OPEN)
+        }
 
         lifecycleScope.launch {
             loaded = withContext(Dispatchers.IO) {
@@ -152,6 +161,8 @@ class MainActivity : ComponentActivity() {
                 HabitReminder.createChannel(this@MainActivity)
                 HabitReminder.schedule(this@MainActivity)
                 HabitReminder.scheduleClose(this@MainActivity)
+                PomodoroTimer.createChannels(this@MainActivity)
+                PomodoroTimer.catchUp(this@MainActivity)
                 GameAssets(
                     sprites = c.sprites,
                     corner = RoomAssets.load(assets),
@@ -168,7 +179,7 @@ class MainActivity : ComponentActivity() {
             MeowneyTheme(game.sprites) {
                 CompositionLocalProvider(LocalIcons provides game.icons) {
                     Box(Modifier.fillMaxSize()) {
-                        App(game, c, openRequest) { openRequest = null }
+                        App(game, c, openRequest, openHabit) { openRequest = null }
                         var intro by remember { mutableStateOf(game.intro) }
                         intro?.let { plan ->
                             WakeIntro(plan.full, plan.catColor, plan.greeting, onDone = { intro = null })
@@ -191,7 +202,7 @@ private suspend fun introPlan(c: AppContainer, settings: Settings, fromWidget: B
 }
 
 @androidx.compose.runtime.Composable
-private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpened: () -> Unit) {
+private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHabit: Long, onOpened: () -> Unit) {
     val nav = rememberNavController()
     val back: () -> Unit = { nav.popBackStack() }
     LaunchedEffect(openRequest) {
@@ -199,6 +210,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
             val onboarding = nav.currentBackStackEntry?.destination?.hasRoute(OnboardingRoute::class) ?: !game.onboarded
             if (!onboarding) nav.navigate(EntryRoute()) { launchSingleTop = true }
         }
+        if (openRequest == OPEN_POMODORO && game.onboarded) nav.navigate(PomodoroRoute(openHabit)) { launchSingleTop = true }
         if (openRequest != null) onOpened()
     }
     // first open of a new month: the cat hands over last month's report card
@@ -248,7 +260,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
                         onHabitTap = vm::habitTap,
                         onHabitCount = vm::habitCount,
                         onHabitFailed = vm::habitFailed,
-                        onTimer = { nav.navigate(HabitRoute(it.habit.id)) },
+                        onTimer = { nav.navigate(PomodoroRoute(it.habit.id)) },
                     ),
                 )
             }
@@ -296,8 +308,13 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
                 vm, onBack = back,
                 onNew = { nav.navigate(HabitEditRoute()) },
                 onOpen = { nav.navigate(HabitRoute(it)) },
-                onPomodoro = { },
+                onPomodoro = { nav.navigate(PomodoroRoute()) },
             )
+        }
+        composable<PomodoroRoute> { entry ->
+            val habitId = entry.toRoute<PomodoroRoute>().habitId
+            val vm: PomodoroViewModel = viewModel(factory = vmFactory { PomodoroViewModel(c, habitId) })
+            PomodoroScreen(vm, game.corner, onBack = back)
         }
         composable<HabitRoute> { entry ->
             val id = entry.toRoute<HabitRoute>().id

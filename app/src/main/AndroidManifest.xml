@@ -3,6 +3,10 @@
 
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- Pomodoro rings on time: a timer is this app's own function (installed outside Play) -->
+    <uses-permission android:name="android.permission.USE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".MeowneyApp"
@@ -26,6 +30,10 @@
 
         <receiver
             android:name=".core.notify.HabitReminder$ActionReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".core.notify.PomodoroTimer$AlarmReceiver"
             android:exported="false" />
 
         <receiver
