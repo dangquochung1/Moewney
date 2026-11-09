@@ -1,6 +1,7 @@
 package app.meowney.core.db
 
 import android.content.Context
+import androidx.room.AutoMigration
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
@@ -10,16 +11,20 @@ import app.meowney.core.money.JarCode
     entities = [
         WalletEntity::class, JarEntity::class, CategoryEntity::class, TxnEntity::class,
         JarEntryEntity::class, CoinEntryEntity::class, QuickTemplateEntity::class,
+        GoalEntity::class, GoalEntryEntity::class, DebtEntity::class, RecurringEntity::class,
+        DayStatEntity::class, MonthReportEntity::class,
     ],
-    version = 1,
+    version = 2,
     exportSchema = true,
+    autoMigrations = [AutoMigration(from = 1, to = 2)],
 )
 abstract class MeowneyDb : RoomDatabase() {
     abstract fun money(): MoneyDao
+    abstract fun plans(): PlanDao
 
     companion object {
         const val FILE = "meowney.db"
-        const val SCHEMA_VERSION = 1
+        const val SCHEMA_VERSION = 2
 
         fun open(context: Context): MeowneyDb =
             Room.databaseBuilder(context.applicationContext, MeowneyDb::class.java, FILE).build()

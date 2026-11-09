@@ -42,6 +42,11 @@ android {
     testOptions {
         unitTests.isIncludeAndroidResources = true
     }
+
+    // Room schemas in debug assets so MigrationTestHelper (Robolectric) can build old versions; not in release.
+    sourceSets {
+        getByName("debug").assets.srcDir(file("$projectDir/schemas"))
+    }
 }
 
 kotlin {
@@ -84,4 +89,5 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.robolectric)
     testImplementation(libs.androidx.test.core)
+    testImplementation(libs.androidx.room.testing)
 }
