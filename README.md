@@ -17,7 +17,7 @@ gradlew.bat testDebugUnitTest assembleDebug
 |---|---|
 | `tools/patch_font.py` | Pixeloid + 32 chữ Việt còn thiếu → `res/font/meowney_pixel_*.ttf` |
 | `tools/pack_assets.py` | Sprite chọn lọc → `app/src/main/assets/sprites/` (atlas + `sprites.json`) |
-| `tools/build_room.py` | Bố cục phòng mèo → `app/src/main/assets/room/room.json` (`--preview x.png`) |
-| `tools/make_icon.py` | Icon mèo ôm xu (`--sheet x.png` xem phương án, `--pick N` chọn) |
+| `tools/build_room.py` | Góc mèo trong vòng tròn → `app/src/main/assets/room/corner.json` (`--preview x.png`) |
+| `tools/make_icon.py` | Icon mèo ôm xu (`--sheet x.png` xem phương án, `--pick N` chọn; đang dùng 5) |
 
 Chạy lại `pack_assets.py` trước `build_room.py` / `make_icon.py` (hai script sau đọc atlas).

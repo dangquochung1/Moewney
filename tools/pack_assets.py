@@ -44,7 +44,25 @@ SOURCES = [
     ("crop", "gfx/ui/sunny/crops/*.png", False),
     ("treasure", "gfx/items/treasure/*.png", True),
     ("coin", "gfx/props/depths/coin/coin.png", True),
+    ("prop", "packs/Cozy_Cat_Pixel_Art_Pack/Cozy_Cat_Pixel_Art_Pack/props/*.png", False),
 ]
+
+# Sheets of loose items: each connected blob of pixels is one item, read top-to-bottom
+# (in 16 px bands) then left-to-right, and named in that order.
+ITEM_SHEETS = [
+    ("packs/PET_PROPS.png", "prop/pet", [
+        "bone", "fish", "bowl_red", "bowl_blue", "bowl_green", "bed",
+        "ball_green", "ball_red", "yarn_green", "yarn_blue",
+        "food_red", "food_blue", "food_green", "bed_fish",
+    ]),
+    ("packs/CAT_TOWER.png", "prop/tower", ["white", "grey", "green"]),
+    ("packs/DOG_HOUSE.png", "prop/house", ["blue", "red", "green"]),
+]
+
+# Licence files that must ship with the app (shown on the Credits screen).
+LICENSES = {
+    "packs/Cozy_Cat_Pixel_Art_Pack/Cozy_Cat_Pixel_Art_Pack/LICENSE.txt": "cozy_cat_pack_FOTOPIXY.txt",
+}
 
 # Nine-patch insets (source pixels) for stretchable UI pieces. The wood panels have a
 # 1 px inner shadow on the top/left of their window, so those sides are one wider.
@@ -144,7 +162,41 @@ def collect():
     for it in items:
         if it["key"].startswith(("cat/", "hat/")) and it["key"] not in FRAME_OVERRIDES:
             it["n"] = by_anim[it["key"].split("/", 2)[2]]
+    for path, prefix, names in ITEM_SHEETS:
+        sheet = Image.open(ART / path).convert("RGBA")
+        boxes = blobs(sheet)
+        if len(boxes) != len(names):
+            raise SystemExit(f"{path}: found {len(boxes)} items, expected {len(names)} - update ITEM_SHEETS")
+        for name, (x, y, w, h) in zip(names, boxes):
+            items.append({"key": f"{prefix}_{name}", "im": sheet.crop((x, y, x + w, y + h)), "n": 1, "fps": 0})
     return items
+
+
+def blobs(im: Image.Image) -> list[tuple[int, int, int, int]]:
+    """Bounding boxes (x, y, w, h) of 8-connected opaque regions, in reading order."""
+    w, h = im.size
+    alpha = im.getchannel("A").load()
+    seen = set()
+    boxes = []
+    for y in range(h):
+        for x in range(w):
+            if alpha[x, y] == 0 or (x, y) in seen:
+                continue
+            stack = [(x, y)]
+            seen.add((x, y))
+            x0 = x1 = x
+            y0 = y1 = y
+            while stack:
+                cx, cy = stack.pop()
+                x0, x1, y0, y1 = min(x0, cx), max(x1, cx), min(y0, cy), max(y1, cy)
+                for dx in (-1, 0, 1):
+                    for dy in (-1, 0, 1):
+                        nx, ny = cx + dx, cy + dy
+                        if 0 <= nx < w and 0 <= ny < h and alpha[nx, ny] and (nx, ny) not in seen:
+                            seen.add((nx, ny))
+                            stack.append((nx, ny))
+            boxes.append((x0, y0, x1 - x0 + 1, y1 - y0 + 1))
+    return sorted(boxes, key=lambda b: ((b[1] + b[3]) // 16, b[0]))
 
 
 # ------------------------------------------------------------------ pack
@@ -201,6 +253,10 @@ def write(items, pages):
     icons = OUT / "icons"
     icons.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(ART / "gfx/icons/raven_icons_16.png", icons / "raven16.png")
+    licenses = OUT / "licenses"
+    licenses.mkdir(parents=True, exist_ok=True)
+    for src, dst in LICENSES.items():
+        shutil.copyfile(ART / src, licenses / dst)
     return entries
 
 

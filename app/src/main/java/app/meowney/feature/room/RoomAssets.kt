@@ -38,6 +38,8 @@ data class RoomFile(
     val anims: Map<String, List<List<Int>>> = emptyMap(),
     val hotspots: List<Hotspot> = emptyList(),
     val spots: Map<String, List<Int>> = emptyMap(),
+    /** Visible round window: centre x, centre y, radius (scene pixels). */
+    val circle: List<Int> = emptyList(),
 )
 
 /** A tile that cycles through frames (the windows), drawn every frame on top of the baked room. */
@@ -56,7 +58,7 @@ class AnimatedTile(val tileset: Int, val col: Int, val row: Int, frames: List<Li
 }
 
 /**
- * The room from tools/build_room.py. Static layers are baked once into [base]
+ * A tile scene from tools/build_room.py (the cat's corner). Static layers are baked once into [base]
  * (room-pixel resolution); animated tiles are drawn on top each frame.
  */
 class RoomAssets private constructor(
@@ -70,6 +72,14 @@ class RoomAssets private constructor(
 
     fun spot(name: String): Pair<Float, Float> =
         file.spots[name]?.let { it[0].toFloat() to it[1].toFloat() } ?: (widthPx / 2f to heightPx / 2f)
+
+    val spots: Map<String, Pair<Float, Float>>
+        get() = file.spots.mapValues { (_, v) -> v[0].toFloat() to v[1].toFloat() }
+
+    val circle: StageCircle
+        get() = file.circle.takeIf { it.size == 3 }
+            ?.let { StageCircle(it[0].toFloat(), it[1].toFloat(), it[2].toFloat()) }
+            ?: StageCircle(widthPx / 2f, heightPx / 2f, minOf(widthPx, heightPx) / 2f)
 
     fun hotspotAt(x: Float, y: Float): Hotspot? = file.hotspots.firstOrNull { it.contains(x, y) }
 
@@ -93,8 +103,8 @@ class RoomAssets private constructor(
     companion object {
         private val json = Json { ignoreUnknownKeys = true }
 
-        fun load(assets: AssetManager): RoomAssets {
-            val file = assets.open("room/room.json").use {
+        fun load(assets: AssetManager, path: String = "room/corner.json"): RoomAssets {
+            val file = assets.open(path).use {
                 json.decodeFromString<RoomFile>(it.readBytes().decodeToString())
             }
             val sheets = file.tilesets.map { SpriteAtlas.loadBitmap(assets, "room/${it.image}") }

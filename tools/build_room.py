@@ -1,18 +1,27 @@
-"""Lay out the cat room (portrait, 11 x 18 tiles of 16 px) from the old game's home tilesets.
+"""Lay out the cat's corner: the little scene seen through the round window on the home screen.
 
-Writes app/src/main/assets/room/room.json:
+The scene is 64 x 64 px (4 x 4 tiles of the old game's home tilesets): stone wall with a
+window on top, wooden floor below. The app shows a 54 px circle of it, scaled by a whole
+number (x17 on a 1080 px phone), so the cat is about half the circle tall.
+
+Writes app/src/main/assets/room/corner.json:
   tilesets: [{name, image, columns}]
   layers:   [{name, tiles: [..]}]   tile = 0 (empty) or tileset * 10000 + index + 1
-  anims:    {"tileset:index": [[index, ms], ...]}   animated tiles (windows), from home.tmx
-  hotspots: [{id, x, y, w, h}]   room pixels; tapping one opens a module
-  spots:    {name: [x, y]}       where the cat can go (feet position)
+  anims:    {"tileset:index": [[index, ms], ...]}   animated tiles (the window), from home.tmx
+  circle:   [cx, cy, r]      the visible circle, in scene pixels
+  spots:    {name: [x, y]}   feet / bottom-centre positions in scene pixels:
+            home            where the cat idles
+            bowl, bowl_cat  food bowl, and where the cat stands to eat (facing left)
+            yarn, yarn_cat  yarn ball, and where the cat stands to play (facing right)
+            bed, bed_cat    cat bed, and the sleeping cat inside it
 
-Usage:  python -I tools/build_room.py [--preview room.png]
+Usage:  python -I tools/build_room.py [--preview corner.png]
 """
 from __future__ import annotations
 
 import argparse
 import json
+import math
 import random
 import sys
 import xml.etree.ElementTree as ET
@@ -23,7 +32,10 @@ from PIL import Image, ImageDraw
 ROOT = Path(__file__).resolve().parent.parent
 ART = ROOT / "assets"
 OUT = ROOT / "app" / "src" / "main" / "assets" / "room"
-W, H, T = 11, 18, 16
+W, H, T = 4, 4, 16
+# The visible circle inside the 64 x 64 scene: centre and radius in scene pixels. A 54 px
+# circle makes the 26 px cat about half its height.
+CIRCLE = (32, 35, 27)
 
 TILESETS = [  # name, file in OUT, columns
     ("walls_floor", "walls_floor.png", 11),
@@ -31,10 +43,17 @@ TILESETS = [  # name, file in OUT, columns
     ("doors_windows", "doors_windows.png", 17),
 ]
 WALL, INT, DOOR = 0, 1, 2
-LAYERS = ["floor", "walls", "rugs", "furniture", "decor"]
+LAYERS = ["floor", "walls", "decor"]
+
+SPOTS = {
+    "home": (32, 57),
+    "bowl": (22, 57), "bowl_cat": (36, 57),
+    "yarn": (42, 57), "yarn_cat": (28, 57),
+    "bed": (32, 61), "bed_cat": (32, 57),
+}
 
 
-class Room:
+class Scene:
     def __init__(self):
         self.layers = {name: [0] * (W * H) for name in LAYERS}
 
@@ -42,84 +61,28 @@ class Room:
         if 0 <= row < H and 0 <= col < W:
             self.layers[layer][row * W + col] = ts * 10000 + idx + 1
 
-    def block(self, layer, ts, src_row, src_col, rows, cols, row, col, skip=()):
-        """Copy a rows x cols block of tiles from a tileset grid."""
+    def block(self, layer, ts, src_row, src_col, rows, cols, row, col):
+        """Copy a whole rows x cols block from a tileset grid (multi-tile objects stay whole)."""
         columns = TILESETS[ts][2]
         for r in range(rows):
             for c in range(cols):
-                idx = (src_row + r) * columns + src_col + c
-                if idx not in skip:
-                    self.set(layer, ts, idx, row + r, col + c)
+                self.set(layer, ts, (src_row + r) * columns + src_col + c, row + r, col + c)
 
 
-def build() -> Room:
-    rnd = random.Random(7)
-    room = Room()
-    # ---- floor: wood planks with a few worn variants
-    for r in range(1, H - 1):
-        for c in range(1, W - 1):
-            room.set("floor", WALL, rnd.choice([103] * 14 + [104, 105, 106, 116]), r, c)
-    # ---- outer frame
-    room.set("walls", WALL, 133, 0, 0); room.set("walls", WALL, 135, 0, W - 1)
-    room.set("walls", WALL, 155, H - 1, 0); room.set("walls", WALL, 157, H - 1, W - 1)
-    for c in range(1, W - 1):
-        room.set("walls", WALL, 134, 0, c)
-        room.set("walls", WALL, 156, H - 1, c)
-    for r in range(1, H - 1):
-        room.set("walls", WALL, 144, r, 0)
-        room.set("walls", WALL, 146, r, W - 1)
-    # ---- back wall: cream cap, two rows of stone, skirting
-    stone_top = [34, 34, 68, 34, 101, 34, 34]
-    stone_low = [45, 45, 79, 45, 112, 45, 45]
-    for i, c in enumerate(range(1, W - 1)):
-        last = c == W - 2
-        room.set("walls", WALL, 14 if c == 1 else 15 if last else 23, 1, c)
-        room.set("walls", WALL, 25 if c == 1 else 26 if last else stone_top[i % 7], 2, c)
-        room.set("walls", WALL, 36 if c == 1 else 37 if last else stone_low[i % 7], 3, c)
-    # ---- side borders and bottom skirting
-    for r in range(4, H - 2):
-        room.set("walls", WALL, 13, r, 1)
-        room.set("walls", WALL, 11, r, W - 2)
-    room.set("walls", WALL, 47, H - 2, 1)
-    room.set("walls", WALL, 48, H - 2, W - 2)
-    for c in range(2, W - 2):
-        room.set("walls", WALL, 1, H - 2, c)
-    # ---- window (animated in home.tmx: doors_windows 15,16 / 32,33)
-    room.block("decor", DOOR, 0, 15, 2, 2, 2, 2)
-    # ---- jar shelf: empty 3x4 wooden shelf, jars are drawn on it by the app
-    room.block("furniture", INT, 6, 5, 4, 3, 1, 6)
-    # ---- bed + nightstand under the window
-    room.block("furniture", INT, 1, 4, 2, 2, 4, 1)
-    room.block("furniture", INT, 1, 8, 2, 2, 4, 3, skip={22})
-    # ---- round rug in the middle
-    room.block("rugs", INT, 16, 1, 6, 7, 8, 2, skip={225, 231, 295, 301})
-    # ---- armchair (left) and writing desk + chair (right, lower)
-    room.block("furniture", INT, 10, 1, 3, 2, 11, 1)
-    room.block("furniture", INT, 4, 8, 2, 2, 13, 7)       # small table
-    room.block("furniture", INT, 13, 5, 2, 1, 13, 6)      # chair facing the table
-    # ---- potted plants (habits) along the right wall
-    for top, row in ((328, 5), (329, 7), (326, 9)):   # plants are 1 x 2 tiles
-        room.set("decor", INT, top, row, 9)
-        room.set("decor", INT, top + 14, row + 1, 9)
-    # ---- small things on the desk / nightstand
-    room.set("decor", INT, 337, 13, 8)
-    return room
-
-
-HOTSPOTS = [  # id, tile rect (col, row, cols, rows)
-    ("jars", (6, 1, 3, 4)),
-    ("calendar", (4, 2, 1, 2)),
-    ("plants", (9, 5, 1, 6)),
-    ("desk", (6, 13, 3, 2)),
-    ("bed", (1, 4, 2, 2)),
-    ("gift", (2, 15, 1, 1)),
-    ("window", (2, 2, 2, 2)),
-]
-SPOTS = {  # feet positions in room pixels
-    "rug": (5.5 * T, 11.2 * T), "bed": (2.0 * T, 5.6 * T), "shelf": (7.5 * T, 5.8 * T),
-    "desk": (6.4 * T, 15.6 * T), "plants": (8.4 * T, 8.2 * T), "door": (5.0 * T, 15.8 * T),
-    "armchair": (2.0 * T, 12.4 * T),
-}
+def build() -> Scene:
+    rnd = random.Random(3)
+    s = Scene()
+    # Wall: two rows of stone (the lower one with the skirting), middle pieces only -
+    # the circle hides the ends.
+    for c in range(W):
+        s.set("walls", WALL, [34, 68, 34, 101][c], 0, c)
+        s.set("walls", WALL, [45, 79, 45, 112][c], 1, c)
+    for r in range(2, H):
+        for c in range(W):
+            s.set("floor", WALL, rnd.choice([103] * 6 + [104, 105, 116]), r, c)
+    # Window (2 x 2, animated in home.tmx) centred above the cat.
+    s.block("decor", DOOR, 0, 15, 2, 2, 0, 1)
+    return s
 
 
 def window_anims() -> dict:
@@ -135,22 +98,25 @@ def window_anims() -> dict:
     return anims
 
 
-def write(room: Room) -> dict:
+def write(scene: Scene) -> dict:
     data = {
         "width": W, "height": H, "tile": T,
         "tilesets": [{"name": n, "image": f, "columns": c} for n, f, c in TILESETS],
-        "layers": [{"name": n, "tiles": room.layers[n]} for n in LAYERS],
+        "layers": [{"name": n, "tiles": scene.layers[n]} for n in LAYERS],
         "anims": window_anims(),
-        "hotspots": [{"id": i, "x": c * T, "y": r * T, "w": w * T, "h": h * T}
-                     for i, (c, r, w, h) in HOTSPOTS],
-        "spots": {k: [round(x), round(y)] for k, (x, y) in SPOTS.items()},
+        "spots": {k: [x, y] for k, (x, y) in SPOTS.items()},
+        "circle": list(CIRCLE),
     }
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "room.json").write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
+    (OUT / "corner.json").write_text(json.dumps(data, separators=(",", ":")), encoding="utf-8")
+    old = OUT / "room.json"
+    if old.exists():
+        old.unlink()
     return data
 
 
-def render(data: dict, path: Path, scale: int = 4) -> None:
+def render(data: dict, path: Path, scale: int = 8) -> None:
+    """Preview: the scene, a cat at home, the bowl and yarn, masked to the circle."""
     sheets = [Image.open(OUT / ts["image"]).convert("RGBA") for ts in data["tilesets"]]
     img = Image.new("RGBA", (W * T, H * T), (42, 32, 39, 255))
     for layer in data["layers"]:
@@ -169,21 +135,21 @@ def render(data: dict, path: Path, scale: int = 4) -> None:
         im = pages[s["p"]].crop((s["x"] + frame * s["w"], s["y"], s["x"] + (frame + 1) * s["w"], s["y"] + s["h"]))
         img.alpha_composite(im, (int(x - s["w"] / 2), int(y - s["h"])))
 
-    d = ImageDraw.Draw(img)
-    # placeholder wall calendar + jars as the app will draw them
-    d.rectangle([4 * T + 2, 2 * T + 2, 5 * T - 2, 3 * T + 6], fill=(246, 231, 200, 255), outline=(60, 40, 30, 255))
-    d.rectangle([4 * T + 2, 2 * T + 2, 5 * T - 2, 2 * T + 5], fill=(200, 60, 50, 255))
-    for i, lvl in enumerate([0.8, 0.4, 0.9, 0.2, 0.6, 1.0]):
-        jx = 6 * T + 4 + (i % 3) * 15
-        jy = 2 * T + 3 + (i // 3) * 16
-        d.rectangle([jx, jy, jx + 7, jy + 10], outline=(230, 240, 255, 255))
-        d.rectangle([jx + 1, jy + 1 + int(9 * (1 - lvl)), jx + 6, jy + 9], fill=(90, 200, 120, 255))
-    sprite("treasure/littletreasurechest", 2.5 * T, 16 * T)
-    sprite("cat/1/sit", *data["spots"]["rug"])
-    sprite("cat/3/sleep1_r", *data["spots"]["bed"])
-    for hid in data["hotspots"]:
-        d.rectangle([hid["x"], hid["y"], hid["x"] + hid["w"] - 1, hid["y"] + hid["h"] - 1], outline=(80, 220, 255, 120))
-    img.resize((img.width * scale, img.height * scale), Image.NEAREST).save(path)
+    spots = data["spots"]
+    sprite("prop/pet_food_red", *spots["bowl"])
+    sprite("prop/yarnball", *spots["yarn"])
+    sprite("cat/5/sit", *spots["home"])
+    # circle mask, then crop to the circle
+    cx, cy, r = data["circle"]
+    px = img.load()
+    for y in range(img.height):
+        for x in range(img.width):
+            if math.hypot(x + 0.5 - cx, y + 0.5 - cy) > r:
+                px[x, y] = (42, 32, 39, 255)
+    img = img.crop((cx - r, cy - r, cx + r, cy + r))
+    big = img.resize((img.width * scale, img.height * scale), Image.NEAREST)
+    ImageDraw.Draw(big).ellipse([0, 0, big.width - 1, big.height - 1], outline=(138, 85, 54, 255), width=scale * 2)
+    big.save(path)
     print(f"preview: {path}")
 
 
@@ -193,6 +159,6 @@ if __name__ == "__main__":
     ap.add_argument("--preview", type=Path)
     args = ap.parse_args()
     data = write(build())
-    print(f"room.json: {W}x{H} tiles, {len(data['anims'])} animated tiles, {len(data['hotspots'])} hotspots")
+    print(f"corner.json: {W}x{H} tiles, {len(data['anims'])} animated tiles, spots {sorted(data['spots'])}")
     if args.preview:
         render(data, args.preview)

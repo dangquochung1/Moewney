@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.Alignment
+import kotlinx.coroutines.delay
 import androidx.compose.ui.Modifier
 import app.meowney.core.format.formatVnd
 import app.meowney.core.sprite.drawSprite
@@ -54,7 +55,10 @@ fun UiKitScreen(onBack: () -> Unit) {
     val clock = remember { mutableLongStateOf(0L) }
     LaunchedEffect(Unit) {
         val start = withFrameMillis { it }
-        while (true) withFrameMillis { clock.longValue = it - start }
+        while (true) {
+            withFrameMillis { clock.longValue = it - start }
+            delay(40)
+        }
     }
     val anims = remember(catColor) { atlas.keys("cat/$catColor/").map { it.substringAfterLast('/') } }
     val cell = m.dp(36 * m.ui)
@@ -131,6 +135,21 @@ fun UiKitScreen(onBack: () -> Unit) {
                         hat?.let { h -> atlas.getOrNull("hat/$h/$anim")?.let { hs -> drawSprite(hs, hs.frameAt(t), size.width / 2, size.height, scale = m.ui) } }
                     }
                     PixelText(anim, style = type.caption, color = Pal.Cream, maxLines = 1)
+                }
+            }
+        }
+        item(span = { GridItemSpan(maxLineSpan) }) {
+            PixelText("Đạo cụ (pack mới)", style = type.title, color = Pal.Cream, modifier = Modifier.padding(top = m.unit * 3))
+        }
+        items(atlas.keys("prop/")) { key ->
+            PixelPanel(sprite = "ui/wood/nine_path_bg", extraPadding = 1) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Canvas(Modifier.size(cell, m.dp(30 * m.ui))) {
+                        val s = atlas[key]
+                        val k = (minOf(size.width / s.width, size.height / s.height)).toInt().coerceIn(1, m.ui * 2)
+                        drawSprite(s, 0, size.width / 2, size.height, scale = k)
+                    }
+                    PixelText(key.removePrefix("prop/"), style = type.caption, color = Pal.Cream, maxLines = 1)
                 }
             }
         }

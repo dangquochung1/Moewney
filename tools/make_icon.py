@@ -32,28 +32,15 @@ def frame(key: str, i: int = 0) -> Image.Image:
     return _pages[s["p"]].crop((s["x"] + i * s["w"], s["y"], s["x"] + (i + 1) * s["w"], s["y"] + s["h"]))
 
 
-def outline(im: Image.Image, color=(42, 32, 39, 255)) -> Image.Image:
-    """1-pixel dark outline so the art reads on any background."""
-    out = Image.new("RGBA", (im.width + 2, im.height + 2))
-    a = im.getchannel("A").load()
-    o = out.load()
-    for y in range(im.height):
-        for x in range(im.width):
-            if a[x, y] > 0:
-                for dx, dy in ((-1, 0), (1, 0), (0, -1), (0, 1)):
-                    o[x + 1 + dx, y + 1 + dy] = color
-    out.alpha_composite(im, (1, 1))
-    return out
-
-
 def foreground(cat: int) -> Image.Image:
     """Sitting cat with a big gold coin held against its chest."""
     canvas = Image.new("RGBA", (GRID, GRID))
-    body = outline(frame(f"cat/{cat}/sit", 0))
-    coin = outline(frame("coin/coin", 0))
+    # Both sprites already carry a 1 px dark outline; adding another doubles it.
+    body = frame(f"cat/{cat}/sit", 0)
+    coin = frame("coin/coin", 0)
     cx, floor = GRID // 2, GRID // 2 + 15
     canvas.alpha_composite(body, (cx - body.width // 2, floor - body.height))
-    canvas.alpha_composite(coin, (cx - coin.width // 2 + 1, floor - coin.height + 1))
+    canvas.alpha_composite(coin, (cx - coin.width // 2 + 1, floor - coin.height - 1))
     # two sparkles on the coin side
     d = ImageDraw.Draw(canvas)
     for sx, sy in ((cx + 10, floor - 18), (cx - 12, floor - 6)):

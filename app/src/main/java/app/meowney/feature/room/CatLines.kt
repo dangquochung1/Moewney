@@ -16,15 +16,18 @@ object CatLines {
         "Trẫm ngủ đủ 16 tiếng rồi, giờ trẫm ngắm Sen làm việc.",
     )
 
-    private val hotspot = mapOf(
-        "jars" to listOf("Kệ 6 lọ của trẫm. Sắp tới Sen rót tiền vào đây!"),
-        "calendar" to listOf("Lịch hôm nay đó. Sổ lịch của Sen mở ở giai đoạn 4."),
-        "plants" to listOf("Chậu cây thói quen. Sen chăm chỉ thì cây mới lớn."),
-        "desk" to listOf("Bàn viết sổ tay của Sen. Nhật ký để sau nha."),
-        "bed" to listOf("Giường của trẫm. Sen cấm nằm."),
-        "gift" to listOf("Rương quà! Mỗi ngày một vòng quay, đợi trẫm chút."),
-        "window" to listOf("Trời đẹp quá. Sen đi làm kiếm hạt cho trẫm đi."),
-        "add" to listOf("Nút ghi chi tiêu nhanh. Giai đoạn 1 trẫm mới cho Sen bấm."),
+    private val fed = listOf(
+        "Măm măm! Sen ghi %s %s rồi nha.",
+        "Ghi sổ đều thế này, trẫm cho Sen thêm một tiếng meo.",
+        "%s %s à? Ghi đủ là trẫm vui, tiêu lố cũng phải ghi đó.",
+    )
+
+    private val toy = mapOf(
+        Toy.Money to "Hũ xu của Sen. Giai đoạn 1 mới rót tiền vào 6 lọ được.",
+        Toy.Habits to "Xong thói quen là trẫm được vờn len! Thử trước nè.",
+        Toy.Calendar to "Lịch của Sen mở ở giai đoạn 4.",
+        Toy.Notes to "Nhà của trẫm... à không, sổ tay của Sen. Giai đoạn 5 nhé.",
+        Toy.Gift to "Quà và cửa hàng mở ở giai đoạn 6. Để dành xu đi Sen.",
     )
 
     fun greeting(hour: Int): String = when (hour) {
@@ -37,6 +40,15 @@ object CatLines {
 
     fun onTap(random: Random = Random.Default) = tap.random(random)
 
-    fun onHotspot(id: String, random: Random = Random.Default) =
-        hotspot[id]?.random(random) ?: "Meo?"
+    fun fed(label: String, amount: String, random: Random = Random.Default): String {
+        val line = fed.random(random)
+        return if (line.count { it == '%' } == 2) line.format(label, amount) else line
+    }
+
+    /** [toy] null = the big "+ Ghi chi tiêu" button. */
+    fun onToy(toy: Toy?): String =
+        if (toy == null) "Nút ghi chi tiêu. Giai đoạn 1 trẫm mới cho Sen bấm thật." else toy.let { this.toy.getValue(it) }
+
+    fun sleepToggle(asleep: Boolean) =
+        if (asleep) "Trẫm đi ngủ đây... zZ (giữ lâu lần nữa để gọi trẫm dậy)" else "Ai đánh thức trẫm đấy? Hừm."
 }
