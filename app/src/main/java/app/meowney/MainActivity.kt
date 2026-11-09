@@ -44,6 +44,9 @@ import app.meowney.feature.money.JarDetailViewModel
 import app.meowney.feature.money.MoneyScreen
 import app.meowney.feature.money.RecurringScreen
 import app.meowney.feature.money.RecurringViewModel
+import app.meowney.feature.money.ReportScreen
+import app.meowney.feature.money.ReportViewModel
+import app.meowney.core.data.code
 import app.meowney.feature.money.MoneyViewModel
 import app.meowney.feature.money.WalletsScreen
 import app.meowney.feature.money.WalletsViewModel
@@ -84,6 +87,7 @@ class GameAssets(
 @Serializable data class GoalRoute(val id: Long)
 @Serializable object DebtsRoute
 @Serializable object RecurringRoute
+@Serializable data class ReportRoute(val yyyymm: Int = -1)
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -148,6 +152,13 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
             if (!onboarding) nav.navigate(EntryRoute()) { launchSingleTop = true }
         }
         if (openRequest != null) onOpened()
+    }
+    // first open of a new month: the cat hands over last month's report card
+    LaunchedEffect(Unit) {
+        if (game.onboarded && openRequest == null) {
+            val pending = withContext(Dispatchers.IO) { c.reports.pending(LocalDate.now()) }
+            if (pending != null) nav.navigate(ReportRoute(pending.code())) { launchSingleTop = true }
+        }
     }
     NavHost(nav, startDestination = if (game.onboarded) HomeRoute else OnboardingRoute) {
         composable<OnboardingRoute> {
@@ -215,7 +226,14 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, onOpene
                 onGoal = { nav.navigate(GoalRoute(it)) },
                 onDebts = { nav.navigate(DebtsRoute) },
                 onRecurring = { nav.navigate(RecurringRoute) },
+                onReport = { nav.navigate(ReportRoute()) },
             )
+        }
+        composable<ReportRoute> { entry ->
+            val month = entry.toRoute<ReportRoute>().yyyymm
+            val vm: ReportViewModel = viewModel(factory = vmFactory { ReportViewModel(c, month) })
+            val settings by c.settings.flow.collectAsState(initial = null)
+            ReportScreen(vm, catColor = settings?.catColor ?: 0, onBack = back)
         }
         composable<RecurringRoute> {
             val vm: RecurringViewModel = viewModel(factory = vmFactory { RecurringViewModel(c) })

@@ -96,6 +96,15 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
 
+    init {
+        // remember today's limit for the monthly report card
+        viewModelScope.launch {
+            state.collect { s ->
+                if (s.ready) c.reports.recordDay(LocalDate.now(), s.leftToday + s.spentToday, s.spentToday, s.spentToday > 0)
+            }
+        }
+    }
+
     private fun build(
         day: LocalDate,
         catName: String,

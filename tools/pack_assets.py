@@ -44,6 +44,7 @@ SOURCES = [
     ("crop", "gfx/ui/sunny/crops/*.png", False),
     ("treasure", "gfx/items/treasure/*.png", True),
     ("coin", "gfx/props/depths/coin/coin.png", True),
+    ("chest", "gfx/props/depths/chest/*.png", True),
     ("prop", "packs/Cozy_Cat_Pixel_Art_Pack/Cozy_Cat_Pixel_Art_Pack/props/*.png", False),
 ]
 

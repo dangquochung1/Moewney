@@ -21,6 +21,7 @@ import app.meowney.core.money.JarCode
 abstract class MeowneyDb : RoomDatabase() {
     abstract fun money(): MoneyDao
     abstract fun plans(): PlanDao
+    abstract fun reports(): ReportDao
 
     companion object {
         const val FILE = "meowney.db"

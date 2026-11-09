@@ -95,6 +95,7 @@ fun MoneyScreen(
     onGoal: (Long) -> Unit,
     onDebts: () -> Unit,
     onRecurring: () -> Unit,
+    onReport: () -> Unit,
 ) {
     val s by vm.state.collectAsState()
     var newGoal by remember { mutableStateOf(false) }
@@ -125,6 +126,10 @@ fun MoneyScreen(
                         style = type.caption, color = Pal.Gold,
                     )
                 }
+                PixelTextButton(
+                    "Tổng kết tháng · phiếu điểm", onClick = onReport, look = ButtonLook.Light,
+                    modifier = Modifier.fillMaxWidth().padding(top = m.unit),
+                )
             }
             item { GoalsSection(s.goals, s.jars, onGoal = onGoal, onNew = { newGoal = true }) }
             if (days.isEmpty()) {

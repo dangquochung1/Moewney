@@ -40,6 +40,7 @@ suspend fun todaySnapshot(c: AppContainer, today: LocalDate = LocalDate.now()): 
         .sumOf { it.amount }
     val allowance = MoneyEngine.allowance(today, period, jars.filter { it.jar.id in spendIds }.sumOf { it.balance }, spent, reserved)
     val logged = c.money.countOn(today).first() > 0
+    c.reports.recordDay(today, allowance.base, spent, logged)
     val names = c.money.categoriesNow().associate { it.id to it.name }
     val pinned = c.money.templates.first().map { QuickTemplate(it.id, it.label, it.amount, it.categoryId, true) }
     val frequent = c.money.frequentExpenses(today.minusDays(60), 6).first()
