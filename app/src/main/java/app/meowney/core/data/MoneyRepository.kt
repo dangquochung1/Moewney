@@ -4,6 +4,7 @@ import androidx.room.withTransaction
 import app.meowney.core.db.CategoryEntity
 import app.meowney.core.db.CoinEntryEntity
 import app.meowney.core.db.DebtEntity
+import app.meowney.core.db.RecurringEntity
 import app.meowney.core.db.DefaultData
 import app.meowney.core.db.GoalEntity
 import app.meowney.core.db.GoalEntryEntity
@@ -20,6 +21,8 @@ import app.meowney.core.money.BorrowPlan
 import app.meowney.core.money.EntryDraft
 import app.meowney.core.money.EntryKind
 import app.meowney.core.money.GoalEngine
+import app.meowney.core.money.RecurrenceEngine
+import app.meowney.core.money.Repeat
 import app.meowney.core.money.JarCode
 import app.meowney.core.money.JarInfo
 import app.meowney.core.money.Loan
@@ -207,6 +210,25 @@ class MoneyRepository(private val db: MeowneyDb) {
         }
         SaveResult(id, coins, notes)
     }
+
+    // ------------------------------------------------------------------ recurring bills
+
+    val recurring = plans.recurring()
+
+    suspend fun recurringNow() = plans.recurringNow()
+
+    suspend fun saveRecurring(r: RecurringEntity): Long = if (r.id == 0L) plans.insertRecurring(r) else r.id.also { plans.updateRecurring(r) }
+
+    suspend fun deleteRecurring(id: Long) = plans.deleteRecurring(id)
+
+    /** Moves a bill to its next due date (after paying or skipping this one). */
+    suspend fun advanceRecurring(id: Long) {
+        val r = plans.recurringById(id) ?: return
+        val next = RecurrenceEngine.after(Repeat.valueOf(r.rule), r.ruleDay, r.ruleMonth, LocalDate.ofEpochDay(r.nextDueDay))
+        plans.updateRecurring(r.copy(nextDueDay = next.toEpochDay()))
+    }
+
+    suspend fun debtsDue(day: LocalDate) = plans.debtsDue(day.toEpochDay())
 
     // ------------------------------------------------------------------ debts
 

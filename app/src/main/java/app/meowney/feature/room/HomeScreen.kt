@@ -46,6 +46,10 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
 import app.meowney.core.CatEvent
+import app.meowney.core.db.RecurringEntity
+import app.meowney.core.money.AmountInput
+import app.meowney.core.ui.PixelDialog
+import app.meowney.core.ui.PixelKeypad
 import app.meowney.core.format.formatVnd
 import app.meowney.core.format.formatVndShort
 import app.meowney.core.sprite.Sprite
@@ -75,6 +79,8 @@ class HomeActions(
     val onQuick: (QuickTemplate) -> Unit,
     val onPin: (QuickTemplate) -> Unit,
     val onNoSpend: () -> Unit,
+    val onPayBill: (RecurringEntity, Long) -> Unit,
+    val onSkipBill: (RecurringEntity) -> Unit,
 )
 
 @Composable
@@ -96,6 +102,21 @@ fun HomeScreen(
         }
     }
     LaunchedEffect(state.mood) { cat.mood = state.mood }
+    var paying by remember { mutableStateOf<RecurringEntity?>(null) }
+    paying?.let { bill ->
+        var amount by remember(bill) { mutableStateOf(AmountInput(bill.amount)) }
+        PixelDialog(onDismiss = { paying = null }) {
+            PixelText("Trả ${bill.name}", style = LocalPixelType.current.title)
+            PixelText(formatVnd(amount.value), style = LocalPixelType.current.display, modifier = Modifier.fillMaxWidth(), align = TextAlign.End)
+            PixelKeypad(onKey = { amount = amount.press(it) })
+            PixelButton(onClick = {
+                if (amount.value > 0) actions.onPayBill(bill, amount.value)
+                paying = null
+            }, modifier = Modifier.fillMaxWidth()) {
+                PixelText("Đã trả", style = LocalPixelType.current.title, color = Pal.Cream)
+            }
+        }
+    }
     LaunchedEffect(catEvent) {
         when (val e = catEvent ?: return@LaunchedEffect) {
             is CatEvent.Fed -> {
@@ -173,6 +194,8 @@ fun HomeScreen(
                 },
                 onAdd = actions.onAdd,
                 onNoSpend = actions.onNoSpend,
+                onPayBill = { paying = it },
+                onSkipBill = actions.onSkipBill,
             )
             Spacer(Modifier.height(m.unit * 2))
         }
@@ -296,6 +319,8 @@ private fun TodayPanel(
     onPin: (QuickTemplate) -> Unit,
     onAdd: () -> Unit,
     onNoSpend: () -> Unit,
+    onPayBill: (RecurringEntity) -> Unit,
+    onSkipBill: (RecurringEntity) -> Unit,
 ) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
@@ -304,6 +329,19 @@ private fun TodayPanel(
             Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(m.unit * 2),
         ) {
+            if (state.billsDue.isNotEmpty()) {
+                PixelText("CẦN TRẢ", style = type.caption, color = Pal.Red)
+                for (b in state.billsDue) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                        Column(Modifier.weight(1f)) {
+                            PixelText(b.name, style = type.bodyBold, maxLines = 1)
+                            PixelText(formatVnd(b.amount), style = type.caption, color = Pal.InkSoft)
+                        }
+                        PixelButton(onClick = { onPayBill(b) }, padded = true) { PixelText("Đã trả", style = type.caption, color = Pal.Cream) }
+                        PixelButton(onClick = { onSkipBill(b) }, look = ButtonLook.Light) { PixelText("Bỏ qua", style = type.caption) }
+                    }
+                }
+            }
             Column {
                 PixelText("HÔM NAY CÒN ĐƯỢC TIÊU", style = type.caption, color = Pal.InkSoft)
                 PixelText(
@@ -315,6 +353,9 @@ private fun TodayPanel(
                     if (state.spentToday == 0L) "Hôm nay chưa tiêu đồng nào" else "Đã tiêu hôm nay ${formatVnd(state.spentToday)}",
                     style = type.caption, color = Pal.InkSoft,
                 )
+                if (state.reserved > 0) {
+                    PixelText("Đã chừa ${formatVnd(state.reserved)} cho khoản định kỳ", style = type.caption, color = Pal.InkSoft)
+                }
             }
             if (state.templates.isNotEmpty()) {
                 PixelText("Ghi nhanh (giữ lâu để ghim)", style = type.bodyBold)

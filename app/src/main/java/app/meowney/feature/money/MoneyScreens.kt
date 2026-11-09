@@ -94,6 +94,7 @@ fun MoneyScreen(
     onAdd: () -> Unit,
     onGoal: (Long) -> Unit,
     onDebts: () -> Unit,
+    onRecurring: () -> Unit,
 ) {
     val s by vm.state.collectAsState()
     var newGoal by remember { mutableStateOf(false) }
@@ -103,6 +104,7 @@ fun MoneyScreen(
     val days = remember(s.txns) { s.txns.groupBy { it.day }.toList() }
 
     PixelScreen("Tiền", onBack = onBack, actions = {
+        PixelTextButton("Định kỳ", onClick = onRecurring, look = ButtonLook.Light)
         PixelTextButton("Nợ", onClick = onDebts, look = ButtonLook.Light)
         PixelTextButton("Ví", onClick = onWallets, look = ButtonLook.Light)
         PixelTextButton("+", onClick = onAdd)

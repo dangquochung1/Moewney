@@ -177,6 +177,19 @@ class MoneyRepositoryTest {
         assertBalanced()
     }
 
+    @Test fun recurringBillAdvancesAfterPaying() = runBlocking {
+        val id = repo.saveRecurring(
+            app.meowney.core.db.RecurringEntity(
+                name = "Tiền nhà", amount = 3_000_000, categoryId = cat("Nhà & hoá đơn"), walletId = cash(), jarId = jar(JarCode.NEC),
+                rule = "MONTHLY", ruleDay = 31, nextDueDay = java.time.LocalDate.of(2027, 1, 31).toEpochDay(),
+            ),
+        )
+        repo.advanceRecurring(id)
+        assertThat(repo.recurringNow().single().nextDueDay).isEqualTo(java.time.LocalDate.of(2027, 2, 28).toEpochDay())
+        repo.advanceRecurring(id)
+        assertThat(repo.recurringNow().single().nextDueDay).isEqualTo(java.time.LocalDate.of(2027, 3, 31).toEpochDay())
+    }
+
     @Test fun noSpendOnlyOnceAndOnlyWithoutSpending() = runBlocking {
         assertThat(repo.claimNoSpend(today, 0)).isEqualTo(5)
         assertThat(repo.claimNoSpend(today, 0)).isEqualTo(0)

@@ -116,6 +116,17 @@ class MoneyEngineTest {
         assertThat(over.left).isEqualTo(-50_000)
     }
 
+    @Test fun billsDueThisPeriodAreSetAsideFirst() {
+        val today = LocalDate.of(2026, 11, 21)
+        val period = MoneyEngine.period(today, 0) // 10 days left
+        val plain = MoneyEngine.allowance(today, period, 4_000_000, 0)
+        val withRent = MoneyEngine.allowance(today, period, 4_000_000, 0, reserved = 3_000_000)
+        assertThat(plain.base).isEqualTo(400_000)
+        assertThat(withRent.base).isEqualTo(100_000)
+        // more bills than money: nothing to spend, never a negative base
+        assertThat(MoneyEngine.allowance(today, period, 1_000_000, 0, reserved = 3_000_000).base).isEqualTo(0)
+    }
+
     @Test fun moneyNotSpentRollsIntoTomorrow() {
         val period = MoneyEngine.period(LocalDate.of(2026, 11, 21), 0)
         val day1 = MoneyEngine.allowance(LocalDate.of(2026, 11, 21), period, 1_000_000, 0)

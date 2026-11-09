@@ -6,6 +6,7 @@ import app.meowney.AppContainer
 import app.meowney.core.CatEvent
 import app.meowney.core.data.JarState
 import app.meowney.core.data.TxnDraft
+import app.meowney.core.db.RecurringEntity
 import app.meowney.core.game.MoodEngine
 import app.meowney.core.money.JarCode
 import app.meowney.core.money.MoneyEngine
@@ -41,6 +42,10 @@ data class HomeState(
     val canClaimNoSpend: Boolean = false,
     val templates: List<QuickTemplate> = emptyList(),
     val jarNames: Map<Long, String> = emptyMap(),
+    /** Recurring bills due today or overdue. */
+    val billsDue: List<RecurringEntity> = emptyList(),
+    /** Money set aside for bills due before the period ends. */
+    val reserved: Long = 0,
 )
 
 private data class DayNumbers(val spent: Long, val count: Int, val noSpendClaims: Int, val allocated: Long)
@@ -82,8 +87,11 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                 }
                 list
             }
-            combine(dayNumbers, templates, money.coins, money.loans) { n, t, coins, loans ->
-                build(day, settings.catName, settings.catColor, period, jars, spendIds, n, t, coins, loans.isNotEmpty())
+            combine(dayNumbers, templates, money.coins, money.loans, money.recurring) { n, t, coins, loans, bills ->
+                val active = bills.filter { it.active }
+                val reserved = active.filter { it.jarId in spendIds && it.nextDueDay <= period.end.toEpochDay() }.sumOf { it.amount }
+                build(day, settings.catName, settings.catColor, period, jars, spendIds, n, t, coins, loans.isNotEmpty(), reserved)
+                    .copy(billsDue = active.filter { it.nextDueDay <= day.toEpochDay() })
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), HomeState())
@@ -99,9 +107,10 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
         templates: List<QuickTemplate>,
         coins: Long,
         hasLoans: Boolean,
+        reserved: Long,
     ): HomeState {
         val spendingBalance = jars.filter { it.jar.id in spendIds }.sumOf { it.balance }
-        val allowance = MoneyEngine.allowance(day, period, spendingBalance, n.spent)
+        val allowance = MoneyEngine.allowance(day, period, spendingBalance, n.spent, reserved)
         val full = maxOf(n.allocated, spendingBalance, 1)
         return HomeState(
             ready = true,
@@ -116,6 +125,7 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
             canClaimNoSpend = n.spent == 0L && n.noSpendClaims == 0,
             templates = templates,
             jarNames = jars.associate { it.jar.id to it.jar.name },
+            reserved = reserved,
         )
     }
 
@@ -134,10 +144,31 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
         val p = _pending.value ?: return@launch
         _pending.value = null
         saver.save(p.draft, plan, p.editing, p.label)
+        pendingBill?.let { money.advanceRecurring(it) }
+        pendingBill = null
     }
+
+    private var pendingBill: Long? = null
+
+    /** "Đã trả" on a recurring bill: log it (borrowing if needed), then move it to its next date. */
+    fun payBill(bill: RecurringEntity, amount: Long) = viewModelScope.launch {
+        val cat = money.categoriesNow().firstOrNull { it.id == bill.categoryId }
+        val draft = TxnDraft(amount, bill.walletId, categoryId = bill.categoryId, jarId = bill.jarId ?: cat?.defaultJarId, note = bill.name, date = LocalDate.now(), source = "RECURRING")
+        val pending = saver.prepare(draft, editing = null, label = bill.name)
+        if (pending == null) {
+            saver.save(draft, app.meowney.core.money.BorrowPlan(emptyList(), 0), null, bill.name)
+            money.advanceRecurring(bill.id)
+        } else {
+            pendingBill = bill.id
+            _pending.value = pending
+        }
+    }
+
+    fun skipBill(bill: RecurringEntity) = viewModelScope.launch { money.advanceRecurring(bill.id) }
 
     fun dismissBorrow() {
         _pending.value = null
+        pendingBill = null
     }
 
     fun togglePin(t: QuickTemplate) = viewModelScope.launch {

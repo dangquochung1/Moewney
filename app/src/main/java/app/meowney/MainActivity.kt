@@ -21,6 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import app.meowney.core.data.TxnDraft
 import app.meowney.core.notify.EveningReminder
+import app.meowney.core.notify.MorningReminder
 import app.meowney.core.sprite.SpriteAtlas
 import app.meowney.core.ui.LocalIcons
 import app.meowney.core.ui.MeowneyTheme
@@ -38,6 +39,8 @@ import app.meowney.feature.money.GoalViewModel
 import app.meowney.feature.money.JarDetailScreen
 import app.meowney.feature.money.JarDetailViewModel
 import app.meowney.feature.money.MoneyScreen
+import app.meowney.feature.money.RecurringScreen
+import app.meowney.feature.money.RecurringViewModel
 import app.meowney.feature.money.MoneyViewModel
 import app.meowney.feature.money.WalletsScreen
 import app.meowney.feature.money.WalletsViewModel
@@ -75,6 +78,7 @@ class GameAssets(
 @Serializable data class JarRoute(val id: Long)
 @Serializable data class GoalRoute(val id: Long)
 @Serializable object DebtsRoute
+@Serializable object RecurringRoute
 @Serializable object WalletsRoute
 @Serializable object SettingsRoute
 @Serializable object XiaomiRoute
@@ -97,6 +101,8 @@ class MainActivity : ComponentActivity() {
                 c.sfx.enabled = settings.soundOn
                 EveningReminder.createChannel(this@MainActivity)
                 EveningReminder.schedule(this@MainActivity, settings.reminderMinute, settings.reminderOn)
+                MorningReminder.createChannel(this@MainActivity)
+                MorningReminder.schedule(this@MainActivity)
                 GameAssets(
                     sprites = SpriteAtlas.load(assets),
                     corner = RoomAssets.load(assets),
@@ -148,6 +154,8 @@ private fun App(game: GameAssets, c: AppContainer) {
                         onQuick = vm::quickLog,
                         onPin = vm::togglePin,
                         onNoSpend = vm::claimNoSpend,
+                        onPayBill = { bill, amount -> vm.payBill(bill, amount) },
+                        onSkipBill = { vm.skipBill(it) },
                     ),
                 )
             }
@@ -185,7 +193,12 @@ private fun App(game: GameAssets, c: AppContainer) {
                 onAdd = { nav.navigate(EntryRoute()) },
                 onGoal = { nav.navigate(GoalRoute(it)) },
                 onDebts = { nav.navigate(DebtsRoute) },
+                onRecurring = { nav.navigate(RecurringRoute) },
             )
+        }
+        composable<RecurringRoute> {
+            val vm: RecurringViewModel = viewModel(factory = vmFactory { RecurringViewModel(c) })
+            RecurringScreen(vm, onBack = back)
         }
         composable<DebtsRoute> {
             val vm: DebtsViewModel = viewModel(factory = vmFactory { DebtsViewModel(c) })
