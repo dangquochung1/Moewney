@@ -74,11 +74,19 @@ object CatLines {
     fun habitSlip(name: String) = "Lỡ $name à? Không sao, Sen thật thà là trẫm thương. Mai làm lại nha."
 
     /** The morning words about the days that were just closed. */
+    /**
+     * The morning sum-up of the habit days that just closed. After days away the same note comes
+     * once per day, so repeats are counted ("x 12") and only the first few kinds are said.
+     */
     fun habitSummary(s: app.meowney.core.data.CloseSummary): String = buildList {
-        if (s.kept.isNotEmpty()) add("Hôm qua Sen giữ được ${s.kept.joinToString(", ")}.")
-        if (s.rested.isNotEmpty()) add("Trẫm cho Sen nghỉ ${s.rested.joinToString(", ")} (dùng vé).")
-        if (s.missed.isNotEmpty()) add("Lỡ ${s.missed.joinToString(", ")} rồi, hôm nay làm lại nha.")
-        addAll(s.notes)
+        val many = s.notes.size > s.notes.distinct().size || s.kept.size > s.kept.distinct().size
+        val when_ = if (many) "Mấy hôm qua" else "Hôm qua"
+        if (s.kept.isNotEmpty()) add("$when_ Sen giữ được ${s.kept.distinct().joinToString(", ")}.")
+        if (s.rested.isNotEmpty()) add("Trẫm cho Sen nghỉ ${s.rested.distinct().joinToString(", ")} (dùng vé).")
+        if (s.missed.isNotEmpty()) add("Lỡ ${s.missed.distinct().joinToString(", ")} rồi, hôm nay làm lại nha.")
+        val counted = s.notes.groupingBy { it }.eachCount().entries
+        counted.take(3).forEach { (note, n) -> add(if (n > 1) "${note.trimEnd('.')} (x$n)." else note) }
+        if (counted.size > 3) add("...")
         if (s.coins > 0) add("+${s.coins} xu")
     }.joinToString(" ")
 
@@ -124,4 +132,11 @@ object CatLines {
     fun redeemed(name: String) = "Đổi \"$name\" rồi! Lúc nào thưởng thì bấm Dùng, trẫm ghi sổ giúp."
 
     fun chest(coins: Int) = "Rương mở rồi! $coins xu và đồ ăn cho trẫm. Sen giỏi nhất tháng."
+
+    fun season(season: app.meowney.core.game.Season): String = when (season) {
+        app.meowney.core.game.Season.NOEL -> "Giáng sinh an lành, Sen! Trẫm đội mũ Noel rồi nè."
+        app.meowney.core.game.Season.TET -> "Chúc mừng năm mới! Vào hộp quà nhận lì xì của trẫm đi Sen."
+        app.meowney.core.game.Season.HALLOWEEN -> "Halloween rồi! Dơi bay đầy phòng, Sen đừng sợ, có trẫm đây."
+        app.meowney.core.game.Season.AUTUMN -> "Mùa thu rồi, lá rơi đẹp ghê. Sen nhớ mặc ấm nha."
+    }
 }

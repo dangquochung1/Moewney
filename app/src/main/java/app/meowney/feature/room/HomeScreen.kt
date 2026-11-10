@@ -123,7 +123,31 @@ fun HomeScreen(
 ) {
     val m = LocalPixelMetrics.current
     val cat = remember(state.catColor) { Cat(state.catColor, corner.circle, corner.spots) }
-    var bubble by remember { mutableStateOf<String?>(CatLines.greeting(LocalDateTime.now().hour, state.catName)) }
+    var bubble by remember {
+        mutableStateOf<String?>(
+            app.meowney.core.game.SeasonEngine.seasonOn(java.time.LocalDate.now())?.let { CatLines.season(it) }
+                ?: CatLines.greeting(LocalDateTime.now().hour, state.catName),
+        )
+    }
+    // background music while home is on screen (paused when another screen or app is in front)
+    val music = (androidx.compose.ui.platform.LocalContext.current.applicationContext as app.meowney.MeowneyApp).container.music
+    val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
+    val track = app.meowney.core.game.SeasonEngine.music(state.look.season, java.time.LocalDate.now())
+    androidx.compose.runtime.DisposableEffect(lifecycle, track) {
+        val obs = androidx.lifecycle.LifecycleEventObserver { _, e ->
+            when (e) {
+                androidx.lifecycle.Lifecycle.Event.ON_RESUME -> music.play(track)
+                androidx.lifecycle.Lifecycle.Event.ON_PAUSE -> music.pause()
+                else -> Unit
+            }
+        }
+        lifecycle.addObserver(obs)
+        if (lifecycle.currentState.isAtLeast(androidx.lifecycle.Lifecycle.State.RESUMED)) music.play(track)
+        onDispose {
+            lifecycle.removeObserver(obs)
+            music.pause()
+        }
+    }
     LaunchedEffect(bubble) {
         if (bubble != null) {
             delay(3_500)

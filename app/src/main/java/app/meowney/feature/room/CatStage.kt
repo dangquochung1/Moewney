@@ -104,6 +104,7 @@ fun CatStage(
                 look.rug?.let { with(RoomPaint) { rug(it) } }
                 look.decor?.let { with(RoomPaint) { decor(atlas, it) } }
                 cat.draw(this, atlas, now)
+                with(SeasonOverlay) { season(look.season, now, atlas) }
             }
             drawImage(mask)
         }

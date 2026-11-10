@@ -206,6 +206,7 @@ class MainActivity : FragmentActivity() {
             loaded = withContext(Dispatchers.IO) {
                 val settings = c.settings.now()
                 c.sfx.enabled = settings.soundOn
+                c.music.enabled = settings.musicOn
                 EveningReminder.createChannel(this@MainActivity)
                 EveningReminder.schedule(this@MainActivity, settings.reminderMinute, settings.reminderOn)
                 MorningReminder.createChannel(this@MainActivity)

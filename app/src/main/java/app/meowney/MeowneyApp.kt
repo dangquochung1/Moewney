@@ -47,6 +47,7 @@ class AppContainer(val context: Context) {
     val settings = SettingsStore(context)
     val events = AppEvents()
     val sfx: Sfx by lazy { Sfx(context) }
+    val music: app.meowney.core.sound.Music by lazy { app.meowney.core.sound.Music(context) }
 
     // Art shared by the app and the home-screen widgets (which may run without the activity).
     val sprites: SpriteAtlas by lazy { SpriteAtlas.load(context.assets) }

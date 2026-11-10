@@ -59,6 +59,7 @@ class SettingsViewModel(private val c: AppContainer, private val context: Contex
         c.settings.update(f)
         val s = c.settings.now()
         c.sfx.enabled = s.soundOn
+        c.music.enabled = s.musicOn
         EveningReminder.schedule(context, s.reminderMinute, s.reminderOn)
         app.meowney.core.notify.CalendarReminder.schedule(context)
     }
@@ -144,7 +145,11 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
                 }
             }
             Section("Âm thanh") {
-                PixelChip(if (s.soundOn) "Hiệu ứng: bật" else "Hiệu ứng: tắt", selected = s.soundOn) { vm.update { it.copy(soundOn = !it.soundOn) } }
+                Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                    PixelChip(if (s.soundOn) "Hiệu ứng: bật" else "Hiệu ứng: tắt", selected = s.soundOn) { vm.update { it.copy(soundOn = !it.soundOn) } }
+                    PixelChip(if (s.musicOn) "Nhạc nền: bật" else "Nhạc nền: tắt", selected = s.musicOn) { vm.update { it.copy(musicOn = !it.musicOn) } }
+                }
+                PixelText("Nhạc chỉ phát ở màn chính, đổi bài theo mùa.", style = type.caption, color = Pal.InkSoft)
             }
             Section("Khác") {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {

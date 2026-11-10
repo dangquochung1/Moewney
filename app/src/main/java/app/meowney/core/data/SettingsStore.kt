@@ -25,6 +25,8 @@ data class Settings(
     /** Minutes after midnight, default 21:00. */
     val reminderMinute: Int = 21 * 60,
     val soundOn: Boolean = true,
+    /** Background music on the home screen. */
+    val musicOn: Boolean = true,
     /** Exact reminders for events and to-dos. */
     val calendarRemindOn: Boolean = true,
     /** Ask for the phone's fingerprint / screen lock before opening the notebook. */
@@ -48,6 +50,7 @@ class SettingsStore(private val context: Context) {
         val reminderOn = booleanPreferencesKey("reminder_on")
         val reminderMinute = intPreferencesKey("reminder_minute")
         val soundOn = booleanPreferencesKey("sound_on")
+        val musicOn = booleanPreferencesKey("music_on")
         val calendarRemindOn = booleanPreferencesKey("calendar_remind_on")
         val notesLock = booleanPreferencesKey("notes_lock")
         val diaryHidePreview = booleanPreferencesKey("diary_hide_preview")
@@ -79,6 +82,7 @@ class SettingsStore(private val context: Context) {
             prefs[K.reminderOn] = s.reminderOn
             prefs[K.reminderMinute] = s.reminderMinute
             prefs[K.soundOn] = s.soundOn
+            prefs[K.musicOn] = s.musicOn
             prefs[K.calendarRemindOn] = s.calendarRemindOn
             prefs[K.notesLock] = s.notesLock
             prefs[K.diaryHidePreview] = s.diaryHidePreview
@@ -145,6 +149,7 @@ class SettingsStore(private val context: Context) {
         reminderOn = this[K.reminderOn] ?: true,
         reminderMinute = this[K.reminderMinute] ?: (21 * 60),
         soundOn = this[K.soundOn] ?: true,
+        musicOn = this[K.musicOn] ?: true,
         calendarRemindOn = this[K.calendarRemindOn] ?: true,
         notesLock = this[K.notesLock] ?: false,
         diaryHidePreview = this[K.diaryHidePreview] ?: true,
