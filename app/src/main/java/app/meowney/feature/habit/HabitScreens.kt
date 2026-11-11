@@ -121,7 +121,7 @@ fun HabitsScreen(vm: HabitsViewModel, onBack: () -> Unit, onNew: () -> Unit, onO
         if (s.habits.isEmpty()) {
             PixelText(
                 "Chưa có thói quen nào. Bấm + để tạo: uống nước, đọc sách, bỏ trà sữa... Xong mỗi cái là trẫm được vờn len!",
-                style = type.body, color = Pal.Paper,
+                style = type.body, color = Pal.InkSoft,
             )
         }
         LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
@@ -376,16 +376,16 @@ private fun defaultReminder(part: PartOfDay) = when (part) {
 private fun Label(text: String) = PixelText(text.uppercase(), style = LocalPixelType.current.caption, color = Pal.Gold)
 
 @Composable
-private fun Hint(text: String) = PixelText(text, style = LocalPixelType.current.caption, color = Pal.Paper)
+private fun Hint(text: String) = PixelText(text, style = LocalPixelType.current.caption, color = Pal.InkSoft)
 
 @Composable
 private fun Stepper(label: String, value: String, onMinus: () -> Unit, onPlus: () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-        PixelText(label, style = type.body, color = Pal.Cream, modifier = Modifier.weight(1f))
+        PixelText(label, style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f))
         PixelTextButton("-", onClick = onMinus, look = ButtonLook.Light)
-        PixelText(value, style = type.bodyBold, color = Pal.Cream, align = TextAlign.Center)
+        PixelText(value, style = type.bodyBold, color = Pal.Ink, align = TextAlign.Center)
         PixelTextButton("+", onClick = onPlus, look = ButtonLook.Light)
     }
 }
@@ -434,7 +434,7 @@ fun HabitDetailScreen(vm: HabitDetailViewModel, onBack: () -> Unit, onEdit: () -
             }
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 PixelTextButton("<", onClick = { vm.shift(-1) }, look = ButtonLook.Light)
-                PixelText("Tháng ${s.month.monthValue}/${s.month.year}", style = type.bodyBold, color = Pal.Cream, align = TextAlign.Center, modifier = Modifier.weight(1f))
+                PixelText("Tháng ${s.month.monthValue}/${s.month.year}", style = type.bodyBold, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
                 PixelTextButton(">", onClick = { vm.shift(1) }, enabled = s.month.isBefore(YearMonth.now()), look = ButtonLook.Light)
             }
             MonthGrid(h, s.month, s.logs)
@@ -473,7 +473,7 @@ private fun MonthGrid(h: HabitEntity, month: YearMonth, logs: List<HabitLogEntit
     val cells = lead + month.lengthOfMonth()
     Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
         Row {
-            for (d in WEEKDAY_SHORT) PixelText(d, style = type.caption, color = Pal.Paper, align = TextAlign.Center, modifier = Modifier.weight(1f))
+            for (d in WEEKDAY_SHORT) PixelText(d, style = type.caption, color = Pal.InkSoft, align = TextAlign.Center, modifier = Modifier.weight(1f))
         }
         for (week in 0 until (cells + 6) / 7) {
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit)) {
@@ -505,6 +505,6 @@ private fun Legend(color: Color, label: String) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Canvas(Modifier.size(m.unit * 4)) { drawRect(color) }
         Spacer(Modifier.width(m.unit))
-        PixelText(label, style = LocalPixelType.current.caption, color = Pal.Paper)
+        PixelText(label, style = LocalPixelType.current.caption, color = Pal.InkSoft)
     }
 }

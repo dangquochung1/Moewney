@@ -152,15 +152,15 @@ fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit
             PixelText(
                 "%02d:%02d".format(left / 60, left % 60),
                 style = type.display.copy(fontSize = type.display.fontSize * 2),
-                color = Pal.Cream, align = TextAlign.Center,
+                color = Pal.Ink, align = TextAlign.Center,
             )
             SessionDots(s)
             s.habit?.let { h ->
                 val done = s.habitToday?.value ?: 0
-                PixelText("${h.name} · $done/${h.target} phút hôm nay", style = type.body, color = Pal.Paper)
+                PixelText("${h.name} · $done/${h.target} phút hôm nay", style = type.body, color = Pal.InkSoft)
             }
             if (!s.running && s.timerHabits.isNotEmpty()) {
-                PixelText("Tính phút vào", style = type.caption, color = Pal.Paper)
+                PixelText("Tính phút vào", style = type.caption, color = Pal.InkSoft)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     PixelChip("Tự do", selected = s.habit == null) { vm.pick(null) }
                     for (h in s.timerHabits) PixelChip(h.name, selected = s.habit?.id == h.id) { vm.pick(h.id) }
@@ -180,7 +180,7 @@ fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelText(
                     "Tập trung ${s.cfg.focus}p · nghỉ ${s.cfg.shortBreak}p · nghỉ dài ${s.cfg.longBreak}p sau ${s.cfg.longEvery} phiên",
-                    style = type.caption, color = Pal.Paper, modifier = Modifier.weight(1f),
+                    style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f),
                 )
                 if (!s.running) PixelTextButton("Chỉnh", onClick = { editing = true }, look = ButtonLook.Light)
             }

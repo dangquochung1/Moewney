@@ -53,7 +53,7 @@ fun RavenIcon(index: Int, modifier: Modifier = Modifier, scale: Int = LocalPixel
     }
 }
 
-/** Full-screen page: night background, back button + title row, then [content]. */
+/** Full-screen page: cream background, back button + title row, then [content]. */
 @Composable
 fun PixelScreen(
     title: String,
@@ -66,7 +66,7 @@ fun PixelScreen(
     Column(
         modifier
             .fillMaxSize()
-            .background(Pal.Night)
+            .background(Pal.Canvas)
             .windowInsetsPadding(WindowInsets.safeDrawing)
             .padding(horizontal = m.unit * 2),
     ) {
@@ -76,7 +76,7 @@ fun PixelScreen(
             horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
         ) {
             if (onBack != null) PixelTextButton("<", onClick = onBack, look = ButtonLook.Light)
-            PixelText(title, style = LocalPixelType.current.title, color = Pal.Cream, modifier = Modifier.weight(1f), maxLines = 1)
+            PixelText(title, style = LocalPixelType.current.title, color = Pal.Ink, modifier = Modifier.weight(1f), maxLines = 1)
             actions()
         }
         content()

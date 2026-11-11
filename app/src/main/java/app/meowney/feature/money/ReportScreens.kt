@@ -131,14 +131,14 @@ fun ReportScreen(vm: ReportViewModel, catColor: Int, onBack: () -> Unit) {
             val month = s.months.getOrNull(s.index)
             PixelText(
                 month?.let { "Tháng ${it.monthValue}/${it.year}" + if (s.report?.final == false) " (tạm tính)" else "" } ?: "",
-                style = type.bodyBold, color = Pal.Cream, modifier = Modifier.weight(1f).padding(horizontal = m.unit * 2),
+                style = type.bodyBold, color = Pal.Ink, modifier = Modifier.weight(1f).padding(horizontal = m.unit * 2),
             )
             PixelTextButton(">", onClick = { vm.go(-1) }, enabled = s.index > 0, look = ButtonLook.Light)
         }
         Spacer(Modifier.height(m.unit * 2))
         val r = s.report
         if (r == null) {
-            if (!s.loading) PixelText("Chưa có số liệu tháng này.", style = type.body, color = Pal.Paper)
+            if (!s.loading) PixelText("Chưa có số liệu tháng này.", style = type.body, color = Pal.InkSoft)
             return@PixelScreen
         }
         LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
@@ -231,9 +231,9 @@ private fun ChestRow(r: MonthReport, justClaimed: Int, onOpen: () -> Unit) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                 if (r.claimed) {
                     PixelText(if (justClaimed > 0) "+$justClaimed xu!" else "Đã nhận $coins xu", style = type.title, color = Pal.Gold)
-                    PixelText("Xu để dành mua đồ cho Hoàng thượng.", style = type.caption, color = Pal.Paper)
+                    PixelText("Xu để dành mua đồ cho Hoàng thượng.", style = type.caption, color = Pal.InkSoft)
                 } else {
-                    PixelText("Rương thưởng hạng ${r.data.score.grade}", style = type.bodyBold, color = Pal.Cream)
+                    PixelText("Rương thưởng hạng ${r.data.score.grade}", style = type.bodyBold, color = Pal.Ink)
                     PixelTextButton("Mở rương (+$coins xu)", onClick = onOpen)
                 }
             }
@@ -248,11 +248,11 @@ private fun Totals(d: ReportData) {
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         for ((label, value, color) in listOf(
             Triple("Thu", d.income, Pal.Green),
-            Triple("Chi", d.expense, Pal.Cream),
+            Triple("Chi", d.expense, Pal.Ink),
             Triple("Để dành", d.saved, Pal.Gold),
         )) {
             Column(Modifier.weight(1f)) {
-                PixelText(label, style = type.caption, color = Pal.Paper)
+                PixelText(label, style = type.caption, color = Pal.InkSoft)
                 PixelText(formatVndShort(value), style = type.bodyBold, color = color)
             }
         }
@@ -274,7 +274,7 @@ private fun MoodRow(mood: app.meowney.core.notes.MoodSummary) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-        PixelText("Sen viết nhật ký ${mood.written} ngày", style = type.body, color = Pal.Cream)
+        PixelText("Sen viết nhật ký ${mood.written} ngày", style = type.body, color = Pal.Ink)
         for ((label, n, md) in listOf(
             Triple("Vui", mood.good, app.meowney.core.notes.Mood.GOOD),
             Triple("Bình thường", mood.ok, app.meowney.core.notes.Mood.OK),
@@ -284,8 +284,8 @@ private fun MoodRow(mood: app.meowney.core.notes.MoodSummary) {
                 app.meowney.feature.notes.MoodIcon(md, scale = (m.ui - 2).coerceAtLeast(2), framed = true)
                 Column(Modifier.weight(1f)) {
                     Row {
-                        PixelText(label, style = type.body, color = Pal.Cream, modifier = Modifier.weight(1f))
-                        PixelText("$n ngày", style = type.caption, color = Pal.Paper)
+                        PixelText(label, style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f))
+                        PixelText("$n ngày", style = type.caption, color = Pal.InkSoft)
                     }
                     PixelProgress(n.toFloat() / mood.written.coerceAtLeast(1), color = app.meowney.feature.notes.moodTint(md), heightPx = 4)
                 }
@@ -309,8 +309,8 @@ private fun HBars(bars: List<Bar>, color: (Bar) -> Color) {
                 }
                 Column(Modifier.weight(1f)) {
                     Row {
-                        PixelText(b.label, style = type.body, color = Pal.Cream, modifier = Modifier.weight(1f), maxLines = 1)
-                        PixelText(formatVnd(b.amount), style = type.caption, color = Pal.Paper)
+                        PixelText(b.label, style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f), maxLines = 1)
+                        PixelText(formatVnd(b.amount), style = type.caption, color = Pal.InkSoft)
                     }
                     PixelProgress(b.amount.toFloat() / max, color = color(b), heightPx = 4)
                 }
@@ -348,11 +348,11 @@ private fun DayChart(d: ReportData) {
             }
         }
         Row {
-            PixelText("1", style = type.caption, color = Pal.Paper, modifier = Modifier.weight(1f))
+            PixelText("1", style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f))
             if (d.byDay.getOrNull(peak) ?: 0 > 0) {
                 PixelText("nhiều nhất: ngày ${peak + 1} · ${formatVndShort(d.byDay[peak])}", style = type.caption, color = Pal.Orange)
             }
-            PixelText("  ${d.byDay.size}", style = type.caption, color = Pal.Paper)
+            PixelText("  ${d.byDay.size}", style = type.caption, color = Pal.InkSoft)
         }
     }
 }

@@ -110,6 +110,22 @@ class Cat(
         add(Step.Anim("sit", loop = true, ms = 2_000))
     }
 
+    /** While Sen is stroking: sit still, don't wander or fall asleep. */
+    private var petting = false
+
+    fun pet() {
+        petting = true
+        sleeping = false
+        visible.remove(Prop.Bed)
+        steps.clear()
+        current = null
+    }
+
+    fun releasePet() {
+        petting = false
+        current = null
+    }
+
     private fun interrupt(block: ArrayDeque<Step>.() -> Unit) {
         steps.clear()
         current = null
@@ -130,6 +146,10 @@ class Cat(
     // ------------------------------------------------------------------ frame update
 
     fun update(now: Long, dtMs: Long, atlas: SpriteAtlas, hour: Int) {
+        if (petting) {
+            if (anim != "sit") setAnim("sit", now, loop = true)
+            return
+        }
         val wantsSleep = forceSleep || hour >= 22 || hour < 6 || mood == Mood.Sad
         if (wantsSleep && !sleeping && steps.isEmpty() && current !is Step.Walk) {
             current = null

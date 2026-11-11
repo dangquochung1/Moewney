@@ -1,10 +1,19 @@
 package app.meowney.feature.room
 
-import android.graphics.Typeface
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.material.icons.outlined.DateRange
+import androidx.compose.material3.Icon
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import app.meowney.R
+import app.meowney.core.sound.Sfx
 import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
@@ -115,7 +124,6 @@ class HomeActions(
 @Composable
 fun HomeScreen(
     corner: RoomAssets,
-    pixelTypeface: Typeface,
     state: HomeState,
     catEvent: CatEvent?,
     onCatEventHandled: () -> Unit,
@@ -130,7 +138,9 @@ fun HomeScreen(
         )
     }
     // background music while home is on screen (paused when another screen or app is in front)
-    val music = (androidx.compose.ui.platform.LocalContext.current.applicationContext as app.meowney.MeowneyApp).container.music
+    val meowneyApp = androidx.compose.ui.platform.LocalContext.current.applicationContext as app.meowney.MeowneyApp
+    val music = meowneyApp.container.music
+    val sfx = meowneyApp.container.sfx
     val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
     val track = app.meowney.core.game.SeasonEngine.music(state.look.season, java.time.LocalDate.now())
     androidx.compose.runtime.DisposableEffect(lifecycle, track) {
@@ -245,7 +255,7 @@ fun HomeScreen(
     BoxWithConstraints(
         Modifier
             .fillMaxSize()
-            .background(Pal.Night)
+            .background(Pal.Canvas)
             .windowInsetsPadding(WindowInsets.safeDrawing),
     ) {
         val maxWidth = constraints.maxWidth
@@ -263,6 +273,8 @@ fun HomeScreen(
                     },
                     onCatLongPress = actions.onWardrobe,
                     look = state.look,
+                    plain = true,
+                    onPet = { sfx.play(Sfx.Sound.Click, 0.45f) },
                 )
                 bubble?.let {
                     SpeechBubble(
@@ -274,21 +286,15 @@ fun HomeScreen(
                     )
                 }
             }
-            ToyRow(
-                typeface = pixelTypeface,
-                jarLevel = state.jarLevel,
-                habitLevel = state.habitLevel,
+            NavRow(
                 calendarCount = state.calendarCount(LocalDateTime.now().let { it.hour * 60 + it.minute }),
-                catColor = state.catColor,
+                diaryDone = state.diaryWritten,
+                giftBadge = state.spinReady,
                 moneyZoom = zoomMoney,
                 habitsZoom = zoomHabits,
                 calendarZoom = zoomCalendar,
                 notesZoom = zoomNotes,
                 giftZoom = zoomGift,
-                diaryEmote = app.meowney.core.notes.Mood.of(state.diaryMood)?.emote,
-                diaryDone = state.diaryWritten,
-                tower = state.look.tower,
-                giftBadge = state.spinReady,
                 onToy = { toy ->
                     when (toy) {
                         Toy.Money -> {
@@ -402,51 +408,50 @@ private fun CoinIcon(atlas: SpriteAtlas) {
     }
 }
 
-// ------------------------------------------------------------------ toys
+// ------------------------------------------------------------------ channels
+
+private val NavPastel = mapOf(
+    Toy.Money to Color(0xFFD7EBF8),
+    Toy.Habits to Color(0xFFD9F3DF),
+    Toy.Calendar to Color(0xFFFDE7C2),
+    Toy.Notes to Color(0xFFF8D6E4),
+    Toy.Gift to Color(0xFFE7D6F6),
+)
 
 @Composable
-private fun ToyRow(
-    typeface: Typeface,
-    jarLevel: Float,
-    habitLevel: Float?,
+private fun NavRow(
     calendarCount: Int,
-    catColor: Int,
+    diaryDone: Boolean,
+    giftBadge: Boolean,
     moneyZoom: ZoomSource,
     habitsZoom: ZoomSource,
     calendarZoom: ZoomSource,
     notesZoom: ZoomSource,
     giftZoom: ZoomSource,
-    diaryEmote: String?,
-    diaryDone: Boolean,
-    tower: String,
-    giftBadge: Boolean,
     onToy: (Toy) -> Unit,
 ) {
     val m = LocalPixelMetrics.current
-    val atlas = LocalSprites.current
-    val today = LocalDate.now()
-    val scale = (m.ui - 1).coerceAtLeast(2)
-    // quantise the level so the jar image is not rebuilt for every đồng
-    val level = (jarLevel * 16).toInt() / 16f
-    val images = remember(atlas, typeface, level, today, habitLevel, catColor, calendarCount, diaryEmote, diaryDone, tower, giftBadge) {
-        Toy.entries.associateWith { ToyArt.image(it, atlas, typeface, level, today, habitLevel, catColor, calendarCount, diaryEmote, diaryDone, tower, giftBadge) }
-    }
-    val tallest = images.values.maxOf { it.height }
     Row(
         Modifier.fillMaxWidth().padding(vertical = m.unit * 2),
         horizontalArrangement = Arrangement.SpaceEvenly,
-        verticalAlignment = Alignment.Bottom,
+        verticalAlignment = Alignment.Top,
     ) {
         for (toy in Toy.entries) {
-            ToyButton(
-                toy, images.getValue(toy), scale, tallest,
+            val badge = when (toy) {
+                Toy.Calendar -> if (calendarCount > 0) if (calendarCount > 9) "9" else "$calendarCount" else null
+                Toy.Notes -> if (!diaryDone) "!" else null
+                Toy.Gift -> if (giftBadge) "•" else null
+                else -> null
+            }
+            NavButton(
+                toy,
+                badge,
                 modifier = when (toy) {
                     Toy.Money -> Modifier.zoomSource(moneyZoom)
                     Toy.Habits -> Modifier.zoomSource(habitsZoom)
                     Toy.Calendar -> Modifier.zoomSource(calendarZoom)
                     Toy.Notes -> Modifier.zoomSource(notesZoom)
                     Toy.Gift -> Modifier.zoomSource(giftZoom)
-                    else -> Modifier
                 },
             ) { onToy(toy) }
         }
@@ -454,7 +459,7 @@ private fun ToyRow(
 }
 
 @Composable
-private fun ToyButton(toy: Toy, image: ImageBitmap, scale: Int, tallest: Int, modifier: Modifier = Modifier, onClick: () -> Unit) {
+private fun NavButton(toy: Toy, badge: String?, modifier: Modifier = Modifier, onClick: () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val source = remember { MutableInteractionSource() }
@@ -463,21 +468,35 @@ private fun ToyButton(toy: Toy, image: ImageBitmap, scale: Int, tallest: Int, mo
         modifier.clickable(interactionSource = source, indication = null, role = Role.Button, onClick = onClick),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Box(Modifier.height(m.dp(tallest * scale)), contentAlignment = Alignment.BottomCenter) {
-            Canvas(
+        Box(contentAlignment = Alignment.Center) {
+            Box(
                 Modifier
-                    .size(m.dp(image.width * scale), m.dp(image.height * scale))
-                    .offset(y = if (pressed) m.dp(scale) else m.dp(0)),
+                    .size(m.unit * 16)
+                    .clip(CircleShape)
+                    .background(NavPastel.getValue(toy))
+                    .offset(y = if (pressed) m.unit else m.dp(0)),
+                contentAlignment = Alignment.Center,
             ) {
-                drawImage(
-                    image,
-                    dstSize = IntSize(size.width.toInt(), size.height.toInt()),
-                    filterQuality = FilterQuality.None,
-                    alpha = if (pressed) 0.8f else 1f,
-                )
+                val tint = Pal.Ink.copy(alpha = if (pressed) 0.7f else 1f)
+                val iconSize = Modifier.size(m.unit * 8)
+                when (toy) {
+                    Toy.Money -> Icon(painterResource(R.drawable.ic_nav_wallet), null, iconSize, tint)
+                    Toy.Habits -> Icon(Icons.Outlined.CheckCircle, null, iconSize, tint)
+                    Toy.Calendar -> Icon(Icons.Outlined.DateRange, null, iconSize, tint)
+                    Toy.Notes -> Icon(painterResource(R.drawable.ic_nav_book), null, iconSize, tint)
+                    Toy.Gift -> Icon(painterResource(R.drawable.ic_nav_gift), null, iconSize, tint)
+                }
+            }
+            if (badge != null) {
+                Box(
+                    Modifier.align(Alignment.TopEnd).offset(x = m.unit, y = -m.unit).size(m.unit * 6).background(Pal.Red),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    PixelText(badge, style = type.caption, color = Pal.Card, align = TextAlign.Center, maxLines = 1)
+                }
             }
         }
-        PixelText(toy.label, style = type.caption, color = if (pressed) Pal.Gold else Pal.Cream, align = TextAlign.Center)
+        PixelText(toy.label, style = type.caption, color = if (pressed) Pal.Orange else Pal.Ink, align = TextAlign.Center)
     }
 }
 
@@ -501,67 +520,68 @@ private fun TodayPanel(
 ) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelPanel(modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
-        Column(
-            Modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(m.unit * 2),
-        ) {
-            if (state.billsDue.isNotEmpty()) {
-                PixelText("CẦN TRẢ", style = type.caption, color = Pal.Red)
-                for (b in state.billsDue) {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                        Column(Modifier.weight(1f)) {
-                            PixelText(b.name, style = type.bodyBold, maxLines = 1)
-                            PixelText(formatVnd(b.amount), style = type.caption, color = Pal.InkSoft)
+    Column(
+        modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
+        verticalArrangement = Arrangement.spacedBy(m.unit * 2),
+    ) {
+        if (state.billsDue.isNotEmpty()) {
+            PixelPanel(Modifier.fillMaxWidth()) {
+                Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                    PixelText("CẦN TRẢ", style = type.caption, color = Pal.Red)
+                    for (b in state.billsDue) {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                            Column(Modifier.weight(1f)) {
+                                PixelText(b.name, style = type.bodyBold, maxLines = 1)
+                                PixelText(formatVnd(b.amount), style = type.caption, color = Pal.InkSoft)
+                            }
+                            PixelButton(onClick = { onPayBill(b) }, padded = true) { PixelText("Đã trả", style = type.caption, color = Pal.Cream) }
+                            PixelButton(onClick = { onSkipBill(b) }, look = ButtonLook.Light) { PixelText("Bỏ qua", style = type.caption) }
                         }
-                        PixelButton(onClick = { onPayBill(b) }, padded = true) { PixelText("Đã trả", style = type.caption, color = Pal.Cream) }
-                        PixelButton(onClick = { onSkipBill(b) }, look = ButtonLook.Light) { PixelText("Bỏ qua", style = type.caption) }
                     }
                 }
             }
-            Column {
-                PixelText("HÔM NAY CÒN ĐƯỢC TIÊU", style = type.caption, color = Pal.InkSoft)
-                PixelText(
-                    formatVnd(state.leftToday),
-                    style = type.display,
-                    color = if (state.leftToday < 0) Pal.Red else Pal.Ink,
-                )
-                PixelText(
-                    if (state.spentToday == 0L) "Hôm nay chưa tiêu đồng nào" else "Đã tiêu hôm nay ${formatVnd(state.spentToday)}",
-                    style = type.caption, color = Pal.InkSoft,
-                )
-                if (state.reserved > 0) {
-                    PixelText("Đã chừa ${formatVnd(state.reserved)} cho khoản định kỳ", style = type.caption, color = Pal.InkSoft)
-                }
-            }
-            if (state.events.isNotEmpty() || state.todos.isNotEmpty() || state.overdue > 0) CalendarToday(state, habitActions)
-            if (state.habits.isNotEmpty()) HabitsToday(state.habits, habitActions, onCountEdit)
-            DiaryToday(state, habitActions)
-            state.challenge?.let { ChallengeToday(it, habitActions) }
-            if (state.pinned.isNotEmpty()) PinnedNotes(state, habitActions)
-            if (state.templates.isNotEmpty()) {
-                PixelText("Ghi nhanh (giữ lâu để ghim)", style = type.bodyBold)
-                FlowRow(
-                    horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
-                    verticalArrangement = Arrangement.spacedBy(m.unit * 2),
-                ) {
-                    for (t in state.templates) {
-                        TemplateChip(t, onClick = { onQuick(t) }, onLongClick = { onPin(t) })
+        }
+        PixelPanel(Modifier.fillMaxWidth()) {
+            PixelText(
+                if (state.spentToday == 0L) "Hôm nay chưa tiêu" else "Đã tiêu hôm nay ${formatVnd(state.spentToday)}",
+                style = type.bodyBold,
+            )
+        }
+        if (state.events.isNotEmpty() || state.todos.isNotEmpty() || state.overdue > 0) {
+            PixelPanel(Modifier.fillMaxWidth()) { CalendarToday(state, habitActions) }
+        }
+        if (state.habits.isNotEmpty()) {
+            PixelPanel(Modifier.fillMaxWidth()) { HabitsToday(state.habits, habitActions, onCountEdit) }
+        }
+        PixelPanel(Modifier.fillMaxWidth()) { DiaryToday(state, habitActions) }
+        state.challenge?.let { PixelPanel(Modifier.fillMaxWidth()) { ChallengeToday(it, habitActions) } }
+        if (state.pinned.isNotEmpty()) PixelPanel(Modifier.fillMaxWidth()) { PinnedNotes(state, habitActions) }
+        if (state.templates.isNotEmpty()) {
+            PixelPanel(Modifier.fillMaxWidth()) {
+                Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                    PixelText("Ghi nhanh (giữ lâu để ghim)", style = type.bodyBold)
+                    FlowRow(
+                        horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
+                        verticalArrangement = Arrangement.spacedBy(m.unit * 2),
+                    ) {
+                        for (t in state.templates) {
+                            TemplateChip(t, onClick = { onQuick(t) }, onLongClick = { onPin(t) })
+                        }
                     }
                 }
             }
-            PixelButton(onClick = onAdd, modifier = Modifier.fillMaxWidth().zoomSource(addZoom)) {
-                PixelText("+ Ghi chi tiêu", style = type.title, color = Pal.Cream)
+        }
+        PixelButton(onClick = onAdd, modifier = Modifier.fillMaxWidth().zoomSource(addZoom)) {
+            PixelText("+ Ghi chi tiêu", style = type.title, color = Pal.Cream)
+        }
+        if (state.backupDays > 0) {
+            PixelButton(onClick = onSettings, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
+                PixelText("Sao lưu dữ liệu (${state.backupDays} ngày chưa lưu)", style = type.bodyBold, color = Pal.Ink)
             }
-            if (state.backupDays > 0) {
-                PixelButton(onClick = onSettings, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
-                    PixelText("Sao lưu dữ liệu (${state.backupDays} ngày chưa lưu)", style = type.bodyBold, color = Pal.Ink)
-                }
-            }
-            if (state.canClaimNoSpend) {
-                PixelButton(onClick = onNoSpend, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
-                    PixelText("Hôm nay Sen không tiêu gì", style = type.bodyBold, color = Pal.Ink)
-                }
+        }
+        if (state.canClaimNoSpend) {
+            PixelButton(onClick = onNoSpend, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
+                PixelText("Hôm nay Sen không tiêu gì", style = type.bodyBold, color = Pal.Ink)
             }
         }
     }

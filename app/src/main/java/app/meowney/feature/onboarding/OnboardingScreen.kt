@@ -142,7 +142,7 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
             when (s.step) {
                 0 -> {
                     CatPicker(s.catColor) { color -> vm.update { it.copy(catColor = color) } }
-                    PixelText("Tên mèo", style = type.bodyBold, color = Pal.Cream)
+                    PixelText("Tên mèo", style = type.bodyBold, color = Pal.Ink)
                     PixelTextField(s.catName, { n -> vm.update { it.copy(catName = n.take(16)) } }, Modifier.fillMaxWidth())
                 }
                 1 -> {
@@ -175,7 +175,7 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                             PixelTextField(s.names[code] ?: "", { n -> vm.update { it.copy(names = it.names + (code to n.take(20))) } }, Modifier.weight(1f))
                             PixelTextButton("-", onClick = { vm.update { it.copy(percents = it.percents + (code to (pct - 5).coerceAtLeast(0))) } }, look = ButtonLook.Light)
-                            PixelText("$pct%", style = type.bodyBold, color = Pal.Cream, modifier = Modifier.size(m.unit * 30, m.unit * 10), align = TextAlign.Center, maxLines = 1)
+                            PixelText("$pct%", style = type.bodyBold, color = Pal.Ink, modifier = Modifier.size(m.unit * 30, m.unit * 10), align = TextAlign.Center, maxLines = 1)
                             PixelTextButton("+", onClick = { vm.update { it.copy(percents = it.percents + (code to (pct + 5).coerceAtMost(100))) } }, look = ButtonLook.Light)
                         }
                     }
@@ -188,7 +188,7 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
                 3 -> {
                     PixelChip("Cuối tháng", selected = s.payday == 0) { vm.update { it.copy(payday = 0) } }
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                        PixelText("Ngày cố định:", style = type.body, color = Pal.Cream)
+                        PixelText("Ngày cố định:", style = type.body, color = Pal.Ink)
                         PixelTextButton("-", onClick = { vm.update { it.copy(payday = if (it.payday <= 2) 0 else it.payday - 1) } }, look = ButtonLook.Light)
                         PixelText(if (s.payday == 0) "--" else "ngày ${s.payday}", style = type.bodyBold, color = Pal.Gold)
                         PixelTextButton("+", onClick = { vm.update { it.copy(payday = if (it.payday == 0) 2 else (it.payday + 1).coerceAtMost(28)) } }, look = ButtonLook.Light)
@@ -196,7 +196,7 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
                     PixelText(
                         if (s.payday == 0) "Mỗi kỳ là 1 tháng dương lịch. Lương không cố định thì cứ để Cuối tháng."
                         else "Mỗi kỳ chạy từ ngày ${s.payday} tới hết ngày ${s.payday - 1} tháng sau.",
-                        style = type.caption, color = Pal.Paper,
+                        style = type.caption, color = Pal.InkSoft,
                     )
                 }
                 4 -> {

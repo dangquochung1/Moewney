@@ -68,7 +68,7 @@ fun MoodStatsScreen(vm: MoodStatsViewModel, onBack: () -> Unit) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelTextButton("<", onClick = { vm.shift(-1) }, look = ButtonLook.Light)
-                PixelText("Tháng ${month.monthValue}/${month.year}", style = type.bodyBold, color = Pal.Cream, align = TextAlign.Center, modifier = Modifier.weight(1f))
+                PixelText("Tháng ${month.monthValue}/${month.year}", style = type.bodyBold, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
                 PixelTextButton(">", onClick = { vm.shift(1) }, look = ButtonLook.Light)
             }
             val (s, days) = data ?: return@Column
@@ -96,7 +96,7 @@ fun MoodStatsScreen(vm: MoodStatsViewModel, onBack: () -> Unit) {
                     insight(s)?.let { PixelText(it, style = type.caption, color = Pal.Wood) }
                 }
             }
-            if (s.written == 0) PixelText("Tháng này chưa có trang nhật ký nào.", style = type.body, color = Pal.Paper)
+            if (s.written == 0) PixelText("Tháng này chưa có trang nhật ký nào.", style = type.body, color = Pal.InkSoft)
         }
     }
 }

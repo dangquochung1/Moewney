@@ -2,6 +2,7 @@
 <resources>
     <!-- Nền tối quanh căn phòng (khớp ô w12 của tileset tường) -->
     <color name="meowney_night">#FF2F2929</color>
+    <color name="meowney_canvas">#FFF7F3EA</color>
     <color name="meowney_cream">#FFF6E7C8</color>
     <color name="meowney_icon_bg">#FFF3D9A4</color>
 </resources>

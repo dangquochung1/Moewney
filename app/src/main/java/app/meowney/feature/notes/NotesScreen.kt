@@ -135,7 +135,7 @@ private fun NotesGrid(vm: NotesViewModel, actions: NotesActions) {
             if (cards != null && cards.isEmpty()) {
                 PixelText(
                     if (filter == null) "Chưa có ghi chú nào.\nBấm \"+ Ghi chú\" để viết, trẫm giữ hộ." else "Không có ghi chú nào gắn tag này.",
-                    style = type.body, color = Pal.Paper, modifier = Modifier.align(Alignment.Center),
+                    style = type.body, color = Pal.InkSoft, modifier = Modifier.align(Alignment.Center),
                 )
             }
             LazyVerticalStaggeredGrid(
@@ -214,7 +214,7 @@ fun NoteBinScreen(vm: NoteBinViewModel, onBack: () -> Unit, onOpen: (Long) -> Un
         if (list?.isEmpty() == true) {
             PixelText(
                 if (vm.archive) "Chưa cất ghi chú nào." else "Thùng rác trống. Đồ xoá nằm đây 30 ngày rồi mới mất hẳn.",
-                style = type.body, color = Pal.Paper,
+                style = type.body, color = Pal.InkSoft,
             )
         }
         LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 3), contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = m.unit * 4)) {
@@ -225,9 +225,9 @@ fun NoteBinScreen(vm: NoteBinViewModel, onBack: () -> Unit, onOpen: (Long) -> Un
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit)) {
                         if (!vm.archive) {
                             val left = 30 - ((System.currentTimeMillis() - (n.note.deletedAt ?: 0)) / 86_400_000L)
-                            PixelText("còn ${left.coerceAtLeast(0)} ngày", style = type.caption, color = Pal.Paper, modifier = Modifier.weight(1f))
+                            PixelText("còn ${left.coerceAtLeast(0)} ngày", style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f))
                         } else {
-                            PixelText("sửa ${updated(n)}", style = type.caption, color = Pal.Paper, modifier = Modifier.weight(1f))
+                            PixelText("sửa ${updated(n)}", style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f))
                         }
                         PixelTextButton(if (vm.archive) "Bỏ lưu trữ" else "Khôi phục", onClick = { vm.restore(n) }, look = ButtonLook.Light)
                         if (!vm.archive) PixelTextButton("Xoá hẳn", onClick = { confirm = n })

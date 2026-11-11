@@ -2,14 +2,17 @@ package app.meowney.feature.room
 
 import android.graphics.Bitmap
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.gestures.detectTapGestures
+import androidx.compose.foundation.gestures.awaitEachGesture
+import androidx.compose.foundation.gestures.awaitFirstDown
 import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableLongStateOf
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.withFrameMillis
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Canvas as ComposeCanvas
 import androidx.compose.ui.graphics.Color
@@ -17,9 +20,12 @@ import androidx.compose.ui.graphics.FilterQuality
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
+import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.input.pointer.changedToUp
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.input.pointer.positionChange
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.IntSize
@@ -27,17 +33,21 @@ import androidx.compose.ui.unit.LayoutDirection
 import app.meowney.core.ui.LocalPixelMetrics
 import app.meowney.core.ui.LocalSprites
 import app.meowney.core.ui.Pal
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalTime
+import kotlin.math.abs
 import kotlin.math.ceil
 import kotlin.math.hypot
+import kotlin.random.Random
 
 /**
- * The round window onto the cat's corner.
+ * The cat, blown up by the whole-number [scale].
  *
- * The scene is drawn at its own resolution (a [StageCircle] of ~54 px), masked to a
- * pixel circle and blown up by the whole-number [scale]. A wooden ring, drawn on the
- * finer UI pixel grid, frames it and hides the big stair-step edge of the mask.
+ * [plain] draws only the cat (and a prop while it eats or plays) on the page, with a
+ * small shadow under its feet. Otherwise the round room window and wooden ring stay,
+ * for the wardrobe and the timer.
  */
 @Composable
 fun CatStage(
@@ -48,6 +58,8 @@ fun CatStage(
     onCatLongPress: () -> Unit,
     modifier: Modifier = Modifier,
     look: RoomLook = RoomLook(),
+    plain: Boolean = false,
+    onPet: () -> Unit = {},
 ) {
     val atlas = LocalSprites.current
     val m = LocalPixelMetrics.current
@@ -59,6 +71,7 @@ fun CatStage(
     val pad = (ring.sizePx - stagePx) / 2
 
     val clock = remember { mutableLongStateOf(0L) }
+    val hearts = remember { mutableStateListOf<Heart>() }
     LaunchedEffect(cat) {
         var last = withFrameMillis { it }
         val start = last
@@ -68,6 +81,10 @@ fun CatStage(
                 last = now
                 clock.longValue = now - start
                 cat.update(clock.longValue, dt, atlas, LocalTime.now().hour)
+                if (hearts.isNotEmpty()) {
+                    val wall = System.currentTimeMillis()
+                    hearts.removeAll { wall - it.born > 800 }
+                }
             }
             // Sprites animate at 2-10 fps and positions snap to art pixels, so ~25 fps is
             // plenty; drawing every vsync would only burn battery.
@@ -81,56 +98,130 @@ fun CatStage(
     val mask = remember(d, circle) { circleMask(d, circle.r) }
     val originX = circle.cx - circle.r
     val originY = circle.cy - circle.r
+    val box = if (plain) stagePx else ring.sizePx
 
     Canvas(
         modifier
-            .size(m.dp(ring.sizePx), m.dp(ring.sizePx))
-            .pointerInput(cat, scale) {
-                detectTapGestures(
-                    onTap = { pos ->
-                        val sx = (pos.x - pad) / scale + originX
-                        val sy = (pos.y - pad) / scale + originY
-                        if (cat.hit(sx, sy)) onCatTap()
-                    },
-                    onLongPress = { onCatLongPress() },
-                )
+            .size(m.dp(box), m.dp(box))
+            .pointerInput(cat, scale, plain) {
+                val slop = viewConfiguration.touchSlop
+                val longMs = viewConfiguration.longPressTimeoutMillis
+                val inset = if (plain) 0 else pad
+                coroutineScope {
+                    awaitEachGesture {
+                        val down = awaitFirstDown()
+                        fun scene(x: Float, y: Float) = (x - inset) / scale + originX to (y - inset) / scale + originY
+                        val (sx, sy) = scene(down.position.x, down.position.y)
+                        if (!cat.hit(sx, sy)) return@awaitEachGesture
+                        var moved = 0f
+                        var petting = false
+                        var held = false
+                        val longJob = launch {
+                            delay(longMs)
+                            if (!petting) {
+                                held = true
+                                onCatLongPress()
+                            }
+                        }
+                        try {
+                            while (true) {
+                                val change = awaitPointerEvent().changes.firstOrNull() ?: break
+                                if (change.changedToUp() || !change.pressed) {
+                                    if (petting) cat.releasePet()
+                                    else if (!held) onCatTap()
+                                    break
+                                }
+                                val delta = change.positionChange()
+                                moved += abs(delta.x) + abs(delta.y)
+                                if (!petting && !held && moved > slop) {
+                                    petting = true
+                                    longJob.cancel()
+                                    cat.pet()
+                                    onPet()
+                                }
+                                if (petting) {
+                                    change.consume()
+                                    val wall = System.currentTimeMillis()
+                                    val (px, py) = scene(change.position.x, change.position.y)
+                                    if (hearts.isEmpty() || wall - hearts.last().born > 140) {
+                                        hearts.add(Heart(px + Random.nextInt(-6, 7), py - 22f, wall))
+                                    }
+                                }
+                            }
+                        } finally {
+                            longJob.cancel()
+                            if (petting) cat.releasePet()
+                        }
+                    }
+                }
             },
     ) {
         val now = clock.longValue
         frameScope.draw(Density(1f), LayoutDirection.Ltr, frameCanvas, Size(d.toFloat(), d.toFloat())) {
             translate(-originX, -originY) {
-                drawImage(base)
-                corner.drawAnimatedTiles(this, now)
-                look.rug?.let { with(RoomPaint) { rug(it) } }
-                look.decor?.let { with(RoomPaint) { decor(atlas, it) } }
+                if (!plain) {
+                    drawImage(base)
+                    corner.drawAnimatedTiles(this, now)
+                    look.rug?.let { with(RoomPaint) { rug(it) } }
+                    look.decor?.let { with(RoomPaint) { decor(atlas, it) } }
+                } else {
+                    drawRect(Pal.Canvas, Offset(originX, originY), Size(d.toFloat(), d.toFloat()))
+                    drawOval(Color(0x22000000), Offset(cat.x - 8f, cat.y - 2f), Size(16f, 5f))
+                }
                 cat.draw(this, atlas, now)
-                with(SeasonOverlay) { season(look.season, now, atlas) }
+                if (!plain) with(SeasonOverlay) { season(look.season, now, atlas) }
+                val wall = System.currentTimeMillis()
+                for (h in hearts) {
+                    val t = ((wall - h.born) / 800f).coerceIn(0f, 1f)
+                    if (t < 1f) pixelHeart(h.x, h.y - t * 12f, Pal.Red.copy(alpha = 1f - t))
+                }
             }
-            drawImage(mask)
+            if (!plain) drawImage(mask)
         }
         drawImage(
             frame,
-            dstOffset = IntOffset(pad, pad),
+            dstOffset = IntOffset(if (plain) 0 else pad, if (plain) 0 else pad),
             dstSize = IntSize(stagePx, stagePx),
             filterQuality = FilterQuality.None,
         )
-        drawImage(
-            ring.image,
-            dstOffset = IntOffset.Zero,
-            dstSize = IntSize(ring.sizePx, ring.sizePx),
-            filterQuality = FilterQuality.None,
-        )
+        if (!plain) {
+            drawImage(
+                ring.image,
+                dstOffset = IntOffset.Zero,
+                dstSize = IntSize(ring.sizePx, ring.sizePx),
+                filterQuality = FilterQuality.None,
+            )
+        }
+    }
+}
+
+private class Heart(val x: Float, val y: Float, val born: Long)
+
+/** A 7×6 pixel heart, one scene pixel per cell, feet of the glyph at [y]. */
+private fun DrawScope.pixelHeart(x: Float, y: Float, color: Color) {
+    val cells = intArrayOf(
+        1, 0, 2, 0, 4, 0, 5, 0,
+        0, 1, 1, 1, 2, 1, 3, 1, 4, 1, 5, 1, 6, 1,
+        0, 2, 1, 2, 2, 2, 3, 2, 4, 2, 5, 2, 6, 2,
+        1, 3, 2, 3, 3, 3, 4, 3, 5, 3,
+        2, 4, 3, 4, 4, 4,
+        3, 5,
+    )
+    var i = 0
+    while (i < cells.size) {
+        drawRect(color, Offset(x - 3f + cells[i], y - 5f + cells[i + 1]), Size(1f, 1f))
+        i += 2
     }
 }
 
 private const val FRAME_MS = 40L
 
-/** Night-coloured pixels outside the circle, transparent inside (scene resolution). */
+/** Page-coloured pixels outside the circle, transparent inside (scene resolution). */
 private fun circleMask(d: Int, r: Float): ImageBitmap {
     val bmp = Bitmap.createBitmap(d, d, Bitmap.Config.ARGB_8888)
-    val night = Pal.Night.toArgb()
+    val page = Pal.Canvas.toArgb()
     for (y in 0 until d) for (x in 0 until d) {
-        if (hypot(x + 0.5f - d / 2f, y + 0.5f - d / 2f) > r) bmp.setPixel(x, y, night)
+        if (hypot(x + 0.5f - d / 2f, y + 0.5f - d / 2f) > r) bmp.setPixel(x, y, page)
     }
     return bmp.asImageBitmap()
 }

@@ -83,9 +83,9 @@ fun RecurringScreen(vm: RecurringViewModel, onBack: () -> Unit) {
             "Mỗi tháng: ${formatVnd(ui.bills.filter { it.active && it.rule == Repeat.MONTHLY.name }.sumOf { it.amount })}",
             style = type.title, color = Pal.Gold,
         )
-        PixelText("Trẫm nhắc vào sáng ngày đến hạn; số 'hôm nay còn' đã chừa sẵn tiền cho các khoản này.", style = type.caption, color = Pal.Paper)
+        PixelText("Trẫm nhắc vào sáng ngày đến hạn. Tiền vẫn nằm trong lọ cho đến khi Sen bấm đã trả.", style = type.caption, color = Pal.InkSoft)
         LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-            if (ui.bills.isEmpty()) item { PixelText("Chưa có khoản nào. Tiền nhà, điện, mạng, Netflix... bấm + để thêm.", style = type.body, color = Pal.Paper) }
+            if (ui.bills.isEmpty()) item { PixelText("Chưa có khoản nào. Tiền nhà, điện, mạng, Netflix... bấm + để thêm.", style = type.body, color = Pal.InkSoft) }
             items(ui.bills, key = { it.id }) { r ->
                 val cat = ui.categories.firstOrNull { it.id == r.categoryId }
                 PixelPanel(Modifier.fillMaxWidth().clickable { editing = r }, sprite = "ui/wood/nine_path_panel_3") {

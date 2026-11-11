@@ -115,7 +115,7 @@ fun WheelTab(vm: GiftViewModel) {
                 allDone -> "Hết lượt hôm nay. Mai quay tiếp nhé!"
                 else -> "Hết lượt. Xong hết thói quen hôm nay để được thêm 1 lượt."
             },
-            style = type.body, color = Pal.Cream, align = TextAlign.Center,
+            style = type.body, color = Pal.Ink, align = TextAlign.Center,
         )
         PixelTextButton(if (spinning) "..." else "QUAY!", enabled = left > 0 && !spinning, modifier = Modifier.fillMaxWidth(), onClick = {
             spinning = true

@@ -180,12 +180,12 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
                 PixelChip("Cả ngày", selected = allDay) { allDay = true }
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelText("Từ", style = type.body, color = Pal.Cream, maxLines = 1, modifier = Modifier.width(m.unit * 22))
+                PixelText("Từ", style = type.body, color = Pal.Ink, maxLines = 1, modifier = Modifier.width(m.unit * 22))
                 PixelTextButton(shortDate(startDay), onClick = { picking = "startDay" }, look = ButtonLook.Light)
                 if (!allDay) PixelTextButton(hhmm(startMinute), onClick = { picking = "startMinute" }, look = ButtonLook.Light)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelText("Đến", style = type.body, color = Pal.Cream, maxLines = 1, modifier = Modifier.width(m.unit * 22))
+                PixelText("Đến", style = type.body, color = Pal.Ink, maxLines = 1, modifier = Modifier.width(m.unit * 22))
                 PixelTextButton(shortDate(endDay), onClick = { picking = "endDay" }, look = ButtonLook.Light)
                 if (!allDay) PixelTextButton(hhmm(endMinute), onClick = { picking = "endMinute" }, look = ButtonLook.Light)
             }
@@ -195,7 +195,7 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
             }
             if (repeat != EventRepeat.NONE) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                    PixelText("Đến ngày", style = type.body, color = Pal.Cream)
+                    PixelText("Đến ngày", style = type.body, color = Pal.Ink)
                     PixelTextButton(until?.let { shortDate(it) } ?: "Mãi mãi", onClick = { picking = "until" }, look = ButtonLook.Light)
                 }
             }
@@ -206,7 +206,7 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
             }
             if (remind) {
                 if (allDay) {
-                    PixelText("Sự kiện cả ngày: trẫm nhắc trong thông báo 8:00 sáng hôm đó.", style = type.caption, color = Pal.Paper)
+                    PixelText("Sự kiện cả ngày: trẫm nhắc trong thông báo 8:00 sáng hôm đó.", style = type.caption, color = Pal.InkSoft)
                 } else {
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                         for ((off, text) in OFFSETS) PixelChip(text, selected = off in offsets) {
@@ -360,7 +360,7 @@ fun TodoEditScreen(vm: TodoEditViewModel, presetDay: LocalDate?, onBack: () -> U
                 if (remind) {
                     PixelText(
                         if (dueMinute == null) "Trẫm nhắc trong thông báo 8:00 sáng hôm đó." else "Trẫm nhắc đúng ${hhmm(dueMinute!!)}.",
-                        style = type.caption, color = Pal.Paper,
+                        style = type.caption, color = Pal.InkSoft,
                     )
                 }
             }
@@ -376,7 +376,7 @@ fun TodoEditScreen(vm: TodoEditViewModel, presetDay: LocalDate?, onBack: () -> U
             for ((i, step) in steps.withIndex()) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelCheckbox(step.done, onCheckedChange = { steps[i] = step.copy(done = it) })
-                    PixelText(step.text, style = type.body, color = Pal.Cream, modifier = Modifier.weight(1f))
+                    PixelText(step.text, style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f))
                     PixelTextButton("x", onClick = { steps.removeAt(i) }, look = ButtonLook.Light)
                 }
             }
@@ -435,8 +435,8 @@ fun LabelsScreen(vm: LabelsViewModel, onBack: () -> Unit) {
             items(labels, key = { it.id }) { l ->
                 Row(Modifier.fillMaxWidth().clickable { editing = l }, verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     LabelDot(l.color, 5)
-                    PixelText(l.name, style = type.bodyBold, color = Pal.Cream, modifier = Modifier.weight(1f))
-                    if (l.kind == "BIRTHDAY") PixelText("đếm ngược + mũ", style = type.caption, color = Pal.Paper)
+                    PixelText(l.name, style = type.bodyBold, color = Pal.Ink, modifier = Modifier.weight(1f))
+                    if (l.kind == "BIRTHDAY") PixelText("đếm ngược + mũ", style = type.caption, color = Pal.InkSoft)
                 }
             }
         }

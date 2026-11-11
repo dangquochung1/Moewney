@@ -194,26 +194,21 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     var adding by remember { mutableStateOf(false) }
+    var pickingView by remember { mutableStateOf(false) }
+    var pickingLabels by remember { mutableStateOf(false) }
     var list by remember { mutableStateOf<String?>(null) } // "inbox" / "overdue"
     var eventMenu by remember { mutableStateOf<EventItem?>(null) }
 
     PixelScreen("Lịch", onBack = actions.onBack, actions = {
-        PixelTextButton("Nhãn", onClick = actions.onLabels, look = ButtonLook.Light)
         PixelTextButton("+", onClick = { adding = true })
     }) {
-        Row(horizontalArrangement = Arrangement.spacedBy(m.unit)) {
-            for (v in CalView.entries) PixelChip(v.label, selected = s.view == v) { vm.setView(v) }
-        }
-        Spacer(Modifier.height(m.unit))
-        FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
-            if (s.filter.isNotEmpty()) PixelChip("Tất cả") { vm.clearFilter() }
-            for (l in s.labels) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    LabelDot(l.color)
-                    PixelChip(l.name, selected = l.id in s.filter) { vm.toggleFilter(l.id) }
-                }
-            }
-            if (s.inbox.isNotEmpty()) PixelChip("Chưa xếp lịch (${s.inbox.size})", selected = list == "inbox") { list = if (list == "inbox") null else "inbox" }
+        Row(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalAlignment = Alignment.CenterVertically) {
+            PixelTextButton(s.view.label, onClick = { pickingView = true }, look = ButtonLook.Light)
+            PixelTextButton(
+                if (s.filter.isEmpty()) "Nhãn" else "Nhãn ${s.filter.size}",
+                onClick = { pickingLabels = true }, look = ButtonLook.Light,
+            )
+            if (s.inbox.isNotEmpty()) PixelChip("Chưa xếp (${s.inbox.size})", selected = list == "inbox") { list = if (list == "inbox") null else "inbox" }
             if (s.overdue.isNotEmpty()) PixelChip("Quá hạn (${s.overdue.size})", selected = list == "overdue") { list = if (list == "overdue") null else "overdue" }
         }
         Spacer(Modifier.height(m.unit * 2))
@@ -233,6 +228,32 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
         }
     }
 
+    if (pickingView) {
+        PixelDialog(onDismiss = { pickingView = false }) {
+            PixelText("Xem lịch", style = type.title)
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
+                for (v in CalView.entries) PixelChip(v.label, selected = s.view == v) {
+                    vm.setView(v)
+                    pickingView = false
+                }
+            }
+        }
+    }
+    if (pickingLabels) {
+        PixelDialog(onDismiss = { pickingLabels = false }) {
+            PixelText("Nhãn", style = type.title)
+            if (s.filter.isNotEmpty()) PixelChip("Tất cả") { vm.clearFilter() }
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
+                for (l in s.labels) {
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        LabelDot(l.color)
+                        PixelChip(l.name, selected = l.id in s.filter) { vm.toggleFilter(l.id) }
+                    }
+                }
+            }
+            PixelTextButton("Sửa nhãn", onClick = { pickingLabels = false; actions.onLabels() }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+        }
+    }
     if (adding) {
         PixelDialog(onDismiss = { adding = false }) {
             PixelText("Thêm vào ${shortDate(s.selected)}", style = type.title)
@@ -267,7 +288,7 @@ private fun MonthView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarAct
         item {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
                 PixelTextButton("<", onClick = { vm.shiftMonth(-1) }, look = ButtonLook.Light)
-                PixelText("Tháng ${s.month.monthValue}/${s.month.year}", style = type.title, color = Pal.Cream, align = TextAlign.Center, modifier = Modifier.weight(1f))
+                PixelText("Tháng ${s.month.monthValue}/${s.month.year}", style = type.title, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
                 PixelTextButton(">", onClick = { vm.shiftMonth(1) }, look = ButtonLook.Light)
             }
         }
@@ -295,7 +316,7 @@ private fun MonthGrid(s: CalendarUi, vm: CalendarViewModel) {
         },
     ) {
         Row {
-            for (d in WEEKDAYS_SHORT) PixelText(d, style = type.caption, color = Pal.Paper, align = TextAlign.Center, modifier = Modifier.weight(1f))
+            for (d in WEEKDAYS_SHORT) PixelText(d, style = type.caption, color = Pal.InkSoft, align = TextAlign.Center, modifier = Modifier.weight(1f))
         }
         for (week in 0 until 6) {
             val monday = start.plusDays(week * 7L)

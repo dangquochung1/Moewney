@@ -52,7 +52,7 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
         item {
             PixelText(
                 "Sen tự đặt giá cho những món tự thưởng ngoài đời. Đổi xu lấy phiếu, khi dùng thì ghi luôn khoản chi.",
-                style = type.caption, color = Pal.Paper,
+                style = type.caption, color = Pal.InkSoft,
             )
         }
         if (open.isNotEmpty()) {
@@ -71,7 +71,7 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
         }
         item { PixelText("PHẦN THƯỞNG", style = type.caption, color = Pal.Gold) }
         if (rewards.isEmpty()) {
-            item { PixelText("Chưa có phần thưởng nào. Thử \"Trà sữa\" 300 xu, \"Xem phim\" 1.000 xu...", style = type.body, color = Pal.Paper) }
+            item { PixelText("Chưa có phần thưởng nào. Thử \"Trà sữa\" 300 xu, \"Xem phim\" 1.000 xu...", style = type.body, color = Pal.InkSoft) }
         }
         items(rewards, key = { "r${it.id}" }) { r ->
             PixelPanel(Modifier.fillMaxWidth().clickable { editing = r }, sprite = "ui/wood/nine_path_panel_3") {
@@ -88,9 +88,9 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
             PixelTextButton("+ Thêm phần thưởng", onClick = { editing = RealRewardEntity(name = "", coins = 300) }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
         }
         if (used.isNotEmpty()) {
-            item { PixelText("ĐÃ DÙNG", style = type.caption, color = Pal.Paper) }
+            item { PixelText("ĐÃ DÙNG", style = type.caption, color = Pal.InkSoft) }
             items(used, key = { "u${it.id}" }) { v ->
-                PixelText("${v.name} · ${shortDate(LocalDate.ofEpochDay(v.usedDay!!))}", style = type.caption, color = Pal.Paper)
+                PixelText("${v.name} · ${shortDate(LocalDate.ofEpochDay(v.usedDay!!))}", style = type.caption, color = Pal.InkSoft)
             }
         }
     }

@@ -256,7 +256,7 @@ fun GiftScreen(
         }
         message?.let {
             PixelPanel(Modifier.fillMaxWidth().padding(bottom = m.unit * 2), sprite = "ui/wood/nine_path_panel_interior", extraPadding = 1) {
-                PixelText(it, style = type.body, color = Pal.Cream)
+                PixelText(it, style = type.body, color = Pal.Ink)
             }
         }
         Box(Modifier.weight(1f).fillMaxWidth()) {
@@ -380,7 +380,7 @@ private fun ShopTab(vm: GiftViewModel) {
             }
         }
         if (section == ShopSection.SEASON) {
-            PixelText("Đồ mùa ${vm.season?.label} chỉ bán trong mùa, mua rồi giữ mãi.", style = type.caption, color = Pal.Paper, modifier = Modifier.padding(bottom = m.unit * 2))
+            PixelText("Đồ mùa ${vm.season?.label} chỉ bán trong mùa, mua rồi giữ mãi.", style = type.caption, color = Pal.InkSoft, modifier = Modifier.padding(bottom = m.unit * 2))
         }
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
@@ -534,7 +534,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
                 CatStage(corner = corner, cat = preview, scale = m.ui + 1, onCatTap = { preview.poke() }, onCatLongPress = {}, look = look)
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     val pet = game.pets.firstOrNull { it.color == cat.first }
-                    PixelText(cat.second, style = type.title, color = Pal.Cream)
+                    PixelText(cat.second, style = type.title, color = Pal.Ink)
                     pet?.let { PixelText("${it.affection} tim", style = type.bodyBold, color = Pal.Red) }
                     PixelTextButton("Đổi tên", onClick = { renaming = true }, look = ButtonLook.Light)
                 }
@@ -542,7 +542,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
         }
         item {
             Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                PixelText("MÈO CỦA SEN", style = type.caption, color = Pal.Paper)
+                PixelText("MÈO CỦA SEN", style = type.caption, color = Pal.InkSoft)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     for (p in game.pets) {
                         Column(
@@ -550,7 +550,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             CatIcon(p.color, m.unit * 20)
-                            PixelText(p.name, style = type.caption, color = Pal.Cream, maxLines = 1)
+                            PixelText(p.name, style = type.caption, color = Pal.Ink, maxLines = 1)
                         }
                     }
                     if (game.pets.size < 6) {
@@ -562,12 +562,12 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
         val treats = Catalog.treats.filter { game.qty(it.id) > 0 }
         item {
             Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                PixelText("ĐỒ ĂN", style = type.caption, color = Pal.Paper)
-                if (treats.isEmpty()) PixelText("Chưa có món nào. Mua ở Cửa hàng hoặc quay trúng nhé.", style = type.caption, color = Pal.Paper)
+                PixelText("ĐỒ ĂN", style = type.caption, color = Pal.InkSoft)
+                if (treats.isEmpty()) PixelText("Chưa có món nào. Mua ở Cửa hàng hoặc quay trúng nhé.", style = type.caption, color = Pal.InkSoft)
                 for (t in treats) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                         ItemIcon(t, m.unit * 14)
-                        PixelText("${t.name} x${game.qty(t.id)}", style = type.body, color = Pal.Cream, modifier = Modifier.weight(1f))
+                        PixelText("${t.name} x${game.qty(t.id)}", style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f))
                         PixelTextButton("Cho ăn", onClick = { vm.feed(t); preview.feed() })
                     }
                 }
@@ -577,7 +577,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
             val options = Catalog.items.filter { it.slot == slot && game.owns(it.id) }
             item(key = slot.name) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                    PixelText(slot.label.uppercase(), style = type.caption, color = Pal.Paper)
+                    PixelText(slot.label.uppercase(), style = type.caption, color = Pal.InkSoft)
                     FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                         for (o in options) {
                             val on = game.equipped(slot) == o.id
@@ -586,11 +586,11 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 ItemIcon(o, m.unit * 18, cat.first)
-                                PixelText(o.name, style = type.caption, color = if (on) Pal.Gold else Pal.Cream, align = TextAlign.Center, maxLines = 2)
+                                PixelText(o.name, style = type.caption, color = if (on) Pal.Gold else Pal.Ink, align = TextAlign.Center, maxLines = 2)
                             }
                         }
                         if (options.size <= 1) {
-                            PixelText("Mua thêm ở Cửa hàng", style = type.caption, color = Pal.Paper, modifier = Modifier.clickable {
+                            PixelText("Mua thêm ở Cửa hàng", style = type.caption, color = Pal.InkSoft, modifier = Modifier.clickable {
                                 vm.section.value = if (slot == Slot.TOY) ShopSection.TOY else ShopSection.CORNER
                                 vm.tab.value = GiftTab.SHOP
                             })

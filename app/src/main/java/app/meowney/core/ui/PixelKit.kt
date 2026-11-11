@@ -58,7 +58,7 @@ fun PixelText(
 
 // ------------------------------------------------------------------ panels
 
-/** A box whose background is a nine-patch from the wood theme. Padding = the art's border. */
+/** A white card with a 1 px ink border. [sprite] only picks a dim fill for disabled panels. */
 @Composable
 fun PixelPanel(
     modifier: Modifier = Modifier,
@@ -67,16 +67,17 @@ fun PixelPanel(
     contentAlignment: Alignment = Alignment.TopStart,
     content: @Composable BoxScope.() -> Unit,
 ) {
-    val atlas = LocalSprites.current
     val m = LocalPixelMetrics.current
-    val art = remember(sprite) { atlas[sprite] }
-    val inset = (art.entry.nine?.maxOrNull() ?: 0) + extraPadding
+    val fill = if ("disabled" in sprite) Color(0xFFF3E6D4) else Pal.Card
+    val border = m.ui
     Box(
         modifier = modifier
             .drawBehind {
-                drawNinePatch(art, IntOffset.Zero, IntSize(size.width.toInt(), size.height.toInt()), m.ui)
+                val b = border.toFloat()
+                drawRect(Pal.Ink)
+                drawRect(fill, Offset(b, b), Size((size.width - 2 * b).coerceAtLeast(0f), (size.height - 2 * b).coerceAtLeast(0f)))
             }
-            .padding(m.dp(inset * m.ui)),
+            .padding(m.dp(border + extraPadding * m.ui)),
         contentAlignment = contentAlignment,
         content = content,
     )
@@ -197,8 +198,8 @@ fun PixelProgress(
     val m = LocalPixelMetrics.current
     Canvas(modifier.fillMaxWidth().height(m.dp(heightPx * m.ui))) {
         val u = m.ui.toFloat()
-        drawRect(Pal.WoodDark)
-        drawRect(Pal.Night, Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
+        drawRect(Pal.Ink)
+        drawRect(Pal.Paper, Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
         val inner = size.width - 2 * u
         // snap the fill to whole art pixels
         val fillPx = (inner * fraction.coerceIn(0f, 1f) / u).toInt() * u
@@ -214,6 +215,6 @@ fun PixelProgress(
 @Composable
 fun SpeechBubble(text: String, modifier: Modifier = Modifier) {
     PixelPanel(modifier = modifier, sprite = "ui/wood/nine_path_panel_interior", extraPadding = 1) {
-        PixelText(text, style = LocalPixelType.current.body, color = Pal.Cream)
+        PixelText(text, style = LocalPixelType.current.body, color = Pal.Ink)
     }
 }
