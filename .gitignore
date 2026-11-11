@@ -1,5 +1,8 @@
 # Source art kho goc (1,1 GB) - chi cac sprite da chon loc moi vao app/src/main/assets
-
+# File goc design binary lon — khong track trong Git
+*.eps
+*.psd
+*.ai
 
 .gradle/
 .kotlin/
