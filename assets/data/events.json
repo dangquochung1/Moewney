@@ -1,0 +1,73 @@
+// The island's events: its year of seasons - the winter among them - the
+// Halloween festival in each winter, the days and nights, and when it rains.
+// Read by com.kagebi.data.VillageCatalog (EventsDef) and played out by
+// com.kagebi.village.IslandEvents; checked by ContentValidator.
+//
+// THE ISLAND'S CLOCK. Every number here is seconds of the island's own clock,
+// which runs whenever the game is open - on the island, down in the dungeon and
+// in the menus - and stands still while it is closed. It is saved as
+// "village" -> "island" in the profile (%USERPROFILE%\.prefs\kagebi_profile.json).
+//
+// TO SEE THEM SOONER while trying them: shorten the seasons, or type a code at
+// the main menu, which moves the island's clock to just before the next one:
+// Autumn, Winter or Spring for that season, Halloween for the festival's
+// countdown, Rain for a shower, Night for the next dusk.
+{
+  "events": {
+    "seasons": {
+      // The island's year: a summer, an autumn, a winter and a spring, always
+      // in that order, the island's time beginning with the first summer. Half
+      // an hour all told: 6 minutes of summer, 6 of autumn, 12 of winter and 6
+      // of spring. The autumn's colours come over the island in its first 45
+      // seconds and go under the winter's snow as it settles, over the winter's
+      // first 45; the snow melts over the winter's last 40, the spring coming up
+      // under it, and the spring goes into the summer over its own last 40.
+      "summer": 360,
+      "autumn": 360,
+      "winter": 720,
+      "spring": 360
+    },
+    "winter": {
+      // When the winter comes and how long it lasts is "seasons" above: it
+      // snows the whole of it. The Christmas intro that plays before each
+      // winter is this long, and the snow begins the moment it ends. Change
+      // it only with the song.
+      "intro": 16.6
+    },
+    "halloween": {
+      // The festival comes in each winter: its countdown beginning between
+      // this many seconds into the winter and this many - a different moment
+      // each winter, the same every time for that winter - so the whole of it
+      // falls in the snow, with at least a minute of winter left after it.
+      "inWinterFrom": 30,
+      "inWinterTo": 60,
+      // Each lasts this long: 8 minutes. Then the winter goes on as it was.
+      "lasts": 480,
+      // The song that counts it down - Darkness Falls - is this long, and the
+      // festival begins the moment it ends. Change it only with the song.
+      "countdown": 112
+    },
+    "day": {
+      // A day is 20 minutes of the island's time, start to start.
+      "length": 1200,
+      // Dusk begins 13 minutes in and takes a minute to fall; the night is
+      // 5 minutes, and the dawn takes a minute again. The first night falls
+      // 13 minutes into the island's time.
+      "dusk": 780,
+      "twilight": 60,
+      "night": 300
+    },
+    "rain": {
+      // The first shower: 4 minutes in.
+      "first": 240,
+      // Then a dry spell of between gapMin and gapMax seconds before each
+      // next one (4 to 8 minutes), each shower lasting between lastsMin and
+      // lastsMax (2 to 3.5 minutes). Never during the winter or the festival:
+      // a shower still falling when either begins stops.
+      "gapMin": 240,
+      "gapMax": 480,
+      "lastsMin": 120,
+      "lastsMax": 210
+    }
+  }
+}

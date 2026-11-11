@@ -1,0 +1,223 @@
+// The village economy: what the island's goods sell for, what the goblins'
+// field grows, what each region's people bring when hired, and what the cook
+// makes of it all.
+// Read by com.kagebi.data.VillageCatalog, checked by ContentValidator at boot
+// like everything else here, and held to its promises by BalanceTest.
+//
+// THE CLOCK. Every time here is seconds of the village clock, which runs while
+// the game is open - in the dungeon and the menus too - and never while it is
+// closed. Work that takes three minutes takes three minutes of play.
+//
+// PRICING. An hour of the village at its best - every region, the field
+// planted whole, hired again the moment its goods are in, every load sold - pays
+// about a third of what an hour of the dungeon does, so the dungeon stays
+// where gold comes from; BalanceTest fails if an hour here ever pays more. What the village gives that the dungeon does not is food,
+// and goods are priced so that a meal's ingredients are worth about what the
+// potion it stands in for costs.
+{
+  "goods": [
+    // The farm's crops, each harvested as the good of the same name.
+    {"id": "carrot", "nameKey": "good.carrot.name", "price": 6},
+    {"id": "radish", "nameKey": "good.radish.name", "price": 6},
+    {"id": "potato", "nameKey": "good.potato.name", "price": 7},
+    {"id": "parsnip", "nameKey": "good.parsnip.name", "price": 7},
+    {"id": "beetroot", "nameKey": "good.beetroot.name", "price": 9},
+    {"id": "kale", "nameKey": "good.kale.name", "price": 9},
+    {"id": "cauliflower", "nameKey": "good.cauliflower.name", "price": 10},
+    {"id": "cabbage", "nameKey": "good.cabbage.name", "price": 10},
+    {"id": "wheat", "nameKey": "good.wheat.name", "price": 13},
+    {"id": "sunflower", "nameKey": "good.sunflower.name", "price": 14},
+    {"id": "pumpkin", "nameKey": "good.pumpkin.name", "price": 16},
+
+    // What the island's people are hired to make. The pack draws no meat or
+    // coal, so the ranch keeps hens and cows; the sheep on the ranch's hill
+    // give wool.
+    {"id": "wood", "nameKey": "good.wood.name", "price": 6},
+    {"id": "fish", "nameKey": "good.fish.name", "price": 15},
+    {"id": "egg", "nameKey": "good.egg.name", "price": 8},
+    {"id": "milk", "nameKey": "good.milk.name", "price": 12},
+    {"id": "wool", "nameKey": "good.wool.name", "price": 9},
+
+    // The five stones the two mines dig, the pack's five ore nuggets, lowest
+    // first: the quarry under the village the grey, the black and the white,
+    // the pit in the south-west the orange and the sea-blue. The rarer a stone
+    // the fewer a job brings, and the more Cam pays for one.
+    {"id": "ore_stone", "nameKey": "good.ore_stone.name", "price": 4},
+    {"id": "ore_coal", "nameKey": "good.ore_coal.name", "price": 9},
+    {"id": "ore_silver", "nameKey": "good.ore_silver.name", "price": 20},
+    {"id": "ore_gold", "nameKey": "good.ore_gold.name", "price": 40},
+    {"id": "ore_bluestone", "nameKey": "good.ore_bluestone.name", "price": 65},
+
+    // What the goblins plant: sold at Cam's stall, and bought back at the
+    // same price. One seed is one cell of the field.
+    {"id": "magic_seed", "nameKey": "good.magic_seed.name", "price": 23},
+
+    // What the pen raises: the birds' legs and the beasts' meat, food for the
+    // animals that fight beside the ninja. Cam pays less for either than it
+    // costs to raise - the pen is a larder, never a way to gold.
+    {"id": "drumstick", "nameKey": "good.drumstick.name", "price": 10},
+    {"id": "meat", "nameKey": "good.meat.name", "price": 12}
+  ],
+
+  // What the pen west of the field raises, bought young from its goblin -
+  // "price" for one head - and caught as "yield" of its "good". A pen of the
+  // big ones feeds more for the gold: five turkeys are 30 legs for 400 with
+  // the goblin's fee, five chicks 10 for 275. Every order costs more than the
+  // field's goblins ask, and every head more than a magic seed.
+  "animals": [
+    {"id": "chick", "good": "drumstick", "price": 25, "yield": 2},
+    {"id": "rooster", "good": "drumstick", "price": 40, "yield": 4},
+    {"id": "turkey", "good": "drumstick", "price": 50, "yield": 6},
+    {"id": "piglet", "good": "meat", "price": 30, "yield": 2},
+    {"id": "lamb", "good": "meat", "price": 45, "yield": 3},
+    {"id": "sheep", "good": "meat", "price": 60, "yield": 5},
+    {"id": "calf", "good": "meat", "price": 70, "yield": 6},
+    {"id": "bull", "good": "meat", "price": 90, "yield": 9}
+  ],
+
+  // What the goblins' field grows, each picked as the good of the same name.
+  // "yield" is how many one magic seed grows: about thirty gold of goods a
+  // seed, a little over what the seed costs at Cam's, so a field planted
+  // whole pays for its work and a handful of seeds does not.
+  "crops": [
+    {"id": "carrot", "good": "carrot", "yield": 5},
+    {"id": "radish", "good": "radish", "yield": 5},
+    {"id": "potato", "good": "potato", "yield": 4},
+    {"id": "parsnip", "good": "parsnip", "yield": 4},
+    {"id": "beetroot", "good": "beetroot", "yield": 3},
+    {"id": "kale", "good": "kale", "yield": 3},
+    {"id": "cauliflower", "good": "cauliflower", "yield": 3},
+    {"id": "cabbage", "good": "cabbage", "yield": 3},
+    {"id": "wheat", "good": "wheat", "yield": 2},
+    {"id": "sunflower", "good": "sunflower", "yield": 2},
+    {"id": "pumpkin", "good": "pumpkin", "yield": 2}
+  ],
+
+  // The island's people, hired. A player pays "fee" to the one who takes the
+  // job; the work takes "workSeconds" of the village clock, and then the
+  // region's carriers walk "goods" - "counts" of each - to the player's front
+  // door and wait there to be let in (HubScreen, Crew). Nothing is made
+  // without a hire, and a region takes one job at a time.
+  //
+  // Each job brings goods worth a little more than its fee, about 115 gold
+  // for 100: the village is a larder first, and BalanceTest holds an hour of
+  // hiring every region back to back under an hour of the dungeon.
+  //
+  // The farm is the goblins' field: its goods are the crop the player picks,
+  // grown from as many magic seeds as they give, up to "seeds" - one to a cell.
+  // Its "workSeconds" is FieldWork.PICKED: tilling, watering, tending, and the
+  // goblins lined up at the rows' ends while it ripens.
+  "hires": [
+    {"id": "forest", "fee": 100, "workSeconds": 90, "goods": ["wood"], "counts": [19]},
+    {"id": "ranch", "fee": 100, "workSeconds": 90, "goods": ["egg", "milk"], "counts": [5, 6]},
+    {"id": "wool", "fee": 100, "workSeconds": 90, "goods": ["wool"], "counts": [13]},
+    {"id": "fishing", "fee": 100, "workSeconds": 90, "goods": ["fish"], "counts": [8]},
+    // The two mines are hired for as long as they are to dig: each of
+    // "options" is a length of the village clock, the goblins' fee for it and
+    // what it digs, by "goods" - a longer dig is better for the gold. For each
+    // minute dug, "gemChance" of a socket stone among it, one of "gems". Hired
+    // while the other is digging, the two work as one: the pit's goods go to the
+    // quarry by cart, and come to the door with the quarry's (village.Mines).
+    {"id": "quarry", "goods": ["ore_stone", "ore_coal", "ore_silver"],
+     "options": [{"workSeconds": 180, "fee": 100, "counts": [10, 5, 2]},
+                 {"workSeconds": 600, "fee": 300, "counts": [30, 15, 7]},
+                 {"workSeconds": 1800, "fee": 800, "counts": [90, 45, 21]}],
+     "gemChance": 0.03, "gems": ["red_t1", "green_t1", "blue_t1", "yellow_t1", "purple_t1"]},
+    {"id": "mine", "goods": ["ore_gold", "ore_bluestone"],
+     "options": [{"workSeconds": 180, "fee": 120, "counts": [2, 1]},
+                 {"workSeconds": 600, "fee": 350, "counts": [7, 3]},
+                 {"workSeconds": 1800, "fee": 980, "counts": [20, 10]}],
+     "gemChance": 0.03, "gems": ["red_t1", "green_t1", "blue_t1", "yellow_t1", "purple_t1"]},
+    {"id": "farm", "fee": 100, "workSeconds": 186, "seeds": 36},
+    // The pen: its goblin's fee, and between "heads" of them of one kind,
+    // bought at the animal's price. Its "workSeconds" is Pasture.seconds of
+    // the most: half a minute's roaming, a catch a head, and the walk home.
+    {"id": "pasture", "fee": 150, "workSeconds": 70, "heads": [3, 5]}
+  ],
+
+  // The islands across the water, and the ferryman who rows out to them from
+  // the pier. "fare" is for the trip there and back: the way home is paid for.
+  // The chapel pays "goldPerMinute" to a player who sits out a whole minute
+  // on one of its pews - an hour on a pew is 60000 gold, far past anything
+  // the dungeon pays, and meant to be.
+  "isles": [
+    {"id": "undead", "fare": 20},
+    {"id": "temple", "fare": 20},
+    {"id": "chapel", "fare": 20, "goldPerMinute": 1000},
+    {"id": "frost", "fare": 20}
+  ],
+
+  // What the cook makes, into the pantry the player carries down. Each item is
+  // a consumable in items.json with no price, so the kitchen is the only way to
+  // one. A healing meal's ingredients sell for at least what a small potion
+  // costs for the same healing; a buffing meal's for at least the draught it
+  // stands in for.
+  "recipes": [
+    {"id": "grilled_fish", "item": "food_grilled_fish", "inputs": ["fish", "wood"], "counts": [2, 1]},
+    {"id": "veggie_noodles", "item": "food_veggie_noodles", "inputs": ["carrot", "cabbage", "wheat"], "counts": [2, 1, 1]},
+    {"id": "onigiri", "item": "food_onigiri", "inputs": ["wheat", "egg"], "counts": [2, 1]},
+    {"id": "yakitori", "item": "food_yakitori", "inputs": ["egg", "pumpkin", "sunflower", "wood"], "counts": [3, 1, 1, 1]},
+    {"id": "sushi", "item": "food_sushi", "inputs": ["fish", "wheat", "kale"], "counts": [3, 2, 1]}
+  ],
+
+  // Cam's armory: weapons, off-hand weapons and gear of the first three tiers,
+  // for gold. The rest come from monsters, now and then (loot_tables.json
+  // "spoils"), and from the jobs. Dearer by tier, and the second and third
+  // tiers wait until the player has been as deep as the second and fourth
+  // floors ("requires" and "value" in the words of the shelf's unlocks).
+  // Eighteen at most: two rows of the shelf.
+  "armory": [
+    {"weapon": "sword_2", "price": 250},
+    {"weapon": "spear_1", "price": 250},
+    {"weapon": "bow_2", "price": 250},
+    {"weapon": "disc_2", "price": 250},
+    {"weapon": "hook_1", "price": 600, "requires": "deepest_floor", "value": 2},
+    {"weapon": "axe_1", "price": 600, "requires": "deepest_floor", "value": 2},
+    {"weapon": "crossbow_1", "price": 600, "requires": "deepest_floor", "value": 2},
+    {"weapon": "staff_1", "price": 600, "requires": "deepest_floor", "value": 2},
+    {"weapon": "greatsword_1", "price": 1200, "requires": "deepest_floor", "value": 4},
+    {"weapon": "scepter_1", "price": 1200, "requires": "deepest_floor", "value": 4},
+    {"gear": "cap_1", "price": 300},
+    {"gear": "tunic_3", "price": 300},
+    {"gear": "gloves_1", "price": 300},
+    {"gear": "boots_1", "price": 300},
+    {"gear": "vest_1", "price": 700, "requires": "deepest_floor", "value": 2},
+    {"gear": "amulet_4", "price": 700, "requires": "deepest_floor", "value": 2},
+    {"gear": "armour_2", "price": 1400, "requires": "deepest_floor", "value": 4},
+    {"gear": "ring_1", "price": 1400, "requires": "deepest_floor", "value": 4}
+  ],
+
+  // The lucky wheel at Cam's counter (village.Wheel). A spin costs one gem
+  // shard, which every dungeon floor and shrine may drop and Cam sells -
+  // for gold and goods from the storehouse, a few a day.
+  //
+  // The top prize is one of the sixty SSS swords not yet owned. Its chance on
+  // the n-th spin since it last came up is
+  //   legendBase + legendStep * (n - 1)
+  //     + (1 - legendBase - legendStep * (guarantee - 1)) * ((n - 1) / (guarantee - 1)) ^ legendCurve
+  // : one in a hundred at first and a tenth of a percent more every spin -
+  // 1.0, 1.1, 1.2 ... so the counter shows it rising - with the curve on top
+  // taking it past 7% by the twentieth, 41% by the thirtieth and sure on the
+  // thirty-sixth; about 20 spins on average. It was sure on the eightieth
+  // (about 29), which with sixty swords to win was too long a wait. Every
+  // sword owned, it pays fallbackGold and fallbackTickets instead.
+  //
+  // The segments clockwise from the top, as the picture colours them: pink,
+  // red, cyan, magenta, green, yellow, blue, green. A spin that misses the top
+  // prize lands on one of the other seven by its weight.
+  "wheel": {
+    "legendBase": 0.01, "legendStep": 0.001, "legendCurve": 5, "guarantee": 36,
+    "fallbackGold": 3000, "fallbackTickets": 3,
+    "ticketGold": 1500, "ticketGoods": ["ore_gold", "fish"], "ticketCounts": [3, 3], "ticketsPerDay": 3,
+    "slots": [
+      {"kind": "LEGEND"},
+      {"kind": "STONE", "gem": "red_t2", "amount": 1, "weight": 14},
+      {"kind": "STONE_ANY", "tier": 2, "amount": 1, "weight": 14},
+      {"kind": "TICKETS", "amount": 2, "weight": 8},
+      {"kind": "GOODS", "goods": ["magic_seed", "ore_gold"], "counts": [5, 2], "weight": 24},
+      {"kind": "GOLD", "amount": 600, "weight": 30},
+      {"kind": "WEAPON", "tiers": [4, 5], "fallbackGold": 1000, "weight": 4},
+      {"kind": "GEAR", "tiers": [3, 4], "weight": 6}
+    ]
+  }
+}

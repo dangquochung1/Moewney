@@ -1,0 +1,722 @@
+// Armour, stones and the forge.
+//
+// Three sections, one file, because they are one system: a stone is both a
+// socket filler and the forge's raw material, and a piece of gear is either
+// bought or made out of stones. Splitting them across three files would mean
+// three places to look when a tier does not line up.
+//
+// WHAT GEAR IS FOR. The run is a roguelite: relics are the interesting
+// choices, and they are drawn at random inside a run and lost at the end of
+// it. Gear is the opposite and deliberately so - bought and forged between
+// runs, kept for good, and dull. Eight numbers that go up. It is what a player
+// has to show for the twentieth run when the relics they found that time were
+// bad ones.
+//
+// SLOTS. HEAD, BODY, HANDS, FEET, TRINKET. One of each may be worn, and none
+// of them is drawn on the character: the pack has one body per hero and no
+// layered equipment art. What a helmet changes is the numbers.
+//
+// TIERS. 1 to 4. Tier 1 is bought with the gold of a first stage clear; tier 4
+// is forged out of tier 3 and a fistful of stones, and is not for sale at any
+// price. The prices follow the same curve the weapon unlocks do, so a shelf of
+// armour never out-competes a shelf of swords for the same gold.
+//
+// EFFECTS. Only names in ContentValidator.GEAR_EFFECTS, which is a shorter
+// list than the relics get. Nothing here needs new combat code: Loadout folds
+// gear into the same Modifiers relics and village upgrades already write to.
+{
+  "gear": [
+    {
+      "id": "body_t1", "icon": "stat_armour", "slot": "BODY", "tier": 1,
+      "nameKey": "gear.body_t1.name", "descKey": "gear.body_t1.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 400
+    },
+    {
+      "id": "body_t2", "icon": "stat_armour", "slot": "BODY", "tier": 2,
+      "nameKey": "gear.body_t2.name", "descKey": "gear.body_t2.desc",
+      "sockets": 1, "effects": ["armour_add", "max_hp_add"], "magnitudes": [2, 16], "price": 900
+    },
+    {
+      "id": "body_t3", "icon": "stat_armour", "slot": "BODY", "tier": 3,
+      "nameKey": "gear.body_t3.name", "descKey": "gear.body_t3.desc",
+      "sockets": 2, "effects": ["armour_add", "max_hp_add"], "magnitudes": [3, 26], "price": 1800
+    },
+    {
+      "id": "body_t4", "icon": "stat_armour", "slot": "BODY", "tier": 4,
+      "nameKey": "gear.body_t4.name", "descKey": "gear.body_t4.desc",
+      "sockets": 3, "effects": ["armour_add", "max_hp_add"], "magnitudes": [4, 40], "price": 0
+    },
+    {
+      "id": "hands_t1", "icon": "gauntlet", "slot": "HANDS", "tier": 1,
+      "nameKey": "gear.hands_t1.name", "descKey": "gear.hands_t1.desc",
+      "sockets": 0, "effects": ["damage_mult", "attack_speed_mult"], "magnitudes": [1.04, 1.03], "price": 400
+    },
+    {
+      "id": "hands_t2", "icon": "gauntlet", "slot": "HANDS", "tier": 2,
+      "nameKey": "gear.hands_t2.name", "descKey": "gear.hands_t2.desc",
+      "sockets": 1, "effects": ["damage_mult", "attack_speed_mult"], "magnitudes": [1.08, 1.06], "price": 900
+    },
+    {
+      "id": "hands_t3", "icon": "gauntlet", "slot": "HANDS", "tier": 3,
+      "nameKey": "gear.hands_t3.name", "descKey": "gear.hands_t3.desc",
+      "sockets": 2, "effects": ["damage_mult", "attack_speed_mult"], "magnitudes": [1.13, 1.1], "price": 1800
+    },
+    {
+      "id": "hands_t4", "icon": "gauntlet", "slot": "HANDS", "tier": 4,
+      "nameKey": "gear.hands_t4.name", "descKey": "gear.hands_t4.desc",
+      "sockets": 3, "effects": ["damage_mult", "attack_speed_mult"], "magnitudes": [1.2, 1.15], "price": 0
+    },
+    {
+      "id": "feet_t1", "icon": "boot", "slot": "FEET", "tier": 1,
+      "nameKey": "gear.feet_t1.name", "descKey": "gear.feet_t1.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 400
+    },
+    {
+      "id": "feet_t2", "icon": "boot", "slot": "FEET", "tier": 2,
+      "nameKey": "gear.feet_t2.name", "descKey": "gear.feet_t2.desc",
+      "sockets": 1, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.05, 2], "price": 900
+    },
+    {
+      "id": "feet_t3", "icon": "boot", "slot": "FEET", "tier": 3,
+      "nameKey": "gear.feet_t3.name", "descKey": "gear.feet_t3.desc",
+      "sockets": 2, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.08, 3], "price": 1800
+    },
+    {
+      "id": "feet_t4", "icon": "boot", "slot": "FEET", "tier": 4,
+      "nameKey": "gear.feet_t4.name", "descKey": "gear.feet_t4.desc",
+      "sockets": 3, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.12, 4], "price": 0
+    },
+    {
+      "id": "trinket_t1", "icon": "ring_gold", "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.trinket_t1.name", "descKey": "gear.trinket_t1.desc",
+      "sockets": 0, "effects": ["gold_mult"], "magnitudes": [1.05], "price": 400
+    },
+    {
+      "id": "trinket_t2", "icon": "ring_gold", "slot": "TRINKET", "tier": 2,
+      "nameKey": "gear.trinket_t2.name", "descKey": "gear.trinket_t2.desc",
+      "sockets": 1, "effects": ["gold_mult"], "magnitudes": [1.1], "price": 900
+    },
+    {
+      "id": "trinket_t3", "icon": "ring_gold", "slot": "TRINKET", "tier": 3,
+      "nameKey": "gear.trinket_t3.name", "descKey": "gear.trinket_t3.desc",
+      "sockets": 2, "effects": ["gold_mult"], "magnitudes": [1.16], "price": 1800
+    },
+    {
+      "id": "trinket_t4", "icon": "ring_gold", "slot": "TRINKET", "tier": 4,
+      "nameKey": "gear.trinket_t4.name", "descKey": "gear.trinket_t4.desc",
+      "sockets": 3, "effects": ["gold_mult"], "magnitudes": [1.24], "price": 0
+    },
+    // ---- generated by tools/make_arsenal.py from the dictionary; edit the tool, not these ----
+    {
+      "id": "wizard_hat_1", "icon": 1841, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.wizard_hat_1.name", "descKey": "gear.wizard_hat_1.desc",
+      "sockets": 0, "effects": ["crit_chance_add", "crit_damage_mult"], "magnitudes": [0.02, 1.05], "price": 0
+    },
+    {
+      "id": "wizard_hat_2", "icon": 1842, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.wizard_hat_2.name", "descKey": "gear.wizard_hat_2.desc",
+      "sockets": 0, "effects": ["crit_chance_add", "crit_damage_mult"], "magnitudes": [0.02, 1.05], "price": 0
+    },
+    {
+      "id": "helmet_1", "icon": 1905, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.helmet_1.name", "descKey": "gear.helmet_1.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "helmet_2", "icon": 1906, "slot": "HEAD", "tier": 4,
+      "nameKey": "gear.helmet_2.name", "descKey": "gear.helmet_2.desc",
+      "sockets": 3, "effects": ["armour_add", "max_hp_add"], "magnitudes": [4, 40], "price": 0
+    },
+    {
+      "id": "helmet_3", "icon": 1912, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.helmet_3.name", "descKey": "gear.helmet_3.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "helmet_4", "icon": 1913, "slot": "HEAD", "tier": 4,
+      "nameKey": "gear.helmet_4.name", "descKey": "gear.helmet_4.desc",
+      "sockets": 3, "effects": ["armour_add", "max_hp_add"], "magnitudes": [4, 40], "price": 0
+    },
+    {
+      "id": "helmet_5", "icon": 1919, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.helmet_5.name", "descKey": "gear.helmet_5.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "hood_1", "icon": 1953, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.hood_1.name", "descKey": "gear.hood_1.desc",
+      "sockets": 0, "effects": ["max_hp_add", "crit_chance_add"], "magnitudes": [8, 0.02], "price": 0
+    },
+    {
+      "id": "wizard_hat_3", "icon": 1958, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.wizard_hat_3.name", "descKey": "gear.wizard_hat_3.desc",
+      "sockets": 0, "effects": ["crit_chance_add", "crit_damage_mult"], "magnitudes": [0.02, 1.05], "price": 0
+    },
+    {
+      "id": "round_hat_1", "icon": 1965, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.round_hat_1.name", "descKey": "gear.round_hat_1.desc",
+      "sockets": 0, "effects": ["max_hp_add", "gold_mult"], "magnitudes": [8, 1.05], "price": 0
+    },
+    {
+      "id": "cap_1", "icon": 2001, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.cap_1.name", "descKey": "gear.cap_1.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "gold_mult"], "magnitudes": [1.03, 1.05], "price": 0
+    },
+    {
+      "id": "pointed_hood_1", "icon": 2003, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.pointed_hood_1.name", "descKey": "gear.pointed_hood_1.desc",
+      "sockets": 0, "effects": ["crit_chance_add", "move_speed_mult"], "magnitudes": [0.02, 1.03], "price": 0
+    },
+    {
+      "id": "top_hat_1", "icon": 2009, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.top_hat_1.name", "descKey": "gear.top_hat_1.desc",
+      "sockets": 0, "effects": ["gold_mult", "crit_damage_mult"], "magnitudes": [1.05, 1.05], "price": 0
+    },
+    {
+      "id": "hood_2", "icon": 2015, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.hood_2.name", "descKey": "gear.hood_2.desc",
+      "sockets": 0, "effects": ["max_hp_add", "crit_chance_add"], "magnitudes": [8, 0.02], "price": 0
+    },
+    {
+      "id": "helmet_6", "icon": 2052, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.helmet_6.name", "descKey": "gear.helmet_6.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "helmet_7", "icon": 2054, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.helmet_7.name", "descKey": "gear.helmet_7.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "hood_3", "icon": 2075, "slot": "HEAD", "tier": 1,
+      "nameKey": "gear.hood_3.name", "descKey": "gear.hood_3.desc",
+      "sockets": 0, "effects": ["max_hp_add", "crit_chance_add"], "magnitudes": [8, 0.02], "price": 0
+    },
+    {
+      "id": "helmet_8", "icon": 2077, "slot": "HEAD", "tier": 3,
+      "nameKey": "gear.helmet_8.name", "descKey": "gear.helmet_8.desc",
+      "sockets": 2, "effects": ["armour_add", "max_hp_add"], "magnitudes": [3, 26], "price": 0
+    },
+    {
+      "id": "robe_1", "icon": 1857, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.robe_1.name", "descKey": "gear.robe_1.desc",
+      "sockets": 0, "effects": ["max_hp_add", "crit_damage_mult"], "magnitudes": [8, 1.05], "price": 0
+    },
+    {
+      "id": "tunic_1", "icon": 1859, "slot": "BODY", "tier": 3,
+      "nameKey": "gear.tunic_1.name", "descKey": "gear.tunic_1.desc",
+      "sockets": 2, "effects": ["max_hp_add", "move_speed_mult"], "magnitudes": [26, 1.08], "price": 0
+    },
+    {
+      "id": "armour_1", "icon": 1863, "slot": "BODY", "tier": 4,
+      "nameKey": "gear.armour_1.name", "descKey": "gear.armour_1.desc",
+      "sockets": 3, "effects": ["armour_add", "max_hp_add"], "magnitudes": [4, 40], "price": 0
+    },
+    {
+      "id": "armour_2", "icon": 1869, "slot": "BODY", "tier": 3,
+      "nameKey": "gear.armour_2.name", "descKey": "gear.armour_2.desc",
+      "sockets": 2, "effects": ["armour_add", "max_hp_add"], "magnitudes": [3, 26], "price": 0
+    },
+    {
+      "id": "vest_1", "icon": 1873, "slot": "BODY", "tier": 2,
+      "nameKey": "gear.vest_1.name", "descKey": "gear.vest_1.desc",
+      "sockets": 1, "effects": ["max_hp_add", "attack_speed_mult"], "magnitudes": [16, 1.06], "price": 0
+    },
+    {
+      "id": "tunic_2", "icon": 1876, "slot": "BODY", "tier": 2,
+      "nameKey": "gear.tunic_2.name", "descKey": "gear.tunic_2.desc",
+      "sockets": 1, "effects": ["max_hp_add", "move_speed_mult"], "magnitudes": [16, 1.05], "price": 0
+    },
+    {
+      "id": "coat_1", "icon": 1879, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.coat_1.name", "descKey": "gear.coat_1.desc",
+      "sockets": 0, "effects": ["armour_add", "attack_speed_mult"], "magnitudes": [1, 1.03], "price": 0
+    },
+    {
+      "id": "armour_3", "icon": 1881, "slot": "BODY", "tier": 2,
+      "nameKey": "gear.armour_3.name", "descKey": "gear.armour_3.desc",
+      "sockets": 1, "effects": ["armour_add", "max_hp_add"], "magnitudes": [2, 16], "price": 0
+    },
+    {
+      "id": "armour_4", "icon": 1884, "slot": "BODY", "tier": 3,
+      "nameKey": "gear.armour_4.name", "descKey": "gear.armour_4.desc",
+      "sockets": 2, "effects": ["armour_add", "max_hp_add"], "magnitudes": [3, 26], "price": 0
+    },
+    {
+      "id": "armour_5", "icon": 1888, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.armour_5.name", "descKey": "gear.armour_5.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "robe_2", "icon": 1889, "slot": "BODY", "tier": 3,
+      "nameKey": "gear.robe_2.name", "descKey": "gear.robe_2.desc",
+      "sockets": 2, "effects": ["max_hp_add", "crit_damage_mult"], "magnitudes": [26, 1.16], "price": 0
+    },
+    {
+      "id": "robe_3", "icon": 1893, "slot": "BODY", "tier": 4,
+      "nameKey": "gear.robe_3.name", "descKey": "gear.robe_3.desc",
+      "sockets": 3, "effects": ["max_hp_add", "crit_damage_mult"], "magnitudes": [40, 1.25], "price": 0
+    },
+    {
+      "id": "armour_6", "icon": 1899, "slot": "BODY", "tier": 3,
+      "nameKey": "gear.armour_6.name", "descKey": "gear.armour_6.desc",
+      "sockets": 2, "effects": ["armour_add", "max_hp_add"], "magnitudes": [3, 26], "price": 0
+    },
+    {
+      "id": "vest_2", "icon": 1903, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.vest_2.name", "descKey": "gear.vest_2.desc",
+      "sockets": 0, "effects": ["max_hp_add", "attack_speed_mult"], "magnitudes": [8, 1.03], "price": 0
+    },
+    {
+      "id": "armour_7", "icon": 1921, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.armour_7.name", "descKey": "gear.armour_7.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "armour_8", "icon": 1922, "slot": "BODY", "tier": 4,
+      "nameKey": "gear.armour_8.name", "descKey": "gear.armour_8.desc",
+      "sockets": 3, "effects": ["armour_add", "max_hp_add"], "magnitudes": [4, 40], "price": 0
+    },
+    {
+      "id": "armour_9", "icon": 1928, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.armour_9.name", "descKey": "gear.armour_9.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "armour_10", "icon": 1929, "slot": "BODY", "tier": 4,
+      "nameKey": "gear.armour_10.name", "descKey": "gear.armour_10.desc",
+      "sockets": 3, "effects": ["armour_add", "max_hp_add"], "magnitudes": [4, 40], "price": 0
+    },
+    {
+      "id": "armour_11", "icon": 1935, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.armour_11.name", "descKey": "gear.armour_11.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "robe_4", "icon": 1969, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.robe_4.name", "descKey": "gear.robe_4.desc",
+      "sockets": 0, "effects": ["max_hp_add", "crit_damage_mult"], "magnitudes": [8, 1.05], "price": 0
+    },
+    {
+      "id": "coat_2", "icon": 1974, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.coat_2.name", "descKey": "gear.coat_2.desc",
+      "sockets": 0, "effects": ["armour_add", "attack_speed_mult"], "magnitudes": [1, 1.03], "price": 0
+    },
+    {
+      "id": "tunic_3", "icon": 1981, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.tunic_3.name", "descKey": "gear.tunic_3.desc",
+      "sockets": 0, "effects": ["max_hp_add", "move_speed_mult"], "magnitudes": [8, 1.03], "price": 0
+    },
+    {
+      "id": "coat_3", "icon": 2017, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.coat_3.name", "descKey": "gear.coat_3.desc",
+      "sockets": 0, "effects": ["armour_add", "attack_speed_mult"], "magnitudes": [1, 1.03], "price": 0
+    },
+    {
+      "id": "coat_4", "icon": 2019, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.coat_4.name", "descKey": "gear.coat_4.desc",
+      "sockets": 0, "effects": ["armour_add", "attack_speed_mult"], "magnitudes": [1, 1.03], "price": 0
+    },
+    {
+      "id": "robe_5", "icon": 2025, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.robe_5.name", "descKey": "gear.robe_5.desc",
+      "sockets": 0, "effects": ["max_hp_add", "crit_damage_mult"], "magnitudes": [8, 1.05], "price": 0
+    },
+    {
+      "id": "cloak_1", "icon": 2031, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.cloak_1.name", "descKey": "gear.cloak_1.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "armour_12", "icon": 2049, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.armour_12.name", "descKey": "gear.armour_12.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "armour_13", "icon": 2050, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.armour_13.name", "descKey": "gear.armour_13.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "cloak_2", "icon": 2069, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.cloak_2.name", "descKey": "gear.cloak_2.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "cloak_3", "icon": 2070, "slot": "BODY", "tier": 1,
+      "nameKey": "gear.cloak_3.name", "descKey": "gear.cloak_3.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "gauntlets_1", "icon": 2055, "slot": "HANDS", "tier": 1,
+      "nameKey": "gear.gauntlets_1.name", "descKey": "gear.gauntlets_1.desc",
+      "sockets": 0, "effects": ["damage_mult", "armour_add"], "magnitudes": [1.04, 1], "price": 0
+    },
+    {
+      "id": "gauntlets_2", "icon": 2058, "slot": "HANDS", "tier": 1,
+      "nameKey": "gear.gauntlets_2.name", "descKey": "gear.gauntlets_2.desc",
+      "sockets": 0, "effects": ["damage_mult", "armour_add"], "magnitudes": [1.04, 1], "price": 0
+    },
+    {
+      "id": "gauntlets_3", "icon": 2168, "slot": "HANDS", "tier": 3,
+      "nameKey": "gear.gauntlets_3.name", "descKey": "gear.gauntlets_3.desc",
+      "sockets": 2, "effects": ["damage_mult", "armour_add"], "magnitudes": [1.13, 3], "price": 0
+    },
+    {
+      "id": "gloves_1", "icon": 2173, "slot": "HANDS", "tier": 1,
+      "nameKey": "gear.gloves_1.name", "descKey": "gear.gloves_1.desc",
+      "sockets": 0, "effects": ["attack_speed_mult", "damage_mult"], "magnitudes": [1.03, 1.04], "price": 0
+    },
+    {
+      "id": "boots_1", "icon": 1853, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_1.name", "descKey": "gear.boots_1.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "boots_2", "icon": 1855, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_2.name", "descKey": "gear.boots_2.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "boots_3", "icon": 1937, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_3.name", "descKey": "gear.boots_3.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "boots_4", "icon": 1938, "slot": "FEET", "tier": 4,
+      "nameKey": "gear.boots_4.name", "descKey": "gear.boots_4.desc",
+      "sockets": 3, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.12, 4], "price": 0
+    },
+    {
+      "id": "boots_5", "icon": 1944, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_5.name", "descKey": "gear.boots_5.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "boots_6", "icon": 1945, "slot": "FEET", "tier": 4,
+      "nameKey": "gear.boots_6.name", "descKey": "gear.boots_6.desc",
+      "sockets": 3, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.12, 4], "price": 0
+    },
+    {
+      "id": "boots_7", "icon": 1951, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_7.name", "descKey": "gear.boots_7.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "shoes_1", "icon": 1985, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.shoes_1.name", "descKey": "gear.shoes_1.desc",
+      "sockets": 0, "effects": ["move_speed_mult"], "magnitudes": [1.03], "price": 0
+    },
+    {
+      "id": "boots_8", "icon": 1990, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_8.name", "descKey": "gear.boots_8.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "boots_9", "icon": 1997, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_9.name", "descKey": "gear.boots_9.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "shoes_2", "icon": 2033, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.shoes_2.name", "descKey": "gear.shoes_2.desc",
+      "sockets": 0, "effects": ["move_speed_mult"], "magnitudes": [1.03], "price": 0
+    },
+    {
+      "id": "boots_10", "icon": 2035, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_10.name", "descKey": "gear.boots_10.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "boots_11", "icon": 2041, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_11.name", "descKey": "gear.boots_11.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "boots_12", "icon": 2047, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_12.name", "descKey": "gear.boots_12.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "boots_13", "icon": 2057, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.boots_13.name", "descKey": "gear.boots_13.desc",
+      "sockets": 0, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.03, 1], "price": 0
+    },
+    {
+      "id": "greaves_1", "icon": 2060, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.greaves_1.name", "descKey": "gear.greaves_1.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "boots_14", "icon": 2161, "slot": "FEET", "tier": 3,
+      "nameKey": "gear.boots_14.name", "descKey": "gear.boots_14.desc",
+      "sockets": 2, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.08, 3], "price": 0
+    },
+    {
+      "id": "boots_15", "icon": 2166, "slot": "FEET", "tier": 2,
+      "nameKey": "gear.boots_15.name", "descKey": "gear.boots_15.desc",
+      "sockets": 1, "effects": ["move_speed_mult", "armour_add"], "magnitudes": [1.05, 2], "price": 0
+    },
+    {
+      "id": "greaves_2", "icon": 2175, "slot": "FEET", "tier": 1,
+      "nameKey": "gear.greaves_2.name", "descKey": "gear.greaves_2.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "ring_1", "icon": 1843, "slot": "TRINKET", "tier": 3,
+      "nameKey": "gear.ring_1.name", "descKey": "gear.ring_1.desc",
+      "sockets": 2, "effects": ["crit_chance_add"], "magnitudes": [0.06], "price": 0
+    },
+    {
+      "id": "amulet_1", "icon": 1852, "slot": "TRINKET", "tier": 3,
+      "nameKey": "gear.amulet_1.name", "descKey": "gear.amulet_1.desc",
+      "sockets": 2, "effects": ["max_hp_add"], "magnitudes": [26], "price": 0
+    },
+    {
+      "id": "ring_2", "icon": 2061, "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.ring_2.name", "descKey": "gear.ring_2.desc",
+      "sockets": 0, "effects": ["crit_chance_add"], "magnitudes": [0.02], "price": 0
+    },
+    {
+      "id": "ring_3", "icon": 2063, "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.ring_3.name", "descKey": "gear.ring_3.desc",
+      "sockets": 0, "effects": ["crit_chance_add"], "magnitudes": [0.02], "price": 0
+    },
+    {
+      "id": "amulet_2", "icon": 2065, "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.amulet_2.name", "descKey": "gear.amulet_2.desc",
+      "sockets": 0, "effects": ["max_hp_add"], "magnitudes": [8], "price": 0
+    },
+    {
+      "id": "bracelet_1", "icon": 2067, "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.bracelet_1.name", "descKey": "gear.bracelet_1.desc",
+      "sockets": 0, "effects": ["attack_speed_mult"], "magnitudes": [1.03], "price": 0
+    },
+    {
+      "id": "belt_1", "icon": 2068, "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.belt_1.name", "descKey": "gear.belt_1.desc",
+      "sockets": 0, "effects": ["armour_add"], "magnitudes": [1], "price": 0
+    },
+    {
+      "id": "shield_1", "icon": 2152, "slot": "TRINKET", "tier": 4,
+      "nameKey": "gear.shield_1.name", "descKey": "gear.shield_1.desc",
+      "sockets": 3, "effects": ["armour_add", "max_hp_add"], "magnitudes": [4, 40], "price": 0
+    },
+    {
+      "id": "shield_2", "icon": 2160, "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.shield_2.name", "descKey": "gear.shield_2.desc",
+      "sockets": 0, "effects": ["armour_add", "max_hp_add"], "magnitudes": [1, 8], "price": 0
+    },
+    {
+      "id": "crystal_1", "icon": 2146, "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.crystal_1.name", "descKey": "gear.crystal_1.desc",
+      "sockets": 0, "effects": ["damage_mult"], "magnitudes": [1.04], "price": 0
+    },
+    {
+      "id": "shard_1", "icon": 2147, "slot": "TRINKET", "tier": 2,
+      "nameKey": "gear.shard_1.name", "descKey": "gear.shard_1.desc",
+      "sockets": 1, "effects": ["throw_damage_mult"], "magnitudes": [1.1], "price": 0
+    },
+    {
+      "id": "amulet_3", "icon": 2177, "slot": "TRINKET", "tier": 3,
+      "nameKey": "gear.amulet_3.name", "descKey": "gear.amulet_3.desc",
+      "sockets": 2, "effects": ["max_hp_add"], "magnitudes": [26], "price": 0
+    },
+    {
+      "id": "amulet_4", "icon": 2184, "slot": "TRINKET", "tier": 2,
+      "nameKey": "gear.amulet_4.name", "descKey": "gear.amulet_4.desc",
+      "sockets": 1, "effects": ["max_hp_add"], "magnitudes": [16], "price": 0
+    },
+    {
+      "id": "bracelet_2", "icon": 2183, "slot": "TRINKET", "tier": 1,
+      "nameKey": "gear.bracelet_2.name", "descKey": "gear.bracelet_2.desc",
+      "sockets": 0, "effects": ["attack_speed_mult"], "magnitudes": [1.03], "price": 0
+    },
+    {
+      "id": "ring_4", "icon": 2185, "slot": "TRINKET", "tier": 3,
+      "nameKey": "gear.ring_4.name", "descKey": "gear.ring_4.desc",
+      "sockets": 2, "effects": ["crit_chance_add"], "magnitudes": [0.06], "price": 0
+    },
+    {
+      "id": "belt_2", "icon": 2190, "slot": "TRINKET", "tier": 2,
+      "nameKey": "gear.belt_2.name", "descKey": "gear.belt_2.desc",
+      "sockets": 1, "effects": ["armour_add"], "magnitudes": [2], "price": 0
+    }
+    // ---- end of the generated ----
+  ],
+
+  // Stones. One effect each, and the colour says which: red is damage,
+  // green is survival, blue is speed, yellow is the big hits, purple is
+  // money. ContentValidator.GEM_COLOURS enforces it at boot, so a
+  // red stone that made you faster fails the build rather than teaching
+  // the player that the colours are decoration.
+  //
+  // Only tier 1 is for sale. The rest are forged three-for-one, below.
+  "gems": [
+    {
+      "id": "red_t1", "nameKey": "gem.red_t1.name",
+      "icon": "gem_red", "colour": "RED", "tier": 1, "effect": "damage_mult", "magnitude": 1.02, "price": 120
+    },
+    {
+      "id": "red_t2", "nameKey": "gem.red_t2.name",
+      "icon": "shard_pink", "colour": "RED", "tier": 2, "effect": "crit_chance_add", "magnitude": 0.025, "price": 0
+    },
+    {
+      "id": "red_t3", "nameKey": "gem.red_t3.name",
+      "icon": "crystal_purple", "colour": "RED", "tier": 3, "effect": "damage_mult", "magnitude": 1.09, "price": 0
+    },
+    {
+      "id": "green_t1", "nameKey": "gem.green_t1.name",
+      "icon": "gem_green", "colour": "GREEN", "tier": 1, "effect": "max_hp_add", "magnitude": 5, "price": 120
+    },
+    {
+      "id": "green_t2", "nameKey": "gem.green_t2.name",
+      "icon": "gem_teal", "colour": "GREEN", "tier": 2, "effect": "armour_add", "magnitude": 2, "price": 0
+    },
+    {
+      "id": "green_t3", "nameKey": "gem.green_t3.name",
+      "icon": "crystal_white", "colour": "GREEN", "tier": 3, "effect": "max_hp_add", "magnitude": 20, "price": 0
+    },
+    {
+      "id": "blue_t1", "nameKey": "gem.blue_t1.name",
+      "icon": "gem_blue", "colour": "BLUE", "tier": 1, "effect": "move_speed_mult", "magnitude": 1.02, "price": 120
+    },
+    {
+      "id": "blue_t2", "nameKey": "gem.blue_t2.name",
+      "icon": "ice_shard", "colour": "BLUE", "tier": 2, "effect": "attack_speed_mult", "magnitude": 1.04, "price": 0
+    },
+    {
+      "id": "blue_t3", "nameKey": "gem.blue_t3.name",
+      "icon": "soul_blue", "colour": "BLUE", "tier": 3, "effect": "move_speed_mult", "magnitude": 1.07, "price": 0
+    },
+    {
+      "id": "yellow_t1", "nameKey": "gem.yellow_t1.name",
+      "icon": "gem_amber", "colour": "YELLOW", "tier": 1, "effect": "crit_damage_mult", "magnitude": 1.04, "price": 120
+    },
+    {
+      "id": "yellow_t2", "nameKey": "gem.yellow_t2.name",
+      "icon": "star_orange", "colour": "YELLOW", "tier": 2, "effect": "throw_damage_mult", "magnitude": 1.09, "price": 0
+    },
+    {
+      "id": "yellow_t3", "nameKey": "gem.yellow_t3.name",
+      "icon": "medallion_gold", "colour": "YELLOW", "tier": 3, "effect": "crit_damage_mult", "magnitude": 1.15, "price": 0
+    },
+    {
+      "id": "purple_t1", "nameKey": "gem.purple_t1.name",
+      "icon": "shard_white", "colour": "PURPLE", "tier": 1, "effect": "gold_mult", "magnitude": 1.04, "price": 120
+    },
+    {
+      "id": "purple_t2", "nameKey": "gem.purple_t2.name",
+      "icon": "ring_emerald", "colour": "PURPLE", "tier": 2, "effect": "gold_mult", "magnitude": 1.09, "price": 0
+    },
+    {
+      "id": "purple_t3", "nameKey": "gem.purple_t3.name",
+      "icon": "soul_blue", "colour": "PURPLE", "tier": 3, "effect": "gold_mult", "magnitude": 1.14, "price": 0
+    }
+  ],
+
+  // The forge. Two kinds of line: three stones of one colour make one of
+  // the next tier up, and a piece of gear plus stones makes the piece
+  // above it. Tier 4 gear has no price anywhere and is only ever made.
+  "crafts": [
+    {
+      "id": "fuse_red_t2", "kind": "GEM", "output": "red_t2",
+      "inputs": ["red_t1"], "counts": [3], "goldCost": 150
+    },
+    {
+      "id": "fuse_red_t3", "kind": "GEM", "output": "red_t3",
+      "inputs": ["red_t2"], "counts": [3], "goldCost": 300
+    },
+    {
+      "id": "fuse_green_t2", "kind": "GEM", "output": "green_t2",
+      "inputs": ["green_t1"], "counts": [3], "goldCost": 150
+    },
+    {
+      "id": "fuse_green_t3", "kind": "GEM", "output": "green_t3",
+      "inputs": ["green_t2"], "counts": [3], "goldCost": 300
+    },
+    {
+      "id": "fuse_blue_t2", "kind": "GEM", "output": "blue_t2",
+      "inputs": ["blue_t1"], "counts": [3], "goldCost": 150
+    },
+    {
+      "id": "fuse_blue_t3", "kind": "GEM", "output": "blue_t3",
+      "inputs": ["blue_t2"], "counts": [3], "goldCost": 300
+    },
+    {
+      "id": "fuse_yellow_t2", "kind": "GEM", "output": "yellow_t2",
+      "inputs": ["yellow_t1"], "counts": [3], "goldCost": 150
+    },
+    {
+      "id": "fuse_yellow_t3", "kind": "GEM", "output": "yellow_t3",
+      "inputs": ["yellow_t2"], "counts": [3], "goldCost": 300
+    },
+    {
+      "id": "fuse_purple_t2", "kind": "GEM", "output": "purple_t2",
+      "inputs": ["purple_t1"], "counts": [3], "goldCost": 150
+    },
+    {
+      "id": "fuse_purple_t3", "kind": "GEM", "output": "purple_t3",
+      "inputs": ["purple_t2"], "counts": [3], "goldCost": 300
+    },
+    {
+      "id": "forge_body_t2", "kind": "GEAR", "output": "body_t2",
+      "inputs": ["body_t1", "red_t1"], "counts": [1, 2], "goldCost": 300, "requirement": "none", "requirementValue": 0
+    },
+    {
+      "id": "forge_body_t3", "kind": "GEAR", "output": "body_t3",
+      "inputs": ["body_t2", "red_t2"], "counts": [1, 3], "goldCost": 800, "requirement": "deepest_floor", "requirementValue": 3
+    },
+    {
+      "id": "forge_body_t4", "kind": "GEAR", "output": "body_t4",
+      "inputs": ["body_t3", "red_t2"], "counts": [1, 4], "goldCost": 1600, "requirement": "wins", "requirementValue": 1
+    },
+    {
+      "id": "forge_hands_t2", "kind": "GEAR", "output": "hands_t2",
+      "inputs": ["hands_t1", "red_t1"], "counts": [1, 2], "goldCost": 300, "requirement": "none", "requirementValue": 0
+    },
+    {
+      "id": "forge_hands_t3", "kind": "GEAR", "output": "hands_t3",
+      "inputs": ["hands_t2", "red_t2"], "counts": [1, 3], "goldCost": 800, "requirement": "deepest_floor", "requirementValue": 3
+    },
+    {
+      "id": "forge_hands_t4", "kind": "GEAR", "output": "hands_t4",
+      "inputs": ["hands_t3", "red_t2"], "counts": [1, 4], "goldCost": 1600, "requirement": "wins", "requirementValue": 1
+    },
+    {
+      "id": "forge_feet_t2", "kind": "GEAR", "output": "feet_t2",
+      "inputs": ["feet_t1", "red_t1"], "counts": [1, 2], "goldCost": 300, "requirement": "none", "requirementValue": 0
+    },
+    {
+      "id": "forge_feet_t3", "kind": "GEAR", "output": "feet_t3",
+      "inputs": ["feet_t2", "red_t2"], "counts": [1, 3], "goldCost": 800, "requirement": "deepest_floor", "requirementValue": 3
+    },
+    {
+      "id": "forge_feet_t4", "kind": "GEAR", "output": "feet_t4",
+      "inputs": ["feet_t3", "red_t2"], "counts": [1, 4], "goldCost": 1600, "requirement": "wins", "requirementValue": 1
+    },
+    {
+      "id": "forge_trinket_t2", "kind": "GEAR", "output": "trinket_t2",
+      "inputs": ["trinket_t1", "red_t1"], "counts": [1, 2], "goldCost": 300, "requirement": "none", "requirementValue": 0
+    },
+    {
+      "id": "forge_trinket_t3", "kind": "GEAR", "output": "trinket_t3",
+      "inputs": ["trinket_t2", "red_t2"], "counts": [1, 3], "goldCost": 800, "requirement": "deepest_floor", "requirementValue": 3
+    },
+    {
+      "id": "forge_trinket_t4", "kind": "GEAR", "output": "trinket_t4",
+      "inputs": ["trinket_t3", "red_t2"], "counts": [1, 4], "goldCost": 1600, "requirement": "wins", "requirementValue": 1
+    }
+  ],
+
+  // Weapons forged up with stones: one table for every weapon owned, read by
+  // data.WeaponUpgrades, which makes the forge a line for each. "damage" is a
+  // blow at that level as a share of the weapon's own, never less than a point
+  // a level more. The fire stones because a blade is tempered in fire; the
+  // shards the mines and the newcomers' jobs turn up are enough for the first.
+  "weaponUpgrades": [
+    {"level": 1, "inputs": ["red_t1"], "counts": [2], "goldCost": 200, "damage": 1.1},
+    {"level": 2, "inputs": ["red_t2"], "counts": [2], "goldCost": 600, "damage": 1.2},
+    {"level": 3, "inputs": ["red_t3", "red_t2"], "counts": [1, 2], "goldCost": 1500, "damage": 1.3}
+  ]
+}

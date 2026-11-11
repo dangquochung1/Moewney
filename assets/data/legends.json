@@ -1,0 +1,460 @@
+// The lucky wheel's swords, written by tools/make_legends.py: edit the
+// tool, not this. Tier 6, the top (WeaponDef.LEGEND_TIER), only the wheel
+// turns them up; "blade" is one picture swung by Player.drawOverlay rather
+// than a sheet. Art: thewisehedgehog's Swordtember sheets, CC BY 4.0.
+{
+  "weapons": [
+    {
+      "id": "legend_moss", "nameKey": "weapon.legend_moss.name", "descKey": "weapon.legend_moss.desc",
+      "sprite": "player/legend/legend_moss", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_automaton", "nameKey": "weapon.legend_automaton.name", "descKey": "weapon.legend_automaton.desc",
+      "sprite": "player/legend/legend_automaton", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_scale", "nameKey": "weapon.legend_scale.name", "descKey": "weapon.legend_scale.desc",
+      "sprite": "player/legend/legend_scale", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_bell", "nameKey": "weapon.legend_bell.name", "descKey": "weapon.legend_bell.desc",
+      "sprite": "player/legend/legend_bell", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_fossil", "nameKey": "weapon.legend_fossil.name", "descKey": "weapon.legend_fossil.desc",
+      "sprite": "player/legend/legend_fossil", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_clock", "nameKey": "weapon.legend_clock.name", "descKey": "weapon.legend_clock.desc",
+      "sprite": "player/legend/legend_clock", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_canine", "nameKey": "weapon.legend_canine.name", "descKey": "weapon.legend_canine.desc",
+      "sprite": "player/legend/legend_canine", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_feline", "nameKey": "weapon.legend_feline.name", "descKey": "weapon.legend_feline.desc",
+      "sprite": "player/legend/legend_feline", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_rodent", "nameKey": "weapon.legend_rodent.name", "descKey": "weapon.legend_rodent.desc",
+      "sprite": "player/legend/legend_rodent", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_reliquary", "nameKey": "weapon.legend_reliquary.name", "descKey": "weapon.legend_reliquary.desc",
+      "sprite": "player/legend/legend_reliquary", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_bloom", "nameKey": "weapon.legend_bloom.name", "descKey": "weapon.legend_bloom.desc",
+      "sprite": "player/legend/legend_bloom", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_rot", "nameKey": "weapon.legend_rot.name", "descKey": "weapon.legend_rot.desc",
+      "sprite": "player/legend/legend_rot", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_lace", "nameKey": "weapon.legend_lace.name", "descKey": "weapon.legend_lace.desc",
+      "sprite": "player/legend/legend_lace", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_carved", "nameKey": "weapon.legend_carved.name", "descKey": "weapon.legend_carved.desc",
+      "sprite": "player/legend/legend_carved", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_gem", "nameKey": "weapon.legend_gem.name", "descKey": "weapon.legend_gem.desc",
+      "sprite": "player/legend/legend_gem", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_beetle", "nameKey": "weapon.legend_beetle.name", "descKey": "weapon.legend_beetle.desc",
+      "sprite": "player/legend/legend_beetle", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_membrane", "nameKey": "weapon.legend_membrane.name", "descKey": "weapon.legend_membrane.desc",
+      "sprite": "player/legend/legend_membrane", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_ring", "nameKey": "weapon.legend_ring.name", "descKey": "weapon.legend_ring.desc",
+      "sprite": "player/legend/legend_ring", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_swan", "nameKey": "weapon.legend_swan.name", "descKey": "weapon.legend_swan.desc",
+      "sprite": "player/legend/legend_swan", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_owl", "nameKey": "weapon.legend_owl.name", "descKey": "weapon.legend_owl.desc",
+      "sprite": "player/legend/legend_owl", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_venom", "nameKey": "weapon.legend_venom.name", "descKey": "weapon.legend_venom.desc",
+      "sprite": "player/legend/legend_venom", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_bubble", "nameKey": "weapon.legend_bubble.name", "descKey": "weapon.legend_bubble.desc",
+      "sprite": "player/legend/legend_bubble", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_harpy", "nameKey": "weapon.legend_harpy.name", "descKey": "weapon.legend_harpy.desc",
+      "sprite": "player/legend/legend_harpy", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_spring", "nameKey": "weapon.legend_spring.name", "descKey": "weapon.legend_spring.desc",
+      "sprite": "player/legend/legend_spring", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_summer", "nameKey": "weapon.legend_summer.name", "descKey": "weapon.legend_summer.desc",
+      "sprite": "player/legend/legend_summer", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_autumn", "nameKey": "weapon.legend_autumn.name", "descKey": "weapon.legend_autumn.desc",
+      "sprite": "player/legend/legend_autumn", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_winter", "nameKey": "weapon.legend_winter.name", "descKey": "weapon.legend_winter.desc",
+      "sprite": "player/legend/legend_winter", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_brush", "nameKey": "weapon.legend_brush.name", "descKey": "weapon.legend_brush.desc",
+      "sprite": "player/legend/legend_brush", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_harvest", "nameKey": "weapon.legend_harvest.name", "descKey": "weapon.legend_harvest.desc",
+      "sprite": "player/legend/legend_harvest", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_wax", "nameKey": "weapon.legend_wax.name", "descKey": "weapon.legend_wax.desc",
+      "sprite": "player/legend/legend_wax", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_comedy", "nameKey": "weapon.legend_comedy.name", "descKey": "weapon.legend_comedy.desc",
+      "sprite": "player/legend/legend_comedy", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_tragedy", "nameKey": "weapon.legend_tragedy.name", "descKey": "weapon.legend_tragedy.desc",
+      "sprite": "player/legend/legend_tragedy", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_circus", "nameKey": "weapon.legend_circus.name", "descKey": "weapon.legend_circus.desc",
+      "sprite": "player/legend/legend_circus", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_gamble", "nameKey": "weapon.legend_gamble.name", "descKey": "weapon.legend_gamble.desc",
+      "sprite": "player/legend/legend_gamble", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_crane", "nameKey": "weapon.legend_crane.name", "descKey": "weapon.legend_crane.desc",
+      "sprite": "player/legend/legend_crane", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_mandrake", "nameKey": "weapon.legend_mandrake.name", "descKey": "weapon.legend_mandrake.desc",
+      "sprite": "player/legend/legend_mandrake", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_crustacean", "nameKey": "weapon.legend_crustacean.name", "descKey": "weapon.legend_crustacean.desc",
+      "sprite": "player/legend/legend_crustacean", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_bake", "nameKey": "weapon.legend_bake.name", "descKey": "weapon.legend_bake.desc",
+      "sprite": "player/legend/legend_bake", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_surgical", "nameKey": "weapon.legend_surgical.name", "descKey": "weapon.legend_surgical.desc",
+      "sprite": "player/legend/legend_surgical", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_nest", "nameKey": "weapon.legend_nest.name", "descKey": "weapon.legend_nest.desc",
+      "sprite": "player/legend/legend_nest", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_ship", "nameKey": "weapon.legend_ship.name", "descKey": "weapon.legend_ship.desc",
+      "sprite": "player/legend/legend_ship", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_seed", "nameKey": "weapon.legend_seed.name", "descKey": "weapon.legend_seed.desc",
+      "sprite": "player/legend/legend_seed", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_portal", "nameKey": "weapon.legend_portal.name", "descKey": "weapon.legend_portal.desc",
+      "sprite": "player/legend/legend_portal", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_monkey", "nameKey": "weapon.legend_monkey.name", "descKey": "weapon.legend_monkey.desc",
+      "sprite": "player/legend/legend_monkey", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_serpent", "nameKey": "weapon.legend_serpent.name", "descKey": "weapon.legend_serpent.desc",
+      "sprite": "player/legend/legend_serpent", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_amber", "nameKey": "weapon.legend_amber.name", "descKey": "weapon.legend_amber.desc",
+      "sprite": "player/legend/legend_amber", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_bovine", "nameKey": "weapon.legend_bovine.name", "descKey": "weapon.legend_bovine.desc",
+      "sprite": "player/legend/legend_bovine", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_vegetable", "nameKey": "weapon.legend_vegetable.name", "descKey": "weapon.legend_vegetable.desc",
+      "sprite": "player/legend/legend_vegetable", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_fruit", "nameKey": "weapon.legend_fruit.name", "descKey": "weapon.legend_fruit.desc",
+      "sprite": "player/legend/legend_fruit", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    },
+    {
+      "id": "legend_tidepool", "nameKey": "weapon.legend_tidepool.name", "descKey": "weapon.legend_tidepool.desc",
+      "sprite": "player/legend/legend_tidepool", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_pearlescent", "nameKey": "weapon.legend_pearlescent.name", "descKey": "weapon.legend_pearlescent.desc",
+      "sprite": "player/legend/legend_pearlescent", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_seal", "nameKey": "weapon.legend_seal.name", "descKey": "weapon.legend_seal.desc",
+      "sprite": "player/legend/legend_seal", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_lily", "nameKey": "weapon.legend_lily.name", "descKey": "weapon.legend_lily.desc",
+      "sprite": "player/legend/legend_lily", "tier": 6, "blade": true,
+      "damage": 17, "reach": 28, "width": 15,
+      "windupSteps": 4, "activeSteps": 4, "recoverSteps": 11,
+      "knockback": 90, "rootSteps": 2
+    },
+    {
+      "id": "legend_acidic", "nameKey": "weapon.legend_acidic.name", "descKey": "weapon.legend_acidic.desc",
+      "sprite": "player/legend/legend_acidic", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_kelpie", "nameKey": "weapon.legend_kelpie.name", "descKey": "weapon.legend_kelpie.desc",
+      "sprite": "player/legend/legend_kelpie", "tier": 6, "blade": true,
+      "damage": 32, "reach": 31, "width": 22,
+      "windupSteps": 9, "activeSteps": 5, "recoverSteps": 20,
+      "knockback": 180, "rootSteps": 8
+    },
+    {
+      "id": "legend_unicorn", "nameKey": "weapon.legend_unicorn.name", "descKey": "weapon.legend_unicorn.desc",
+      "sprite": "player/legend/legend_unicorn", "tier": 6, "blade": true,
+      "damage": 12, "reach": 26, "width": 12,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 8,
+      "knockback": 50, "rootSteps": 0
+    }
+  ],
+
+  // Their dictionary entries, under the legends group of the legend tab (codex.json).
+  "codex": [
+    {"group": "legends", "weapon": "legend_moss"},
+    {"group": "legends", "weapon": "legend_automaton"},
+    {"group": "legends", "weapon": "legend_scale"},
+    {"group": "legends", "weapon": "legend_bell"},
+    {"group": "legends", "weapon": "legend_fossil"},
+    {"group": "legends", "weapon": "legend_clock"},
+    {"group": "legends", "weapon": "legend_canine"},
+    {"group": "legends", "weapon": "legend_feline"},
+    {"group": "legends", "weapon": "legend_rodent"},
+    {"group": "legends", "weapon": "legend_reliquary"},
+    {"group": "legends", "weapon": "legend_bloom"},
+    {"group": "legends", "weapon": "legend_rot"},
+    {"group": "legends", "weapon": "legend_lace"},
+    {"group": "legends", "weapon": "legend_carved"},
+    {"group": "legends", "weapon": "legend_gem"},
+    {"group": "legends", "weapon": "legend_beetle"},
+    {"group": "legends", "weapon": "legend_membrane"},
+    {"group": "legends", "weapon": "legend_ring"},
+    {"group": "legends", "weapon": "legend_swan"},
+    {"group": "legends", "weapon": "legend_owl"},
+    {"group": "legends", "weapon": "legend_venom"},
+    {"group": "legends", "weapon": "legend_bubble"},
+    {"group": "legends", "weapon": "legend_harpy"},
+    {"group": "legends", "weapon": "legend_spring"},
+    {"group": "legends", "weapon": "legend_summer"},
+    {"group": "legends", "weapon": "legend_autumn"},
+    {"group": "legends", "weapon": "legend_winter"},
+    {"group": "legends", "weapon": "legend_brush"},
+    {"group": "legends", "weapon": "legend_harvest"},
+    {"group": "legends", "weapon": "legend_wax"},
+    {"group": "legends", "weapon": "legend_comedy"},
+    {"group": "legends", "weapon": "legend_tragedy"},
+    {"group": "legends", "weapon": "legend_circus"},
+    {"group": "legends", "weapon": "legend_gamble"},
+    {"group": "legends", "weapon": "legend_crane"},
+    {"group": "legends", "weapon": "legend_mandrake"},
+    {"group": "legends", "weapon": "legend_crustacean"},
+    {"group": "legends", "weapon": "legend_bake"},
+    {"group": "legends", "weapon": "legend_surgical"},
+    {"group": "legends", "weapon": "legend_nest"},
+    {"group": "legends", "weapon": "legend_ship"},
+    {"group": "legends", "weapon": "legend_seed"},
+    {"group": "legends", "weapon": "legend_portal"},
+    {"group": "legends", "weapon": "legend_monkey"},
+    {"group": "legends", "weapon": "legend_serpent"},
+    {"group": "legends", "weapon": "legend_amber"},
+    {"group": "legends", "weapon": "legend_bovine"},
+    {"group": "legends", "weapon": "legend_vegetable"},
+    {"group": "legends", "weapon": "legend_fruit"},
+    {"group": "legends", "weapon": "legend_tidepool"},
+    {"group": "legends", "weapon": "legend_pearlescent"},
+    {"group": "legends", "weapon": "legend_seal"},
+    {"group": "legends", "weapon": "legend_lily"},
+    {"group": "legends", "weapon": "legend_acidic"},
+    {"group": "legends", "weapon": "legend_kelpie"},
+    {"group": "legends", "weapon": "legend_unicorn"}
+  ]
+}

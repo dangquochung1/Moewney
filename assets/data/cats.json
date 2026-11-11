@@ -1,0 +1,89 @@
+// The village's six cats, from the Free pack's cat. Read by
+// com.kagebi.data.VillageCatalog (CatDef), lived by village/CatLife and drawn by
+// screen/island/Cats; checked by ContentValidator.
+//
+// Every place is a cat's feet in the pixels Tiled shows for its map, y down:
+// village.tmx's for the island, home.tmx's for "where": "home". A cat sleeps
+// in its bed, wakes with a stretch, goes out from stop to stop - each reached
+// by its "how": walk (through "via", straight between), route (the way a
+// player would go, on the ground only) or leap (one jump, onto or off a roof
+// or a bed) - and comes back the same way. "roof": true draws it over every
+// roof. "linger": false passes through without stopping. "does" picks what it
+// may do at a stop from sit, itch, meow, lie, nap, play and eat; left out, any
+// of them. "bowl": true stands a plate of food at a stop, which is the only
+// place a cat eats. "sleepy" is how many times as long as the others a cat
+// sleeps.
+//
+// "sheet" is the cat's coat, made by tools/cats.py: 1 ginger (the pack's cat
+// 1.6), 2 black, 3 cream, 4 hairless pink (cat 1 recoloured), 5 white (cat
+// 1.9), 6 grey (cat 1). "hat" is what it wears in winter: santa, santa2 or
+// antlers, from the pack's Winter accessories.
+{
+  "cats": {
+    "pace": 14,
+    "napMin": 25,
+    "napMax": 70,
+    "lingerMin": 4,
+    "lingerMax": 14,
+    "zoomies": 0.08,
+    "leapSeconds": 0.45,
+    "leapHeight": 8,
+    "cats": [
+      // On the flat roof of the red house on the left, by the Guild Hall; now
+      // and then over the plank to the red house on the right.
+      {"id": "red_roofs", "sheet": 1, "hat": "santa",
+       "bed": {"x": 2954, "y": 2092, "roof": true, "face": "right"},
+       "stops": [
+         {"x": 3030, "y": 2091, "via": [2974, 2091], "roof": true, "does": ["sit", "meow", "lie"]},
+         {"x": 3030, "y": 2112, "roof": true}
+       ]},
+      // Asleep on the Guild Hall's roof nearly all day; once in a while along
+      // the ridge and down onto the east wing.
+      {"id": "guild_roof", "sheet": 2, "hat": "antlers", "sleepy": 2,
+       "bed": {"x": 2846, "y": 1940, "roof": true, "face": "right"},
+       "stops": [
+         {"x": 2896, "y": 1940, "roof": true},
+         {"x": 2918, "y": 1978, "via": [2908, 1958], "roof": true, "does": ["sit", "lie", "nap"]}
+       ]},
+      // On the big orange house over the pond; down off its roof, over the
+      // bridge and up the hill to the ginger-haired woman by the green house,
+      // and back up to sleep.
+      {"id": "orange_roof", "sheet": 3, "hat": "santa2",
+       "bed": {"x": 3160, "y": 1672, "roof": true, "face": "left"},
+       "stops": [
+         {"x": 3186, "y": 1708, "roof": true, "linger": false},
+         {"x": 3206, "y": 1740, "how": "leap", "linger": false},
+         {"x": 3438, "y": 1792, "how": "route", "does": ["sit", "meow", "lie"]}
+       ]},
+      // Indoors, curled on the bed; down to potter about the room now and
+      // then, and to its plate by the table.
+      {"id": "home_bed", "sheet": 4, "hat": "santa", "where": "home", "sleepy": 2,
+       "bed": {"x": 158, "y": 138, "face": "right"},
+       "stops": [
+         {"x": 162, "y": 156, "how": "leap", "linger": false},
+         {"x": 205, "y": 156},
+         {"x": 160, "y": 228, "via": [160, 180], "bowl": true}
+       ]},
+      // On the green roof of the wooden house by the stream; down onto the
+      // road behind it, along to the bridge and the other way, and back up.
+      {"id": "wood_house", "sheet": 5, "hat": "santa2",
+       "bed": {"x": 3318, "y": 2082, "roof": true, "face": "left"},
+       "stops": [
+         {"x": 3304, "y": 2067, "roof": true, "linger": false},
+         {"x": 3304, "y": 2051, "how": "leap", "linger": false},
+         {"x": 3250, "y": 2050, "how": "route"},
+         {"x": 3352, "y": 2050, "how": "route"}
+       ]},
+      // By the cook's garden fence, far enough from the cabin's door to be
+      // stroked; out over the porch, to its plate on the dirt path - the
+      // cook's scraps - and the grass, and home again.
+      {"id": "cook_porch", "sheet": 6, "hat": "antlers",
+       "bed": {"x": 3870, "y": 1928, "face": "right"},
+       "stops": [
+         {"x": 3950, "y": 1932, "how": "route"},
+         {"x": 3985, "y": 1964, "how": "route", "bowl": true},
+         {"x": 4014, "y": 1942, "how": "route"}
+       ]}
+    ]
+  }
+}

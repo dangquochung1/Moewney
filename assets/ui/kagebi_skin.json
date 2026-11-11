@@ -1,0 +1,197 @@
+{
+  "com.badlogic.gdx.graphics.g2d.BitmapFont": {
+    "default": {
+      "file": "assets/fonts/pixeloid_9.fnt",
+      "useIntegerPositions": true,
+      "markupEnabled": false,
+      "flip": false
+    }
+  },
+
+  "com.badlogic.gdx.graphics.Color": {
+    "white":        { "hex": "ffffffff" },
+    "ink":          { "hex": "131b1bff" },
+    "wood_light":   { "hex": "ffad55ff" },
+    "wood_mid":     { "hex": "f06733ff" },
+    "wood_dark":    { "hex": "9b513cff" },
+    "stone_mid":    { "hex": "56634dff" },
+    "cream":        { "hex": "eecf9bff" },
+    "text":         { "hex": "131b1bff" },
+    "text_inverse": { "hex": "ffe6c4ff" },
+    "text_soft":    { "hex": "46503cff" },
+    "text_on_dark": { "hex": "e8cfa9ff" },
+    "text_faded":   { "hex": "ab8a6eff" },
+    "danger":       { "hex": "d94a3aff" },
+    "scrim":        { "hex": "0c0a10c0" },
+    "track":        { "hex": "00000060" },
+    "depths":       { "hex": "4c3a52ff" }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable": {
+    "scrim":         { "name": "ui/white", "color": "scrim" },
+    "fill_accent":   { "name": "ui/white", "color": "wood_light" },
+    "fill_track":    { "name": "ui/white", "color": "track" },
+    "fill_selected": { "name": "ui/white", "color": "wood_mid" },
+    "fill_over":     { "name": "ui/white", "color": "wood_dark" },
+    "divider":       { "name": "ui/white", "color": "wood_dark" },
+    "cursor":        { "name": "ui/white", "color": "cream" },
+    "panel_depths":  { "name": "ui/panel", "color": "depths" },
+    "panel_stone":   { "name": "ui/panel", "color": "stone_mid" }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
+    "default": { "font": "default", "fontColor": "text" },
+    "inverse": { "font": "default", "fontColor": "text_inverse" },
+    "dim":     { "font": "default", "fontColor": "text_soft" },
+    "danger":  { "font": "default", "fontColor": "danger" },
+    "title":   { "font": "default", "fontColor": "ink" },
+    "boxed":   { "parent": "inverse", "background": "ui/bg" }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
+    "default": {
+      "up": "ui/button_up",
+      "over": "ui/button_over",
+      "down": "ui/button_down",
+      "disabled": "ui/button_disabled"
+    },
+    "bind": {
+      "parent": "default",
+      "checked": "ui/button_down"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
+    "default": {
+      "up": "ui/button_up",
+      "over": "ui/button_over",
+      "down": "ui/button_down",
+      "disabled": "ui/button_disabled",
+      "font": "default",
+      "fontColor": "text",
+      "overFontColor": "ink",
+      "downFontColor": "ink",
+      "disabledFontColor": "text_faded"
+    },
+    "toggle": {
+      "parent": "default",
+      "checked": "ui/button_over",
+      "checkedFontColor": "ink",
+      "checkedOver": "ui/button_over",
+      "checkedDown": "ui/button_down"
+    },
+    "tab": {
+      "up": "ui/tab",
+      "over": "ui/tab_over",
+      "checked": "ui/tab_selected",
+      "checkedOver": "ui/tab_selected",
+      "down": "ui/tab_selected",
+      "disabled": "ui/tab_disabled",
+      "font": "default",
+      "fontColor": "text_on_dark",
+      "overFontColor": "text_inverse",
+      "checkedFontColor": "ink",
+      "disabledFontColor": "text_faded"
+    },
+    "bind": {
+      "parent": "default",
+      "checked": "ui/button_down",
+      "checkedFontColor": "danger"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle": {
+    "default": {
+      "background": "ui/panel",
+      "titleFont": "default",
+      "titleFontColor": "ink"
+    },
+    "modal": {
+      "parent": "default",
+      "stageBackground": "scrim"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle": {
+    "default-horizontal": {
+      "background": "fill_track",
+      "disabledBackground": "fill_track",
+      "knob": "ui/hslider_knob",
+      "knobOver": "ui/hslider_knob_over",
+      "knobDown": "ui/hslider_knob_over",
+      "disabledKnob": "ui/hslider_knob_disabled",
+      "knobBefore": "fill_accent",
+      "disabledKnobBefore": "fill_track"
+    },
+    "default-vertical": {
+      "background": "fill_track",
+      "disabledBackground": "fill_track",
+      "knob": "ui/vslider_knob",
+      "knobOver": "ui/vslider_knob_over",
+      "knobDown": "ui/vslider_knob_over",
+      "disabledKnob": "ui/vslider_knob_disabled",
+      "knobBefore": "fill_accent",
+      "disabledKnobBefore": "fill_track"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.ProgressBar$ProgressBarStyle": {
+    "default-horizontal": {
+      "background": "fill_track",
+      "knobBefore": "fill_accent"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+    "default": {
+      "checkboxOn": "ui/check_on",
+      "checkboxOff": "ui/check_off",
+      "checkboxOver": "ui/check_off",
+      "checkboxOnOver": "ui/check_on",
+      "checkboxOnDisabled": "ui/check_on_disabled",
+      "checkboxOffDisabled": "ui/check_off_disabled",
+      "font": "default",
+      "fontColor": "text",
+      "disabledFontColor": "text_faded"
+    },
+    "radio": {
+      "parent": "default",
+      "checkboxOn": "ui/radio_on",
+      "checkboxOff": "ui/radio_off",
+      "checkboxOver": "ui/radio_off",
+      "checkboxOnOver": "ui/radio_on",
+      "checkboxOnDisabled": "ui/radio_on_disabled",
+      "checkboxOffDisabled": "ui/radio_off_disabled"
+    },
+    "switch": {
+      "parent": "default",
+      "checkboxOn": "ui/toggle_on",
+      "checkboxOff": "ui/toggle_off",
+      "checkboxOver": "ui/toggle_off",
+      "checkboxOnOver": "ui/toggle_on",
+      "checkboxOnDisabled": "ui/toggle_on_disabled",
+      "checkboxOffDisabled": "ui/toggle_off_disabled"
+    }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle": {
+    "default": {
+      "vScroll": "fill_track",
+      "vScrollKnob": "fill_accent",
+      "hScroll": "fill_track",
+      "hScrollKnob": "fill_accent"
+    },
+    "boxed": { "parent": "default", "background": "ui/bg" }
+  },
+
+  "com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle": {
+    "default": {
+      "font": "default",
+      "fontColorSelected": "text_inverse",
+      "fontColorUnselected": "text",
+      "selection": "fill_selected",
+      "over": "fill_over",
+      "down": "fill_selected"
+    }
+  }
+}

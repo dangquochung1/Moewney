@@ -1,0 +1,2095 @@
+[
+ {
+  "name": "common_paper_cone_of_candy_corn",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_toffee_in_wax_paper",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_striped_lollipop",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_caramel_apple",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_slice_of_pumpkin_pie",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_chocolate_bar_in_paper",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_gummy_worm",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bone_shaped_cookie",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_ghost_shaped_cookie",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bat_shaped_cookie",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_ghost_candy_that_floats",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_pumpkin_muffin",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_paper_bag_of_candy",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_licorice_rope",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_salt_water_taffy",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_marshmallow_ghost",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_handful_of_pumpkin_seeds",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_honey_cake",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_eyeball_gumball",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_rock_candy_on_a_twig",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_pouch_of_jelly_beans",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_chocolate_coin",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_candy_bracelet",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_cone_of_cotton_candy",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_square_of_fudge",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_pumpkin_tart",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_spider_brownie",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_caramel_popcorn_ball",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_tin_of_sour_drops",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_peppermint",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_cauldron_cookie",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_pumpkin_bread_loaf",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_toffee_in_silver_foil",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_jar_of_candied_plums",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_hard_candy_in_a_twist_wrapper",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_gingerbread_bat",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_chocolate_bar_in_silver_foil",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_jar_of_gummy_worms",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_bone_cookie_with_icing",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_ghost_cookie_with_icing",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_cupcake_with_a_spider_topping",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_pumpkin_muffin_with_a_ribbon",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_striped_candy_bag_with_a_ribbon",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_braided_licorice",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_box_of_taffy",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_marshmallow_ghost_on_a_stick",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_honey_cake_with_a_bat_stamp",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_jar_of_eyeball_gumballs",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_rock_candy_cluster",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_chocolate_coin_pouch",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_cotton_candy_in_a_jar",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_fudge_with_walnut_pieces",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_pumpkin_tart_with_cream",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_caramel_popcorn_bucket",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_peppermint_tin_with_a_moon_picture",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_cauldron_cake_with_a_candle",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_crystal_candy_corn",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_jewel_lollipop",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_glazed_caramel_apple",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_pumpkin_pie_with_a_lattice_crust",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_chocolate_box_with_a_bat_lid",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_gummy_worm_in_a_glass_vial",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_frosted_bone_cookie",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_cupcake_with_a_ghost_topping",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_candy_bucket_shaped_like_a_pumpkin",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_licorice_wand",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_taffy_in_a_ribbon_box",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_ghost_marshmallow_tower",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_honey_cake_with_a_ghost_on_top",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_gumball_in_a_crystal_dome",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_rock_candy_geode",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_gem_jelly_beans_in_a_velvet_pouch",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_spun_sugar_spider_web",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_fudge_stack_with_a_cherry",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_caramel_popcorn_in_a_tin",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_peppermint_swirl_candy",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_moon_cake_with_a_bat_imprint",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_lollipop_shaped_like_a_moon",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_jelly_pumpkin_with_a_gummy_face",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_pumpkin_pie_with_a_pastry_ghost",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_chocolate_skull_with_a_cream_eye",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_cupcake_tower_with_ghosts",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_candy_cauldron_overflowing_with_treats",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_licorice_serpent",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_witch_hat_cake",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_gumball_eye_in_a_silver_cage",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_cotton_candy_cloud_with_bats",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_spider_web_cake",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_candy_corn",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_lollipop_with_a_pumpkin_core",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_caramel_apple",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_pumpkin_king_pie_with_a_crown_crust",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_chocolate_box",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_great_candy_bucket_of_the_pumpkin_king",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_honey_cake",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_spun_sugar_crown",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_cursed_candy_corn_with_a_spiral_pattern",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_shadow_fudge_with_a_moon_pattern",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_cursed_caramel_apple",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_void_chocolate_with_a_swirl_pattern",
+  "category": "halloween_candy_and_treats",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_round_potion_bottle",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_tall_potion_flask",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_corked_vial",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_jar_of_bat_wings",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_jar_of_newt_eyes",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_spider_in_a_jar",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_mandrake_root_with_a_face",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_raven_feather",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_pouch_of_cat_whiskers",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_dried_toadstool",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_veil_stone_with_a_spiral_pattern",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_sprig_of_wolfsbane",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_moonflower_bloom",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bone_charm_on_a_string",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_black_wax_candle_stub",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_blank_spell_scroll",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_old_grimoire",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_twig_wand",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bundle_of_broom_twigs",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_small_iron_cauldron",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_pumpkin_lantern",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_hourglass_of_grey_sand",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_tarnished_coin_with_a_skull",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_rusty_skeleton_key",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bag_of_grave_dust",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_jar_of_pickled_eyeballs",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_garlic_braid",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_sprig_of_dried_sage",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bowl_of_witch_salt",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_cracked_hand_mirror",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_round_potion_bottle_with_a_silver_cap",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_tall_potion_flask_with_a_ribbon",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_vial_in_a_leather_holder",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_bat_wing_charm",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_jar_of_newt_eyes_with_a_silver_lid",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_spider_in_an_amber_cube",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_mandrake_root_in_a_pot",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_raven_feather_quill",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_toadstool_ring_in_a_dish",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_wolfsbane_in_a_vase",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_bone_charm_with_silver_wire",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_black_candle_with_a_bat_holder",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_spell_scroll_with_a_ribbon",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_jar_of_moths",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_witch_ring_with_a_toad",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_miniature_broom_charm",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_copper_cauldron",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_ghost_lantern",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_vial_of_moon_dust",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_silver_coin_with_a_bat",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_silver_key_with_a_moon_bow",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_garlic_braid_with_a_ribbon",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_silver_hand_mirror",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_crystal_ball_on_a_claw_stand",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_cursed_ring_of_iron",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_heart_shaped_potion_flask",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_potion_in_a_pumpkin_flask",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_vial_set_in_a_velvet_case",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_bottled_ghost",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_spider_in_a_crystal_sphere",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_mandrake_root_with_a_gold_band",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_raven_skull_charm",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_moonflower_in_a_glass_dome",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_enchanted_toadstool",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_candle_in_a_skull_holder",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_spell_scroll_with_a_wax_seal",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_grimoire_with_a_moon_lock",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_bone_wand_with_a_blue_gem",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_bronze_cauldron_with_bat_handles",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_hourglass_of_blue_sand",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_gold_coin_with_a_pumpkin",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_crystal_ball_with_a_ghost_inside",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_cursed_amulet_with_a_blue_gem",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_hand_mirror_with_a_bat_frame",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_charm_bracelet_of_tiny_pumpkins",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_potion_of_the_harvest_moon",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_violet_elixir_in_a_bat_flask",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_bottled_storm_cloud",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_bottled_nightmare",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_wand_of_the_black_cat",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_jar_of_captured_moonlight",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_lantern_of_lost_souls",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_hourglass_of_midnight",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_cursed_tiara_with_bat_wings",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_spider_queen_amulet",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_raven_feather_fan",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_moon_mirror_with_silver_bats",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_pumpkin_elixir",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_cauldron",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_mandrake_root",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_grimoire_with_a_pumpkin_lock",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_hourglass",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_pumpkin_lantern_of_the_harvest_king",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_amulet_of_the_harvest_moon",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_wand_with_a_pumpkin_gem",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_void_potion_with_a_swirl_pattern",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_cursed_skull_goblet",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_shadow_grimoire_with_a_moon_pattern",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_watching_eye_in_a_cage",
+  "category": "potions_and_witch_ingredients",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_pumpkin_bomb",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_rusty_scythe",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bone_club",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_broom_staff",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_wooden_pumpkin_shield",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_pointed_witch_hat",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_straw_scarecrow_hat",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_carved_pumpkin_mask",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_paper_skull_mask",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bedsheet_ghost_hood",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_hood_of_the_headless_rider",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_felt_bat_mask",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_old_wolf_mask",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_torn_black_cape",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_patched_witch_cloak",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_patched_witch_shoes",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_skeleton_gloves",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_burlap_candy_sack",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_lantern_on_a_pole",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_wooden_pitchfork",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bent_harvest_sickle",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_wooden_stake",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_silver_dagger",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_jack_o_lantern_torch",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_candy_slingshot",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bat_wing_buckler",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_simple_spider_bow",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_bone_dagger",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_pumpkin_helmet",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_paper_costume_crown",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "common_battered_top_hat",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_pumpkin_bomb_with_a_fuse",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_pumpkin_lantern_flail",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_spiked_bone_club",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_bone_flute",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_iron_buckler_with_a_bat",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_top_hat_with_a_bat_band",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_scarecrow_hat_with_a_crow_feather",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_pumpkin_mask_with_silver_eyes",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_skull_mask_with_a_jaw",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_ghost_veil_with_silver_trim",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_bat_mask_with_silver_ears",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_wolf_mask_with_fur_trim",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_vampire_cape_with_a_high_collar",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_witch_cloak_with_a_bat_clasp",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_witch_boots_with_buckles",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_skeleton_gauntlets",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_trick_or_treat_sack_with_a_ribbon",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_lantern_staff_with_a_bat_hook",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_pitchfork_with_iron_tines",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_silver_sickle",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_crossbow_with_silver_bolts",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_silver_dagger_with_a_bat_guard",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_candy_slingshot_with_a_leather_pouch",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_spider_bow_with_silk_string",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "uncommon_pumpkin_helmet_with_a_visor",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_pumpkin_bomb_cluster",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_chain_flail_of_pumpkins",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_bone_club_with_blue_gems",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_broom_staff_with_a_blue_gem",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_jack_o_lantern_shield",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_witch_hat_with_a_blue_gem",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_pumpkin_mask_of_the_harvest",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_skull_mask_with_blue_eyes",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_bat_mask_with_jewels",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_vampire_cape_with_a_blue_clasp",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_witch_boots_with_silver_toes",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_skeleton_armour_vest",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_lantern_staff_with_a_ghost",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_crossbow_of_the_night_hunt",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_silver_dagger_with_a_blue_gem",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_spider_bow_of_black_silk",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_ghost_sword",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_bat_wing_shield_with_a_gem",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_costume_crown_with_blue_gems",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "rare_pumpkin_helmet_with_a_leaf_crest",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_scythe_of_the_harvest_moon",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_cursed_sword_with_a_bat_hilt",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_shield_of_the_screaming_pumpkin",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_witch_hat_of_the_coven",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_masquerade_mask_with_bat_wings",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_vampire_lord_cape",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_broom_of_the_night_sky",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_crossbow_of_silver_moons",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_spider_queen_bow",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_skeleton_king_armour",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_ghost_lantern_staff",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "epic_wolf_hunter_dagger",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_scythe",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_pumpkin_king_sword",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_jack_o_lantern_shield",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_witch_hat",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_pumpkin_helmet",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_crossbow_with_pumpkin_bolts",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_golden_broom_staff",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "legendary_pumpkin_king_crown",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_cursed_scythe_with_a_spiral_pattern",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_shadow_mask",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_void_cloak_with_a_moon_pattern",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ },
+ {
+  "name": "mystic_cursed_bone_blade",
+  "category": "weapons_masks_and_costume_gear",
+  "width": 48,
+  "height": 48,
+  "variants": null
+ }
+]

@@ -1,0 +1,606 @@
+{
+ "cell": 48,
+ "columns": 8,
+ "sprites": {
+  "common_bat_shaped_cookie": {
+   "x": 0,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_bone_shaped_cookie": {
+   "x": 48,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_candy_bracelet": {
+   "x": 96,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_caramel_apple": {
+   "x": 144,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_caramel_popcorn_ball": {
+   "x": 192,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_cauldron_cookie": {
+   "x": 240,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_chocolate_bar_in_paper": {
+   "x": 288,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_chocolate_coin": {
+   "x": 336,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_cone_of_cotton_candy": {
+   "x": 0,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_eyeball_gumball": {
+   "x": 48,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_ghost_shaped_cookie": {
+   "x": 96,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_gummy_worm": {
+   "x": 144,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_handful_of_pumpkin_seeds": {
+   "x": 192,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_honey_cake": {
+   "x": 240,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_licorice_rope": {
+   "x": 288,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_marshmallow_ghost": {
+   "x": 336,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_paper_bag_of_candy": {
+   "x": 0,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_paper_cone_of_candy_corn": {
+   "x": 48,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_peppermint": {
+   "x": 96,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_pouch_of_jelly_beans": {
+   "x": 144,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_pumpkin_muffin": {
+   "x": 192,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_pumpkin_tart": {
+   "x": 240,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_rock_candy_on_a_twig": {
+   "x": 288,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_salt_water_taffy": {
+   "x": 336,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_slice_of_pumpkin_pie": {
+   "x": 0,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_spider_brownie": {
+   "x": 48,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_square_of_fudge": {
+   "x": 96,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_striped_lollipop": {
+   "x": 144,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_tin_of_sour_drops": {
+   "x": 192,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_toffee_in_wax_paper": {
+   "x": 240,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_candy_cauldron_overflowing_with_treats": {
+   "x": 288,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_chocolate_skull_with_a_cream_eye": {
+   "x": 336,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_cotton_candy_cloud_with_bats": {
+   "x": 0,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_cupcake_tower_with_ghosts": {
+   "x": 48,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_gumball_eye_in_a_silver_cage": {
+   "x": 96,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_jelly_pumpkin_with_a_gummy_face": {
+   "x": 144,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_licorice_serpent": {
+   "x": 192,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_lollipop_shaped_like_a_moon": {
+   "x": 240,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_moon_cake_with_a_bat_imprint": {
+   "x": 288,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_pumpkin_pie_with_a_pastry_ghost": {
+   "x": 336,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_spider_web_cake": {
+   "x": 0,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "epic_witch_hat_cake": {
+   "x": 48,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_candy_corn": {
+   "x": 96,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_caramel_apple": {
+   "x": 144,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_chocolate_box": {
+   "x": 192,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_honey_cake": {
+   "x": 240,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_lollipop_with_a_pumpkin_core": {
+   "x": 288,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_spun_sugar_crown": {
+   "x": 336,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_great_candy_bucket_of_the_pumpkin_king": {
+   "x": 0,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_pumpkin_king_pie_with_a_crown_crust": {
+   "x": 48,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_cursed_candy_corn_with_a_spiral_pattern": {
+   "x": 96,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_cursed_caramel_apple": {
+   "x": 144,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_ghost_candy_that_floats": {
+   "x": 192,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_shadow_fudge_with_a_moon_pattern": {
+   "x": 240,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_void_chocolate_with_a_swirl_pattern": {
+   "x": 288,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "rare_candy_bucket_shaped_like_a_pumpkin": {
+   "x": 336,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "rare_caramel_popcorn_in_a_tin": {
+   "x": 0,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_chocolate_box_with_a_bat_lid": {
+   "x": 48,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_crystal_candy_corn": {
+   "x": 96,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_cupcake_with_a_ghost_topping": {
+   "x": 144,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_frosted_bone_cookie": {
+   "x": 192,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_fudge_stack_with_a_cherry": {
+   "x": 240,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_gem_jelly_beans_in_a_velvet_pouch": {
+   "x": 288,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_ghost_marshmallow_tower": {
+   "x": 336,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_glazed_caramel_apple": {
+   "x": 0,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_gumball_in_a_crystal_dome": {
+   "x": 48,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_gummy_worm_in_a_glass_vial": {
+   "x": 96,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_honey_cake_with_a_ghost_on_top": {
+   "x": 144,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_jewel_lollipop": {
+   "x": 192,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_licorice_wand": {
+   "x": 240,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_peppermint_swirl_candy": {
+   "x": 288,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_pumpkin_pie_with_a_lattice_crust": {
+   "x": 336,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_rock_candy_geode": {
+   "x": 0,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "rare_spun_sugar_spider_web": {
+   "x": 48,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "rare_taffy_in_a_ribbon_box": {
+   "x": 96,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_bone_cookie_with_icing": {
+   "x": 144,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_box_of_taffy": {
+   "x": 192,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_braided_licorice": {
+   "x": 240,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_caramel_popcorn_bucket": {
+   "x": 288,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_cauldron_cake_with_a_candle": {
+   "x": 336,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_chocolate_bar_in_silver_foil": {
+   "x": 0,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_chocolate_coin_pouch": {
+   "x": 48,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_cotton_candy_in_a_jar": {
+   "x": 96,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_cupcake_with_a_spider_topping": {
+   "x": 144,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_fudge_with_walnut_pieces": {
+   "x": 192,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_ghost_cookie_with_icing": {
+   "x": 240,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_gingerbread_bat": {
+   "x": 288,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_hard_candy_in_a_twist_wrapper": {
+   "x": 336,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_honey_cake_with_a_bat_stamp": {
+   "x": 0,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_jar_of_candied_plums": {
+   "x": 48,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_jar_of_eyeball_gumballs": {
+   "x": 96,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_jar_of_gummy_worms": {
+   "x": 144,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_marshmallow_ghost_on_a_stick": {
+   "x": 192,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_peppermint_tin_with_a_moon_picture": {
+   "x": 240,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_pumpkin_bread_loaf": {
+   "x": 288,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_pumpkin_muffin_with_a_ribbon": {
+   "x": 336,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_pumpkin_tart_with_cream": {
+   "x": 0,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_rock_candy_cluster": {
+   "x": 48,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_striped_candy_bag_with_a_ribbon": {
+   "x": 96,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_toffee_in_silver_foil": {
+   "x": 144,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  }
+ }
+}

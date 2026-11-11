@@ -1,0 +1,190 @@
+{ "frames": [
+   {
+    "filename": "Lantern_32_ALL #Fire Light (L1) 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Light (L1) 1.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Light (L1) 2.aseprite",
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Light (L1) 3.aseprite",
+    "frame": { "x": 96, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Light (L1) 4.aseprite",
+    "frame": { "x": 128, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Loop (L1) 0.aseprite",
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Loop (L1) 1.aseprite",
+    "frame": { "x": 32, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Loop (L1) 2.aseprite",
+    "frame": { "x": 64, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Loop (L1) 3.aseprite",
+    "frame": { "x": 96, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Loop (L1) 4.aseprite",
+    "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Loop (L1) 5.aseprite",
+    "frame": { "x": 160, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Loop (L1) 6.aseprite",
+    "frame": { "x": 192, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Out (L1) 0.aseprite",
+    "frame": { "x": 0, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Out (L1) 1.aseprite",
+    "frame": { "x": 32, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Out (L1) 2.aseprite",
+    "frame": { "x": 64, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Out (L1) 3.aseprite",
+    "frame": { "x": 96, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Lantern_32_ALL #Fire Out (L1) 4.aseprite",
+    "frame": { "x": 128, "y": 64, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.17-x64",
+  "image": "Lantern_Sample_32.png",
+  "format": "RGBA8888",
+  "size": { "w": 224, "h": 96 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Fire Light (L1)", "from": 0, "to": 4, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Loop (L1)", "from": 5, "to": 11, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Out (L1)", "from": 12, "to": 16, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Light (L2)", "from": 17, "to": 21, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Loop (L2)", "from": 22, "to": 26, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Out (L2)", "from": 27, "to": 29, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Light (L3)", "from": 30, "to": 32, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Loop (L3)", "from": 33, "to": 40, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Out (L3)", "from": 41, "to": 44, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Light (L4)", "from": 45, "to": 49, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Loop (L4)", "from": 50, "to": 55, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Out (L4)", "from": 56, "to": 61, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Light (L5)", "from": 62, "to": 66, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Loop (L5)", "from": 67, "to": 72, "direction": "forward", "color": "#000000ff" },
+   { "name": "Fire Out (L5)", "from": 73, "to": 78, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "Base_Yellow" },
+   { "name": "Underlayer_Candle", "group": "Base_Yellow", "opacity": 255, "blendMode": "normal" },
+   { "name": "Base_Frame", "group": "Base_Yellow", "opacity": 255, "blendMode": "normal" },
+   { "name": "Base_Fire", "group": "Base_Yellow", "opacity": 255, "blendMode": "normal" },
+   { "name": "Base_Light", "group": "Base_Yellow", "opacity": 143, "blendMode": "hard_light" }
+  ],
+  "slices": [
+  ]
+ }
+}

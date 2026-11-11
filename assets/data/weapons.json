@@ -1,0 +1,586 @@
+// The five held weapons the pack draws overlaid on the player sprite, plus
+// the two thrown ones.
+//
+// The design target is that no two of these play the same way, which means
+// theoretical DPS has to be roughly EQUAL and everything else has to differ.
+// A weapon that is simply better is not a choice. Cycle length is
+// windup + active + recover, in steps at 60 to the second:
+//
+//   katana    7 dmg / 18 steps = 3.33 swings/s = 23.3 dps   reach 22 width  9
+//   axe      12 dmg / 28 steps = 2.14 swings/s = 25.7 dps   reach 26 width 14
+//   hammer   26 dmg / 46 steps = 1.30 swings/s = 33.9 dps   reach 28 width 22
+//   pickaxe   9 dmg / 22 steps = 2.73 swings/s = 24.5 dps   reach 30 width  7
+//   net       4 dmg / 36 steps = 1.67 swings/s =  6.7 dps   reach 24 width 20
+//   kunai     6 dmg / 20 steps = 3.00 throws/s = 18.0 dps   range 140
+//   shuriken  4 dmg / 16 steps = 3.75 throws/s = 15.0 dps   range 170
+//
+// The hammer's 33.9 is a lie told on purpose: rootSteps 24 pins the player for
+// over half its cycle, so against anything that moves it lands far below the
+// katana. Against something rooted, slowed or cornered it is the best weapon
+// in the game by a wide margin. That is the trade, and it is entirely in these
+// numbers rather than in code.
+//
+// The two thrown weapons sit deliberately below melee. Range is worth about
+// 25% of damage here; anything closer and there is no reason to walk up to
+// something.
+{
+  "weapons": [
+    {
+      "id": "katana", "nameKey": "weapon.katana.name", "descKey": "weapon.katana.desc",
+      "sprite": "player/weapons/katana", "icon": "weapon_katana", "tier": 1,
+      "damage": 7, "reach": 22, "width": 9,
+      // Nothing else in the game recovers in 11 steps. The katana's identity is
+      // that it never takes the player's feet away: rootSteps 0.
+      "windupSteps": 4, "activeSteps": 3, "recoverSteps": 11,
+      "knockback": 40, "rootSteps": 0
+    },
+    {
+      "id": "axe", "nameKey": "weapon.axe.name", "descKey": "weapon.axe.desc",
+      "sprite": "player/weapons/axe", "icon": "weapon_axe", "tier": 2,
+      // Width 14 is a wide enough arc to catch two enemies standing shoulder to
+      // shoulder at 16px each, which is what makes it the answer to a mouse pack.
+      "damage": 12, "reach": 26, "width": 14,
+      "windupSteps": 8, "activeSteps": 4, "recoverSteps": 16,
+      "knockback": 80, "rootSteps": 6
+    },
+    {
+      "id": "hammer", "nameKey": "weapon.hammer.name", "descKey": "weapon.hammer.desc",
+      "sprite": "player/weapons/hammer", "icon": "weapon_hammer", "tier": 4,
+      "damage": 26, "reach": 28, "width": 22,
+      "windupSteps": 16, "activeSteps": 5, "recoverSteps": 25,
+      // 190 knockback throws anything under 0.5 resist clear across a room, and
+      // 24 root steps means the player watches it go from where they stood.
+      "knockback": 190, "rootSteps": 24
+    },
+    {
+      "id": "pickaxe", "nameKey": "weapon.pickaxe.name", "descKey": "weapon.pickaxe.desc",
+      "sprite": "player/weapons/pickaxe", "icon": "weapon_pickaxe", "tier": 2,
+      // The longest melee reach on the narrowest arc: 30 out, 7 across. It
+      // outranges a skeleton's 24 and hits exactly one thing while doing it.
+      "damage": 9, "reach": 30, "width": 7,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 13,
+      "knockback": 55, "rootSteps": 2
+    },
+    {
+      "id": "net", "nameKey": "weapon.net.name", "descKey": "weapon.net.desc",
+      "sprite": "player/weapons/net", "icon": "weapon_rope", "tier": 2,
+      // 6.7 dps is not a mistake. The net roots what it catches for 90 steps,
+      // and the hammer does 26 a swing to something that cannot walk away. Until
+      // WeaponDef has an onHit field (notes/d.md section 5) combat has to
+      // special-case the id, which is ugly and is written down as such.
+      "damage": 4, "reach": 24, "width": 20,
+      "windupSteps": 10, "activeSteps": 6, "recoverSteps": 20,
+      "knockback": 15, "rootSteps": 8
+    },
+    {
+      "id": "fishing_rod", "nameKey": "weapon.fishing_rod.name", "descKey": "weapon.fishing_rod.desc",
+      // Every ninja has one. 7.8 dps is the net's company on purpose: it is a
+      // tool, not a blade. In the village it sits the ninja on the fisherman's
+      // dock to fish, and hooks the cloud by the ladder east of the bridges.
+      // Its in-hand art is drawn by tools/make_rod.py.
+      "sprite": "player/weapons/fishing_rod", "tier": 1,
+      "damage": 3, "reach": 30, "width": 8,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 14,
+      "knockback": 30, "rootSteps": 4
+    },
+    {
+      "id": "kunai", "nameKey": "weapon.kunai.name", "descKey": "weapon.kunai.desc",
+      // Thrown: sprite is the projectile's own, because there is no in-hand art
+      // for it. reach is travel distance, not swing length - 140px crosses most
+      // of a 320px room. Suggested travel speed 240 px/s.
+      "sprite": "fx/projectile/kunai/spritesheet", "icon": "weapon_dagger", "tier": 1,
+      "damage": 6, "reach": 140, "width": 5,
+      "windupSteps": 5, "activeSteps": 2, "recoverSteps": 13,
+      "knockback": 30, "rootSteps": 3,
+      "projectile": "kunai"
+    },
+    {
+      "id": "shuriken", "nameKey": "weapon.shuriken.name", "descKey": "weapon.shuriken.desc",
+      "sprite": "fx/projectile/shuriken/spritesheet", "icon": "weapon_star", "tier": 2,
+      // Lower damage, longer range, faster hand. Meant to pierce, which the
+      // schema cannot say yet. Suggested travel speed 300 px/s.
+      "damage": 4, "reach": 170, "width": 6,
+      "windupSteps": 4, "activeSteps": 2, "recoverSteps": 10,
+      "knockback": 18, "rootSteps": 2,
+      "projectile": "shuriken"
+    },
+    // ---- generated by tools/make_arsenal.py from the dictionary; edit the tool, not these ----
+    {
+      "id": "sword_1", "nameKey": "weapon.sword_1.name", "descKey": "weapon.sword_1.desc",
+      "sprite": "player/held/sword_1", "icon": 1441, "tier": 1, "blade": true,
+      "damage": 8, "reach": 23, "width": 10,
+      "windupSteps": 5, "activeSteps": 3, "recoverSteps": 12,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "cleaver_1", "nameKey": "weapon.cleaver_1.name", "descKey": "weapon.cleaver_1.desc",
+      "sprite": "player/held/cleaver_1", "icon": 1442, "tier": 2, "blade": true,
+      "damage": 10, "reach": 22, "width": 12,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 15,
+      "knockback": 60, "rootSteps": 2
+    },
+    {
+      "id": "sword_2", "nameKey": "weapon.sword_2.name", "descKey": "weapon.sword_2.desc",
+      "sprite": "player/held/sword_2", "icon": 1445, "tier": 1, "blade": true,
+      "damage": 7, "reach": 23, "width": 10,
+      "windupSteps": 4, "activeSteps": 3, "recoverSteps": 10,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "sword_3", "nameKey": "weapon.sword_3.name", "descKey": "weapon.sword_3.desc",
+      "sprite": "player/held/sword_3", "icon": 1446, "tier": 2, "blade": true,
+      "damage": 10, "reach": 23, "width": 10,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 15,
+      "knockback": 52, "rootSteps": 0
+    },
+    {
+      "id": "sword_4", "nameKey": "weapon.sword_4.name", "descKey": "weapon.sword_4.desc",
+      "sprite": "player/held/sword_4", "icon": 1447, "tier": 1, "blade": true,
+      "damage": 8, "reach": 23, "width": 10,
+      "windupSteps": 5, "activeSteps": 3, "recoverSteps": 12,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "sword_5", "nameKey": "weapon.sword_5.name", "descKey": "weapon.sword_5.desc",
+      "sprite": "player/held/sword_5", "icon": 1448, "tier": 1, "blade": true,
+      "damage": 7, "reach": 23, "width": 10,
+      "windupSteps": 4, "activeSteps": 3, "recoverSteps": 10,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "sword_6", "nameKey": "weapon.sword_6.name", "descKey": "weapon.sword_6.desc",
+      "sprite": "player/held/sword_6", "icon": 1449, "tier": 2, "blade": true,
+      "damage": 10, "reach": 23, "width": 10,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 15,
+      "knockback": 52, "rootSteps": 0
+    },
+    {
+      "id": "hook_1", "nameKey": "weapon.hook_1.name", "descKey": "weapon.hook_1.desc",
+      "sprite": "player/held/hook_1", "icon": 1450, "tier": 2, "blade": true,
+      "damage": 8, "reach": 24, "width": 9,
+      "windupSteps": 5, "activeSteps": 3, "recoverSteps": 13,
+      "knockback": 40, "rootSteps": 0
+    },
+    {
+      "id": "hook_2", "nameKey": "weapon.hook_2.name", "descKey": "weapon.hook_2.desc",
+      "sprite": "player/held/hook_2", "icon": 1451, "tier": 2, "blade": true,
+      "damage": 7, "reach": 24, "width": 9,
+      "windupSteps": 4, "activeSteps": 3, "recoverSteps": 11,
+      "knockback": 40, "rootSteps": 0
+    },
+    {
+      "id": "hook_3", "nameKey": "weapon.hook_3.name", "descKey": "weapon.hook_3.desc",
+      "sprite": "player/held/hook_3", "icon": 1452, "tier": 3, "blade": true,
+      "damage": 10, "reach": 24, "width": 9,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 16,
+      "knockback": 46, "rootSteps": 0
+    },
+    {
+      "id": "sword_7", "nameKey": "weapon.sword_7.name", "descKey": "weapon.sword_7.desc",
+      "sprite": "player/held/sword_7", "icon": 1453, "tier": 1, "blade": true,
+      "damage": 8, "reach": 23, "width": 10,
+      "windupSteps": 5, "activeSteps": 3, "recoverSteps": 12,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "rapier_1", "nameKey": "weapon.rapier_1.name", "descKey": "weapon.rapier_1.desc",
+      "sprite": "player/held/rapier_1", "icon": 1454, "tier": 2, "blade": true,
+      "damage": 6, "reach": 27, "width": 6,
+      "windupSteps": 4, "activeSteps": 2, "recoverSteps": 10,
+      "knockback": 30, "rootSteps": 0
+    },
+    {
+      "id": "sword_8", "nameKey": "weapon.sword_8.name", "descKey": "weapon.sword_8.desc",
+      "sprite": "player/held/sword_8", "icon": 1455, "tier": 1, "blade": true,
+      "damage": 7, "reach": 23, "width": 10,
+      "windupSteps": 4, "activeSteps": 3, "recoverSteps": 10,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "greatsword_1", "nameKey": "weapon.greatsword_1.name", "descKey": "weapon.greatsword_1.desc",
+      "sprite": "player/held/greatsword_1", "icon": 1456, "tier": 3, "blade": true,
+      "damage": 16, "reach": 28, "width": 18,
+      "windupSteps": 12, "activeSteps": 4, "recoverSteps": 22,
+      "knockback": 120, "rootSteps": 12
+    },
+    {
+      "id": "sword_9", "nameKey": "weapon.sword_9.name", "descKey": "weapon.sword_9.desc",
+      "sprite": "player/held/sword_9", "icon": 1505, "tier": 2, "blade": true,
+      "damage": 10, "reach": 23, "width": 10,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 15,
+      "knockback": 52, "rootSteps": 0
+    },
+    {
+      "id": "scimitar_1", "nameKey": "weapon.scimitar_1.name", "descKey": "weapon.scimitar_1.desc",
+      "sprite": "player/held/scimitar_1", "icon": 1507, "tier": 2, "blade": true,
+      "damage": 8, "reach": 23, "width": 11,
+      "windupSteps": 4, "activeSteps": 3, "recoverSteps": 13,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "sword_10", "nameKey": "weapon.sword_10.name", "descKey": "weapon.sword_10.desc",
+      "sprite": "player/held/sword_10", "icon": 1508, "tier": 1, "blade": true,
+      "damage": 8, "reach": 23, "width": 10,
+      "windupSteps": 5, "activeSteps": 3, "recoverSteps": 12,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "scimitar_2", "nameKey": "weapon.scimitar_2.name", "descKey": "weapon.scimitar_2.desc",
+      "sprite": "player/held/scimitar_2", "icon": 1509, "tier": 2, "blade": true,
+      "damage": 7, "reach": 23, "width": 11,
+      "windupSteps": 3, "activeSteps": 3, "recoverSteps": 11,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "greatsword_2", "nameKey": "weapon.greatsword_2.name", "descKey": "weapon.greatsword_2.desc",
+      "sprite": "player/held/greatsword_2", "icon": 1510, "tier": 3, "blade": true,
+      "damage": 14, "reach": 28, "width": 18,
+      "windupSteps": 11, "activeSteps": 4, "recoverSteps": 20,
+      "knockback": 120, "rootSteps": 12
+    },
+    {
+      "id": "rapier_2", "nameKey": "weapon.rapier_2.name", "descKey": "weapon.rapier_2.desc",
+      "sprite": "player/held/rapier_2", "icon": 1512, "tier": 2, "blade": true,
+      "damage": 5, "reach": 27, "width": 6,
+      "windupSteps": 3, "activeSteps": 2, "recoverSteps": 8,
+      "knockback": 30, "rootSteps": 0
+    },
+    {
+      "id": "dagger_1", "nameKey": "weapon.dagger_1.name", "descKey": "weapon.dagger_1.desc",
+      "sprite": "player/held/dagger_1", "icon": 1513, "tier": 1, "blade": true,
+      "damage": 5, "reach": 18, "width": 8,
+      "windupSteps": 3, "activeSteps": 2, "recoverSteps": 8,
+      "knockback": 25, "rootSteps": 0
+    },
+    {
+      "id": "sai_1", "nameKey": "weapon.sai_1.name", "descKey": "weapon.sai_1.desc",
+      "sprite": "player/held/sai_1", "icon": 1517, "tier": 1, "blade": true,
+      "damage": 5, "reach": 19, "width": 8,
+      "windupSteps": 3, "activeSteps": 2, "recoverSteps": 9,
+      "knockback": 30, "rootSteps": 0
+    },
+    {
+      "id": "sword_11", "nameKey": "weapon.sword_11.name", "descKey": "weapon.sword_11.desc",
+      "sprite": "player/held/sword_11", "icon": 1518, "tier": 1, "blade": true,
+      "damage": 7, "reach": 23, "width": 10,
+      "windupSteps": 4, "activeSteps": 3, "recoverSteps": 10,
+      "knockback": 45, "rootSteps": 0
+    },
+    {
+      "id": "scythe_1", "nameKey": "weapon.scythe_1.name", "descKey": "weapon.scythe_1.desc",
+      "sprite": "player/held/scythe_1", "icon": 1519, "tier": 3, "blade": true,
+      "damage": 14, "reach": 30, "width": 20,
+      "windupSteps": 11, "activeSteps": 4, "recoverSteps": 21,
+      "knockback": 90, "rootSteps": 10
+    },
+    {
+      "id": "sickle_1", "nameKey": "weapon.sickle_1.name", "descKey": "weapon.sickle_1.desc",
+      "sprite": "player/held/sickle_1", "icon": 1520, "tier": 1, "blade": true,
+      "damage": 7, "reach": 20, "width": 12,
+      "windupSteps": 4, "activeSteps": 3, "recoverSteps": 11,
+      "knockback": 35, "rootSteps": 0
+    },
+    {
+      "id": "pickaxe_1", "nameKey": "weapon.pickaxe_1.name", "descKey": "weapon.pickaxe_1.desc",
+      "sprite": "player/held/pickaxe_1", "icon": 1457, "tier": 2, "blade": true,
+      "damage": 9, "reach": 30, "width": 7,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 13,
+      "knockback": 55, "rootSteps": 2
+    },
+    {
+      "id": "axe_1", "nameKey": "weapon.axe_1.name", "descKey": "weapon.axe_1.desc",
+      "sprite": "player/held/axe_1", "icon": 1459, "tier": 2, "blade": true,
+      "damage": 12, "reach": 26, "width": 14,
+      "windupSteps": 8, "activeSteps": 4, "recoverSteps": 16,
+      "knockback": 80, "rootSteps": 6
+    },
+    {
+      "id": "axe_2", "nameKey": "weapon.axe_2.name", "descKey": "weapon.axe_2.desc",
+      "sprite": "player/held/axe_2", "icon": 1464, "tier": 2, "blade": true,
+      "damage": 10, "reach": 26, "width": 14,
+      "windupSteps": 7, "activeSteps": 4, "recoverSteps": 14,
+      "knockback": 80, "rootSteps": 6
+    },
+    {
+      "id": "axe_3", "nameKey": "weapon.axe_3.name", "descKey": "weapon.axe_3.desc",
+      "sprite": "player/held/axe_3", "icon": 1465, "tier": 3, "blade": true,
+      "damage": 14, "reach": 26, "width": 14,
+      "windupSteps": 9, "activeSteps": 4, "recoverSteps": 19,
+      "knockback": 92, "rootSteps": 8
+    },
+    {
+      "id": "axe_4", "nameKey": "weapon.axe_4.name", "descKey": "weapon.axe_4.desc",
+      "sprite": "player/held/axe_4", "icon": 1466, "tier": 2, "blade": true,
+      "damage": 12, "reach": 26, "width": 14,
+      "windupSteps": 8, "activeSteps": 4, "recoverSteps": 16,
+      "knockback": 80, "rootSteps": 6
+    },
+    {
+      "id": "axe_5", "nameKey": "weapon.axe_5.name", "descKey": "weapon.axe_5.desc",
+      "sprite": "player/held/axe_5", "icon": 1467, "tier": 2, "blade": true,
+      "damage": 10, "reach": 26, "width": 14,
+      "windupSteps": 7, "activeSteps": 4, "recoverSteps": 14,
+      "knockback": 80, "rootSteps": 6
+    },
+    {
+      "id": "shovel_1", "nameKey": "weapon.shovel_1.name", "descKey": "weapon.shovel_1.desc",
+      "sprite": "player/held/shovel_1", "icon": 1469, "tier": 2, "blade": true,
+      "damage": 11, "reach": 26, "width": 12,
+      "windupSteps": 8, "activeSteps": 4, "recoverSteps": 16,
+      "knockback": 70, "rootSteps": 6
+    },
+    {
+      "id": "spear_1", "nameKey": "weapon.spear_1.name", "descKey": "weapon.spear_1.desc",
+      "sprite": "player/held/spear_1", "icon": 1460, "tier": 1, "blade": true,
+      "damage": 9, "reach": 32, "width": 6,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 13,
+      "knockback": 60, "rootSteps": 2
+    },
+    {
+      "id": "spear_2", "nameKey": "weapon.spear_2.name", "descKey": "weapon.spear_2.desc",
+      "sprite": "player/held/spear_2", "icon": 1461, "tier": 1, "blade": true,
+      "damage": 8, "reach": 32, "width": 6,
+      "windupSteps": 5, "activeSteps": 3, "recoverSteps": 11,
+      "knockback": 60, "rootSteps": 2
+    },
+    {
+      "id": "trident_1", "nameKey": "weapon.trident_1.name", "descKey": "weapon.trident_1.desc",
+      "sprite": "player/held/trident_1", "icon": 1462, "tier": 2, "blade": true,
+      "damage": 10, "reach": 31, "width": 9,
+      "windupSteps": 7, "activeSteps": 3, "recoverSteps": 15,
+      "knockback": 65, "rootSteps": 3
+    },
+    {
+      "id": "spear_3", "nameKey": "weapon.spear_3.name", "descKey": "weapon.spear_3.desc",
+      "sprite": "player/held/spear_3", "icon": 1463, "tier": 2, "blade": true,
+      "damage": 11, "reach": 32, "width": 6,
+      "windupSteps": 7, "activeSteps": 3, "recoverSteps": 16,
+      "knockback": 69, "rootSteps": 4
+    },
+    {
+      "id": "spear_4", "nameKey": "weapon.spear_4.name", "descKey": "weapon.spear_4.desc",
+      "sprite": "player/held/spear_4", "icon": 1470, "tier": 1, "blade": true,
+      "damage": 9, "reach": 32, "width": 6,
+      "windupSteps": 6, "activeSteps": 3, "recoverSteps": 13,
+      "knockback": 60, "rootSteps": 2
+    },
+    {
+      "id": "spear_5", "nameKey": "weapon.spear_5.name", "descKey": "weapon.spear_5.desc",
+      "sprite": "player/held/spear_5", "icon": 1471, "tier": 1, "blade": true,
+      "damage": 8, "reach": 32, "width": 6,
+      "windupSteps": 5, "activeSteps": 3, "recoverSteps": 11,
+      "knockback": 60, "rootSteps": 2
+    },
+    {
+      "id": "halberd_1", "nameKey": "weapon.halberd_1.name", "descKey": "weapon.halberd_1.desc",
+      "sprite": "player/held/halberd_1", "icon": 1472, "tier": 3, "blade": true,
+      "damage": 15, "reach": 32, "width": 12,
+      "windupSteps": 10, "activeSteps": 4, "recoverSteps": 20,
+      "knockback": 110, "rootSteps": 10
+    },
+    {
+      "id": "club_1", "nameKey": "weapon.club_1.name", "descKey": "weapon.club_1.desc",
+      "sprite": "player/held/club_1", "icon": 1468, "tier": 3, "blade": true,
+      "damage": 14, "reach": 24, "width": 16,
+      "windupSteps": 10, "activeSteps": 4, "recoverSteps": 18,
+      "knockback": 120, "rootSteps": 10
+    },
+    {
+      "id": "hammer_1", "nameKey": "weapon.hammer_1.name", "descKey": "weapon.hammer_1.desc",
+      "sprite": "player/held/hammer_1", "icon": 1473, "tier": 4, "blade": true,
+      "damage": 26, "reach": 28, "width": 22,
+      "windupSteps": 16, "activeSteps": 5, "recoverSteps": 25,
+      "knockback": 190, "rootSteps": 24
+    },
+    {
+      "id": "flail_1", "nameKey": "weapon.flail_1.name", "descKey": "weapon.flail_1.desc",
+      "sprite": "player/held/flail_1", "icon": 1474, "tier": 4, "blade": true,
+      "damage": 20, "reach": 28, "width": 24,
+      "windupSteps": 14, "activeSteps": 5, "recoverSteps": 23,
+      "knockback": 160, "rootSteps": 18
+    },
+    {
+      "id": "flail_2", "nameKey": "weapon.flail_2.name", "descKey": "weapon.flail_2.desc",
+      "sprite": "player/held/flail_2", "icon": 1475, "tier": 4, "blade": true,
+      "damage": 17, "reach": 28, "width": 24,
+      "windupSteps": 13, "activeSteps": 5, "recoverSteps": 21,
+      "knockback": 160, "rootSteps": 18
+    },
+    {
+      "id": "hammer_2", "nameKey": "weapon.hammer_2.name", "descKey": "weapon.hammer_2.desc",
+      "sprite": "player/held/hammer_2", "icon": 1476, "tier": 4, "blade": true,
+      "damage": 22, "reach": 28, "width": 22,
+      "windupSteps": 15, "activeSteps": 5, "recoverSteps": 23,
+      "knockback": 190, "rootSteps": 24
+    },
+    {
+      "id": "mace_1", "nameKey": "weapon.mace_1.name", "descKey": "weapon.mace_1.desc",
+      "sprite": "player/held/mace_1", "icon": 1489, "tier": 3, "blade": true,
+      "damage": 18, "reach": 25, "width": 18,
+      "windupSteps": 12, "activeSteps": 4, "recoverSteps": 21,
+      "knockback": 150, "rootSteps": 16
+    },
+    {
+      "id": "mace_2", "nameKey": "weapon.mace_2.name", "descKey": "weapon.mace_2.desc",
+      "sprite": "player/held/mace_2", "icon": 1491, "tier": 3, "blade": true,
+      "damage": 15, "reach": 25, "width": 18,
+      "windupSteps": 11, "activeSteps": 4, "recoverSteps": 19,
+      "knockback": 150, "rootSteps": 16
+    },
+    {
+      "id": "mace_3", "nameKey": "weapon.mace_3.name", "descKey": "weapon.mace_3.desc",
+      "sprite": "player/held/mace_3", "icon": 1506, "tier": 4, "blade": true,
+      "damage": 22, "reach": 25, "width": 18,
+      "windupSteps": 13, "activeSteps": 4, "recoverSteps": 24,
+      "knockback": 172, "rootSteps": 18
+    },
+    {
+      "id": "anchor_1", "nameKey": "weapon.anchor_1.name", "descKey": "weapon.anchor_1.desc",
+      "sprite": "player/held/anchor_1", "icon": 1511, "tier": 5, "blade": true,
+      "damage": 30, "reach": 30, "width": 24,
+      "windupSteps": 20, "activeSteps": 6, "recoverSteps": 30,
+      "knockback": 220, "rootSteps": 28
+    },
+    {
+      "id": "crossbow_1", "nameKey": "weapon.crossbow_1.name", "descKey": "weapon.crossbow_1.desc",
+      "sprite": "fx/projectile/arrow", "icon": 1481, "tier": 2,
+      "damage": 10, "reach": 200, "width": 5,
+      "windupSteps": 9, "activeSteps": 2, "recoverSteps": 23,
+      "knockback": 50, "rootSteps": 5, "projectile": "arrow", "launcher": "player/bows/crossbow_1"
+    },
+    {
+      "id": "crossbow_2", "nameKey": "weapon.crossbow_2.name", "descKey": "weapon.crossbow_2.desc",
+      "sprite": "fx/projectile/arrow", "icon": 1482, "tier": 2,
+      "damage": 8, "reach": 200, "width": 5,
+      "windupSteps": 8, "activeSteps": 2, "recoverSteps": 21,
+      "knockback": 50, "rootSteps": 5, "projectile": "arrow", "launcher": "player/bows/crossbow_2"
+    },
+    {
+      "id": "bow_1", "nameKey": "weapon.bow_1.name", "descKey": "weapon.bow_1.desc",
+      "sprite": "fx/projectile/arrow", "icon": 1483, "tier": 1,
+      "damage": 7, "reach": 180, "width": 5,
+      "windupSteps": 6, "activeSteps": 2, "recoverSteps": 16,
+      "knockback": 30, "rootSteps": 3, "projectile": "arrow", "launcher": "player/bows/bow_1"
+    },
+    {
+      "id": "bow_2", "nameKey": "weapon.bow_2.name", "descKey": "weapon.bow_2.desc",
+      "sprite": "fx/projectile/arrow", "icon": 1484, "tier": 1,
+      "damage": 6, "reach": 180, "width": 5,
+      "windupSteps": 5, "activeSteps": 2, "recoverSteps": 14,
+      "knockback": 30, "rootSteps": 3, "projectile": "arrow", "launcher": "player/bows/bow_2"
+    },
+    {
+      "id": "disc_1", "nameKey": "weapon.disc_1.name", "descKey": "weapon.disc_1.desc",
+      "sprite": "fx/projectile/own/disc_1", "icon": 1486, "tier": 1,
+      "damage": 5, "reach": 160, "width": 7,
+      "windupSteps": 4, "activeSteps": 2, "recoverSteps": 12,
+      "knockback": 25, "rootSteps": 2, "projectile": "disc"
+    },
+    {
+      "id": "disc_2", "nameKey": "weapon.disc_2.name", "descKey": "weapon.disc_2.desc",
+      "sprite": "fx/projectile/own/disc_2", "icon": 1487, "tier": 1,
+      "damage": 4, "reach": 160, "width": 7,
+      "windupSteps": 3, "activeSteps": 2, "recoverSteps": 10,
+      "knockback": 25, "rootSteps": 2, "projectile": "disc"
+    },
+    {
+      "id": "boomerang_1", "nameKey": "weapon.boomerang_1.name", "descKey": "weapon.boomerang_1.desc",
+      "sprite": "fx/projectile/own/boomerang_1", "icon": 1501, "tier": 2,
+      "damage": 6, "reach": 150, "width": 7,
+      "windupSteps": 5, "activeSteps": 2, "recoverSteps": 13,
+      "knockback": 30, "rootSteps": 2, "projectile": "boomerang"
+    },
+    {
+      "id": "boomerang_2", "nameKey": "weapon.boomerang_2.name", "descKey": "weapon.boomerang_2.desc",
+      "sprite": "fx/projectile/own/boomerang_2", "icon": 1502, "tier": 2,
+      "damage": 5, "reach": 150, "width": 7,
+      "windupSteps": 4, "activeSteps": 2, "recoverSteps": 11,
+      "knockback": 30, "rootSteps": 2, "projectile": "boomerang"
+    },
+    {
+      "id": "boomerang_3", "nameKey": "weapon.boomerang_3.name", "descKey": "weapon.boomerang_3.desc",
+      "sprite": "fx/projectile/own/boomerang_3", "icon": 1503, "tier": 3,
+      "damage": 7, "reach": 150, "width": 7,
+      "windupSteps": 6, "activeSteps": 2, "recoverSteps": 16,
+      "knockback": 34, "rootSteps": 4, "projectile": "boomerang"
+    },
+    {
+      "id": "bow_3", "nameKey": "weapon.bow_3.name", "descKey": "weapon.bow_3.desc",
+      "sprite": "fx/projectile/arrow", "icon": 1514, "tier": 2,
+      "damage": 8, "reach": 180, "width": 5,
+      "windupSteps": 7, "activeSteps": 2, "recoverSteps": 19,
+      "knockback": 34, "rootSteps": 5, "projectile": "arrow", "launcher": "player/bows/bow_3"
+    },
+    {
+      "id": "bow_4", "nameKey": "weapon.bow_4.name", "descKey": "weapon.bow_4.desc",
+      "sprite": "fx/projectile/arrow", "icon": 1515, "tier": 1,
+      "damage": 7, "reach": 180, "width": 5,
+      "windupSteps": 6, "activeSteps": 2, "recoverSteps": 16,
+      "knockback": 30, "rootSteps": 3, "projectile": "arrow", "launcher": "player/bows/bow_4"
+    },
+    {
+      "id": "bow_5", "nameKey": "weapon.bow_5.name", "descKey": "weapon.bow_5.desc",
+      "sprite": "fx/projectile/arrow", "icon": 1516, "tier": 1,
+      "damage": 6, "reach": 180, "width": 5,
+      "windupSteps": 5, "activeSteps": 2, "recoverSteps": 14,
+      "knockback": 30, "rootSteps": 3, "projectile": "arrow", "launcher": "player/bows/bow_5"
+    },
+    {
+      "id": "wand_1", "nameKey": "weapon.wand_1.name", "descKey": "weapon.wand_1.desc",
+      "sprite": "fx/projectile/energyball", "icon": 1490, "tier": 1,
+      "damage": 6, "reach": 170, "width": 6,
+      "windupSteps": 5, "activeSteps": 2, "recoverSteps": 14,
+      "knockback": 20, "rootSteps": 2, "projectile": "orb", "launcher": "player/held/wand_1", "tip": [-13, -11]
+    },
+    {
+      "id": "staff_1", "nameKey": "weapon.staff_1.name", "descKey": "weapon.staff_1.desc",
+      "sprite": "fx/projectile/energyball", "icon": 1492, "tier": 2,
+      "damage": 9, "reach": 160, "width": 8,
+      "windupSteps": 8, "activeSteps": 2, "recoverSteps": 20,
+      "knockback": 40, "rootSteps": 4, "projectile": "orb", "launcher": "player/held/staff_1", "tip": [-19, -15]
+    },
+    {
+      "id": "staff_2", "nameKey": "weapon.staff_2.name", "descKey": "weapon.staff_2.desc",
+      "sprite": "fx/projectile/energyball", "icon": 1493, "tier": 2,
+      "damage": 8, "reach": 160, "width": 8,
+      "windupSteps": 7, "activeSteps": 2, "recoverSteps": 18,
+      "knockback": 40, "rootSteps": 4, "projectile": "orb", "launcher": "player/held/staff_2", "tip": [-19, -17]
+    },
+    {
+      "id": "scepter_1", "nameKey": "weapon.scepter_1.name", "descKey": "weapon.scepter_1.desc",
+      "sprite": "fx/projectile/energyball", "icon": 1494, "tier": 3,
+      "damage": 8, "reach": 170, "width": 7,
+      "windupSteps": 7, "activeSteps": 2, "recoverSteps": 18,
+      "knockback": 30, "rootSteps": 3, "projectile": "orb", "launcher": "player/held/scepter_1", "tip": [-19, -17]
+    },
+    {
+      "id": "scepter_2", "nameKey": "weapon.scepter_2.name", "descKey": "weapon.scepter_2.desc",
+      "sprite": "fx/projectile/energyball", "icon": 1495, "tier": 3,
+      "damage": 7, "reach": 170, "width": 7,
+      "windupSteps": 6, "activeSteps": 2, "recoverSteps": 16,
+      "knockback": 30, "rootSteps": 3, "projectile": "orb", "launcher": "player/held/scepter_2", "tip": [-21, -19]
+    },
+    {
+      "id": "scepter_3", "nameKey": "weapon.scepter_3.name", "descKey": "weapon.scepter_3.desc",
+      "sprite": "fx/projectile/energyball", "icon": 1496, "tier": 4,
+      "damage": 10, "reach": 170, "width": 7,
+      "windupSteps": 8, "activeSteps": 2, "recoverSteps": 21,
+      "knockback": 34, "rootSteps": 5, "projectile": "orb", "launcher": "player/held/scepter_3", "tip": [-22, -21]
+    },
+    {
+      "id": "scepter_4", "nameKey": "weapon.scepter_4.name", "descKey": "weapon.scepter_4.desc",
+      "sprite": "fx/projectile/energyball", "icon": 1497, "tier": 3,
+      "damage": 8, "reach": 170, "width": 7,
+      "windupSteps": 7, "activeSteps": 2, "recoverSteps": 18,
+      "knockback": 30, "rootSteps": 3, "projectile": "orb", "launcher": "player/held/scepter_4", "tip": [-22, -20]
+    },
+    {
+      "id": "scepter_5", "nameKey": "weapon.scepter_5.name", "descKey": "weapon.scepter_5.desc",
+      "sprite": "fx/projectile/energyball", "icon": 1498, "tier": 3,
+      "damage": 7, "reach": 170, "width": 7,
+      "windupSteps": 6, "activeSteps": 2, "recoverSteps": 16,
+      "knockback": 30, "rootSteps": 3, "projectile": "orb", "launcher": "player/held/scepter_5", "tip": [-21, -19]
+    }
+    // ---- end of the generated ----
+  ]
+}

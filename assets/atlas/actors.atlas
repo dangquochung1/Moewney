@@ -1,0 +1,1847 @@
+actors.png
+size: 4096,4096
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bosses/demoncyclop/faceset
+  bounds: 3347, 3871, 38, 38
+  index: -1
+bosses/demoncyclop/hit
+  bounds: 2505, 3617, 150, 50
+  index: -1
+bosses/demoncyclop/idle
+  bounds: 2065, 3617, 250, 50
+  index: -1
+bosses/demoncyclop/sprite
+  bounds: 2651, 3323, 37, 33
+  index: -1
+bosses/demoncyclop/walk
+  bounds: 1163, 1763, 300, 50
+  index: -1
+bosses/demoncyclop2/faceset
+  bounds: 3387, 3871, 38, 38
+  index: -1
+bosses/demoncyclop2/hit
+  bounds: 1, 2333, 150, 50
+  index: -1
+bosses/demoncyclop2/idle
+  bounds: 2065, 3669, 250, 50
+  index: -1
+bosses/demoncyclop2/sprite
+  bounds: 1465, 1831, 37, 33
+  index: -1
+bosses/demoncyclop2/walk
+  bounds: 1163, 1815, 300, 50
+  index: -1
+bosses/dragonblue/body1
+  bounds: 3565, 3671, 31, 27
+  index: -1
+bosses/dragonblue/body2
+  bounds: 3919, 3181, 31, 27
+  index: -1
+bosses/dragonblue/bodyend
+  bounds: 483, 4021, 29, 40
+  index: -1
+bosses/dragonblue/faceset
+  bounds: 4057, 595, 38, 38
+  index: -1
+bosses/dragonblue/head
+  bounds: 1419, 4021, 44, 46
+  index: -1
+bosses/dragonblue/wing
+  bounds: 2307, 2984, 57, 57
+  index: -1
+bosses/dragongreen/body1
+  bounds: 3952, 3181, 31, 27
+  index: -1
+bosses/dragongreen/body2
+  bounds: 3985, 3181, 31, 27
+  index: -1
+bosses/dragongreen/bodyend
+  bounds: 3169, 4021, 29, 40
+  index: -1
+bosses/dragongreen/faceset
+  bounds: 4057, 635, 38, 38
+  index: -1
+bosses/dragongreen/head
+  bounds: 4049, 2333, 44, 46
+  index: -1
+bosses/dragongreen/wing
+  bounds: 2366, 2984, 57, 57
+  index: -1
+bosses/giantbamboo/attack
+  bounds: 2703, 3231, 310, 62
+  index: -1
+bosses/giantbamboo/charge
+  bounds: 2835, 4021, 186, 62
+  index: -1
+bosses/giantbamboo/faceset
+  bounds: 4057, 675, 38, 38
+  index: -1
+bosses/giantbamboo/hit
+  bounds: 2335, 4023, 248, 62
+  index: -1
+bosses/giantbamboo/idle
+  bounds: 2447, 2979, 372, 62
+  index: -1
+bosses/giantbamboo/walk
+  bounds: 2245, 925, 744, 62
+  index: -1
+bosses/giantbamboo2/attack
+  bounds: 2703, 3295, 310, 62
+  index: -1
+bosses/giantbamboo2/charge
+  bounds: 2317, 3617, 186, 62
+  index: -1
+bosses/giantbamboo2/faceset
+  bounds: 4057, 715, 38, 38
+  index: -1
+bosses/giantbamboo2/hit
+  bounds: 2585, 4023, 248, 62
+  index: -1
+bosses/giantbamboo2/idle
+  bounds: 2703, 3043, 372, 62
+  index: -1
+bosses/giantbamboo2/walk
+  bounds: 2991, 963, 744, 62
+  index: -1
+bosses/giantbluesamurai/attackleft
+  bounds: 1949, 3972, 384, 96
+  index: -1
+bosses/giantbluesamurai/attackright
+  bounds: 1549, 3729, 384, 96
+  index: -1
+bosses/giantbluesamurai/chargeleft
+  bounds: 2335, 3925, 288, 96
+  index: -1
+bosses/giantbluesamurai/chargeright
+  bounds: 2387, 3806, 288, 96
+  index: -1
+bosses/giantbluesamurai/faceset
+  bounds: 4057, 755, 38, 38
+  index: -1
+bosses/giantbluesamurai/hit
+  bounds: 2065, 2803, 384, 48
+  index: -1
+bosses/giantbluesamurai/idle
+  bounds: 3083, 2525, 576, 48
+  index: -1
+bosses/giantbluesamurai/walk
+  bounds: 3083, 2575, 576, 48
+  index: -1
+bosses/giantflam/faceset
+  bounds: 4057, 795, 38, 38
+  index: -1
+bosses/giantflam/hit
+  bounds: 153, 2333, 150, 50
+  index: -1
+bosses/giantflam/idle
+  bounds: 2065, 3301, 250, 50
+  index: -1
+bosses/giantfrog/attack
+  bounds: 1167, 1991, 120, 40
+  index: -1
+bosses/giantfrog/charge
+  bounds: 1291, 3297, 280, 40
+  index: -1
+bosses/giantfrog/faceset
+  bounds: 4057, 835, 38, 38
+  index: -1
+bosses/giantfrog/hit
+  bounds: 1167, 2033, 120, 40
+  index: -1
+bosses/giantfrog/idle40x40
+  bounds: 1855, 3297, 200, 40
+  index: -1
+bosses/giantfrog/jump
+  bounds: 2065, 2984, 240, 40
+  index: -1
+bosses/giantfrog2/attack
+  bounds: 1167, 2075, 120, 40
+  index: -1
+bosses/giantfrog2/charge
+  bounds: 1573, 3297, 280, 40
+  index: -1
+bosses/giantfrog2/faceset
+  bounds: 4057, 875, 38, 38
+  index: -1
+bosses/giantfrog2/hit
+  bounds: 1167, 2117, 120, 40
+  index: -1
+bosses/giantfrog2/idle
+  bounds: 1791, 3171, 200, 40
+  index: -1
+bosses/giantfrog2/jump
+  bounds: 1549, 3171, 240, 40
+  index: -1
+bosses/giantracoon/attack
+  bounds: 2703, 3725, 240, 60
+  index: -1
+bosses/giantracoon/charge
+  bounds: 1167, 1867, 120, 60
+  index: -1
+bosses/giantracoon/faceset
+  bounds: 4057, 915, 38, 38
+  index: -1
+bosses/giantracoon/idle
+  bounds: 2703, 3107, 360, 60
+  index: -1
+bosses/giantracoon/jump
+  bounds: 1163, 1639, 300, 60
+  index: -1
+bosses/giantracoon/sprite
+  bounds: 663, 2579, 55, 50
+  index: -1
+bosses/giantracoongold/attack
+  bounds: 2945, 3725, 240, 60
+  index: -1
+bosses/giantracoongold/charge
+  bounds: 1167, 1929, 120, 60
+  index: -1
+bosses/giantracoongold/faceset
+  bounds: 4057, 955, 38, 38
+  index: -1
+bosses/giantracoongold/idle
+  bounds: 2703, 3169, 360, 60
+  index: -1
+bosses/giantracoongold/jump
+  bounds: 1163, 1701, 300, 60
+  index: -1
+bosses/giantracoongold/sprite
+  bounds: 4049, 2283, 43, 48
+  index: -1
+bosses/giantredsamurai/attackleft
+  bounds: 1935, 3729, 384, 96
+  index: -1
+bosses/giantredsamurai/attackright
+  bounds: 2001, 3827, 384, 96
+  index: -1
+bosses/giantredsamurai/chargeleft
+  bounds: 2625, 3911, 288, 96
+  index: -1
+bosses/giantredsamurai/chargeright
+  bounds: 2677, 3806, 288, 96
+  index: -1
+bosses/giantredsamurai/faceset
+  bounds: 4057, 995, 38, 38
+  index: -1
+bosses/giantredsamurai/hit
+  bounds: 2065, 2853, 384, 48
+  index: -1
+bosses/giantredsamurai/idle
+  bounds: 3083, 2625, 576, 48
+  index: -1
+bosses/giantredsamurai/walk
+  bounds: 3083, 2675, 576, 48
+  index: -1
+bosses/giantslime/faceset
+  bounds: 4057, 1035, 38, 38
+  index: -1
+bosses/giantslime/hit
+  bounds: 1163, 775, 310, 52
+  index: -1
+bosses/giantslime/idle
+  bounds: 1163, 829, 310, 52
+  index: -1
+bosses/giantslime/jump
+  bounds: 2245, 487, 806, 52
+  index: -1
+bosses/giantslime2/faceset
+  bounds: 4057, 1075, 38, 38
+  index: -1
+bosses/giantslime2/hit
+  bounds: 1163, 883, 310, 52
+  index: -1
+bosses/giantslime2/idle
+  bounds: 1163, 937, 310, 52
+  index: -1
+bosses/giantslime2/jump
+  bounds: 2245, 541, 806, 52
+  index: -1
+bosses/giantspirit/faceset
+  bounds: 4057, 1115, 38, 38
+  index: -1
+bosses/giantspirit/hit
+  bounds: 305, 2333, 150, 50
+  index: -1
+bosses/giantspirit/idle
+  bounds: 2317, 3301, 250, 50
+  index: -1
+bosses/squidgreen/attack
+  bounds: 1491, 3987, 456, 79
+  index: -1
+bosses/squidgreen/attackloop
+  bounds: 1163, 991, 304, 79
+  index: -1
+bosses/squidgreen/faceset
+  bounds: 2761, 2801, 38, 37
+  index: -1
+bosses/squidgreen/hit
+  bounds: 1163, 1072, 304, 79
+  index: -1
+bosses/squidgreen/idle
+  bounds: 1163, 1153, 304, 79
+  index: -1
+bosses/squidgreen/shoot
+  bounds: 2321, 3725, 380, 79
+  index: -1
+bosses/squidgreen/walk
+  bounds: 1163, 1234, 304, 79
+  index: -1
+bosses/squidred/attack
+  bounds: 1543, 3857, 456, 79
+  index: -1
+bosses/squidred/attackloop
+  bounds: 1163, 1315, 304, 79
+  index: -1
+bosses/squidred/faceset
+  bounds: 4057, 1155, 38, 38
+  index: -1
+bosses/squidred/hit
+  bounds: 1163, 1396, 304, 79
+  index: -1
+bosses/squidred/idle
+  bounds: 1163, 1477, 304, 79
+  index: -1
+bosses/squidred/shoot
+  bounds: 2065, 2903, 380, 79
+  index: -1
+bosses/squidred/walk
+  bounds: 1163, 1558, 304, 79
+  index: -1
+bosses/tengublue/attack
+  bounds: 2245, 1, 1230, 82
+  index: -1
+bosses/tengublue/faceset
+  bounds: 4057, 1195, 38, 38
+  index: -1
+bosses/tengublue/hit
+  bounds: 3083, 2725, 544, 68
+  index: -1
+bosses/tengublue/idle
+  bounds: 1009, 4021, 408, 68
+  index: -1
+bosses/tengublue/trans
+  bounds: 2245, 855, 748, 68
+  index: -1
+bosses/tengublue/walk
+  bounds: 2245, 319, 820, 82
+  index: -1
+bosses/tengured/attack
+  bounds: 2245, 85, 1230, 82
+  index: -1
+bosses/tengured/faceset
+  bounds: 4057, 1235, 38, 38
+  index: -1
+bosses/tengured/hit
+  bounds: 3083, 1027, 656, 82
+  index: -1
+bosses/tengured/idle
+  bounds: 515, 3987, 492, 82
+  index: -1
+bosses/tengured/trans
+  bounds: 2245, 169, 902, 82
+  index: -1
+bosses/tengured/walk
+  bounds: 2245, 403, 820, 82
+  index: -1
+bosses6/fireorb/idle
+  bounds: 3919, 2697, 128, 256
+  index: -1
+bosses6/pirateleader/attack
+  bounds: 517, 2984, 256, 320
+  index: -1
+bosses6/pirateleader/death
+  bounds: 1291, 3231, 320, 64
+  index: -1
+bosses6/pirateleader/hurt
+  bounds: 517, 2631, 256, 320
+  index: -1
+bosses6/pirateleader/idle
+  bounds: 3725, 2183, 256, 512
+  index: -1
+bosses6/pirateleader/run
+  bounds: 1549, 2011, 256, 384
+  index: -1
+bosses6/pirateleader/walk
+  bounds: 3083, 1111, 256, 640
+  index: -1
+bosses6/piratezombie/attack
+  bounds: 775, 2984, 256, 320
+  index: -1
+bosses6/piratezombie/death
+  bounds: 1613, 3231, 320, 64
+  index: -1
+bosses6/piratezombie/hurt
+  bounds: 775, 2631, 256, 320
+  index: -1
+bosses6/piratezombie/idle
+  bounds: 3661, 2697, 256, 512
+  index: -1
+bosses6/piratezombie/run
+  bounds: 1549, 3343, 256, 384
+  index: -1
+bosses6/piratezombie/walk
+  bounds: 2825, 1733, 256, 640
+  index: -1
+bosses6/squidman/attack
+  bounds: 1033, 2984, 256, 320
+  index: -1
+bosses6/squidman/death
+  bounds: 1935, 3231, 320, 64
+  index: -1
+bosses6/squidman/hurt
+  bounds: 1291, 131, 256, 320
+  index: -1
+bosses6/squidman/idle
+  bounds: 3083, 2829, 256, 512
+  index: -1
+bosses6/squidman/run
+  bounds: 1807, 3343, 256, 384
+  index: -1
+bosses6/squidman/walk
+  bounds: 3341, 1111, 256, 640
+  index: -1
+bosses6/waterorb/idle
+  bounds: 3599, 1111, 128, 384
+  index: -1
+crypt/crypt_bat/death
+  bounds: 3201, 3911, 232, 174
+  index: -1
+crypt/crypt_bat/hurt
+  bounds: 2967, 3787, 232, 232
+  index: -1
+crypt/crypt_bat/idle
+  bounds: 3857, 3211, 232, 348
+  index: -1
+crypt/crypt_bat/walk
+  bounds: 3857, 3561, 232, 348
+  index: -1
+crypt/crypt_blueslime/attack
+  bounds: 2065, 3026, 128, 192
+  index: -1
+crypt/crypt_blueslime/idle
+  bounds: 777, 907, 128, 160
+  index: -1
+crypt/crypt_blueslime/walk
+  bounds: 3435, 3957, 128, 128
+  index: -1
+crypt/crypt_ghost/attack
+  bounds: 3023, 4021, 144, 72
+  index: -1
+crypt/crypt_ghost/death
+  bounds: 517, 2449, 144, 180
+  index: -1
+crypt/crypt_ghost/hurt
+  bounds: 309, 2255, 144, 72
+  index: -1
+crypt/crypt_ghost/idle
+  bounds: 3201, 3763, 144, 72
+  index: -1
+crypt/crypt_ghost/walk
+  bounds: 3201, 3837, 144, 72
+  index: -1
+crypt/crypt_greenslime/attack
+  bounds: 3187, 3569, 128, 192
+  index: -1
+crypt/crypt_greenslime/idle
+  bounds: 2065, 2245, 128, 160
+  index: -1
+crypt/crypt_greenslime/walk
+  bounds: 663, 2449, 128, 128
+  index: -1
+crypt/crypt_phantom/attack
+  bounds: 2323, 2417, 128, 256
+  index: -1
+crypt/crypt_phantom/idle
+  bounds: 2713, 3359, 128, 192
+  index: -1
+crypt/crypt_phantom/walk
+  bounds: 2843, 3359, 128, 192
+  index: -1
+crypt/crypt_skeleton/attack
+  bounds: 2515, 3043, 128, 256
+  index: -1
+crypt/crypt_skeleton/idle
+  bounds: 3849, 3911, 128, 128
+  index: -1
+crypt/crypt_skeleton/walk
+  bounds: 2973, 3359, 128, 192
+  index: -1
+crypt/crypt_slime/attack
+  bounds: 3695, 3919, 152, 152
+  index: -1
+crypt/crypt_slime/death
+  bounds: 907, 775, 152, 190
+  index: -1
+crypt/crypt_slime/hurt
+  bounds: 2323, 2675, 152, 76
+  index: -1
+crypt/crypt_slime/idle
+  bounds: 1, 2255, 152, 76
+  index: -1
+crypt/crypt_slime/walk
+  bounds: 155, 2255, 152, 76
+  index: -1
+crypt/crypt_swordsman/attack
+  bounds: 2323, 3359, 128, 256
+  index: -1
+crypt/crypt_swordsman/idle
+  bounds: 907, 967, 128, 128
+  index: -1
+crypt/crypt_swordsman/walk
+  bounds: 3103, 3343, 128, 192
+  index: -1
+crypt/crypt_wizard/attack
+  bounds: 3015, 595, 128, 320
+  index: -1
+crypt/crypt_wizard/idle
+  bounds: 2713, 3553, 128, 160
+  index: -1
+crypt/crypt_wizard/walk
+  bounds: 3233, 3343, 128, 192
+  index: -1
+crypt/vampire_horn/attack
+  bounds: 3799, 1, 256, 768
+  index: -1
+crypt/vampire_horn/death
+  bounds: 2567, 989, 256, 704
+  index: -1
+crypt/vampire_horn/hurt
+  bounds: 1291, 1867, 256, 256
+  index: -1
+crypt/vampire_horn/idle
+  bounds: 1291, 2125, 256, 256
+  index: -1
+crypt/vampire_horn/run
+  bounds: 3341, 2829, 256, 512
+  index: -1
+crypt/vampire_horn/walk
+  bounds: 1807, 2245, 256, 384
+  index: -1
+crypt/vampire_lord/attack
+  bounds: 3799, 771, 256, 768
+  index: -1
+crypt/vampire_lord/bat
+  bounds: 2245, 253, 896, 64
+  index: -1
+crypt/vampire_lord/death
+  bounds: 2825, 1027, 256, 704
+  index: -1
+crypt/vampire_lord/hurt
+  bounds: 1291, 2383, 256, 256
+  index: -1
+crypt/vampire_lord/idle
+  bounds: 1549, 2397, 256, 256
+  index: -1
+crypt/vampire_lord/run
+  bounds: 3599, 3211, 256, 512
+  index: -1
+crypt/vampire_lord/walk
+  bounds: 2065, 2417, 256, 384
+  index: -1
+crypt/vampire_moss/assassin_attack
+  bounds: 2245, 595, 768, 128
+  index: -1
+crypt/vampire_moss/assassin_death1
+  bounds: 3083, 2395, 640, 128
+  index: -1
+crypt/vampire_moss/assassin_death2
+  bounds: 2245, 725, 768, 128
+  index: -1
+crypt/vampire_moss/assassin_hit
+  bounds: 1, 3189, 384, 128
+  index: -1
+crypt/vampire_moss/assassin_idle
+  bounds: 1, 3857, 512, 128
+  index: -1
+crypt/vampire_moss/assassin_tele
+  bounds: 1, 1, 1920, 128
+  index: -1
+crypt/vampire_moss/assassin_throw
+  bounds: 515, 3857, 512, 128
+  index: -1
+crypt/vampire_moss/assassin_walk
+  bounds: 1029, 3857, 512, 128
+  index: -1
+crypt/vampire_moss/attack
+  bounds: 3149, 169, 256, 768
+  index: -1
+crypt/vampire_moss/death
+  bounds: 2567, 1695, 256, 704
+  index: -1
+crypt/vampire_moss/hurt
+  bounds: 1291, 2641, 256, 256
+  index: -1
+crypt/vampire_moss/idle
+  bounds: 1807, 2631, 256, 256
+  index: -1
+crypt/vampire_moss/run
+  bounds: 1, 3343, 256, 512
+  index: -1
+crypt/vampire_moss/walk
+  bounds: 1, 2803, 256, 384
+  index: -1
+depths/dungeon_character
+  bounds: 3983, 2183, 112, 64
+  index: -1
+depths/dungeon_character_2
+  bounds: 3983, 2249, 112, 32
+  index: -1
+depths/monsters_idle/skeleton1/v1/skeleton_v1
+  bounds: 2321, 3806, 64, 16
+  index: -1
+depths/monsters_idle/skeleton1/v2/skeleton_v2
+  bounds: 923, 2369, 64, 16
+  index: -1
+depths/monsters_idle/skeleton2/v1/skeleton2_v1
+  bounds: 1485, 3213, 64, 16
+  index: -1
+depths/monsters_idle/skeleton2/v2/skeleton2_v2
+  bounds: 1551, 3213, 64, 16
+  index: -1
+depths/monsters_idle/skull/v1/skull_v1
+  bounds: 1617, 3213, 64, 16
+  index: -1
+depths/monsters_idle/skull/v2/skull_v2
+  bounds: 1683, 3213, 64, 16
+  index: -1
+depths/monsters_idle/vampire/v1/vampire_v1
+  bounds: 1749, 3213, 64, 16
+  index: -1
+depths/monsters_idle/vampire/v2/vampire_v2
+  bounds: 1815, 3213, 64, 16
+  index: -1
+depths/priests_idle/priest1/v1/priest1_v1
+  bounds: 1881, 3213, 64, 16
+  index: -1
+depths/priests_idle/priest1/v2/priest1_v2
+  bounds: 1947, 3213, 64, 16
+  index: -1
+depths/priests_idle/priest2/v1/priest2_v1
+  bounds: 1, 1849, 64, 16
+  index: -1
+depths/priests_idle/priest2/v2/priest2_v2
+  bounds: 67, 1849, 64, 16
+  index: -1
+depths/priests_idle/priest3/v1/priest3_v1
+  bounds: 133, 1849, 64, 16
+  index: -1
+depths/priests_idle/priest3/v2/priest3_v2
+  bounds: 199, 1849, 64, 16
+  index: -1
+depths/skeleton1_attack
+  bounds: 709, 3306, 288, 32
+  index: -1
+depths/skeleton1_death
+  bounds: 3083, 2795, 544, 32
+  index: -1
+depths/skeleton1_idle
+  bounds: 999, 3306, 192, 32
+  index: -1
+depths/skeleton1_movement
+  bounds: 1993, 3938, 320, 32
+  index: -1
+depths/skeleton1_take_damage
+  bounds: 2825, 989, 160, 32
+  index: -1
+depths/skeleton2_attack
+  bounds: 1, 4021, 480, 32
+  index: -1
+depths/skeleton2_death
+  bounds: 1, 4055, 480, 32
+  index: -1
+depths/skeleton2_death2
+  bounds: 1009, 3987, 480, 32
+  index: -1
+depths/skeleton2_idle
+  bounds: 3599, 1497, 192, 32
+  index: -1
+depths/skeleton2_movement
+  bounds: 387, 3306, 320, 32
+  index: -1
+depths/skeleton2_take_damage
+  bounds: 2317, 3681, 160, 32
+  index: -1
+depths/vampire_attack
+  bounds: 1, 3987, 512, 32
+  index: -1
+depths/vampire_death
+  bounds: 1543, 3938, 448, 32
+  index: -1
+depths/vampire_idle
+  bounds: 1291, 3191, 192, 32
+  index: -1
+depths/vampire_movement
+  bounds: 1291, 3157, 256, 32
+  index: -1
+depths/vampire_take_damage
+  bounds: 2479, 3681, 160, 32
+  index: -1
+monsters/axolot/faceset
+  bounds: 4057, 1275, 38, 38
+  index: -1
+monsters/axolot/spritesheet
+  bounds: 3015, 3231, 64, 64
+  index: -1
+monsters/axolotblue/faceset
+  bounds: 4057, 1315, 38, 38
+  index: -1
+monsters/axolotblue/spritesheet
+  bounds: 3729, 1111, 64, 64
+  index: -1
+monsters/bamboo/faceset
+  bounds: 4057, 1355, 38, 38
+  index: -1
+monsters/bamboo/spritesheet
+  bounds: 3729, 1177, 64, 64
+  index: -1
+monsters/bambooyellow/faceset
+  bounds: 4057, 1395, 38, 38
+  index: -1
+monsters/bambooyellow/spritesheet
+  bounds: 3729, 1243, 64, 64
+  index: -1
+monsters/bear/faceset
+  bounds: 4057, 1435, 38, 38
+  index: -1
+monsters/bear/spritesheet
+  bounds: 3729, 1309, 64, 64
+  index: -1
+monsters/beast/faceset
+  bounds: 4057, 1475, 38, 38
+  index: -1
+monsters/beast/spritesheet
+  bounds: 3729, 1375, 64, 64
+  index: -1
+monsters/beast2/faceset
+  bounds: 2611, 3301, 38, 38
+  index: -1
+monsters/beast2/spritesheet
+  bounds: 3407, 169, 64, 64
+  index: -1
+monsters/bluebat/faceset
+  bounds: 2651, 3043, 38, 38
+  index: -1
+monsters/bluebat/spritesheet
+  bounds: 3407, 235, 64, 64
+  index: -1
+monsters/butterfly/faceset
+  bounds: 2651, 3083, 38, 38
+  index: -1
+monsters/butterfly/spritesheet
+  bounds: 3407, 301, 64, 64
+  index: -1
+monsters/butterflyblue/faceset
+  bounds: 2651, 3123, 38, 38
+  index: -1
+monsters/butterflyblue/spritesheet
+  bounds: 3407, 367, 64, 64
+  index: -1
+monsters/cyclope/faceset
+  bounds: 2651, 3163, 38, 38
+  index: -1
+monsters/cyclope/spritesheet
+  bounds: 3407, 433, 64, 64
+  index: -1
+monsters/cyclope2/faceset
+  bounds: 2651, 3203, 38, 38
+  index: -1
+monsters/cyclope2/spritesheet
+  bounds: 3407, 499, 64, 64
+  index: -1
+monsters/dragon/faceset
+  bounds: 2651, 3243, 38, 38
+  index: -1
+monsters/dragon/spritesheet
+  bounds: 3407, 565, 64, 64
+  index: -1
+monsters/dragonyellow/faceset
+  bounds: 2651, 3283, 38, 38
+  index: -1
+monsters/dragonyellow/spritesheet
+  bounds: 3407, 631, 64, 64
+  index: -1
+monsters/eye/faceset
+  bounds: 3741, 963, 38, 38
+  index: -1
+monsters/eye/spritesheet
+  bounds: 3407, 697, 64, 64
+  index: -1
+monsters/eye2/faceset
+  bounds: 3741, 1003, 38, 38
+  index: -1
+monsters/eye2/spritesheet
+  bounds: 3407, 763, 64, 64
+  index: -1
+monsters/fish/faceset
+  bounds: 3741, 1043, 38, 38
+  index: -1
+monsters/fish/spritesheet
+  bounds: 3407, 829, 64, 64
+  index: -1
+monsters/fishred/faceset
+  bounds: 457, 2255, 38, 38
+  index: -1
+monsters/fishred/spritesheet
+  bounds: 3407, 895, 64, 64
+  index: -1
+monsters/flam/faceset
+  bounds: 457, 2295, 38, 38
+  index: -1
+monsters/flam/spritesheet
+  bounds: 1993, 3147, 64, 64
+  index: -1
+monsters/flam2/faceset
+  bounds: 457, 2335, 38, 38
+  index: -1
+monsters/flam2/spritesheet
+  bounds: 3363, 3343, 64, 64
+  index: -1
+monsters/goldracoon/faceset
+  bounds: 3015, 3297, 38, 38
+  index: -1
+monsters/goldracoon/spritesheet
+  bounds: 3363, 3409, 64, 64
+  index: -1
+monsters/greenoctopus/faceset
+  bounds: 2195, 3026, 38, 38
+  index: -1
+monsters/greenoctopus/spritesheet
+  bounds: 3363, 3475, 64, 64
+  index: -1
+monsters/grey_trex/faceset
+  bounds: 2195, 3066, 38, 38
+  index: -1
+monsters/grey_trex/spritesheet
+  bounds: 1475, 775, 64, 64
+  index: -1
+monsters/heartgreen/faceset
+  bounds: 2195, 3106, 38, 38
+  index: -1
+monsters/heartgreen/spritesheet
+  bounds: 1475, 841, 64, 64
+  index: -1
+monsters/heartred/faceset
+  bounds: 2195, 3146, 38, 38
+  index: -1
+monsters/heartred/spritesheet
+  bounds: 1475, 907, 64, 64
+  index: -1
+monsters/kappagreen/faceset
+  bounds: 2195, 3186, 38, 38
+  index: -1
+monsters/kappagreen/spritesheet
+  bounds: 1475, 973, 64, 64
+  index: -1
+monsters/kappared/faceset
+  bounds: 3599, 2829, 38, 38
+  index: -1
+monsters/kappared/spritesheet
+  bounds: 1469, 1039, 64, 64
+  index: -1
+monsters/lanterngreen/faceset
+  bounds: 3599, 2869, 38, 38
+  index: -1
+monsters/lanterngreen/spritesheet
+  bounds: 1469, 1105, 64, 64
+  index: -1
+monsters/lanternred/faceset
+  bounds: 3599, 2909, 38, 38
+  index: -1
+monsters/lanternred/spritesheet
+  bounds: 1469, 1171, 64, 64
+  index: -1
+monsters/larva/faceset
+  bounds: 3599, 2949, 38, 38
+  index: -1
+monsters/larva/spritesheet
+  bounds: 1469, 1237, 64, 64
+  index: -1
+monsters/larva2/faceset
+  bounds: 3599, 2989, 38, 38
+  index: -1
+monsters/larva2/spritesheet
+  bounds: 1469, 1303, 64, 64
+  index: -1
+monsters/lizard/faceset
+  bounds: 3599, 3029, 38, 38
+  index: -1
+monsters/lizard/spritesheet
+  bounds: 1469, 1369, 64, 64
+  index: -1
+monsters/lizard2/faceset
+  bounds: 3599, 3069, 38, 38
+  index: -1
+monsters/lizard2/spritesheet
+  bounds: 1469, 1435, 64, 64
+  index: -1
+monsters/mole/faceset
+  bounds: 3599, 3109, 38, 38
+  index: -1
+monsters/mole/spritesheet
+  bounds: 1469, 1501, 64, 64
+  index: -1
+monsters/mole2/faceset
+  bounds: 3599, 3149, 38, 38
+  index: -1
+monsters/mole2/spritesheet
+  bounds: 1469, 1567, 64, 64
+  index: -1
+monsters/mollusc/faceset
+  bounds: 3661, 2525, 38, 38
+  index: -1
+monsters/mollusc/spritesheet
+  bounds: 1469, 1633, 64, 64
+  index: -1
+monsters/mollusc2/faceset
+  bounds: 3661, 2565, 38, 38
+  index: -1
+monsters/mollusc2/spritesheet
+  bounds: 3067, 319, 64, 64
+  index: -1
+monsters/mouse/faceset
+  bounds: 3661, 2605, 38, 38
+  index: -1
+monsters/mouse/spritesheet
+  bounds: 3067, 385, 64, 64
+  index: -1
+monsters/mouseblack/faceset
+  bounds: 3661, 2645, 38, 38
+  index: -1
+monsters/mouseblack/spritesheet
+  bounds: 3067, 451, 64, 64
+  index: -1
+monsters/mushroom/faceset
+  bounds: 1807, 2011, 38, 38
+  index: -1
+monsters/mushroom/spritesheet
+  bounds: 3053, 517, 64, 64
+  index: -1
+monsters/mushroom2/faceset
+  bounds: 1807, 2051, 38, 38
+  index: -1
+monsters/mushroom2/spritesheet
+  bounds: 1465, 1699, 64, 64
+  index: -1
+monsters/octopus/faceset
+  bounds: 1807, 2091, 38, 38
+  index: -1
+monsters/octopus/spritesheet
+  bounds: 1465, 1765, 64, 64
+  index: -1
+monsters/octopus2/faceset
+  bounds: 1807, 2131, 38, 38
+  index: -1
+monsters/octopus2/spritesheet
+  bounds: 3103, 3537, 64, 64
+  index: -1
+monsters/owl/faceset
+  bounds: 1807, 2171, 38, 38
+  index: -1
+monsters/owl/spritesheet
+  bounds: 3103, 3603, 64, 64
+  index: -1
+monsters/owl2/faceset
+  bounds: 1807, 131, 38, 38
+  index: -1
+monsters/owl2/spritesheet
+  bounds: 3347, 3541, 64, 64
+  index: -1
+monsters/panda/faceset
+  bounds: 1807, 171, 38, 38
+  index: -1
+monsters/panda/spritesheet
+  bounds: 3347, 3607, 64, 64
+  index: -1
+monsters/racoon/faceset
+  bounds: 1807, 211, 38, 38
+  index: -1
+monsters/racoon/spritesheet
+  bounds: 3347, 3673, 64, 64
+  index: -1
+monsters/redoctopus/faceset
+  bounds: 1807, 251, 38, 38
+  index: -1
+monsters/redoctopus/spritesheet
+  bounds: 3347, 3739, 64, 64
+  index: -1
+monsters/reptile/faceset
+  bounds: 1807, 291, 38, 38
+  index: -1
+monsters/reptile/spritesheet
+  bounds: 3347, 3805, 64, 64
+  index: -1
+monsters/reptile2/faceset
+  bounds: 1807, 331, 38, 38
+  index: -1
+monsters/reptile2/spritesheet
+  bounds: 1061, 775, 64, 64
+  index: -1
+monsters/skull/faceset
+  bounds: 1807, 371, 38, 38
+  index: -1
+monsters/skull/spritesheet
+  bounds: 1061, 841, 64, 64
+  index: -1
+monsters/skullblue/faceset
+  bounds: 1807, 411, 38, 38
+  index: -1
+monsters/skullblue/spritesheet
+  bounds: 1061, 907, 64, 64
+  index: -1
+monsters/slime/faceset
+  bounds: 1807, 451, 38, 38
+  index: -1
+monsters/slime/spritesheet
+  bounds: 1183, 2159, 64, 64
+  index: -1
+monsters/slime2/faceset
+  bounds: 1807, 491, 38, 38
+  index: -1
+monsters/slime2/spritesheet
+  bounds: 1183, 2225, 64, 64
+  index: -1
+monsters/slime3/faceset
+  bounds: 1807, 531, 38, 38
+  index: -1
+monsters/slime3/spritesheet
+  bounds: 1167, 2291, 64, 64
+  index: -1
+monsters/slime4/faceset
+  bounds: 1807, 571, 38, 38
+  index: -1
+monsters/slime4/spritesheet
+  bounds: 1183, 2357, 64, 64
+  index: -1
+monsters/snake/faceset
+  bounds: 2761, 2401, 38, 38
+  index: -1
+monsters/snake/spritesheet
+  bounds: 1183, 2423, 64, 64
+  index: -1
+monsters/snake2/faceset
+  bounds: 2761, 2441, 38, 38
+  index: -1
+monsters/snake2/spritesheet
+  bounds: 1183, 2489, 64, 64
+  index: -1
+monsters/snake3/faceset
+  bounds: 2761, 2481, 38, 38
+  index: -1
+monsters/snake3/spritesheet
+  bounds: 1183, 2555, 64, 64
+  index: -1
+monsters/snake4/faceset
+  bounds: 2761, 2521, 38, 38
+  index: -1
+monsters/snake4/spritesheet
+  bounds: 3987, 1541, 64, 64
+  index: -1
+monsters/spiderred/faceset
+  bounds: 2761, 2561, 38, 38
+  index: -1
+monsters/spiderred/spritesheet
+  bounds: 3987, 1607, 64, 64
+  index: -1
+monsters/spideryellow/faceset
+  bounds: 2761, 2601, 38, 38
+  index: -1
+monsters/spideryellow/spritesheet
+  bounds: 3987, 1673, 64, 64
+  index: -1
+monsters/spirit/faceset
+  bounds: 2761, 2641, 38, 38
+  index: -1
+monsters/spirit/spritesheet
+  bounds: 3987, 1739, 64, 64
+  index: -1
+monsters/spirit2/faceset
+  bounds: 2761, 2681, 38, 38
+  index: -1
+monsters/spirit2/spritesheet
+  bounds: 3987, 1805, 64, 64
+  index: -1
+monsters/trex/faceset
+  bounds: 2761, 2721, 38, 38
+  index: -1
+monsters/trex/spritesheet
+  bounds: 3987, 1871, 64, 64
+  index: -1
+monsters/yellowsbat/faceset
+  bounds: 2761, 2761, 38, 38
+  index: -1
+monsters/yellowsbat/spritesheet
+  bounds: 3987, 1937, 64, 64
+  index: -1
+night/nightborne/attack
+  bounds: 1549, 1609, 320, 400
+  index: -1
+night/nightborne/cleave
+  bounds: 3477, 1, 320, 960
+  index: -1
+night/nightborne/death
+  bounds: 1923, 1, 320, 1840
+  index: -1
+night/nightborne/hurt
+  bounds: 1871, 1843, 320, 400
+  index: -1
+night/nightborne/idle
+  bounds: 2245, 989, 320, 720
+  index: -1
+night/nightborne/run
+  bounds: 1549, 645, 320, 480
+  index: -1
+night/nightborne/walk
+  bounds: 1549, 1127, 320, 480
+  index: -1
+night/satyr/attack
+  bounds: 3919, 2955, 128, 224
+  index: -1
+night/satyr/beam
+  bounds: 3857, 1541, 128, 640
+  index: -1
+night/satyr/cast
+  bounds: 3435, 3569, 128, 192
+  index: -1
+night/satyr/dash
+  bounds: 3435, 3763, 128, 192
+  index: -1
+night/satyr/death
+  bounds: 1033, 2631, 128, 320
+  index: -1
+night/satyr/hurt
+  bounds: 777, 1069, 128, 128
+  index: -1
+night/satyr/idle
+  bounds: 3565, 3725, 128, 192
+  index: -1
+night/satyr/raise
+  bounds: 3695, 3725, 128, 192
+  index: -1
+night/satyr/run
+  bounds: 2453, 3359, 128, 256
+  index: -1
+night/satyr/step
+  bounds: 907, 1097, 128, 128
+  index: -1
+night/satyr/walk
+  bounds: 2583, 3359, 128, 256
+  index: -1
+pets/boar/attack
+  bounds: 2843, 3553, 128, 160
+  index: -1
+pets/boar/death
+  bounds: 1, 1867, 128, 192
+  index: -1
+pets/boar/face
+  bounds: 2315, 3925, 18, 18
+  index: -1
+pets/boar/hurt
+  bounds: 777, 1199, 128, 128
+  index: -1
+pets/boar/idle
+  bounds: 907, 1227, 128, 128
+  index: -1
+pets/boar/run
+  bounds: 2973, 3553, 128, 160
+  index: -1
+pets/boar/walk
+  bounds: 1, 2061, 128, 192
+  index: -1
+pets/deer/attack
+  bounds: 131, 1867, 128, 192
+  index: -1
+pets/deer/death
+  bounds: 3435, 3343, 128, 224
+  index: -1
+pets/deer/face
+  bounds: 2315, 3945, 18, 18
+  index: -1
+pets/deer/hurt
+  bounds: 777, 1329, 128, 128
+  index: -1
+pets/deer/idle
+  bounds: 907, 1357, 128, 128
+  index: -1
+pets/deer/run
+  bounds: 131, 2061, 128, 192
+  index: -1
+pets/deer/walk
+  bounds: 261, 1867, 128, 192
+  index: -1
+pets/fox/attack
+  bounds: 261, 2061, 128, 192
+  index: -1
+pets/fox/death
+  bounds: 391, 1867, 128, 192
+  index: -1
+pets/fox/face
+  bounds: 2995, 855, 18, 18
+  index: -1
+pets/fox/hurt
+  bounds: 777, 1459, 128, 128
+  index: -1
+pets/fox/idle
+  bounds: 907, 1487, 128, 128
+  index: -1
+pets/fox/run
+  bounds: 391, 2061, 128, 192
+  index: -1
+pets/fox/walk
+  bounds: 517, 2255, 128, 192
+  index: -1
+pets/grouse/attack
+  bounds: 521, 1867, 128, 192
+  index: -1
+pets/grouse/death
+  bounds: 521, 2061, 128, 192
+  index: -1
+pets/grouse/face
+  bounds: 2995, 875, 18, 18
+  index: -1
+pets/grouse/hurt
+  bounds: 777, 1589, 128, 128
+  index: -1
+pets/grouse/idle
+  bounds: 1, 1719, 128, 128
+  index: -1
+pets/grouse/run
+  bounds: 647, 2255, 128, 192
+  index: -1
+pets/grouse/walk
+  bounds: 777, 131, 128, 192
+  index: -1
+pets/hare/attack
+  bounds: 777, 325, 128, 192
+  index: -1
+pets/hare/death
+  bounds: 777, 519, 128, 192
+  index: -1
+pets/hare/face
+  bounds: 2995, 895, 18, 18
+  index: -1
+pets/hare/hurt
+  bounds: 131, 1719, 128, 128
+  index: -1
+pets/hare/idle
+  bounds: 261, 1719, 128, 128
+  index: -1
+pets/hare/run
+  bounds: 777, 713, 128, 192
+  index: -1
+pets/hare/walk
+  bounds: 3565, 3919, 128, 160
+  index: -1
+player/bows/bow_1
+  bounds: 2821, 3017, 192, 24
+  index: -1
+player/bows/bow_2
+  bounds: 483, 4071, 192, 24
+  index: -1
+player/bows/bow_3
+  bounds: 677, 4071, 192, 24
+  index: -1
+player/bows/bow_4
+  bounds: 1419, 4070, 192, 24
+  index: -1
+player/bows/bow_5
+  bounds: 1613, 4070, 192, 24
+  index: -1
+player/bows/crossbow_1
+  bounds: 1807, 4070, 192, 24
+  index: -1
+player/bows/crossbow_2
+  bounds: 2001, 4070, 192, 24
+  index: -1
+player/held/anchor_1
+  bounds: 2323, 2753, 48, 48
+  index: -1
+player/held/axe_1
+  bounds: 2373, 2753, 48, 48
+  index: -1
+player/held/axe_2
+  bounds: 2423, 2753, 48, 48
+  index: -1
+player/held/axe_3
+  bounds: 2453, 2417, 48, 48
+  index: -1
+player/held/axe_4
+  bounds: 2453, 2467, 48, 48
+  index: -1
+player/held/axe_5
+  bounds: 2453, 2517, 48, 48
+  index: -1
+player/held/cleaver_1
+  bounds: 2453, 2567, 48, 48
+  index: -1
+player/held/club_1
+  bounds: 2453, 2617, 48, 48
+  index: -1
+player/held/dagger_1
+  bounds: 2195, 1843, 48, 48
+  index: -1
+player/held/flail_1
+  bounds: 2195, 1893, 48, 48
+  index: -1
+player/held/flail_2
+  bounds: 2195, 1943, 48, 48
+  index: -1
+player/held/greatsword_1
+  bounds: 2195, 1993, 48, 48
+  index: -1
+player/held/greatsword_2
+  bounds: 2195, 2043, 48, 48
+  index: -1
+player/held/halberd_1
+  bounds: 2195, 2093, 48, 48
+  index: -1
+player/held/hammer_1
+  bounds: 2195, 2143, 48, 48
+  index: -1
+player/held/hammer_2
+  bounds: 2195, 2193, 48, 48
+  index: -1
+player/held/hook_1
+  bounds: 2195, 2243, 48, 48
+  index: -1
+player/held/hook_2
+  bounds: 2195, 2293, 48, 48
+  index: -1
+player/held/hook_3
+  bounds: 2195, 2343, 48, 48
+  index: -1
+player/held/mace_1
+  bounds: 720, 2579, 48, 48
+  index: -1
+player/held/mace_2
+  bounds: 2915, 3904, 48, 48
+  index: -1
+player/held/mace_3
+  bounds: 2915, 3954, 48, 48
+  index: -1
+player/held/pickaxe_1
+  bounds: 2451, 2803, 48, 48
+  index: -1
+player/held/rapier_1
+  bounds: 2451, 2853, 48, 48
+  index: -1
+player/held/rapier_2
+  bounds: 1871, 131, 48, 48
+  index: -1
+player/held/sai_1
+  bounds: 1871, 181, 48, 48
+  index: -1
+player/held/scepter_1
+  bounds: 1871, 231, 48, 48
+  index: -1
+player/held/scepter_2
+  bounds: 1871, 281, 48, 48
+  index: -1
+player/held/scepter_3
+  bounds: 1871, 331, 48, 48
+  index: -1
+player/held/scepter_4
+  bounds: 1871, 381, 48, 48
+  index: -1
+player/held/scepter_5
+  bounds: 1871, 431, 48, 48
+  index: -1
+player/held/scimitar_1
+  bounds: 1871, 481, 48, 48
+  index: -1
+player/held/scimitar_2
+  bounds: 1871, 531, 48, 48
+  index: -1
+player/held/scythe_1
+  bounds: 1871, 581, 48, 48
+  index: -1
+player/held/shovel_1
+  bounds: 1871, 631, 48, 48
+  index: -1
+player/held/sickle_1
+  bounds: 1871, 681, 48, 48
+  index: -1
+player/held/spear_1
+  bounds: 1871, 731, 48, 48
+  index: -1
+player/held/spear_2
+  bounds: 1871, 781, 48, 48
+  index: -1
+player/held/spear_3
+  bounds: 1871, 831, 48, 48
+  index: -1
+player/held/spear_4
+  bounds: 1871, 881, 48, 48
+  index: -1
+player/held/spear_5
+  bounds: 1871, 931, 48, 48
+  index: -1
+player/held/staff_1
+  bounds: 1871, 981, 48, 48
+  index: -1
+player/held/staff_2
+  bounds: 1871, 1031, 48, 48
+  index: -1
+player/held/sword_1
+  bounds: 1871, 1081, 48, 48
+  index: -1
+player/held/sword_10
+  bounds: 1871, 1131, 48, 48
+  index: -1
+player/held/sword_11
+  bounds: 1871, 1181, 48, 48
+  index: -1
+player/held/sword_2
+  bounds: 1871, 1231, 48, 48
+  index: -1
+player/held/sword_3
+  bounds: 1871, 1281, 48, 48
+  index: -1
+player/held/sword_4
+  bounds: 1871, 1331, 48, 48
+  index: -1
+player/held/sword_5
+  bounds: 1871, 1381, 48, 48
+  index: -1
+player/held/sword_6
+  bounds: 1871, 1431, 48, 48
+  index: -1
+player/held/sword_7
+  bounds: 1871, 1481, 48, 48
+  index: -1
+player/held/sword_8
+  bounds: 1871, 1531, 48, 48
+  index: -1
+player/held/sword_9
+  bounds: 1871, 1581, 48, 48
+  index: -1
+player/held/trident_1
+  bounds: 1871, 1631, 48, 48
+  index: -1
+player/held/wand_1
+  bounds: 1871, 1681, 48, 48
+  index: -1
+player/legend/legend_acidic
+  bounds: 1249, 2159, 40, 40
+  index: -1
+player/legend/legend_amber
+  bounds: 1249, 2201, 40, 40
+  index: -1
+player/legend/legend_automaton
+  bounds: 1249, 2243, 40, 40
+  index: -1
+player/legend/legend_autumn
+  bounds: 1249, 2357, 40, 40
+  index: -1
+player/legend/legend_bake
+  bounds: 1249, 2399, 40, 40
+  index: -1
+player/legend/legend_beetle
+  bounds: 1249, 2441, 40, 40
+  index: -1
+player/legend/legend_bell
+  bounds: 1249, 2483, 40, 40
+  index: -1
+player/legend/legend_bloom
+  bounds: 1249, 2525, 40, 40
+  index: -1
+player/legend/legend_bovine
+  bounds: 1249, 2567, 40, 40
+  index: -1
+player/legend/legend_brush
+  bounds: 1249, 2609, 40, 40
+  index: -1
+player/legend/legend_bubble
+  bounds: 4053, 1541, 40, 40
+  index: -1
+player/legend/legend_canine
+  bounds: 4053, 1583, 40, 40
+  index: -1
+player/legend/legend_carved
+  bounds: 4053, 1625, 40, 40
+  index: -1
+player/legend/legend_circus
+  bounds: 4053, 1667, 40, 40
+  index: -1
+player/legend/legend_clock
+  bounds: 4053, 1709, 40, 40
+  index: -1
+player/legend/legend_comedy
+  bounds: 4053, 1751, 40, 40
+  index: -1
+player/legend/legend_crane
+  bounds: 4053, 1793, 40, 40
+  index: -1
+player/legend/legend_crustacean
+  bounds: 4053, 1835, 40, 40
+  index: -1
+player/legend/legend_feline
+  bounds: 4053, 1877, 40, 40
+  index: -1
+player/legend/legend_fossil
+  bounds: 4053, 1919, 40, 40
+  index: -1
+player/legend/legend_fruit
+  bounds: 4053, 1961, 40, 40
+  index: -1
+player/legend/legend_gamble
+  bounds: 2995, 917, 40, 40
+  index: -1
+player/legend/legend_gem
+  bounds: 3037, 917, 40, 40
+  index: -1
+player/legend/legend_harpy
+  bounds: 3079, 917, 40, 40
+  index: -1
+player/legend/legend_harvest
+  bounds: 4049, 2381, 40, 40
+  index: -1
+player/legend/legend_kelpie
+  bounds: 4049, 2423, 40, 40
+  index: -1
+player/legend/legend_lace
+  bounds: 4049, 2465, 40, 40
+  index: -1
+player/legend/legend_lily
+  bounds: 4049, 2507, 40, 40
+  index: -1
+player/legend/legend_mandrake
+  bounds: 4049, 2549, 40, 40
+  index: -1
+player/legend/legend_membrane
+  bounds: 4049, 2591, 40, 40
+  index: -1
+player/legend/legend_monkey
+  bounds: 4049, 2633, 40, 40
+  index: -1
+player/legend/legend_moss
+  bounds: 4049, 2675, 40, 40
+  index: -1
+player/legend/legend_nest
+  bounds: 4049, 2717, 40, 40
+  index: -1
+player/legend/legend_owl
+  bounds: 4049, 2759, 40, 40
+  index: -1
+player/legend/legend_pearlescent
+  bounds: 4049, 2801, 40, 40
+  index: -1
+player/legend/legend_portal
+  bounds: 4049, 2843, 40, 40
+  index: -1
+player/legend/legend_reliquary
+  bounds: 4049, 2885, 40, 40
+  index: -1
+player/legend/legend_ring
+  bounds: 4049, 2927, 40, 40
+  index: -1
+player/legend/legend_rodent
+  bounds: 4049, 2969, 40, 40
+  index: -1
+player/legend/legend_rot
+  bounds: 4049, 3011, 40, 40
+  index: -1
+player/legend/legend_scale
+  bounds: 4049, 3053, 40, 40
+  index: -1
+player/legend/legend_seal
+  bounds: 4049, 3095, 40, 40
+  index: -1
+player/legend/legend_seed
+  bounds: 4049, 3137, 40, 40
+  index: -1
+player/legend/legend_serpent
+  bounds: 1871, 1731, 40, 40
+  index: -1
+player/legend/legend_ship
+  bounds: 1871, 1773, 40, 40
+  index: -1
+player/legend/legend_spring
+  bounds: 3729, 1441, 40, 40
+  index: -1
+player/legend/legend_summer
+  bounds: 2641, 3669, 40, 40
+  index: -1
+player/legend/legend_surgical
+  bounds: 2657, 3617, 40, 40
+  index: -1
+player/legend/legend_swan
+  bounds: 2447, 2903, 40, 40
+  index: -1
+player/legend/legend_tidepool
+  bounds: 3103, 3669, 40, 40
+  index: -1
+player/legend/legend_tragedy
+  bounds: 3145, 3669, 40, 40
+  index: -1
+player/legend/legend_unicorn
+  bounds: 3849, 4041, 40, 40
+  index: -1
+player/legend/legend_vegetable
+  bounds: 3891, 4041, 40, 40
+  index: -1
+player/legend/legend_venom
+  bounds: 3933, 4041, 40, 40
+  index: -1
+player/legend/legend_wax
+  bounds: 3975, 4041, 40, 40
+  index: -1
+player/legend/legend_winter
+  bounds: 2569, 3301, 40, 40
+  index: -1
+player/ninjablue/attack
+  bounds: 391, 1719, 128, 128
+  index: -1
+player/ninjablue/dead
+  bounds: 1233, 2291, 32, 64
+  index: -1
+player/ninjablue/hit
+  bounds: 131, 359, 128, 64
+  index: -1
+player/ninjablue/idle
+  bounds: 521, 1719, 128, 128
+  index: -1
+player/ninjablue/pickup
+  bounds: 3565, 3473, 32, 64
+  index: -1
+player/ninjablue/roll
+  bounds: 907, 2007, 128, 96
+  index: -1
+player/ninjablue/walk
+  bounds: 907, 1617, 128, 128
+  index: -1
+player/ninjadark/attack
+  bounds: 777, 1719, 128, 128
+  index: -1
+player/ninjadark/dead
+  bounds: 3565, 3539, 32, 64
+  index: -1
+player/ninjadark/hit
+  bounds: 1, 391, 128, 64
+  index: -1
+player/ninjadark/idle
+  bounds: 907, 1747, 128, 128
+  index: -1
+player/ninjadark/pickup
+  bounds: 3565, 3605, 32, 64
+  index: -1
+player/ninjadark/roll
+  bounds: 387, 3189, 128, 96
+  index: -1
+player/ninjadark/walk
+  bounds: 777, 1849, 128, 128
+  index: -1
+player/ninjafire/attack
+  bounds: 1037, 1867, 128, 128
+  index: -1
+player/ninjafire/dead
+  bounds: 1127, 775, 32, 64
+  index: -1
+player/ninjafire/hit
+  bounds: 261, 359, 128, 64
+  index: -1
+player/ninjafire/idle
+  bounds: 907, 1877, 128, 128
+  index: -1
+player/ninjafire/pickup
+  bounds: 1127, 841, 32, 64
+  index: -1
+player/ninjafire/roll
+  bounds: 923, 2517, 128, 96
+  index: -1
+player/ninjafire/walk
+  bounds: 777, 1979, 128, 128
+  index: -1
+player/ninjagreen/attack
+  bounds: 651, 2109, 128, 128
+  index: -1
+player/ninjagreen/climb
+  bounds: 3565, 3343, 32, 128
+  index: -1
+player/ninjagreen/dead
+  bounds: 1127, 907, 32, 64
+  index: -1
+player/ninjagreen/hit
+  bounds: 391, 359, 128, 64
+  index: -1
+player/ninjagreen/idle
+  bounds: 777, 2239, 128, 128
+  index: -1
+player/ninjagreen/item
+  bounds: 4057, 1, 32, 64
+  index: -1
+player/ninjagreen/jump
+  bounds: 911, 2105, 96, 128
+  index: -1
+player/ninjagreen/pickup
+  bounds: 4057, 67, 32, 64
+  index: -1
+player/ninjagreen/push
+  bounds: 781, 2109, 128, 128
+  index: -1
+player/ninjagreen/roll
+  bounds: 1053, 2517, 128, 96
+  index: -1
+player/ninjagreen/swim
+  bounds: 1037, 1997, 128, 128
+  index: -1
+player/ninjagreen/walk
+  bounds: 793, 2369, 128, 128
+  index: -1
+player/ninjaice/attack
+  bounds: 907, 2239, 128, 128
+  index: -1
+player/ninjaice/dead
+  bounds: 4057, 133, 32, 64
+  index: -1
+player/ninjaice/hit
+  bounds: 521, 359, 128, 64
+  index: -1
+player/ninjaice/idle
+  bounds: 793, 2499, 128, 128
+  index: -1
+player/ninjaice/pickup
+  bounds: 4057, 199, 32, 64
+  index: -1
+player/ninjaice/roll
+  bounds: 131, 261, 128, 96
+  index: -1
+player/ninjaice/walk
+  bounds: 1037, 2127, 128, 128
+  index: -1
+player/ninjared/attack
+  bounds: 1037, 2257, 128, 128
+  index: -1
+player/ninjared/dead
+  bounds: 4057, 265, 32, 64
+  index: -1
+player/ninjared/hit
+  bounds: 131, 425, 128, 64
+  index: -1
+player/ninjared/idle
+  bounds: 923, 2387, 128, 128
+  index: -1
+player/ninjared/lamp/attack
+  bounds: 1053, 2387, 128, 128
+  index: -1
+player/ninjared/lamp/dead
+  bounds: 4057, 331, 32, 64
+  index: -1
+player/ninjared/lamp/hit
+  bounds: 1, 457, 128, 64
+  index: -1
+player/ninjared/lamp/idle
+  bounds: 1, 131, 128, 128
+  index: -1
+player/ninjared/lamp/roll
+  bounds: 261, 261, 128, 96
+  index: -1
+player/ninjared/lamp/walk
+  bounds: 131, 131, 128, 128
+  index: -1
+player/ninjared/pickup
+  bounds: 4057, 397, 32, 64
+  index: -1
+player/ninjared/roll
+  bounds: 391, 261, 128, 96
+  index: -1
+player/ninjared/walk
+  bounds: 261, 131, 128, 128
+  index: -1
+player/ninjawater/attack
+  bounds: 391, 131, 128, 128
+  index: -1
+player/ninjawater/dead
+  bounds: 4057, 463, 32, 64
+  index: -1
+player/ninjawater/hit
+  bounds: 261, 425, 128, 64
+  index: -1
+player/ninjawater/idle
+  bounds: 521, 131, 128, 128
+  index: -1
+player/ninjawater/pickup
+  bounds: 4057, 529, 32, 64
+  index: -1
+player/ninjawater/roll
+  bounds: 521, 261, 128, 96
+  index: -1
+player/ninjawater/walk
+  bounds: 1, 261, 128, 128
+  index: -1
+player/weapons/axe
+  bounds: 1549, 2655, 256, 256
+  index: -1
+player/weapons/fishing_rod
+  bounds: 1291, 2899, 256, 256
+  index: -1
+player/weapons/hammer
+  bounds: 1807, 2889, 256, 256
+  index: -1
+player/weapons/katana
+  bounds: 1549, 2913, 256, 256
+  index: -1
+player/weapons/net
+  bounds: 2065, 3359, 256, 256
+  index: -1
+player/weapons/pickaxe
+  bounds: 2257, 3043, 256, 256
+  index: -1
+shadow
+  bounds: 3187, 3763, 12, 7
+  index: -1
+slimes/slimeember/attack
+  bounds: 2503, 2401, 256, 576
+  index: -1
+slimes/slimeember/death
+  bounds: 3599, 1541, 256, 640
+  index: -1
+slimes/slimeember/hurt
+  bounds: 1033, 131, 256, 320
+  index: -1
+slimes/slimeember/idle
+  bounds: 1, 2397, 256, 384
+  index: -1
+slimes/slimeember/run
+  bounds: 259, 3343, 256, 512
+  index: -1
+slimes/slimeember/walk
+  bounds: 517, 3343, 256, 512
+  index: -1
+slimes/slimespike/attack
+  bounds: 3083, 1753, 256, 640
+  index: -1
+slimes/slimespike/death
+  bounds: 2825, 2375, 256, 640
+  index: -1
+slimes/slimespike/hurt
+  bounds: 1291, 453, 256, 320
+  index: -1
+slimes/slimespike/idle
+  bounds: 259, 2803, 256, 384
+  index: -1
+slimes/slimespike/run
+  bounds: 775, 3343, 256, 512
+  index: -1
+slimes/slimespike/walk
+  bounds: 1033, 3343, 256, 512
+  index: -1
+slimes/slimetide/attack
+  bounds: 2245, 1711, 256, 704
+  index: -1
+slimes/slimetide/death
+  bounds: 3341, 1753, 256, 640
+  index: -1
+slimes/slimetide/hurt
+  bounds: 1033, 453, 256, 320
+  index: -1
+slimes/slimetide/idle
+  bounds: 259, 2397, 256, 384
+  index: -1
+slimes/slimetide/run
+  bounds: 1291, 3343, 256, 512
+  index: -1
+slimes/slimetide/walk
+  bounds: 1549, 131, 256, 512
+  index: -1

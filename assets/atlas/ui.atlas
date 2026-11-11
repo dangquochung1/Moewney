@@ -1,0 +1,4837 @@
+ui.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+items/action/hit
+  bounds: 1185, 1413, 15, 16
+  index: -1
+items/action/interact
+  bounds: 763, 751, 16, 16
+  index: -1
+items/food/beaf
+  bounds: 745, 777, 16, 16
+  index: -1
+items/food/calamari
+  bounds: 1381, 1350, 16, 16
+  index: -1
+items/food/fish
+  bounds: 89, 1396, 16, 16
+  index: -1
+items/food/fortunecookie
+  bounds: 69, 1430, 16, 16
+  index: -1
+items/food/honey
+  bounds: 327, 1488, 16, 16
+  index: -1
+items/food/meat
+  bounds: 1993, 1343, 15, 15
+  index: -1
+items/food/noodle
+  bounds: 1607, 1333, 16, 16
+  index: -1
+items/food/nut
+  bounds: 2010, 1357, 15, 15
+  index: -1
+items/food/nut2
+  bounds: 2027, 1357, 15, 15
+  index: -1
+items/food/octopus
+  bounds: 1141, 1358, 16, 16
+  index: -1
+items/food/onigiri
+  bounds: 607, 926, 16, 16
+  index: -1
+items/food/seed1
+  bounds: 309, 1548, 8, 8
+  index: -1
+items/food/seed2
+  bounds: 1441, 1018, 8, 8
+  index: -1
+items/food/seed3
+  bounds: 1441, 1028, 8, 8
+  index: -1
+items/food/seedbig1
+  bounds: 1401, 463, 10, 13
+  index: -1
+items/food/seedbig2
+  bounds: 1485, 1160, 10, 13
+  index: -1
+items/food/seedbig3
+  bounds: 1461, 871, 10, 13
+  index: -1
+items/food/seedlarge
+  bounds: 1403, 1215, 14, 13
+  index: -1
+items/food/seedlargewhite
+  bounds: 1137, 1266, 14, 13
+  index: -1
+items/food/shrimp
+  bounds: 1107, 1334, 16, 16
+  index: -1
+items/food/sushi
+  bounds: 79, 1550, 16, 16
+  index: -1
+items/food/sushi2
+  bounds: 937, 1286, 16, 16
+  index: -1
+items/food/tealeaf
+  bounds: 895, 1388, 16, 16
+  index: -1
+items/food/yakitori
+  bounds: 431, 1506, 16, 16
+  index: -1
+items/legend/legend_acidic
+  bounds: 2009, 893, 32, 32
+  index: -1
+items/legend/legend_amber
+  bounds: 1771, 1200, 32, 32
+  index: -1
+items/legend/legend_automaton
+  bounds: 1771, 1234, 32, 32
+  index: -1
+items/legend/legend_autumn
+  bounds: 835, 1263, 32, 32
+  index: -1
+items/legend/legend_bake
+  bounds: 871, 1213, 32, 32
+  index: -1
+items/legend/legend_beetle
+  bounds: 633, 1122, 32, 32
+  index: -1
+items/legend/legend_bell
+  bounds: 597, 1301, 32, 32
+  index: -1
+items/legend/legend_bloom
+  bounds: 793, 1288, 32, 32
+  index: -1
+items/legend/legend_bovine
+  bounds: 743, 1289, 32, 32
+  index: -1
+items/legend/legend_brush
+  bounds: 691, 1293, 32, 32
+  index: -1
+items/legend/legend_bubble
+  bounds: 631, 1304, 32, 32
+  index: -1
+items/legend/legend_canine
+  bounds: 1695, 1250, 32, 32
+  index: -1
+items/legend/legend_carved
+  bounds: 1729, 1250, 32, 32
+  index: -1
+items/legend/legend_circus
+  bounds: 1629, 1268, 32, 32
+  index: -1
+items/legend/legend_clock
+  bounds: 515, 1330, 32, 32
+  index: -1
+items/legend/legend_comedy
+  bounds: 549, 1330, 32, 32
+  index: -1
+items/legend/legend_crane
+  bounds: 583, 1335, 32, 32
+  index: -1
+items/legend/legend_crustacean
+  bounds: 1051, 1232, 32, 32
+  index: -1
+items/legend/legend_feline
+  bounds: 1001, 1259, 32, 32
+  index: -1
+items/legend/legend_fossil
+  bounds: 955, 1279, 32, 32
+  index: -1
+items/legend/legend_fruit
+  bounds: 1085, 1232, 32, 32
+  index: -1
+items/legend/legend_gamble
+  bounds: 1119, 1232, 32, 32
+  index: -1
+items/legend/legend_gem
+  bounds: 1153, 1256, 32, 32
+  index: -1
+items/legend/legend_harpy
+  bounds: 1187, 1277, 32, 32
+  index: -1
+items/legend/legend_harvest
+  bounds: 1221, 1277, 32, 32
+  index: -1
+items/legend/legend_kelpie
+  bounds: 1255, 1281, 32, 32
+  index: -1
+items/legend/legend_lace
+  bounds: 869, 1286, 32, 32
+  index: -1
+items/legend/legend_lily
+  bounds: 827, 1297, 32, 32
+  index: -1
+items/legend/legend_mandrake
+  bounds: 777, 1322, 32, 32
+  index: -1
+items/legend/legend_membrane
+  bounds: 725, 1323, 32, 32
+  index: -1
+items/legend/legend_monkey
+  bounds: 903, 1286, 32, 32
+  index: -1
+items/legend/legend_moss
+  bounds: 665, 1327, 32, 32
+  index: -1
+items/legend/legend_nest
+  bounds: 617, 1338, 32, 32
+  index: -1
+items/legend/legend_owl
+  bounds: 1035, 1266, 32, 32
+  index: -1
+items/legend/legend_pearlescent
+  bounds: 989, 1293, 32, 32
+  index: -1
+items/legend/legend_portal
+  bounds: 937, 1313, 32, 32
+  index: -1
+items/legend/legend_reliquary
+  bounds: 861, 1320, 32, 32
+  index: -1
+items/legend/legend_ring
+  bounds: 895, 1320, 32, 32
+  index: -1
+items/legend/legend_rodent
+  bounds: 811, 1331, 32, 32
+  index: -1
+items/legend/legend_rot
+  bounds: 759, 1356, 32, 32
+  index: -1
+items/legend/legend_scale
+  bounds: 699, 1357, 32, 32
+  index: -1
+items/legend/legend_seal
+  bounds: 651, 1361, 32, 32
+  index: -1
+items/legend/legend_seed
+  bounds: 1069, 1266, 32, 32
+  index: -1
+items/legend/legend_serpent
+  bounds: 1103, 1266, 32, 32
+  index: -1
+items/legend/legend_ship
+  bounds: 1137, 1290, 32, 32
+  index: -1
+items/legend/legend_spring
+  bounds: 1171, 1311, 32, 32
+  index: -1
+items/legend/legend_summer
+  bounds: 1205, 1311, 32, 32
+  index: -1
+items/legend/legend_surgical
+  bounds: 1023, 1300, 32, 32
+  index: -1
+items/legend/legend_swan
+  bounds: 971, 1327, 32, 32
+  index: -1
+items/legend/legend_tidepool
+  bounds: 929, 1347, 32, 32
+  index: -1
+items/legend/legend_tragedy
+  bounds: 1057, 1300, 32, 32
+  index: -1
+items/legend/legend_unicorn
+  bounds: 1091, 1300, 32, 32
+  index: -1
+items/legend/legend_vegetable
+  bounds: 1125, 1324, 32, 32
+  index: -1
+items/legend/legend_venom
+  bounds: 845, 1354, 32, 32
+  index: -1
+items/legend/legend_wax
+  bounds: 879, 1354, 32, 32
+  index: -1
+items/legend/legend_winter
+  bounds: 793, 1365, 32, 32
+  index: -1
+items/object/bag
+  bounds: 725, 1293, 16, 16
+  index: -1
+items/object/book
+  bounds: 759, 1323, 16, 16
+  index: -1
+items/object/crateempty
+  bounds: 1539, 791, 16, 15
+  index: -1
+items/object/dice_20
+  bounds: 533, 1539, 16, 16
+  index: -1
+items/object/dice_4
+  bounds: 1459, 1385, 16, 16
+  index: -1
+items/object/dice_6
+  bounds: 1459, 1403, 16, 16
+  index: -1
+items/object/dice_8
+  bounds: 1633, 1354, 16, 16
+  index: -1
+items/object/gourd
+  bounds: 1365, 1405, 14, 14
+  index: -1
+items/object/hourglass
+  bounds: 321, 999, 16, 16
+  index: -1
+items/object/moneybag
+  bounds: 1721, 631, 14, 15
+  index: -1
+items/object/panflute
+  bounds: 35, 1403, 16, 16
+  index: -1
+items/other/letter
+  bounds: 1541, 1196, 12, 9
+  index: -1
+items/other/letter2
+  bounds: 1187, 834, 12, 7
+  index: -1
+items/other/letter3
+  bounds: 753, 1424, 12, 7
+  index: -1
+items/other/stamp
+  bounds: 1629, 1257, 9, 9
+  index: -1
+items/potion/emptypot
+  bounds: 821, 1178, 9, 11
+  index: -1
+items/potion/heart
+  bounds: 379, 1260, 9, 8
+  index: -1
+items/potion/lifepot
+  bounds: 821, 1191, 9, 11
+  index: -1
+items/potion/medipack
+  bounds: 2037, 172, 10, 10
+  index: -1
+items/potion/milkpot
+  bounds: 673, 1048, 9, 11
+  index: -1
+items/potion/waterpot
+  bounds: 673, 1061, 9, 11
+  index: -1
+items/projectile/arrow
+  bounds: 1645, 928, 16, 16
+  index: -1
+items/projectile/bomb
+  bounds: 841, 610, 12, 13
+  index: -1
+items/projectile/caltrop
+  bounds: 467, 1370, 16, 16
+  index: -1
+items/projectile/cratedynamite
+  bounds: 535, 463, 16, 16
+  index: -1
+items/projectile/dynamite
+  bounds: 637, 1429, 16, 16
+  index: -1
+items/projectile/kunai
+  bounds: 225, 1424, 16, 16
+  index: -1
+items/projectile/shuriken
+  bounds: 963, 1462, 15, 15
+  index: -1
+items/resource/barcopper
+  bounds: 1709, 1109, 16, 15
+  index: -1
+items/resource/bargold
+  bounds: 2019, 790, 16, 15
+  index: -1
+items/resource/bariron
+  bounds: 1185, 1431, 16, 15
+  index: -1
+items/resource/barmithril
+  bounds: 157, 1628, 16, 15
+  index: -1
+items/resource/barpurple
+  bounds: 175, 1628, 16, 15
+  index: -1
+items/resource/barsilver
+  bounds: 105, 1630, 16, 15
+  index: -1
+items/resource/branch
+  bounds: 293, 1456, 16, 16
+  index: -1
+items/resource/feather
+  bounds: 205, 1458, 16, 16
+  index: -1
+items/resource/gemgreen
+  bounds: 273, 1490, 16, 16
+  index: -1
+items/resource/gempurple
+  bounds: 671, 1459, 16, 16
+  index: -1
+items/resource/gemred
+  bounds: 927, 1463, 15, 15
+  index: -1
+items/resource/gemyellow
+  bounds: 1067, 1436, 14, 14
+  index: -1
+items/resource/grass
+  bounds: 1453, 1239, 16, 16
+  index: -1
+items/resource/rock
+  bounds: 1453, 1257, 16, 16
+  index: -1
+items/resource/water
+  bounds: 1171, 1290, 14, 14
+  index: -1
+items/scroll/scroll
+  bounds: 1001, 435, 14, 14
+  index: -1
+items/scroll/scrollempty
+  bounds: 1503, 1283, 16, 16
+  index: -1
+items/scroll/scrollfire
+  bounds: 1503, 1301, 16, 16
+  index: -1
+items/scroll/scrollice
+  bounds: 1085, 1014, 16, 16
+  index: -1
+items/scroll/scrollplant
+  bounds: 1103, 1014, 16, 16
+  index: -1
+items/scroll/scrollrock
+  bounds: 1121, 1014, 16, 16
+  index: -1
+items/scroll/scrollthunder
+  bounds: 705, 1492, 16, 16
+  index: -1
+items/tool/anvil
+  bounds: 1205, 1206, 16, 16
+  index: -1
+items/tool/axe
+  bounds: 1223, 1206, 16, 16
+  index: -1
+items/tool/hammer
+  bounds: 581, 1254, 16, 16
+  index: -1
+items/tool/hoe
+  bounds: 599, 1254, 16, 16
+  index: -1
+items/tool/pickaxe
+  bounds: 1181, 606, 16, 16
+  index: -1
+items/tool/shovel
+  bounds: 1199, 606, 16, 16
+  index: -1
+items/tool/sickle
+  bounds: 543, 1280, 16, 16
+  index: -1
+items/tool/wateringcan
+  bounds: 561, 1280, 16, 16
+  index: -1
+items/treasure/bigtreasurechest
+  bounds: 35, 1532, 32, 14
+  index: -1
+items/treasure/coin2
+  bounds: 931, 1125, 40, 10
+  index: -1
+items/treasure/goldcoin
+  bounds: 784, 1390, 7, 7
+  index: -1
+items/treasure/goldcup
+  bounds: 673, 1074, 9, 11
+  index: -1
+items/treasure/goldkey
+  bounds: 1817, 1151, 12, 8
+  index: -1
+items/treasure/littletreasurechest
+  bounds: 711, 777, 32, 16
+  index: -1
+items/treasure/silvercoin
+  bounds: 367, 976, 6, 6
+  index: -1
+items/treasure/silvercup
+  bounds: 673, 1087, 9, 11
+  index: -1
+items/treasure/silverkey
+  bounds: 395, 1186, 12, 8
+  index: -1
+items/weapons/axe/sprite
+  bounds: 998, 1043, 11, 13
+  index: -1
+items/weapons/axe/spriteinhand
+  bounds: 2033, 1187, 11, 8
+  index: -1
+items/weapons/axetool/sprite
+  bounds: 1159, 1324, 9, 14
+  index: -1
+items/weapons/axetool/spriteinhand
+  bounds: 1919, 1288, 9, 9
+  index: -1
+items/weapons/bigsword/sprite
+  bounds: 370, 1274, 7, 16
+  index: -1
+items/weapons/bigsword/spriteinhand
+  bounds: 913, 883, 7, 12
+  index: -1
+items/weapons/bone/sprite
+  bounds: 1737, 987, 7, 12
+  index: -1
+items/weapons/bone/spriteinhand
+  bounds: 1872, 1350, 7, 8
+  index: -1
+items/weapons/book/sprite
+  bounds: 1897, 1314, 9, 9
+  index: -1
+items/weapons/book/spriteinhand
+  bounds: 1661, 1072, 12, 9
+  index: -1
+items/weapons/bow/arrow
+  bounds: 147, 781, 13, 5
+  index: -1
+items/weapons/bow/sprite
+  bounds: 937, 1304, 15, 7
+  index: -1
+items/weapons/bow2/arrow
+  bounds: 1759, 1144, 13, 5
+  index: -1
+items/weapons/bow2/sprite
+  bounds: 793, 1356, 15, 7
+  index: -1
+items/weapons/club/sprite
+  bounds: 1241, 1178, 8, 14
+  index: -1
+items/weapons/club/spriteinhand
+  bounds: 1363, 1175, 8, 10
+  index: -1
+items/weapons/fishing_rod/sprite
+  bounds: 583, 979, 10, 14
+  index: -1
+items/weapons/fork/sprite
+  bounds: 1475, 1188, 7, 16
+  index: -1
+items/weapons/fork/spriteinhand
+  bounds: 1118, 1461, 7, 12
+  index: -1
+items/weapons/hammer/sprite
+  bounds: 595, 957, 9, 16
+  index: -1
+items/weapons/hammer/spriteinhand
+  bounds: 1908, 1314, 9, 9
+  index: -1
+items/weapons/katana/sprite
+  bounds: 1681, 1320, 6, 14
+  index: -1
+items/weapons/katana/spriteinhand
+  bounds: 387, 883, 6, 10
+  index: -1
+items/weapons/lance/sprite
+  bounds: 929, 1320, 6, 23
+  index: -1
+items/weapons/lance/spriteinhand
+  bounds: 631, 895, 6, 16
+  index: -1
+items/weapons/lance2/sprite
+  bounds: 1451, 929, 7, 21
+  index: -1
+items/weapons/lance2/spriteinhand
+  bounds: 641, 1372, 7, 14
+  index: -1
+items/weapons/magicwand/sprite
+  bounds: 1185, 1158, 5, 18
+  index: -1
+items/weapons/magicwand/spriteinhand
+  bounds: 844, 945, 5, 10
+  index: -1
+items/weapons/ninjaku/sprite
+  bounds: 1172, 1456, 7, 12
+  index: -1
+items/weapons/ninjaku/spriteinhand
+  bounds: 901, 1247, 3, 12
+  index: -1
+items/weapons/pickaxe/sprite
+  bounds: 948, 1480, 11, 13
+  index: -1
+items/weapons/pickaxe/spriteinhand
+  bounds: 617, 1241, 11, 8
+  index: -1
+items/weapons/rapier/sprite
+  bounds: 2037, 790, 10, 15
+  index: -1
+items/weapons/rapier/spriteinhand
+  bounds: 747, 1103, 9, 11
+  index: -1
+items/weapons/sai/sprite
+  bounds: 475, 988, 7, 13
+  index: -1
+items/weapons/sai/spriteinhand
+  bounds: 1881, 1350, 7, 8
+  index: -1
+items/weapons/stick/sprite
+  bounds: 1576, 763, 3, 16
+  index: -1
+items/weapons/stick/spriteinhand
+  bounds: 963, 1347, 3, 12
+  index: -1
+items/weapons/sword/sprite
+  bounds: 809, 696, 6, 17
+  index: -1
+items/weapons/sword/spriteinhand
+  bounds: 1693, 1156, 6, 11
+  index: -1
+items/weapons/sword2/sprite
+  bounds: 1701, 1127, 6, 15
+  index: -1
+items/weapons/sword2/spriteinhand
+  bounds: 1251, 1154, 6, 11
+  index: -1
+items/weapons/whip/sprite
+  bounds: 2037, 698, 9, 13
+  index: -1
+items/weapons/whip/spriteinhand
+  bounds: 1689, 1268, 3, 14
+  index: -1
+pixeloid_9
+  bounds: 135, 846, 128, 128
+  index: -1
+ui/arrow
+  bounds: 141, 1630, 13, 13
+  index: -1
+ui/arrow_left
+  bounds: 761, 1029, 16, 16
+  index: -1
+ui/arrow_left_over
+  bounds: 761, 1047, 16, 16
+  index: -1
+ui/arrow_right
+  bounds: 761, 1065, 16, 16
+  index: -1
+ui/arrow_right_over
+  bounds: 909, 1139, 16, 16
+  index: -1
+ui/bg
+  bounds: 1529, 1384, 16, 16
+  split: 2, 2, 2, 2
+  pad: 4, 4, 3, 3
+  index: -1
+ui/bg_2
+  bounds: 1119, 714, 16, 16
+  split: 2, 2, 2, 2
+  pad: 4, 4, 3, 3
+  index: -1
+ui/button_disabled
+  bounds: 431, 1524, 16, 8
+  split: 2, 2, 2, 2
+  pad: 5, 5, 3, 2
+  index: -1
+ui/button_down
+  bounds: 467, 1388, 16, 8
+  split: 2, 2, 3, 1
+  pad: 5, 5, 4, 1
+  index: -1
+ui/button_over
+  bounds: 1645, 946, 16, 8
+  split: 2, 2, 2, 2
+  pad: 5, 5, 3, 2
+  index: -1
+ui/button_up
+  bounds: 725, 1311, 16, 8
+  split: 2, 2, 2, 2
+  pad: 5, 5, 3, 2
+  index: -1
+ui/cats/cat1_eat_down
+  bounds: 1895, 544, 144, 26
+  index: -1
+ui/cats/cat1_eat_downleft
+  bounds: 1857, 211, 176, 26
+  index: -1
+ui/cats/cat1_eat_downright
+  bounds: 1895, 572, 144, 26
+  index: -1
+ui/cats/cat1_eat_left
+  bounds: 1597, 130, 224, 25
+  index: -1
+ui/cats/cat1_eat_right
+  bounds: 1823, 130, 224, 25
+  index: -1
+ui/cats/cat1_eat_up
+  bounds: 1397, 572, 160, 27
+  index: -1
+ui/cats/cat1_eat_upleft
+  bounds: 1219, 598, 160, 27
+  index: -1
+ui/cats/cat1_eat_upright
+  bounds: 1, 867, 128, 27
+  index: -1
+ui/cats/cat1_hind
+  bounds: 343, 988, 88, 29
+  index: -1
+ui/cats/cat1_hiss_l
+  bounds: 637, 1275, 52, 27
+  index: -1
+ui/cats/cat1_hiss_r
+  bounds: 1859, 1108, 60, 27
+  index: -1
+ui/cats/cat1_lie
+  bounds: 1, 1, 320, 25
+  index: -1
+ui/cats/cat1_meow_lie
+  bounds: 1969, 157, 66, 25
+  index: -1
+ui/cats/cat1_meow_sit
+  bounds: 1219, 960, 66, 26
+  index: -1
+ui/cats/cat1_meow_sit2
+  bounds: 1555, 1181, 54, 24
+  index: -1
+ui/cats/cat1_meow_stand
+  bounds: 1317, 1147, 54, 26
+  index: -1
+ui/cats/cat1_paw_down
+  bounds: 799, 55, 162, 26
+  index: -1
+ui/cats/cat1_paw_downleft
+  bounds: 1313, 326, 198, 26
+  index: -1
+ui/cats/cat1_paw_downright
+  bounds: 527, 581, 162, 26
+  index: -1
+ui/cats/cat1_paw_left
+  bounds: 847, 381, 196, 25
+  index: -1
+ui/cats/cat1_paw_right
+  bounds: 621, 405, 196, 25
+  index: -1
+ui/cats/cat1_paw_up
+  bounds: 1947, 239, 100, 27
+  index: -1
+ui/cats/cat1_paw_upleft
+  bounds: 1947, 268, 100, 27
+  index: -1
+ui/cats/cat1_paw_upright
+  bounds: 1967, 459, 80, 27
+  index: -1
+ui/cats/cat1_rest
+  bounds: 1889, 28, 156, 24
+  index: -1
+ui/cats/cat1_sad
+  bounds: 1695, 1218, 22, 29
+  index: -1
+ui/cats/cat1_scratch_l
+  bounds: 533, 142, 264, 26
+  index: -1
+ui/cats/cat1_scratch_r
+  bounds: 533, 55, 264, 27
+  index: -1
+ui/cats/cat1_sit
+  bounds: 979, 819, 132, 26
+  index: -1
+ui/cats/cat1_sleep1_l
+  bounds: 959, 1211, 44, 25
+  index: -1
+ui/cats/cat1_sleep1_r
+  bounds: 277, 1300, 52, 25
+  index: -1
+ui/cats/cat1_sleep2_l
+  bounds: 1817, 1161, 52, 23
+  index: -1
+ui/cats/cat1_sleep2_r
+  bounds: 1743, 1057, 40, 23
+  index: -1
+ui/cats/cat1_sleep3_l
+  bounds: 1741, 869, 56, 23
+  index: -1
+ui/cats/cat1_sleep3_r
+  bounds: 1569, 1157, 56, 22
+  index: -1
+ui/cats/cat1_sleep4_l
+  bounds: 1743, 1083, 64, 23
+  index: -1
+ui/cats/cat1_sleep4_r
+  bounds: 1983, 807, 64, 24
+  index: -1
+ui/cats/cat1_stand
+  bounds: 1, 466, 176, 28
+  index: -1
+ui/cats/cat1_walk_down
+  bounds: 149, 1237, 72, 27
+  index: -1
+ui/cats/cat1_walk_downleft
+  bounds: 1849, 807, 132, 28
+  index: -1
+ui/cats/cat1_walk_downright
+  bounds: 1677, 809, 132, 28
+  index: -1
+ui/cats/cat1_walk_left
+  bounds: 1107, 234, 208, 27
+  index: -1
+ui/cats/cat1_walk_right
+  bounds: 1, 287, 208, 27
+  index: -1
+ui/cats/cat1_walk_up
+  bounds: 287, 1019, 80, 28
+  index: -1
+ui/cats/cat1_walk_upleft
+  bounds: 923, 866, 120, 29
+  index: -1
+ui/cats/cat1_walk_upright
+  bounds: 631, 913, 108, 29
+  index: -1
+ui/cats/cat1_wash_lie
+  bounds: 1323, 679, 154, 25
+  index: -1
+ui/cats/cat1_wash_sit
+  bounds: 1065, 90, 216, 26
+  index: -1
+ui/cats/cat1_wash_stand
+  bounds: 349, 607, 162, 26
+  index: -1
+ui/cats/cat1_yawn_lie
+  bounds: 179, 535, 176, 27
+  index: -1
+ui/cats/cat1_yawn_sit
+  bounds: 555, 432, 176, 28
+  index: -1
+ui/cats/cat1_yawn_sit2
+  bounds: 1903, 378, 144, 24
+  index: -1
+ui/cats/cat1_yawn_stand
+  bounds: 1895, 600, 144, 26
+  index: -1
+ui/cats/cat2_eat_down
+  bounds: 1143, 709, 144, 26
+  index: -1
+ui/cats/cat2_eat_downleft
+  bounds: 357, 553, 176, 26
+  index: -1
+ui/cats/cat2_eat_downright
+  bounds: 973, 714, 144, 26
+  index: -1
+ui/cats/cat2_eat_left
+  bounds: 1065, 152, 224, 25
+  index: -1
+ui/cats/cat2_eat_right
+  bounds: 799, 176, 224, 25
+  index: -1
+ui/cats/cat2_eat_up
+  bounds: 1381, 601, 160, 27
+  index: -1
+ui/cats/cat2_eat_upleft
+  bounds: 1019, 606, 160, 27
+  index: -1
+ui/cats/cat2_eat_upright
+  bounds: 1, 896, 128, 27
+  index: -1
+ui/cats/cat2_hind
+  bounds: 107, 999, 88, 29
+  index: -1
+ui/cats/cat2_hiss_l
+  bounds: 435, 1280, 52, 27
+  index: -1
+ui/cats/cat2_hiss_r
+  bounds: 1987, 1056, 60, 27
+  index: -1
+ui/cats/cat2_lie
+  bounds: 323, 1, 320, 25
+  index: -1
+ui/cats/cat2_meow_lie
+  bounds: 1307, 1069, 66, 25
+  index: -1
+ui/cats/cat2_meow_sit
+  bounds: 1719, 1001, 66, 26
+  index: -1
+ui/cats/cat2_meow_sit2
+  bounds: 1485, 1182, 54, 24
+  index: -1
+ui/cats/cat2_meow_stand
+  bounds: 1373, 1159, 54, 26
+  index: -1
+ui/cats/cat2_paw_down
+  bounds: 171, 618, 162, 26
+  index: -1
+ui/cats/cat2_paw_downleft
+  bounds: 1107, 347, 198, 26
+  index: -1
+ui/cats/cat2_paw_downright
+  bounds: 1, 639, 162, 26
+  index: -1
+ui/cats/cat2_paw_left
+  bounds: 1713, 351, 196, 25
+  index: -1
+ui/cats/cat2_paw_right
+  bounds: 1507, 377, 196, 25
+  index: -1
+ui/cats/cat2_paw_up
+  bounds: 1945, 837, 100, 27
+  index: -1
+ui/cats/cat2_paw_upleft
+  bounds: 1155, 871, 100, 27
+  index: -1
+ui/cats/cat2_paw_upright
+  bounds: 255, 1049, 80, 27
+  index: -1
+ui/cats/cat2_rest
+  bounds: 1889, 54, 156, 24
+  index: -1
+ui/cats/cat2_sad
+  bounds: 733, 1357, 22, 29
+  index: -1
+ui/cats/cat2_scratch_l
+  bounds: 1, 149, 264, 26
+  index: -1
+ui/cats/cat2_scratch_r
+  bounds: 533, 84, 264, 27
+  index: -1
+ui/cats/cat2_sit
+  bounds: 1113, 843, 132, 26
+  index: -1
+ui/cats/cat2_sleep1_l
+  bounds: 1305, 1231, 44, 25
+  index: -1
+ui/cats/cat2_sleep1_r
+  bounds: 407, 1309, 52, 25
+  index: -1
+ui/cats/cat2_sleep2_l
+  bounds: 1751, 1175, 52, 23
+  index: -1
+ui/cats/cat2_sleep2_r
+  bounds: 1675, 1030, 40, 23
+  index: -1
+ui/cats/cat2_sleep3_l
+  bounds: 1991, 1001, 56, 23
+  index: -1
+ui/cats/cat2_sleep3_r
+  bounds: 1497, 1158, 56, 22
+  index: -1
+ui/cats/cat2_sleep4_l
+  bounds: 1661, 1084, 64, 23
+  index: -1
+ui/cats/cat2_sleep4_r
+  bounds: 451, 1022, 64, 24
+  index: -1
+ui/cats/cat2_stand
+  bounds: 733, 435, 176, 28
+  index: -1
+ui/cats/cat2_walk_down
+  bounds: 149, 1266, 72, 27
+  index: -1
+ui/cats/cat2_walk_downleft
+  bounds: 1531, 834, 132, 28
+  index: -1
+ui/cats/cat2_walk_downright
+  bounds: 1339, 841, 132, 28
+  index: -1
+ui/cats/cat2_walk_left
+  bounds: 211, 287, 208, 27
+  index: -1
+ui/cats/cat2_walk_right
+  bounds: 1, 316, 208, 27
+  index: -1
+ui/cats/cat2_walk_up
+  bounds: 523, 1018, 80, 28
+  index: -1
+ui/cats/cat2_walk_upleft
+  bounds: 395, 864, 120, 29
+  index: -1
+ui/cats/cat2_walk_upright
+  bounds: 387, 926, 108, 29
+  index: -1
+ui/cats/cat2_wash_lie
+  bounds: 1145, 682, 154, 25
+  index: -1
+ui/cats/cat2_wash_sit
+  bounds: 985, 206, 216, 26
+  index: -1
+ui/cats/cat2_wash_stand
+  bounds: 1623, 488, 162, 26
+  index: -1
+ui/cats/cat2_yawn_lie
+  bounds: 1, 556, 176, 27
+  index: -1
+ui/cats/cat2_yawn_sit
+  bounds: 555, 462, 176, 28
+  index: -1
+ui/cats/cat2_yawn_sit2
+  bounds: 781, 743, 144, 24
+  index: -1
+ui/cats/cat2_yawn_stand
+  bounds: 809, 715, 144, 26
+  index: -1
+ui/cats/cat3_eat_down
+  bounds: 1795, 675, 144, 26
+  index: -1
+ui/cats/cat3_eat_downleft
+  bounds: 179, 564, 176, 26
+  index: -1
+ui/cats/cat3_eat_downright
+  bounds: 1635, 698, 144, 26
+  index: -1
+ui/cats/cat3_eat_left
+  bounds: 533, 198, 224, 25
+  index: -1
+ui/cats/cat3_eat_right
+  bounds: 1291, 152, 224, 25
+  index: -1
+ui/cats/cat3_eat_up
+  bounds: 841, 630, 160, 27
+  index: -1
+ui/cats/cat3_eat_upleft
+  bounds: 663, 638, 160, 27
+  index: -1
+ui/cats/cat3_eat_upright
+  bounds: 1, 925, 128, 27
+  index: -1
+ui/cats/cat3_hind
+  bounds: 1, 1006, 88, 29
+  index: -1
+ui/cats/cat3_hiss_l
+  bounds: 353, 1296, 52, 27
+  index: -1
+ui/cats/cat3_hiss_r
+  bounds: 1987, 1085, 60, 27
+  index: -1
+ui/cats/cat3_lie
+  bounds: 645, 1, 320, 25
+  index: -1
+ui/cats/cat3_meow_lie
+  bounds: 1787, 1029, 66, 25
+  index: -1
+ui/cats/cat3_meow_sit
+  bounds: 1787, 1001, 66, 26
+  index: -1
+ui/cats/cat3_meow_sit2
+  bounds: 1419, 1188, 54, 24
+  index: -1
+ui/cats/cat3_meow_stand
+  bounds: 1251, 1171, 54, 26
+  index: -1
+ui/cats/cat3_paw_down
+  bounds: 1787, 488, 162, 26
+  index: -1
+ui/cats/cat3_paw_downleft
+  bounds: 881, 353, 198, 26
+  index: -1
+ui/cats/cat3_paw_downright
+  bounds: 1445, 516, 162, 26
+  index: -1
+ui/cats/cat3_paw_left
+  bounds: 1281, 382, 196, 25
+  index: -1
+ui/cats/cat3_paw_right
+  bounds: 1045, 403, 196, 25
+  index: -1
+ui/cats/cat3_paw_up
+  bounds: 1257, 871, 100, 27
+  index: -1
+ui/cats/cat3_paw_upleft
+  bounds: 1359, 871, 100, 27
+  index: -1
+ui/cats/cat3_paw_upright
+  bounds: 83, 1060, 80, 27
+  index: -1
+ui/cats/cat3_rest
+  bounds: 1343, 630, 156, 24
+  index: -1
+ui/cats/cat3_sad
+  bounds: 691, 1425, 22, 29
+  index: -1
+ui/cats/cat3_scratch_l
+  bounds: 267, 149, 264, 26
+  index: -1
+ui/cats/cat3_scratch_r
+  bounds: 799, 90, 264, 27
+  index: -1
+ui/cats/cat3_sit
+  bounds: 281, 807, 132, 26
+  index: -1
+ui/cats/cat3_sleep1_l
+  bounds: 1005, 1137, 44, 25
+  index: -1
+ui/cats/cat3_sleep1_r
+  bounds: 331, 1325, 52, 25
+  index: -1
+ui/cats/cat3_sleep2_l
+  bounds: 1667, 1193, 52, 23
+  index: -1
+ui/cats/cat3_sleep2_r
+  bounds: 1011, 960, 40, 23
+  index: -1
+ui/cats/cat3_sleep3_l
+  bounds: 1991, 1026, 56, 23
+  index: -1
+ui/cats/cat3_sleep3_r
+  bounds: 1833, 1137, 56, 22
+  index: -1
+ui/cats/cat3_sleep4_l
+  bounds: 1577, 1085, 64, 23
+  index: -1
+ui/cats/cat3_sleep4_r
+  bounds: 1375, 1069, 64, 24
+  index: -1
+ui/cats/cat3_stand
+  bounds: 357, 463, 176, 28
+  index: -1
+ui/cats/cat3_walk_down
+  bounds: 149, 1295, 72, 27
+  index: -1
+ui/cats/cat3_walk_downleft
+  bounds: 1811, 837, 132, 28
+  index: -1
+ui/cats/cat3_walk_downright
+  bounds: 1665, 839, 132, 28
+  index: -1
+ui/cats/cat3_walk_left
+  bounds: 211, 316, 208, 27
+  index: -1
+ui/cats/cat3_walk_right
+  bounds: 1, 345, 208, 27
+  index: -1
+ui/cats/cat3_walk_up
+  bounds: 605, 1018, 80, 28
+  index: -1
+ui/cats/cat3_walk_upleft
+  bounds: 265, 883, 120, 29
+  index: -1
+ui/cats/cat3_walk_upright
+  bounds: 265, 945, 108, 29
+  index: -1
+ui/cats/cat3_wash_lie
+  bounds: 987, 687, 154, 25
+  index: -1
+ui/cats/cat3_wash_sit
+  bounds: 1203, 206, 216, 26
+  index: -1
+ui/cats/cat3_wash_stand
+  bounds: 1247, 542, 162, 26
+  index: -1
+ui/cats/cat3_yawn_lie
+  bounds: 1611, 459, 176, 27
+  index: -1
+ui/cats/cat3_yawn_sit
+  bounds: 179, 475, 176, 28
+  index: -1
+ui/cats/cat3_yawn_sit2
+  bounds: 471, 751, 144, 24
+  index: -1
+ui/cats/cat3_yawn_stand
+  bounds: 1457, 707, 144, 26
+  index: -1
+ui/cats/cat4_eat_down
+  bounds: 1289, 733, 144, 26
+  index: -1
+ui/cats/cat4_eat_downleft
+  bounds: 1, 585, 176, 26
+  index: -1
+ui/cats/cat4_eat_downright
+  bounds: 1119, 737, 144, 26
+  index: -1
+ui/cats/cat4_eat_left
+  bounds: 1, 205, 224, 25
+  index: -1
+ui/cats/cat4_eat_right
+  bounds: 227, 205, 224, 25
+  index: -1
+ui/cats/cat4_eat_up
+  bounds: 493, 665, 160, 27
+  index: -1
+ui/cats/cat4_eat_upleft
+  bounds: 329, 691, 160, 27
+  index: -1
+ui/cats/cat4_eat_upright
+  bounds: 1, 954, 128, 27
+  index: -1
+ui/cats/cat4_hind
+  bounds: 197, 999, 88, 29
+  index: -1
+ui/cats/cat4_hiss_l
+  bounds: 489, 1280, 52, 27
+  index: -1
+ui/cats/cat4_hiss_r
+  bounds: 1987, 1114, 60, 27
+  index: -1
+ui/cats/cat4_lie
+  bounds: 967, 1, 320, 25
+  index: -1
+ui/cats/cat4_meow_lie
+  bounds: 1855, 1029, 66, 25
+  index: -1
+ui/cats/cat4_meow_sit
+  bounds: 1855, 1001, 66, 26
+  index: -1
+ui/cats/cat4_meow_sit2
+  bounds: 1611, 1181, 54, 24
+  index: -1
+ui/cats/cat4_meow_stand
+  bounds: 1185, 1178, 54, 26
+  index: -1
+ui/cats/cat4_paw_down
+  bounds: 1069, 550, 162, 26
+  index: -1
+ui/cats/cat4_paw_downleft
+  bounds: 647, 377, 198, 26
+  index: -1
+ui/cats/cat4_paw_downright
+  bounds: 891, 574, 162, 26
+  index: -1
+ui/cats/cat4_paw_left
+  bounds: 819, 408, 196, 25
+  index: -1
+ui/cats/cat4_paw_right
+  bounds: 1705, 378, 196, 25
+  index: -1
+ui/cats/cat4_paw_up
+  bounds: 1461, 894, 100, 27
+  index: -1
+ui/cats/cat4_paw_upleft
+  bounds: 1563, 899, 100, 27
+  index: -1
+ui/cats/cat4_paw_upright
+  bounds: 1, 1067, 80, 27
+  index: -1
+ui/cats/cat4_rest
+  bounds: 1737, 544, 156, 24
+  index: -1
+ui/cats/cat4_sad
+  bounds: 903, 1449, 22, 29
+  index: -1
+ui/cats/cat4_scratch_l
+  bounds: 1065, 124, 264, 26
+  index: -1
+ui/cats/cat4_scratch_r
+  bounds: 1, 91, 264, 27
+  index: -1
+ui/cats/cat4_sit
+  bounds: 135, 818, 132, 26
+  index: -1
+ui/cats/cat4_sleep1_l
+  bounds: 857, 1017, 44, 25
+  index: -1
+ui/cats/cat4_sleep1_r
+  bounds: 277, 1327, 52, 25
+  index: -1
+ui/cats/cat4_sleep2_l
+  bounds: 1871, 1161, 52, 23
+  index: -1
+ui/cats/cat4_sleep2_r
+  bounds: 2005, 1197, 40, 23
+  index: -1
+ui/cats/cat4_sleep3_l
+  bounds: 1095, 902, 56, 23
+  index: -1
+ui/cats/cat4_sleep3_r
+  bounds: 1759, 1151, 56, 22
+  index: -1
+ui/cats/cat4_sleep4_l
+  bounds: 1507, 1086, 64, 23
+  index: -1
+ui/cats/cat4_sleep4_r
+  bounds: 1441, 1083, 64, 24
+  index: -1
+ui/cats/cat4_stand
+  bounds: 1, 496, 176, 28
+  index: -1
+ui/cats/cat4_walk_down
+  bounds: 75, 1311, 72, 27
+  index: -1
+ui/cats/cat4_walk_downleft
+  bounds: 1473, 864, 132, 28
+  index: -1
+ui/cats/cat4_walk_downright
+  bounds: 1799, 867, 132, 28
+  index: -1
+ui/cats/cat4_walk_left
+  bounds: 211, 345, 208, 27
+  index: -1
+ui/cats/cat4_walk_right
+  bounds: 1, 374, 208, 27
+  index: -1
+ui/cats/cat4_walk_up
+  bounds: 369, 1022, 80, 28
+  index: -1
+ui/cats/cat4_walk_upleft
+  bounds: 517, 864, 120, 29
+  index: -1
+ui/cats/cat4_walk_upright
+  bounds: 497, 926, 108, 29
+  index: -1
+ui/cats/cat4_wash_lie
+  bounds: 817, 688, 154, 25
+  index: -1
+ui/cats/cat4_wash_sit
+  bounds: 679, 230, 216, 26
+  index: -1
+ui/cats/cat4_wash_stand
+  bounds: 691, 582, 162, 26
+  index: -1
+ui/cats/cat4_yawn_lie
+  bounds: 1789, 459, 176, 27
+  index: -1
+ui/cats/cat4_yawn_sit
+  bounds: 911, 457, 176, 28
+  index: -1
+ui/cats/cat4_yawn_sit2
+  bounds: 617, 751, 144, 24
+  index: -1
+ui/cats/cat4_yawn_stand
+  bounds: 955, 742, 144, 26
+  index: -1
+ui/cats/cat5_eat_down
+  bounds: 1781, 703, 144, 26
+  index: -1
+ui/cats/cat5_eat_downleft
+  bounds: 1445, 488, 176, 26
+  index: -1
+ui/cats/cat5_eat_downright
+  bounds: 1603, 726, 144, 26
+  index: -1
+ui/cats/cat5_eat_left
+  bounds: 1517, 157, 224, 25
+  index: -1
+ui/cats/cat5_eat_right
+  bounds: 1743, 157, 224, 25
+  index: -1
+ui/cats/cat5_eat_up
+  bounds: 165, 702, 160, 27
+  index: -1
+ui/cats/cat5_eat_upleft
+  bounds: 1, 723, 160, 27
+  index: -1
+ui/cats/cat5_eat_upright
+  bounds: 403, 835, 128, 27
+  index: -1
+ui/cats/cat5_hind
+  bounds: 1197, 929, 88, 29
+  index: -1
+ui/cats/cat5_hiss_l
+  bounds: 543, 1301, 52, 27
+  index: -1
+ui/cats/cat5_hiss_r
+  bounds: 1921, 1132, 60, 27
+  index: -1
+ui/cats/cat5_lie
+  bounds: 1289, 1, 320, 25
+  index: -1
+ui/cats/cat5_meow_lie
+  bounds: 1923, 1029, 66, 25
+  index: -1
+ui/cats/cat5_meow_sit
+  bounds: 1923, 1001, 66, 26
+  index: -1
+ui/cats/cat5_meow_sit2
+  bounds: 469, 1254, 54, 24
+  index: -1
+ui/cats/cat5_meow_stand
+  bounds: 1307, 1175, 54, 26
+  index: -1
+ui/cats/cat5_paw_down
+  bounds: 513, 609, 162, 26
+  index: -1
+ui/cats/cat5_paw_downleft
+  bounds: 421, 399, 198, 26
+  index: -1
+ui/cats/cat5_paw_downright
+  bounds: 335, 635, 162, 26
+  index: -1
+ui/cats/cat5_paw_left
+  bounds: 1479, 404, 196, 25
+  index: -1
+ui/cats/cat5_paw_right
+  bounds: 1243, 409, 196, 25
+  index: -1
+ui/cats/cat5_paw_up
+  bounds: 1155, 900, 100, 27
+  index: -1
+ui/cats/cat5_paw_upleft
+  bounds: 993, 902, 100, 27
+  index: -1
+ui/cats/cat5_paw_upright
+  bounds: 165, 1060, 80, 27
+  index: -1
+ui/cats/cat5_rest
+  bounds: 1737, 570, 156, 24
+  index: -1
+ui/cats/cat5_sad
+  bounds: 1375, 1319, 22, 29
+  index: -1
+ui/cats/cat5_scratch_l
+  bounds: 799, 148, 264, 26
+  index: -1
+ui/cats/cat5_scratch_r
+  bounds: 267, 91, 264, 27
+  index: -1
+ui/cats/cat5_sit
+  bounds: 1, 839, 132, 26
+  index: -1
+ui/cats/cat5_sleep1_l
+  bounds: 1355, 1265, 44, 25
+  index: -1
+ui/cats/cat5_sleep1_r
+  bounds: 203, 1329, 52, 25
+  index: -1
+ui/cats/cat5_sleep2_l
+  bounds: 1925, 1161, 52, 23
+  index: -1
+ui/cats/cat5_sleep2_r
+  bounds: 2005, 1222, 40, 23
+  index: -1
+ui/cats/cat5_sleep3_l
+  bounds: 1159, 1034, 56, 23
+  index: -1
+ui/cats/cat5_sleep3_r
+  bounds: 1693, 1169, 56, 22
+  index: -1
+ui/cats/cat5_sleep4_l
+  bounds: 1441, 1109, 64, 23
+  index: -1
+ui/cats/cat5_sleep4_r
+  bounds: 1375, 1095, 64, 24
+  index: -1
+ui/cats/cat5_stand
+  bounds: 733, 465, 176, 28
+  index: -1
+ui/cats/cat5_walk_down
+  bounds: 1, 1318, 72, 27
+  index: -1
+ui/cats/cat5_walk_downleft
+  bounds: 1607, 869, 132, 28
+  index: -1
+ui/cats/cat5_walk_downright
+  bounds: 1741, 897, 132, 28
+  index: -1
+ui/cats/cat5_walk_left
+  bounds: 211, 374, 208, 27
+  index: -1
+ui/cats/cat5_walk_right
+  bounds: 1317, 239, 208, 27
+  index: -1
+ui/cats/cat5_walk_up
+  bounds: 1287, 929, 80, 28
+  index: -1
+ui/cats/cat5_walk_upleft
+  bounds: 639, 882, 120, 29
+  index: -1
+ui/cats/cat5_walk_upright
+  bounds: 1045, 871, 108, 29
+  index: -1
+ui/cats/cat5_wash_lie
+  bounds: 653, 696, 154, 25
+  index: -1
+ui/cats/cat5_wash_sit
+  bounds: 453, 252, 216, 26
+  index: -1
+ui/cats/cat5_wash_stand
+  bounds: 165, 646, 162, 26
+  index: -1
+ui/cats/cat5_yawn_lie
+  bounds: 1267, 485, 176, 27
+  index: -1
+ui/cats/cat5_yawn_sit
+  bounds: 535, 492, 176, 28
+  index: -1
+ui/cats/cat5_yawn_sit2
+  bounds: 763, 769, 144, 24
+  index: -1
+ui/cats/cat5_yawn_stand
+  bounds: 1435, 735, 144, 26
+  index: -1
+ui/cats/cat6_eat_down
+  bounds: 1265, 761, 144, 26
+  index: -1
+ui/cats/cat6_eat_downleft
+  bounds: 1267, 514, 176, 26
+  index: -1
+ui/cats/cat6_eat_downright
+  bounds: 1101, 765, 144, 26
+  index: -1
+ui/cats/cat6_eat_left
+  bounds: 1025, 179, 224, 25
+  index: -1
+ui/cats/cat6_eat_right
+  bounds: 759, 203, 224, 25
+  index: -1
+ui/cats/cat6_eat_up
+  bounds: 1181, 627, 160, 27
+  index: -1
+ui/cats/cat6_eat_upleft
+  bounds: 1003, 635, 160, 27
+  index: -1
+ui/cats/cat6_eat_upright
+  bounds: 265, 854, 128, 27
+  index: -1
+ui/cats/cat6_hind
+  bounds: 1055, 958, 88, 29
+  index: -1
+ui/cats/cat6_hiss_l
+  bounds: 223, 1300, 52, 27
+  index: -1
+ui/cats/cat6_hiss_r
+  bounds: 1983, 1143, 60, 27
+  index: -1
+ui/cats/cat6_lie
+  bounds: 1611, 1, 320, 25
+  index: -1
+ui/cats/cat6_meow_lie
+  bounds: 1787, 1056, 66, 25
+  index: -1
+ui/cats/cat6_meow_sit
+  bounds: 1719, 1029, 66, 26
+  index: -1
+ui/cats/cat6_meow_sit2
+  bounds: 379, 1270, 54, 24
+  index: -1
+ui/cats/cat6_meow_stand
+  bounds: 1241, 1199, 54, 26
+  index: -1
+ui/cats/cat6_paw_down
+  bounds: 1, 667, 162, 26
+  index: -1
+ui/cats/cat6_paw_downleft
+  bounds: 1733, 323, 198, 26
+  index: -1
+ui/cats/cat6_paw_downright
+  bounds: 1609, 516, 162, 26
+  index: -1
+ui/cats/cat6_paw_left
+  bounds: 1017, 430, 196, 25
+  index: -1
+ui/cats/cat6_paw_right
+  bounds: 1677, 405, 196, 25
+  index: -1
+ui/cats/cat6_paw_up
+  bounds: 851, 928, 100, 27
+  index: -1
+ui/cats/cat6_paw_upleft
+  bounds: 717, 945, 100, 27
+  index: -1
+ui/cats/cat6_paw_upright
+  bounds: 1665, 927, 80, 27
+  index: -1
+ui/cats/cat6_rest
+  bounds: 1737, 596, 156, 24
+  index: -1
+ui/cats/cat6_sad
+  bounds: 1719, 956, 22, 29
+  index: -1
+ui/cats/cat6_scratch_l
+  bounds: 533, 170, 264, 26
+  index: -1
+ui/cats/cat6_scratch_r
+  bounds: 533, 113, 264, 27
+  index: -1
+ui/cats/cat6_sit
+  bounds: 415, 807, 132, 26
+  index: -1
+ui/cats/cat6_sleep1_l
+  bounds: 1401, 1289, 44, 25
+  index: -1
+ui/cats/cat6_sleep1_r
+  bounds: 129, 1353, 52, 25
+  index: -1
+ui/cats/cat6_sleep2_l
+  bounds: 1979, 1172, 52, 23
+  index: -1
+ui/cats/cat6_sleep2_r
+  bounds: 959, 1254, 40, 23
+  index: -1
+ui/cats/cat6_sleep3_l
+  bounds: 1085, 989, 56, 23
+  index: -1
+ui/cats/cat6_sleep3_r
+  bounds: 617, 1251, 56, 22
+  index: -1
+ui/cats/cat6_sleep4_l
+  bounds: 1373, 1121, 64, 23
+  index: -1
+ui/cats/cat6_sleep4_r
+  bounds: 1307, 1096, 64, 24
+  index: -1
+ui/cats/cat6_stand
+  bounds: 357, 493, 176, 28
+  index: -1
+ui/cats/cat6_walk_down
+  bounds: 469, 1196, 72, 27
+  index: -1
+ui/cats/cat6_walk_downleft
+  bounds: 1875, 897, 132, 28
+  index: -1
+ui/cats/cat6_walk_downright
+  bounds: 309, 777, 132, 28
+  index: -1
+ui/cats/cat6_walk_left
+  bounds: 1107, 263, 208, 27
+  index: -1
+ui/cats/cat6_walk_right
+  bounds: 1527, 239, 208, 27
+  index: -1
+ui/cats/cat6_walk_up
+  bounds: 1369, 929, 80, 28
+  index: -1
+ui/cats/cat6_walk_upleft
+  bounds: 761, 883, 120, 29
+  index: -1
+ui/cats/cat6_walk_upright
+  bounds: 883, 897, 108, 29
+  index: -1
+ui/cats/cat6_wash_lie
+  bounds: 1817, 648, 154, 25
+  index: -1
+ui/cats/cat6_wash_sit
+  bounds: 1, 259, 216, 26
+  index: -1
+ui/cats/cat6_wash_stand
+  bounds: 1773, 516, 162, 26
+  index: -1
+ui/cats/cat6_yawn_lie
+  bounds: 1089, 493, 176, 27
+  index: -1
+ui/cats/cat6_yawn_sit
+  bounds: 179, 505, 176, 28
+  index: -1
+ui/cats/cat6_yawn_sit2
+  bounds: 909, 770, 144, 24
+  index: -1
+ui/cats/cat6_yawn_stand
+  bounds: 1749, 731, 144, 26
+  index: -1
+ui/cats/hat_antlers_eat_down
+  bounds: 1895, 731, 144, 26
+  index: -1
+ui/cats/hat_antlers_eat_downleft
+  bounds: 1069, 522, 176, 26
+  index: -1
+ui/cats/hat_antlers_eat_downright
+  bounds: 1581, 754, 144, 26
+  index: -1
+ui/cats/hat_antlers_eat_left
+  bounds: 1251, 179, 224, 25
+  index: -1
+ui/cats/hat_antlers_eat_right
+  bounds: 453, 225, 224, 25
+  index: -1
+ui/cats/hat_antlers_eat_up
+  bounds: 825, 659, 160, 27
+  index: -1
+ui/cats/hat_antlers_eat_upleft
+  bounds: 655, 667, 160, 27
+  index: -1
+ui/cats/hat_antlers_eat_upright
+  bounds: 533, 835, 128, 27
+  index: -1
+ui/cats/hat_antlers_hind
+  bounds: 921, 960, 88, 29
+  index: -1
+ui/cats/hat_antlers_hiss_l
+  bounds: 149, 1324, 52, 27
+  index: -1
+ui/cats/hat_antlers_hiss_r
+  bounds: 1639, 1127, 60, 27
+  index: -1
+ui/cats/hat_antlers_lie
+  bounds: 1, 28, 320, 25
+  index: -1
+ui/cats/hat_antlers_meow_lie
+  bounds: 1675, 1057, 66, 25
+  index: -1
+ui/cats/hat_antlers_meow_sit
+  bounds: 1607, 1030, 66, 26
+  index: -1
+ui/cats/hat_antlers_meow_sit2
+  bounds: 297, 1274, 54, 24
+  index: -1
+ui/cats/hat_antlers_meow_stand
+  bounds: 1429, 1160, 54, 26
+  index: -1
+ui/cats/hat_antlers_paw_down
+  bounds: 1411, 544, 162, 26
+  index: -1
+ui/cats/hat_antlers_paw_downleft
+  bounds: 1513, 349, 198, 26
+  index: -1
+ui/cats/hat_antlers_paw_downright
+  bounds: 1233, 570, 162, 26
+  index: -1
+ui/cats/hat_antlers_paw_left
+  bounds: 1441, 431, 196, 25
+  index: -1
+ui/cats/hat_antlers_paw_right
+  bounds: 1215, 436, 196, 25
+  index: -1
+ui/cats/hat_antlers_paw_up
+  bounds: 1257, 900, 100, 27
+  index: -1
+ui/cats/hat_antlers_paw_upleft
+  bounds: 1359, 900, 100, 27
+  index: -1
+ui/cats/hat_antlers_paw_upright
+  bounds: 1563, 928, 80, 27
+  index: -1
+ui/cats/hat_antlers_rest
+  bounds: 1737, 622, 156, 24
+  index: -1
+ui/cats/hat_antlers_sad
+  bounds: 759, 1467, 22, 29
+  index: -1
+ui/cats/hat_antlers_scratch_l
+  bounds: 1, 177, 264, 26
+  index: -1
+ui/cats/hat_antlers_scratch_r
+  bounds: 799, 119, 264, 27
+  index: -1
+ui/cats/hat_antlers_sit
+  bounds: 549, 807, 132, 26
+  index: -1
+ui/cats/hat_antlers_sleep1_l
+  bounds: 1355, 1292, 44, 25
+  index: -1
+ui/cats/hat_antlers_sleep1_r
+  bounds: 55, 1369, 52, 25
+  index: -1
+ui/cats/hat_antlers_sleep2_l
+  bounds: 1541, 1207, 52, 23
+  index: -1
+ui/cats/hat_antlers_sleep2_r
+  bounds: 871, 1261, 40, 23
+  index: -1
+ui/cats/hat_antlers_sleep3_l
+  bounds: 1775, 1126, 56, 23
+  index: -1
+ui/cats/hat_antlers_sleep3_r
+  bounds: 1259, 1147, 56, 22
+  index: -1
+ui/cats/hat_antlers_sleep4_l
+  bounds: 1307, 1122, 64, 23
+  index: -1
+ui/cats/hat_antlers_sleep4_r
+  bounds: 1855, 1056, 64, 24
+  index: -1
+ui/cats/hat_antlers_stand
+  bounds: 1, 526, 176, 28
+  index: -1
+ui/cats/hat_antlers_walk_down
+  bounds: 543, 1196, 72, 27
+  index: -1
+ui/cats/hat_antlers_walk_downleft
+  bounds: 147, 788, 132, 28
+  index: -1
+ui/cats/hat_antlers_walk_downright
+  bounds: 1, 809, 132, 28
+  index: -1
+ui/cats/hat_antlers_walk_left
+  bounds: 1737, 239, 208, 27
+  index: -1
+ui/cats/hat_antlers_walk_right
+  bounds: 1317, 268, 208, 27
+  index: -1
+ui/cats/hat_antlers_walk_up
+  bounds: 91, 1030, 80, 28
+  index: -1
+ui/cats/hat_antlers_walk_upleft
+  bounds: 387, 895, 120, 29
+  index: -1
+ui/cats/hat_antlers_walk_upright
+  bounds: 741, 914, 108, 29
+  index: -1
+ui/cats/hat_antlers_wash_lie
+  bounds: 1639, 671, 154, 25
+  index: -1
+ui/cats/hat_antlers_wash_sit
+  bounds: 219, 259, 216, 26
+  index: -1
+ui/cats/hat_antlers_wash_stand
+  bounds: 1055, 578, 162, 26
+  index: -1
+ui/cats/hat_antlers_yawn_lie
+  bounds: 891, 517, 176, 27
+  index: -1
+ui/cats/hat_antlers_yawn_sit
+  bounds: 1089, 463, 176, 28
+  index: -1
+ui/cats/hat_antlers_yawn_sit2
+  bounds: 1055, 793, 144, 24
+  index: -1
+ui/cats/hat_antlers_yawn_stand
+  bounds: 1411, 763, 144, 26
+  index: -1
+ui/cats/hat_santa2_eat_down
+  bounds: 1247, 789, 144, 26
+  index: -1
+ui/cats/hat_santa2_eat_downleft
+  bounds: 891, 546, 176, 26
+  index: -1
+ui/cats/hat_santa2_eat_downright
+  bounds: 489, 723, 144, 26
+  index: -1
+ui/cats/hat_santa2_eat_left
+  bounds: 1, 232, 224, 25
+  index: -1
+ui/cats/hat_santa2_eat_right
+  bounds: 227, 232, 224, 25
+  index: -1
+ui/cats/hat_santa2_eat_up
+  bounds: 491, 694, 160, 27
+  index: -1
+ui/cats/hat_santa2_eat_upleft
+  bounds: 327, 720, 160, 27
+  index: -1
+ui/cats/hat_santa2_eat_upright
+  bounds: 663, 853, 128, 27
+  index: -1
+ui/cats/hat_santa2_hind
+  bounds: 815, 986, 88, 29
+  index: -1
+ui/cats/hat_santa2_hiss_l
+  bounds: 75, 1340, 52, 27
+  index: -1
+ui/cats/hat_santa2_hiss_r
+  bounds: 1573, 1128, 60, 27
+  index: -1
+ui/cats/hat_santa2_lie
+  bounds: 323, 28, 320, 25
+  index: -1
+ui/cats/hat_santa2_meow_lie
+  bounds: 1593, 1058, 66, 25
+  index: -1
+ui/cats/hat_santa2_meow_sit
+  bounds: 1525, 1031, 66, 26
+  index: -1
+ui/cats/hat_santa2_meow_sit2
+  bounds: 525, 1254, 54, 24
+  index: -1
+ui/cats/hat_santa2_meow_stand
+  bounds: 1363, 1187, 54, 26
+  index: -1
+ui/cats/hat_santa2_paw_down
+  bounds: 855, 602, 162, 26
+  index: -1
+ui/cats/hat_santa2_paw_downleft
+  bounds: 1307, 354, 198, 26
+  index: -1
+ui/cats/hat_santa2_paw_downright
+  bounds: 677, 610, 162, 26
+  index: -1
+ui/cats/hat_santa2_paw_left
+  bounds: 1639, 432, 196, 25
+  index: -1
+ui/cats/hat_santa2_paw_right
+  bounds: 1837, 432, 196, 25
+  index: -1
+ui/cats/hat_santa2_paw_up
+  bounds: 1461, 923, 100, 27
+  index: -1
+ui/cats/hat_santa2_paw_upleft
+  bounds: 1095, 929, 100, 27
+  index: -1
+ui/cats/hat_santa2_paw_upright
+  bounds: 1451, 952, 80, 27
+  index: -1
+ui/cats/hat_santa2_rest
+  bounds: 1501, 631, 156, 24
+  index: -1
+ui/cats/hat_santa2_sad
+  bounds: 2019, 759, 22, 29
+  index: -1
+ui/cats/hat_santa2_scratch_l
+  bounds: 267, 177, 264, 26
+  index: -1
+ui/cats/hat_santa2_scratch_r
+  bounds: 1, 120, 264, 27
+  index: -1
+ui/cats/hat_santa2_sit
+  bounds: 683, 825, 132, 26
+  index: -1
+ui/cats/hat_santa2_sleep1_l
+  bounds: 1401, 1316, 44, 25
+  index: -1
+ui/cats/hat_santa2_sleep1_r
+  bounds: 1, 1376, 52, 25
+  index: -1
+ui/cats/hat_santa2_sleep2_l
+  bounds: 1475, 1208, 52, 23
+  index: -1
+ui/cats/hat_santa2_sleep2_r
+  bounds: 913, 1261, 40, 23
+  index: -1
+ui/cats/hat_santa2_sleep3_l
+  bounds: 1701, 1144, 56, 23
+  index: -1
+ui/cats/hat_santa2_sleep3_r
+  bounds: 1193, 1154, 56, 22
+  index: -1
+ui/cats/hat_santa2_sleep4_l
+  bounds: 1921, 1082, 64, 23
+  index: -1
+ui/cats/hat_santa2_sleep4_r
+  bounds: 1921, 1056, 64, 24
+  index: -1
+ui/cats/hat_santa2_stand
+  bounds: 911, 487, 176, 28
+  index: -1
+ui/cats/hat_santa2_walk_down
+  bounds: 469, 1225, 72, 27
+  index: -1
+ui/cats/hat_santa2_walk_downleft
+  bounds: 443, 777, 132, 28
+  index: -1
+ui/cats/hat_santa2_walk_downright
+  bounds: 577, 777, 132, 28
+  index: -1
+ui/cats/hat_santa2_walk_left
+  bounds: 1107, 292, 208, 27
+  index: -1
+ui/cats/hat_santa2_walk_right
+  bounds: 1527, 268, 208, 27
+  index: -1
+ui/cats/hat_santa2_walk_up
+  bounds: 1, 1037, 80, 28
+  index: -1
+ui/cats/hat_santa2_walk_upleft
+  bounds: 265, 914, 120, 29
+  index: -1
+ui/cats/hat_santa2_walk_upright
+  bounds: 607, 944, 108, 29
+  index: -1
+ui/cats/hat_santa2_wash_lie
+  bounds: 1479, 680, 154, 25
+  index: -1
+ui/cats/hat_santa2_wash_sit
+  bounds: 1421, 211, 216, 26
+  index: -1
+ui/cats/hat_santa2_wash_stand
+  bounds: 499, 637, 162, 26
+  index: -1
+ui/cats/hat_santa2_yawn_lie
+  bounds: 713, 525, 176, 27
+  index: -1
+ui/cats/hat_santa2_yawn_sit
+  bounds: 713, 495, 176, 28
+  index: -1
+ui/cats/hat_santa2_yawn_sit2
+  bounds: 1727, 759, 144, 24
+  index: -1
+ui/cats/hat_santa2_yawn_stand
+  bounds: 325, 749, 144, 26
+  index: -1
+ui/cats/hat_santa_eat_down
+  bounds: 163, 760, 144, 26
+  index: -1
+ui/cats/hat_santa_eat_downleft
+  bounds: 713, 554, 176, 26
+  index: -1
+ui/cats/hat_santa_eat_downright
+  bounds: 1, 781, 144, 26
+  index: -1
+ui/cats/hat_santa_eat_left
+  bounds: 1477, 184, 224, 25
+  index: -1
+ui/cats/hat_santa_eat_right
+  bounds: 1703, 184, 224, 25
+  index: -1
+ui/cats/hat_santa_eat_up
+  bounds: 163, 731, 160, 27
+  index: -1
+ui/cats/hat_santa_eat_upleft
+  bounds: 1, 752, 160, 27
+  index: -1
+ui/cats/hat_santa_eat_upright
+  bounds: 793, 854, 128, 27
+  index: -1
+ui/cats/hat_santa_hind
+  bounds: 693, 998, 88, 29
+  index: -1
+ui/cats/hat_santa_hiss_l
+  bounds: 1, 1347, 52, 27
+  index: -1
+ui/cats/hat_santa_hiss_r
+  bounds: 1507, 1129, 60, 27
+  index: -1
+ui/cats/hat_santa_lie
+  bounds: 645, 28, 320, 25
+  index: -1
+ui/cats/hat_santa_meow_lie
+  bounds: 1509, 1059, 66, 25
+  index: -1
+ui/cats/hat_santa_meow_sit
+  bounds: 1441, 1055, 66, 26
+  index: -1
+ui/cats/hat_santa_meow_sit2
+  bounds: 581, 1275, 54, 24
+  index: -1
+ui/cats/hat_santa_meow_stand
+  bounds: 1297, 1203, 54, 26
+  index: -1
+ui/cats/hat_santa_paw_down
+  bounds: 329, 663, 162, 26
+  index: -1
+ui/cats/hat_santa_paw_downleft
+  bounds: 1081, 375, 198, 26
+  index: -1
+ui/cats/hat_santa_paw_downright
+  bounds: 165, 674, 162, 26
+  index: -1
+ui/cats/hat_santa_paw_left
+  bounds: 1413, 458, 196, 25
+  index: -1
+ui/cats/hat_santa_paw_right
+  bounds: 1, 403, 196, 25
+  index: -1
+ui/cats/hat_santa_paw_up
+  bounds: 953, 931, 100, 27
+  index: -1
+ui/cats/hat_santa_paw_upleft
+  bounds: 819, 957, 100, 27
+  index: -1
+ui/cats/hat_santa_paw_upright
+  bounds: 1287, 959, 80, 27
+  index: -1
+ui/cats/hat_santa_rest
+  bounds: 1165, 656, 156, 24
+  index: -1
+ui/cats/hat_santa_sad
+  bounds: 1053, 1063, 22, 29
+  index: -1
+ui/cats/hat_santa_scratch_l
+  bounds: 1331, 124, 264, 26
+  index: -1
+ui/cats/hat_santa_scratch_r
+  bounds: 267, 120, 264, 27
+  index: -1
+ui/cats/hat_santa_sit
+  bounds: 817, 826, 132, 26
+  index: -1
+ui/cats/hat_santa_sleep1_l
+  bounds: 1005, 1232, 44, 25
+  index: -1
+ui/cats/hat_santa_sleep1_r
+  bounds: 461, 1309, 52, 25
+  index: -1
+ui/cats/hat_santa_sleep2_l
+  bounds: 1419, 1214, 52, 23
+  index: -1
+ui/cats/hat_santa_sleep2_r
+  bounds: 793, 1263, 40, 23
+  index: -1
+ui/cats/hat_santa_sleep3_l
+  bounds: 1635, 1156, 56, 23
+  index: -1
+ui/cats/hat_santa_sleep3_r
+  bounds: 1127, 1158, 56, 22
+  index: -1
+ui/cats/hat_santa_sleep4_l
+  bounds: 1921, 1107, 64, 23
+  index: -1
+ui/cats/hat_santa_sleep4_r
+  bounds: 1855, 1082, 64, 24
+  index: -1
+ui/cats/hat_santa_stand
+  bounds: 535, 522, 176, 28
+  index: -1
+ui/cats/hat_santa_walk_down
+  bounds: 543, 1225, 72, 27
+  index: -1
+ui/cats/hat_santa_walk_downleft
+  bounds: 711, 795, 132, 28
+  index: -1
+ui/cats/hat_santa_walk_downright
+  bounds: 845, 796, 132, 28
+  index: -1
+ui/cats/hat_santa_walk_left
+  bounds: 1737, 268, 208, 27
+  index: -1
+ui/cats/hat_santa_walk_right
+  bounds: 1317, 297, 208, 27
+  index: -1
+ui/cats/hat_santa_walk_up
+  bounds: 173, 1030, 80, 28
+  index: -1
+ui/cats/hat_santa_walk_upleft
+  bounds: 509, 895, 120, 29
+  index: -1
+ui/cats/hat_santa_walk_upright
+  bounds: 375, 957, 108, 29
+  index: -1
+ui/cats/hat_santa_wash_lie
+  bounds: 1301, 706, 154, 25
+  index: -1
+ui/cats/hat_santa_wash_sit
+  bounds: 1639, 211, 216, 26
+  index: -1
+ui/cats/hat_santa_wash_stand
+  bounds: 1, 695, 162, 26
+  index: -1
+ui/cats/hat_santa_yawn_lie
+  bounds: 535, 552, 176, 27
+  index: -1
+ui/cats/hat_santa_yawn_sit
+  bounds: 357, 523, 176, 28
+  index: -1
+ui/cats/hat_santa_yawn_sit2
+  bounds: 1557, 782, 144, 24
+  index: -1
+ui/cats/hat_santa_yawn_stand
+  bounds: 635, 723, 144, 26
+  index: -1
+ui/cell
+  bounds: 909, 1193, 16, 16
+  split: 3, 1, 3, 1
+  pad: 3, 2, 3, 2
+  index: -1
+ui/check_off
+  bounds: 389, 1584, 16, 16
+  index: -1
+ui/check_off_disabled
+  bounds: 1109, 1426, 16, 16
+  index: -1
+ui/check_on
+  bounds: 909, 1157, 16, 16
+  index: -1
+ui/check_on_disabled
+  bounds: 909, 1175, 16, 16
+  index: -1
+ui/chess/atomic/b_bishop
+  bounds: 733, 1390, 32, 32
+  index: -1
+ui/chess/atomic/b_king
+  bounds: 685, 1391, 32, 32
+  index: -1
+ui/chess/atomic/b_knight
+  bounds: 1239, 1315, 32, 32
+  index: -1
+ui/chess/atomic/b_pawn
+  bounds: 1159, 1345, 32, 32
+  index: -1
+ui/chess/atomic/b_queen
+  bounds: 1193, 1345, 32, 32
+  index: -1
+ui/chess/atomic/b_rook
+  bounds: 1273, 1315, 32, 32
+  index: -1
+ui/chess/atomic/dark
+  bounds: 1307, 1315, 32, 32
+  index: -1
+ui/chess/atomic/frame_bottom
+  bounds: 1341, 1319, 32, 32
+  index: -1
+ui/chess/atomic/frame_bottom_left
+  bounds: 1227, 1349, 32, 32
+  index: -1
+ui/chess/atomic/frame_bottom_right
+  bounds: 1261, 1349, 32, 32
+  index: -1
+ui/chess/atomic/frame_left
+  bounds: 1295, 1349, 32, 32
+  index: -1
+ui/chess/atomic/frame_right
+  bounds: 1005, 1334, 32, 32
+  index: -1
+ui/chess/atomic/frame_top
+  bounds: 963, 1361, 32, 32
+  index: -1
+ui/chess/atomic/frame_top_left
+  bounds: 913, 1381, 32, 32
+  index: -1
+ui/chess/atomic/frame_top_right
+  bounds: 827, 1388, 32, 32
+  index: -1
+ui/chess/atomic/light
+  bounds: 861, 1388, 32, 32
+  index: -1
+ui/chess/atomic/w_bishop
+  bounds: 767, 1399, 32, 32
+  index: -1
+ui/chess/atomic/w_king
+  bounds: 719, 1424, 32, 32
+  index: -1
+ui/chess/atomic/w_knight
+  bounds: 1039, 1334, 32, 32
+  index: -1
+ui/chess/atomic/w_pawn
+  bounds: 1073, 1334, 32, 32
+  index: -1
+ui/chess/atomic/w_queen
+  bounds: 1107, 1358, 32, 32
+  index: -1
+ui/chess/atomic/w_rook
+  bounds: 1141, 1379, 32, 32
+  index: -1
+ui/chess/badge/amulet
+  bounds: 869, 1422, 24, 24
+  index: -1
+ui/chess/badge/bomb
+  bounds: 699, 1327, 24, 24
+  index: -1
+ui/chess/badge/candle
+  bounds: 927, 743, 24, 24
+  index: -1
+ui/chess/badge/candybag
+  bounds: 1055, 931, 24, 24
+  index: -1
+ui/chess/badge/candycorn
+  bounds: 657, 1395, 24, 24
+  index: -1
+ui/chess/badge/chill
+  bounds: 1127, 1108, 24, 24
+  index: -1
+ui/chess/badge/cooldown
+  bounds: 1811, 809, 24, 24
+  index: -1
+ui/chess/badge/crown
+  bounds: 1543, 601, 24, 24
+  index: -1
+ui/chess/badge/crystal
+  bounds: 979, 991, 24, 24
+  index: -1
+ui/chess/badge/fear
+  bounds: 979, 1017, 24, 24
+  index: -1
+ui/chess/badge/ghost
+  bounds: 1663, 1268, 24, 24
+  index: -1
+ui/chess/badge/ghostjar
+  bounds: 1, 1539, 24, 24
+  index: -1
+ui/chess/badge/goldglass
+  bounds: 103, 1516, 24, 24
+  index: -1
+ui/chess/badge/jack
+  bounds: 27, 1548, 24, 24
+  index: -1
+ui/chess/badge/lantern
+  bounds: 1, 1565, 24, 24
+  index: -1
+ui/chess/badge/mirror
+  bounds: 327, 1506, 24, 24
+  index: -1
+ui/chess/badge/ribcage
+  bounds: 273, 1522, 24, 24
+  index: -1
+ui/chess/badge/sage
+  bounds: 299, 1522, 24, 24
+  index: -1
+ui/chess/badge/salt
+  bounds: 205, 1524, 24, 24
+  index: -1
+ui/chess/badge/scream
+  bounds: 231, 1524, 24, 24
+  index: -1
+ui/chess/badge/shield
+  bounds: 129, 1526, 24, 24
+  index: -1
+ui/chess/badge/skull
+  bounds: 103, 1542, 24, 24
+  index: -1
+ui/chess/badge/tired
+  bounds: 53, 1550, 24, 24
+  index: -1
+ui/chess/coord/1
+  bounds: 1175, 1379, 32, 32
+  index: -1
+ui/chess/coord/2
+  bounds: 997, 1368, 32, 32
+  index: -1
+ui/chess/coord/3
+  bounds: 947, 1395, 32, 32
+  index: -1
+ui/chess/coord/4
+  bounds: 895, 1415, 32, 32
+  index: -1
+ui/chess/coord/5
+  bounds: 1031, 1368, 32, 32
+  index: -1
+ui/chess/coord/6
+  bounds: 1065, 1368, 32, 32
+  index: -1
+ui/chess/coord/7
+  bounds: 1099, 1392, 32, 32
+  index: -1
+ui/chess/coord/8
+  bounds: 801, 1422, 32, 32
+  index: -1
+ui/chess/coord/a
+  bounds: 753, 1433, 32, 32
+  index: -1
+ui/chess/coord/b
+  bounds: 835, 1422, 32, 32
+  index: -1
+ui/chess/coord/c
+  bounds: 981, 1402, 32, 32
+  index: -1
+ui/chess/coord/d
+  bounds: 929, 1429, 32, 32
+  index: -1
+ui/chess/coord/e
+  bounds: 869, 1449, 32, 32
+  index: -1
+ui/chess/coord/f
+  bounds: 787, 1456, 32, 32
+  index: -1
+ui/chess/coord/g
+  bounds: 821, 1456, 32, 32
+  index: -1
+ui/chess/coord/h
+  bounds: 1015, 1402, 32, 32
+  index: -1
+ui/chess/face/crab
+  bounds: 1301, 682, 20, 20
+  index: -1
+ui/chess/face/explorer
+  bounds: 1849, 785, 20, 20
+  index: -1
+ui/chess/face/guard
+  bounds: 331, 1300, 20, 20
+  index: -1
+ui/chess/face/reader
+  bounds: 1477, 1359, 20, 20
+  index: -1
+ui/chess/ghost/b_bishop
+  bounds: 1049, 1402, 32, 32
+  index: -1
+ui/chess/ghost/b_king
+  bounds: 385, 1336, 32, 32
+  index: -1
+ui/chess/ghost/b_knight
+  bounds: 331, 1352, 32, 32
+  index: -1
+ui/chess/ghost/b_pawn
+  bounds: 257, 1354, 32, 32
+  index: -1
+ui/chess/ghost/b_queen
+  bounds: 291, 1354, 32, 32
+  index: -1
+ui/chess/ghost/b_rook
+  bounds: 183, 1356, 32, 32
+  index: -1
+ui/chess/ghost/dark
+  bounds: 217, 1356, 32, 32
+  index: -1
+ui/chess/ghost/frame_bottom
+  bounds: 109, 1380, 32, 32
+  index: -1
+ui/chess/ghost/frame_bottom_left
+  bounds: 143, 1380, 32, 32
+  index: -1
+ui/chess/ghost/frame_bottom_right
+  bounds: 55, 1396, 32, 32
+  index: -1
+ui/chess/ghost/frame_left
+  bounds: 1, 1403, 32, 32
+  index: -1
+ui/chess/ghost/frame_right
+  bounds: 419, 1336, 32, 32
+  index: -1
+ui/chess/ghost/frame_top
+  bounds: 453, 1336, 32, 32
+  index: -1
+ui/chess/ghost/frame_top_left
+  bounds: 487, 1364, 32, 32
+  index: -1
+ui/chess/ghost/frame_top_right
+  bounds: 521, 1364, 32, 32
+  index: -1
+ui/chess/ghost/light
+  bounds: 555, 1369, 32, 32
+  index: -1
+ui/chess/ghost/w_bishop
+  bounds: 589, 1372, 32, 32
+  index: -1
+ui/chess/ghost/w_king
+  bounds: 623, 1395, 32, 32
+  index: -1
+ui/chess/ghost/w_knight
+  bounds: 657, 1425, 32, 32
+  index: -1
+ui/chess/ghost/w_pawn
+  bounds: 691, 1458, 32, 32
+  index: -1
+ui/chess/ghost/w_queen
+  bounds: 725, 1467, 32, 32
+  index: -1
+ui/chess/ghost/w_rook
+  bounds: 365, 1370, 32, 32
+  index: -1
+ui/chess/icon/amulet
+  bounds: 1353, 1215, 48, 48
+  index: -1
+ui/chess/icon/bomb
+  bounds: 1595, 1207, 48, 48
+  index: -1
+ui/chess/icon/candle
+  bounds: 1529, 1232, 48, 48
+  index: -1
+ui/chess/icon/candybag
+  bounds: 1473, 1233, 48, 48
+  index: -1
+ui/chess/icon/candycorn
+  bounds: 1403, 1239, 48, 48
+  index: -1
+ui/chess/icon/chill
+  bounds: 1805, 1186, 48, 48
+  index: -1
+ui/chess/icon/cooldown
+  bounds: 1721, 1200, 48, 48
+  index: -1
+ui/chess/icon/crown
+  bounds: 1645, 1218, 48, 48
+  index: -1
+ui/chess/icon/crystal
+  bounds: 1579, 1257, 48, 48
+  index: -1
+ui/chess/icon/fear
+  bounds: 1523, 1282, 48, 48
+  index: -1
+ui/chess/icon/ghost
+  bounds: 1453, 1283, 48, 48
+  index: -1
+ui/chess/icon/ghostjar
+  bounds: 1855, 1186, 48, 48
+  index: -1
+ui/chess/icon/goldglass
+  bounds: 1905, 1186, 48, 48
+  index: -1
+ui/chess/icon/jack
+  bounds: 1955, 1197, 48, 48
+  index: -1
+ui/chess/icon/lantern
+  bounds: 1005, 1182, 48, 48
+  index: -1
+ui/chess/icon/mirror
+  bounds: 909, 1211, 48, 48
+  index: -1
+ui/chess/icon/ribcage
+  bounds: 821, 1213, 48, 48
+  index: -1
+ui/chess/icon/sage
+  bounds: 743, 1239, 48, 48
+  index: -1
+ui/chess/icon/salt
+  bounds: 1055, 1182, 48, 48
+  index: -1
+ui/chess/icon/scream
+  bounds: 1105, 1182, 48, 48
+  index: -1
+ui/chess/icon/shield
+  bounds: 1155, 1206, 48, 48
+  index: -1
+ui/chess/icon/skull
+  bounds: 1205, 1227, 48, 48
+  index: -1
+ui/chess/icon/tired
+  bounds: 1255, 1231, 48, 48
+  index: -1
+ui/chess/mark/capture
+  bounds: 325, 1386, 32, 32
+  index: -1
+ui/chess/mark/last_move
+  bounds: 251, 1388, 32, 32
+  index: -1
+ui/chess/mark/legal_move
+  bounds: 285, 1388, 32, 32
+  index: -1
+ui/chess/mark/selected
+  bounds: 177, 1390, 32, 32
+  index: -1
+ui/chess/pumpkin/b_bishop
+  bounds: 211, 1390, 32, 32
+  index: -1
+ui/chess/pumpkin/b_king
+  bounds: 89, 1414, 32, 32
+  index: -1
+ui/chess/pumpkin/b_knight
+  bounds: 35, 1430, 32, 32
+  index: -1
+ui/chess/pumpkin/b_pawn
+  bounds: 1, 1437, 32, 32
+  index: -1
+ui/chess/pumpkin/b_queen
+  bounds: 123, 1414, 32, 32
+  index: -1
+ui/chess/pumpkin/b_rook
+  bounds: 399, 1370, 32, 32
+  index: -1
+ui/chess/pumpkin/dark
+  bounds: 433, 1370, 32, 32
+  index: -1
+ui/chess/pumpkin/frame_bottom
+  bounds: 467, 1398, 32, 32
+  index: -1
+ui/chess/pumpkin/frame_bottom_left
+  bounds: 501, 1398, 32, 32
+  index: -1
+ui/chess/pumpkin/frame_bottom_right
+  bounds: 535, 1403, 32, 32
+  index: -1
+ui/chess/pumpkin/frame_left
+  bounds: 569, 1406, 32, 32
+  index: -1
+ui/chess/pumpkin/frame_right
+  bounds: 603, 1429, 32, 32
+  index: -1
+ui/chess/pumpkin/frame_top
+  bounds: 637, 1459, 32, 32
+  index: -1
+ui/chess/pumpkin/frame_top_left
+  bounds: 671, 1492, 32, 32
+  index: -1
+ui/chess/pumpkin/frame_top_right
+  bounds: 359, 1404, 32, 32
+  index: -1
+ui/chess/pumpkin/light
+  bounds: 319, 1420, 32, 32
+  index: -1
+ui/chess/pumpkin/w_bishop
+  bounds: 245, 1422, 32, 32
+  index: -1
+ui/chess/pumpkin/w_king
+  bounds: 279, 1422, 32, 32
+  index: -1
+ui/chess/pumpkin/w_knight
+  bounds: 393, 1404, 32, 32
+  index: -1
+ui/chess/pumpkin/w_pawn
+  bounds: 427, 1404, 32, 32
+  index: -1
+ui/chess/pumpkin/w_queen
+  bounds: 461, 1432, 32, 32
+  index: -1
+ui/chess/pumpkin/w_rook
+  bounds: 495, 1432, 32, 32
+  index: -1
+ui/chess/skeleton/b_bishop
+  bounds: 529, 1437, 32, 32
+  index: -1
+ui/chess/skeleton/b_king
+  bounds: 563, 1440, 32, 32
+  index: -1
+ui/chess/skeleton/b_knight
+  bounds: 597, 1463, 32, 32
+  index: -1
+ui/chess/skeleton/b_pawn
+  bounds: 631, 1493, 32, 32
+  index: -1
+ui/chess/skeleton/b_queen
+  bounds: 157, 1424, 32, 32
+  index: -1
+ui/chess/skeleton/b_rook
+  bounds: 191, 1424, 32, 32
+  index: -1
+ui/chess/skeleton/dark
+  bounds: 69, 1448, 32, 32
+  index: -1
+ui/chess/skeleton/frame_bottom
+  bounds: 35, 1464, 32, 32
+  index: -1
+ui/chess/skeleton/frame_bottom_left
+  bounds: 1, 1471, 32, 32
+  index: -1
+ui/chess/skeleton/frame_bottom_right
+  bounds: 103, 1448, 32, 32
+  index: -1
+ui/chess/skeleton/frame_left
+  bounds: 353, 1438, 32, 32
+  index: -1
+ui/chess/skeleton/frame_right
+  bounds: 313, 1454, 32, 32
+  index: -1
+ui/chess/skeleton/frame_top
+  bounds: 387, 1438, 32, 32
+  index: -1
+ui/chess/skeleton/frame_top_left
+  bounds: 421, 1438, 32, 32
+  index: -1
+ui/chess/skeleton/frame_top_right
+  bounds: 455, 1466, 32, 32
+  index: -1
+ui/chess/skeleton/light
+  bounds: 489, 1466, 32, 32
+  index: -1
+ui/chess/skeleton/w_bishop
+  bounds: 523, 1471, 32, 32
+  index: -1
+ui/chess/skeleton/w_king
+  bounds: 557, 1474, 32, 32
+  index: -1
+ui/chess/skeleton/w_knight
+  bounds: 591, 1497, 32, 32
+  index: -1
+ui/chess/skeleton/w_pawn
+  bounds: 225, 1456, 32, 32
+  index: -1
+ui/chess/skeleton/w_queen
+  bounds: 259, 1456, 32, 32
+  index: -1
+ui/chess/skeleton/w_rook
+  bounds: 137, 1458, 32, 32
+  index: -1
+ui/cursor
+  bounds: 141, 1630, 13, 13
+  index: -1
+ui/depths/arrow
+  bounds: 453, 205, 64, 16
+  index: -1
+ui/depths/square_left
+  bounds: 1193, 1136, 64, 16
+  index: -1
+ui/depths/square_left_2
+  bounds: 1727, 1108, 64, 16
+  index: -1
+ui/depths/square_right
+  bounds: 1643, 1109, 64, 16
+  index: -1
+ui/depths/square_right_2
+  bounds: 1573, 1110, 64, 16
+  index: -1
+ui/depths/square_up_down
+  bounds: 1507, 1111, 64, 16
+  index: -1
+ui/dialog
+  bounds: 1285, 28, 300, 58
+  index: -1
+ui/dialog/choicebox
+  bounds: 1127, 1136, 64, 20
+  index: -1
+ui/dialog/dialogbox
+  bounds: 1285, 28, 300, 58
+  index: -1
+ui/dialog/dialogboxfaceset
+  bounds: 1587, 28, 300, 58
+  index: -1
+ui/dialog/dialoginfo
+  bounds: 1369, 959, 80, 16
+  index: -1
+ui/dialog/dialogueboxsimple
+  bounds: 967, 28, 316, 60
+  index: -1
+ui/dialog/facesetbox
+  bounds: 1305, 1265, 48, 48
+  index: -1
+ui/dialog/nobutton
+  bounds: 683, 807, 26, 16
+  index: -1
+ui/dialog/yesbutton
+  bounds: 281, 788, 26, 16
+  index: -1
+ui/dialog_faceset
+  bounds: 1587, 28, 300, 58
+  index: -1
+ui/emote/emote1
+  bounds: 691, 1269, 14, 13
+  index: -1
+ui/emote/emote10
+  bounds: 1083, 1402, 14, 13
+  index: -1
+ui/emote/emote11
+  bounds: 257, 1524, 14, 13
+  index: -1
+ui/emote/emote12
+  bounds: 2033, 1172, 14, 13
+  index: -1
+ui/emote/emote13
+  bounds: 1579, 1232, 14, 13
+  index: -1
+ui/emote/emote14
+  bounds: 1577, 1059, 14, 13
+  index: -1
+ui/emote/emote15
+  bounds: 913, 1354, 14, 13
+  index: -1
+ui/emote/emote16
+  bounds: 1559, 572, 14, 13
+  index: -1
+ui/emote/emote17
+  bounds: 777, 1289, 14, 13
+  index: -1
+ui/emote/emote18
+  bounds: 777, 1304, 14, 13
+  index: -1
+ui/emote/emote19
+  bounds: 1289, 1281, 14, 13
+  index: -1
+ui/emote/emote2
+  bounds: 1289, 1296, 14, 13
+  index: -1
+ui/emote/emote20
+  bounds: 321, 1078, 14, 13
+  index: -1
+ui/emote/emote21
+  bounds: 321, 1093, 14, 13
+  index: -1
+ui/emote/emote22
+  bounds: 321, 1108, 14, 13
+  index: -1
+ui/emote/emote23
+  bounds: 305, 1152, 14, 13
+  index: -1
+ui/emote/emote24
+  bounds: 305, 1167, 14, 13
+  index: -1
+ui/emote/emote25
+  bounds: 305, 1182, 14, 13
+  index: -1
+ui/emote/emote26
+  bounds: 617, 1196, 14, 13
+  index: -1
+ui/emote/emote27
+  bounds: 617, 1211, 14, 13
+  index: -1
+ui/emote/emote28
+  bounds: 617, 1226, 14, 13
+  index: -1
+ui/emote/emote29
+  bounds: 231, 1089, 14, 13
+  index: -1
+ui/emote/emote3
+  bounds: 231, 1104, 14, 13
+  index: -1
+ui/emote/emote30
+  bounds: 231, 1119, 14, 13
+  index: -1
+ui/emote/emote4
+  bounds: 231, 1134, 14, 13
+  index: -1
+ui/emote/emote5
+  bounds: 395, 1126, 14, 13
+  index: -1
+ui/emote/emote6
+  bounds: 395, 1141, 14, 13
+  index: -1
+ui/emote/emote7
+  bounds: 395, 1156, 14, 13
+  index: -1
+ui/emote/emote8
+  bounds: 395, 1171, 14, 13
+  index: -1
+ui/emote/emote9
+  bounds: 379, 1200, 14, 13
+  index: -1
+ui/faceset_frame
+  bounds: 1305, 1265, 48, 48
+  index: -1
+ui/focus
+  bounds: 1882, 1340, 8, 8
+  split: 3, 3, 3, 3
+  index: -1
+ui/hero/button
+  bounds: 1055, 770, 43, 14
+  index: -1
+ui/hero/button_down
+  bounds: 1201, 793, 43, 14
+  index: -1
+ui/hero/button_off
+  bounds: 1809, 1083, 43, 14
+  index: -1
+ui/hero/button_over
+  bounds: 959, 1238, 43, 14
+  index: -1
+ui/hero/craft_all
+  bounds: 897, 234, 208, 117
+  index: -1
+ui/hero/craft_gear
+  bounds: 671, 258, 208, 117
+  index: -1
+ui/hero/craft_gems
+  bounds: 437, 280, 208, 117
+  index: -1
+ui/hero/equipment
+  bounds: 1575, 544, 160, 85
+  index: -1
+ui/hslider_knob
+  bounds: 886, 1247, 13, 11
+  index: -1
+ui/hslider_knob_disabled
+  bounds: 883, 883, 13, 11
+  index: -1
+ui/hslider_knob_over
+  bounds: 898, 883, 13, 11
+  index: -1
+ui/input/gamepad/buttona/disabled
+  bounds: 79, 1646, 16, 15
+  index: -1
+ui/input/gamepad/buttona/hovered
+  bounds: 53, 1654, 16, 15
+  index: -1
+ui/input/gamepad/buttona/idle
+  bounds: 123, 1630, 16, 15
+  index: -1
+ui/input/gamepad/buttona/pressed
+  bounds: 1407, 1411, 16, 15
+  index: -1
+ui/input/gamepad/buttonb/disabled
+  bounds: 1425, 1411, 16, 15
+  index: -1
+ui/input/gamepad/buttonb/hovered
+  bounds: 1365, 1421, 16, 15
+  index: -1
+ui/input/gamepad/buttonb/idle
+  bounds: 1383, 1421, 16, 15
+  index: -1
+ui/input/gamepad/buttonb/pressed
+  bounds: 1313, 1431, 16, 15
+  index: -1
+ui/input/gamepad/buttondown
+  bounds: 2029, 628, 17, 17
+  index: -1
+ui/input/gamepad/buttonlb
+  bounds: 129, 1340, 17, 11
+  index: -1
+ui/input/gamepad/buttonleft
+  bounds: 673, 999, 17, 17
+  index: -1
+ui/input/gamepad/buttonlt
+  bounds: 663, 835, 17, 13
+  index: -1
+ui/input/gamepad/buttonminus
+  bounds: 421, 392, 14, 5
+  index: -1
+ui/input/gamepad/buttonplus
+  bounds: 379, 1215, 14, 13
+  index: -1
+ui/input/gamepad/buttonrb
+  bounds: 1639, 657, 17, 11
+  index: -1
+ui/input/gamepad/buttonright
+  bounds: 1557, 763, 17, 17
+  index: -1
+ui/input/gamepad/buttonrt
+  bounds: 365, 1352, 17, 13
+  index: -1
+ui/input/gamepad/buttonup
+  bounds: 783, 998, 17, 17
+  index: -1
+ui/input/gamepad/buttonx/disabled
+  bounds: 1331, 1431, 16, 15
+  index: -1
+ui/input/gamepad/buttonx/hovered
+  bounds: 1127, 1439, 16, 15
+  index: -1
+ui/input/gamepad/buttonx/idle
+  bounds: 1109, 1444, 16, 15
+  index: -1
+ui/input/gamepad/buttonx/pressed
+  bounds: 1145, 1439, 16, 15
+  index: -1
+ui/input/gamepad/buttony/buttony
+  bounds: 1163, 1439, 16, 15
+  index: -1
+ui/input/gamepad/buttony/disabled
+  bounds: 1067, 1452, 16, 15
+  index: -1
+ui/input/gamepad/buttony/hovered
+  bounds: 1085, 1452, 16, 15
+  index: -1
+ui/input/gamepad/buttony/pressed
+  bounds: 1975, 1325, 16, 15
+  index: -1
+ui/input/gamepad/dpad
+  bounds: 980, 1462, 15, 14
+  index: -1
+ui/input/gamepad/dpaddown
+  bounds: 944, 1463, 15, 15
+  index: -1
+ui/input/gamepad/dpadleft
+  bounds: 1407, 1369, 16, 14
+  index: -1
+ui/input/gamepad/dpadright
+  bounds: 1975, 1342, 16, 14
+  index: -1
+ui/input/gamepad/dpadup
+  bounds: 1993, 1325, 15, 16
+  index: -1
+ui/input/gamepad/joystickleft
+  bounds: 287, 999, 15, 18
+  index: -1
+ui/input/gamepad/joystickleftpressed
+  bounds: 1247, 765, 15, 22
+  index: -1
+ui/input/gamepad/joystickright
+  bounds: 304, 999, 15, 18
+  index: -1
+ui/input/gamepad/joystickrightpressed
+  bounds: 1643, 1085, 15, 22
+  index: -1
+ui/input/gamepad/select
+  bounds: 923, 854, 26, 9
+  index: -1
+ui/input/gamepad/start
+  bounds: 407, 1296, 26, 9
+  index: -1
+ui/input/icongamepad
+  bounds: 639, 864, 19, 16
+  index: -1
+ui/input/iconkeyboard
+  bounds: 1581, 735, 20, 15
+  index: -1
+ui/input/iconmouse
+  bounds: 1430, 436, 9, 16
+  index: -1
+ui/input/keyboard/key0
+  bounds: 193, 1628, 13, 13
+  index: -1
+ui/input/keyboard/key1
+  bounds: 491, 1560, 13, 13
+  index: -1
+ui/input/keyboard/key2
+  bounds: 1349, 1431, 13, 13
+  index: -1
+ui/input/keyboard/key3
+  bounds: 1443, 1411, 13, 13
+  index: -1
+ui/input/keyboard/key4
+  bounds: 1014, 1462, 13, 13
+  index: -1
+ui/input/keyboard/key5
+  bounds: 1029, 1462, 13, 13
+  index: -1
+ui/input/keyboard/key6
+  bounds: 1044, 1462, 13, 13
+  index: -1
+ui/input/keyboard/key7
+  bounds: 1203, 1435, 13, 13
+  index: -1
+ui/input/keyboard/key8
+  bounds: 1181, 1448, 13, 13
+  index: -1
+ui/input/keyboard/key9
+  bounds: 1127, 1456, 13, 13
+  index: -1
+ui/input/keyboard/keya
+  bounds: 1103, 1461, 13, 13
+  index: -1
+ui/input/keyboard/keyalt
+  bounds: 1425, 1343, 20, 13
+  index: -1
+ui/input/keyboard/keyb
+  bounds: 1142, 1456, 13, 13
+  index: -1
+ui/input/keyboard/keyc
+  bounds: 1157, 1456, 13, 13
+  index: -1
+ui/input/keyboard/keyctrl
+  bounds: 1017, 408, 26, 13
+  index: -1
+ui/input/keyboard/keyd
+  bounds: 1059, 1469, 13, 13
+  index: -1
+ui/input/keyboard/keydelete
+  bounds: 1767, 1294, 20, 13
+  index: -1
+ui/input/keyboard/keydown
+  bounds: 1074, 1469, 13, 13
+  index: -1
+ui/input/keyboard/keye
+  bounds: 1014, 1477, 13, 13
+  index: -1
+ui/input/keyboard/keyenter
+  bounds: 255, 1030, 17, 17
+  index: -1
+ui/input/keyboard/keyescape
+  bounds: 1145, 664, 18, 13
+  index: -1
+ui/input/keyboard/keyf
+  bounds: 1029, 1477, 13, 13
+  index: -1
+ui/input/keyboard/keyf1
+  bounds: 379, 1230, 14, 13
+  index: -1
+ui/input/keyboard/keyf10
+  bounds: 379, 1245, 14, 13
+  index: -1
+ui/input/keyboard/keyf11
+  bounds: 881, 258, 14, 13
+  index: -1
+ui/input/keyboard/keyf12
+  bounds: 881, 273, 14, 13
+  index: -1
+ui/input/keyboard/keyf2
+  bounds: 881, 288, 14, 13
+  index: -1
+ui/input/keyboard/keyf3
+  bounds: 881, 303, 14, 13
+  index: -1
+ui/input/keyboard/keyf4
+  bounds: 881, 318, 14, 13
+  index: -1
+ui/input/keyboard/keyf5
+  bounds: 881, 333, 14, 13
+  index: -1
+ui/input/keyboard/keyf6
+  bounds: 421, 287, 14, 13
+  index: -1
+ui/input/keyboard/keyf7
+  bounds: 421, 302, 14, 13
+  index: -1
+ui/input/keyboard/keyf8
+  bounds: 421, 317, 14, 13
+  index: -1
+ui/input/keyboard/keyf9
+  bounds: 421, 332, 14, 13
+  index: -1
+ui/input/keyboard/keyg
+  bounds: 1044, 1477, 13, 13
+  index: -1
+ui/input/keyboard/keyh
+  bounds: 980, 1478, 13, 13
+  index: -1
+ui/input/keyboard/keyi
+  bounds: 961, 1479, 13, 13
+  index: -1
+ui/input/keyboard/keyj
+  bounds: 995, 1478, 13, 13
+  index: -1
+ui/input/keyboard/keyk
+  bounds: 903, 1480, 13, 13
+  index: -1
+ui/input/keyboard/keyl
+  bounds: 918, 1480, 13, 13
+  index: -1
+ui/input/keyboard/keyleft
+  bounds: 933, 1480, 13, 13
+  index: -1
+ui/input/keyboard/keym
+  bounds: 855, 1483, 13, 13
+  index: -1
+ui/input/keyboard/keyn
+  bounds: 870, 1483, 13, 13
+  index: -1
+ui/input/keyboard/keyo
+  bounds: 885, 1483, 13, 13
+  index: -1
+ui/input/keyboard/keyp
+  bounds: 783, 1490, 13, 13
+  index: -1
+ui/input/keyboard/keyq
+  bounds: 759, 1498, 13, 13
+  index: -1
+ui/input/keyboard/keyr
+  bounds: 723, 1501, 13, 13
+  index: -1
+ui/input/keyboard/keyright
+  bounds: 705, 1510, 13, 13
+  index: -1
+ui/input/keyboard/keys
+  bounds: 738, 1501, 13, 13
+  index: -1
+ui/input/keyboard/keyshift
+  bounds: 1603, 707, 30, 13
+  index: -1
+ui/input/keyboard/keyspace
+  bounds: 855, 582, 33, 13
+  index: -1
+ui/input/keyboard/keyt
+  bounds: 798, 1490, 13, 13
+  index: -1
+ui/input/keyboard/keytab
+  bounds: 107, 983, 22, 13
+  index: -1
+ui/input/keyboard/keyu
+  bounds: 813, 1490, 13, 13
+  index: -1
+ui/input/keyboard/keyup
+  bounds: 828, 1490, 13, 13
+  index: -1
+ui/input/keyboard/keyv
+  bounds: 1218, 1435, 13, 13
+  index: -1
+ui/input/keyboard/keyw
+  bounds: 1233, 1435, 13, 13
+  index: -1
+ui/input/keyboard/keyx
+  bounds: 1248, 1435, 13, 13
+  index: -1
+ui/input/keyboard/keyy
+  bounds: 1263, 1435, 13, 13
+  index: -1
+ui/input/keyboard/keyz
+  bounds: 1278, 1435, 13, 13
+  index: -1
+ui/input/mouse/mouse
+  bounds: 891, 495, 15, 20
+  index: -1
+ui/input/mouse/mousebuttonleft
+  bounds: 55, 1347, 15, 20
+  index: -1
+ui/input/mouse/mousebuttonmiddle
+  bounds: 353, 1274, 15, 20
+  index: -1
+ui/input/mouse/mousebuttonright
+  bounds: 1413, 436, 15, 20
+  index: -1
+ui/input/mouse/mousedisabled
+  bounds: 1045, 381, 15, 20
+  index: -1
+ui/input/mouse/mousewheeldown
+  bounds: 1062, 381, 15, 20
+  index: -1
+ui/input/mouse/mousewheelup
+  bounds: 955, 715, 15, 24
+  index: -1
+ui/input/tuto
+  bounds: 1817, 88, 226, 40
+  index: -1
+ui/panel
+  bounds: 693, 975, 16, 16
+  split: 6, 5, 6, 5
+  pad: 8, 8, 7, 7
+  index: -1
+ui/panel_2
+  bounds: 665, 1304, 16, 16
+  split: 6, 5, 6, 5
+  pad: 8, 8, 7, 7
+  index: -1
+ui/panel_3
+  bounds: 801, 1399, 16, 16
+  split: 6, 5, 6, 5
+  pad: 8, 8, 7, 7
+  index: -1
+ui/panel_disabled
+  bounds: 623, 1372, 16, 16
+  split: 6, 5, 6, 5
+  index: -1
+ui/panel_interior
+  bounds: 1473, 841, 16, 16
+  split: 3, 2, 3, 2
+  index: -1
+ui/paper/scroll5
+  bounds: 171, 1458, 32, 32
+  index: -1
+ui/paper/stained_1
+  bounds: 69, 1482, 32, 32
+  index: -1
+ui/paper/stained_2
+  bounds: 35, 1498, 32, 32
+  index: -1
+ui/paper/stained_3
+  bounds: 1, 1505, 32, 32
+  index: -1
+ui/paper/stained_4
+  bounds: 103, 1482, 32, 32
+  index: -1
+ui/paper/stained_5
+  bounds: 347, 1472, 32, 32
+  index: -1
+ui/paper/stained_6
+  bounds: 293, 1488, 32, 32
+  index: -1
+ui/paper/stained_7
+  bounds: 381, 1472, 32, 32
+  index: -1
+ui/paper/stained_8
+  bounds: 415, 1472, 32, 32
+  index: -1
+ui/paper/stained_9
+  bounds: 449, 1500, 32, 32
+  index: -1
+ui/px
+  bounds: 625, 941, 1, 1
+  index: -1
+ui/radio_off
+  bounds: 1155, 1182, 16, 16
+  index: -1
+ui/radio_off_disabled
+  bounds: 675, 1251, 16, 16
+  index: -1
+ui/radio_on
+  bounds: 1491, 841, 16, 16
+  index: -1
+ui/radio_on_disabled
+  bounds: 1509, 841, 16, 16
+  index: -1
+ui/receptacle/heart
+  bounds: 1369, 977, 80, 16
+  index: -1
+ui/receptacle/heart2
+  bounds: 1793, 1108, 64, 16
+  index: -1
+ui/receptacle/heart3
+  bounds: 1709, 1126, 64, 16
+  index: -1
+ui/receptacle/iconheart
+  bounds: 1559, 587, 14, 12
+  index: -1
+ui/receptacle/lifebarminiprogress
+  bounds: 179, 430, 18, 4
+  index: -1
+ui/receptacle/lifebarminiunder
+  bounds: 157, 1414, 18, 4
+  index: -1
+ui/receptacle/receptacle_rectangle/ammokunai
+  bounds: 647, 364, 22, 10
+  index: -1
+ui/receptacle/receptacle_rectangle/ammoskill
+  bounds: 1667, 1181, 22, 10
+  index: -1
+ui/receptacle/receptacle_rectangle/ammospecial
+  bounds: 913, 1369, 11, 10
+  index: -1
+ui/receptacle/receptacle_rectangle/backgroundbag
+  bounds: 931, 1065, 42, 58
+  index: -1
+ui/receptacle/receptacle_rectangle/backgroundbamboo
+  bounds: 707, 1177, 34, 56
+  index: -1
+ui/receptacle/receptacle_rectangle/backgroundbottle
+  bounds: 1607, 957, 32, 63
+  index: -1
+ui/receptacle/receptacle_rectangle/backgroundscroll
+  bounds: 411, 1052, 38, 66
+  index: -1
+ui/receptacle/receptacle_rectangle/backgroundwood
+  bounds: 707, 1235, 34, 56
+  index: -1
+ui/receptacle/receptacle_rectangle/progresshealth
+  bounds: 647, 280, 22, 40
+  index: -1
+ui/receptacle/receptacle_rectangle/progresswhite
+  bounds: 647, 322, 22, 40
+  index: -1
+ui/receptacle/receptacle_sphere/backgroundbamboo
+  bounds: 483, 1500, 32, 32
+  index: -1
+ui/receptacle/receptacle_sphere/backgroundflask
+  bounds: 517, 1505, 32, 32
+  index: -1
+ui/receptacle/receptacle_sphere/backgroundiron
+  bounds: 551, 1508, 32, 32
+  index: -1
+ui/receptacle/receptacle_sphere/backgroundiron2
+  bounds: 205, 1490, 32, 32
+  index: -1
+ui/receptacle/receptacle_sphere/backgroundmetal
+  bounds: 239, 1490, 32, 32
+  index: -1
+ui/receptacle/receptacle_sphere/backgroundred
+  bounds: 137, 1492, 32, 32
+  index: -1
+ui/receptacle/receptacle_sphere/backgroundwood
+  bounds: 171, 1492, 32, 32
+  index: -1
+ui/receptacle/receptacle_sphere/over
+  bounds: 69, 1516, 32, 32
+  index: -1
+ui/receptacle/receptacle_sphere/progressblack
+  bounds: 1265, 737, 22, 22
+  index: -1
+ui/receptacle/receptacle_sphere/progressgreen
+  bounds: 181, 1526, 22, 22
+  index: -1
+ui/receptacle/receptacle_sphere/progresshealth
+  bounds: 233, 1550, 22, 22
+  index: -1
+ui/receptacle/receptacle_sphere/progressmana
+  bounds: 157, 1578, 22, 22
+  index: -1
+ui/receptacle/receptacle_sphere/progresspurple
+  bounds: 1085, 847, 22, 22
+  index: -1
+ui/receptacle/receptacle_sphere/progresswhite
+  bounds: 793, 1239, 22, 22
+  index: -1
+ui/receptacle/receptacle_sphere/progressyellow
+  bounds: 1891, 1137, 22, 22
+  index: -1
+ui/skill/bolt
+  bounds: 27, 1574, 24, 24
+  index: -1
+ui/skill/fireblast
+  bounds: 1, 1591, 24, 24
+  index: -1
+ui/skill/firering
+  bounds: 155, 1526, 24, 24
+  index: -1
+ui/skill/firestar
+  bounds: 353, 1506, 24, 24
+  index: -1
+ui/skill/frozenheart
+  bounds: 379, 1506, 24, 24
+  index: -1
+ui/skill/holyascend
+  bounds: 405, 1506, 24, 24
+  index: -1
+ui/skill/holybind
+  bounds: 325, 1532, 24, 24
+  index: -1
+ui/skill/holysmite
+  bounds: 257, 1548, 24, 24
+  index: -1
+ui/skill/holyward
+  bounds: 283, 1548, 24, 24
+  index: -1
+ui/skill/icecrescent
+  bounds: 181, 1550, 24, 24
+  index: -1
+ui/skill/iceform
+  bounds: 207, 1550, 24, 24
+  index: -1
+ui/skill/icerain
+  bounds: 129, 1552, 24, 24
+  index: -1
+ui/skill/nova
+  bounds: 155, 1552, 24, 24
+  index: -1
+ui/skill/pumpkinlamp
+  bounds: 79, 1568, 24, 24
+  index: -1
+ui/skill/pumpkinlantern
+  bounds: 53, 1576, 24, 24
+  index: -1
+ui/skill/pumpkinmight
+  bounds: 27, 1600, 24, 24
+  index: -1
+ui/skill/pumpkinvortex
+  bounds: 1, 1617, 24, 24
+  index: -1
+ui/skill/rebirth
+  bounds: 351, 1532, 24, 24
+  index: -1
+ui/skill/shadeflurry
+  bounds: 377, 1532, 24, 24
+  index: -1
+ui/skill/shadehaste
+  bounds: 403, 1532, 24, 24
+  index: -1
+ui/skill/shadeorb
+  bounds: 429, 1534, 24, 24
+  index: -1
+ui/skill/shadepalm
+  bounds: 455, 1534, 24, 24
+  index: -1
+ui/skill/shock
+  bounds: 481, 1534, 24, 24
+  index: -1
+ui/skill/swiftthunder
+  bounds: 507, 1539, 24, 24
+  index: -1
+ui/skill/venomlunge
+  bounds: 309, 1558, 24, 24
+  index: -1
+ui/skill/venommeteor
+  bounds: 233, 1574, 24, 24
+  index: -1
+ui/skill/venomstomp
+  bounds: 259, 1574, 24, 24
+  index: -1
+ui/skill/venomstride
+  bounds: 181, 1576, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/amulet
+  bounds: 207, 1576, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/amuletdisabled
+  bounds: 105, 1578, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/armor
+  bounds: 79, 1594, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/armordisabled
+  bounds: 53, 1602, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/arrow
+  bounds: 27, 1626, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/arrowdisabled
+  bounds: 1, 1643, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/boot
+  bounds: 131, 1578, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/bootdisabled
+  bounds: 335, 1558, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/guard
+  bounds: 361, 1558, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/guarddisabled
+  bounds: 387, 1558, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/helmet
+  bounds: 413, 1560, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/helmetdisabled
+  bounds: 439, 1560, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/hook
+  bounds: 465, 1560, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/hookdisabled
+  bounds: 285, 1584, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/kunai
+  bounds: 233, 1600, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/kunaidisabled
+  bounds: 259, 1600, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/money
+  bounds: 157, 1602, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/moneydisabled
+  bounds: 183, 1602, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/ring
+  bounds: 105, 1604, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/ringdisabled
+  bounds: 79, 1620, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/scroll
+  bounds: 53, 1628, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/scrolldisabled
+  bounds: 27, 1652, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/shuriken
+  bounds: 1, 1669, 24, 24
+  index: -1
+ui/skill_icon/items_and_weapon/shurikendisabled
+  bounds: 131, 1604, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/cook
+  bounds: 311, 1584, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/cookdisabled
+  bounds: 337, 1584, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/dish
+  bounds: 363, 1584, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/dishdisabled
+  bounds: 1805, 1236, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/harvest
+  bounds: 1831, 1236, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/harvestdisabled
+  bounds: 1857, 1236, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/interact
+  bounds: 1883, 1236, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/interactdisabled
+  bounds: 1909, 1236, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/mine
+  bounds: 1935, 1247, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/minedisabled
+  bounds: 1961, 1247, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/plant
+  bounds: 1987, 1247, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/plantdisabled
+  bounds: 2013, 1247, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/potion
+  bounds: 1805, 1262, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/potiondisabled
+  bounds: 1763, 1268, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/punch
+  bounds: 1689, 1284, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/punchdisabled
+  bounds: 1663, 1294, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/repair
+  bounds: 1629, 1302, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/repairdisabled
+  bounds: 1715, 1284, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/sing
+  bounds: 1573, 1307, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/singdisabled
+  bounds: 1599, 1307, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/talk
+  bounds: 1503, 1332, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/talkdisabled
+  bounds: 1529, 1332, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/water
+  bounds: 1447, 1333, 24, 24
+  index: -1
+ui/skill_icon/job_and_action/waterdisabled
+  bounds: 1473, 1333, 24, 24
+  index: -1
+ui/skill_icon/meteo/moon
+  bounds: 1399, 1343, 24, 24
+  index: -1
+ui/skill_icon/meteo/moondisabled
+  bounds: 1329, 1353, 24, 24
+  index: -1
+ui/skill_icon/meteo/rain
+  bounds: 1355, 1353, 24, 24
+  index: -1
+ui/skill_icon/meteo/raindisabled
+  bounds: 1831, 1262, 24, 24
+  index: -1
+ui/skill_icon/meteo/snow
+  bounds: 1857, 1262, 24, 24
+  index: -1
+ui/skill_icon/meteo/snowdisabled
+  bounds: 1883, 1262, 24, 24
+  index: -1
+ui/skill_icon/meteo/sun
+  bounds: 1909, 1262, 24, 24
+  index: -1
+ui/skill_icon/meteo/sundisabled
+  bounds: 1935, 1273, 24, 24
+  index: -1
+ui/skill_icon/spell/alchemy
+  bounds: 1961, 1273, 24, 24
+  index: -1
+ui/skill_icon/spell/alchemydisabled
+  bounds: 1987, 1273, 24, 24
+  index: -1
+ui/skill_icon/spell/attackupgrade
+  bounds: 2013, 1273, 24, 24
+  index: -1
+ui/skill_icon/spell/attackupgradedisabled
+  bounds: 1789, 1288, 24, 24
+  index: -1
+ui/skill_icon/spell/bookdarkness
+  bounds: 1741, 1294, 24, 24
+  index: -1
+ui/skill_icon/spell/bookdarknessdisabled
+  bounds: 1689, 1310, 24, 24
+  index: -1
+ui/skill_icon/spell/bookdeath
+  bounds: 1715, 1310, 24, 24
+  index: -1
+ui/skill_icon/spell/bookdeathdisabled
+  bounds: 1655, 1320, 24, 24
+  index: -1
+ui/skill_icon/spell/bookfire
+  bounds: 1625, 1328, 24, 24
+  index: -1
+ui/skill_icon/spell/bookfiredisabled
+  bounds: 1555, 1333, 24, 24
+  index: -1
+ui/skill_icon/spell/bookice
+  bounds: 1581, 1333, 24, 24
+  index: -1
+ui/skill_icon/spell/bookicedisabled
+  bounds: 1499, 1358, 24, 24
+  index: -1
+ui/skill_icon/spell/booklight
+  bounds: 1525, 1358, 24, 24
+  index: -1
+ui/skill_icon/spell/booklightdisabled
+  bounds: 1425, 1359, 24, 24
+  index: -1
+ui/skill_icon/spell/bookplant
+  bounds: 1381, 1369, 24, 24
+  index: -1
+ui/skill_icon/spell/bookplantdisabled
+  bounds: 1451, 1359, 24, 24
+  index: -1
+ui/skill_icon/spell/bookrock
+  bounds: 1329, 1379, 24, 24
+  index: -1
+ui/skill_icon/spell/bookrockdisabled
+  bounds: 1355, 1379, 24, 24
+  index: -1
+ui/skill_icon/spell/bookthunder
+  bounds: 1209, 1383, 24, 24
+  index: -1
+ui/skill_icon/spell/bookthunderdisabled
+  bounds: 1235, 1383, 24, 24
+  index: -1
+ui/skill_icon/spell/bookwind
+  bounds: 1261, 1383, 24, 24
+  index: -1
+ui/skill_icon/spell/bookwinddisabled
+  bounds: 1287, 1383, 24, 24
+  index: -1
+ui/skill_icon/spell/camouflage
+  bounds: 1815, 1288, 24, 24
+  index: -1
+ui/skill_icon/spell/camouflagedisabled
+  bounds: 1841, 1288, 24, 24
+  index: -1
+ui/skill_icon/spell/counter
+  bounds: 1867, 1288, 24, 24
+  index: -1
+ui/skill_icon/spell/counterdisabled
+  bounds: 1893, 1288, 24, 24
+  index: -1
+ui/skill_icon/spell/cut
+  bounds: 1919, 1299, 24, 24
+  index: -1
+ui/skill_icon/spell/cutdisabled
+  bounds: 1945, 1299, 24, 24
+  index: -1
+ui/skill_icon/spell/death
+  bounds: 1971, 1299, 24, 24
+  index: -1
+ui/skill_icon/spell/deathdisabled
+  bounds: 1997, 1299, 24, 24
+  index: -1
+ui/skill_icon/spell/defenseupgrade
+  bounds: 2023, 1299, 24, 24
+  index: -1
+ui/skill_icon/spell/defenseupgradedisabled
+  bounds: 1767, 1314, 24, 24
+  index: -1
+ui/skill_icon/spell/downgrade
+  bounds: 1741, 1320, 24, 24
+  index: -1
+ui/skill_icon/spell/downgradedisabled
+  bounds: 1681, 1336, 24, 24
+  index: -1
+ui/skill_icon/spell/explosion
+  bounds: 1651, 1346, 24, 24
+  index: -1
+ui/skill_icon/spell/explosiondisabled
+  bounds: 1707, 1336, 24, 24
+  index: -1
+ui/skill_icon/spell/fireball
+  bounds: 1607, 1354, 24, 24
+  index: -1
+ui/skill_icon/spell/fireballdisabled
+  bounds: 1551, 1359, 24, 24
+  index: -1
+ui/skill_icon/spell/heal
+  bounds: 1577, 1359, 24, 24
+  index: -1
+ui/skill_icon/spell/healdisabled
+  bounds: 1477, 1384, 24, 24
+  index: -1
+ui/skill_icon/spell/luckupgrade
+  bounds: 1503, 1384, 24, 24
+  index: -1
+ui/skill_icon/spell/luckupgradedisabled
+  bounds: 1407, 1385, 24, 24
+  index: -1
+ui/skill_icon/spell/magicweapon
+  bounds: 1381, 1395, 24, 24
+  index: -1
+ui/skill_icon/spell/magicweapondisabled
+  bounds: 1433, 1385, 24, 24
+  index: -1
+ui/skill_icon/spell/mist
+  bounds: 1313, 1405, 24, 24
+  index: -1
+ui/skill_icon/spell/mistdisabled
+  bounds: 1339, 1405, 24, 24
+  index: -1
+ui/skill_icon/spell/necromancy
+  bounds: 1209, 1409, 24, 24
+  index: -1
+ui/skill_icon/spell/necromancydisabled
+  bounds: 1133, 1413, 24, 24
+  index: -1
+ui/skill_icon/spell/orbdarkness
+  bounds: 1083, 1426, 24, 24
+  index: -1
+ui/skill_icon/spell/orbdisabled
+  bounds: 1159, 1413, 24, 24
+  index: -1
+ui/skill_icon/spell/orbfire
+  bounds: 1235, 1409, 24, 24
+  index: -1
+ui/skill_icon/spell/orblight
+  bounds: 1261, 1409, 24, 24
+  index: -1
+ui/skill_icon/spell/orbplant
+  bounds: 1287, 1409, 24, 24
+  index: -1
+ui/skill_icon/spell/orbwater
+  bounds: 963, 1436, 24, 24
+  index: -1
+ui/skill_icon/spell/permutation
+  bounds: 989, 1436, 24, 24
+  index: -1
+ui/skill_icon/spell/permutationdisabled
+  bounds: 1015, 1436, 24, 24
+  index: -1
+ui/skill_icon/spell/rockspike
+  bounds: 1041, 1436, 24, 24
+  index: -1
+ui/skill_icon/spell/rockspikedisabled
+  bounds: 1793, 1314, 24, 24
+  index: -1
+ui/skill_icon/spell/upgrade
+  bounds: 1819, 1314, 24, 24
+  index: -1
+ui/skill_icon/spell/upgradedisabled
+  bounds: 1845, 1314, 24, 24
+  index: -1
+ui/skill_icon/spell/vision
+  bounds: 1871, 1314, 24, 24
+  index: -1
+ui/skill_icon/spell/visiondisabled
+  bounds: 1897, 1325, 24, 24
+  index: -1
+ui/skill_icon/spell/watercanon
+  bounds: 1923, 1325, 24, 24
+  index: -1
+ui/skill_icon/spell/watercanondisabled
+  bounds: 1949, 1325, 24, 24
+  index: -1
+ui/slider_fill
+  bounds: 1339, 817, 16, 16
+  split: 3, 4, 3, 3
+  index: -1
+ui/slider_fill_over
+  bounds: 1357, 817, 16, 16
+  split: 3, 4, 3, 3
+  index: -1
+ui/sunny/animals/bull_idle_down
+  bounds: 199, 403, 176, 34
+  index: -1
+ui/sunny/animals/bull_idle_left
+  bounds: 1, 430, 176, 34
+  index: -1
+ui/sunny/animals/bull_idle_right
+  bounds: 377, 427, 176, 34
+  index: -1
+ui/sunny/animals/bull_idle_up
+  bounds: 179, 439, 176, 34
+  index: -1
+ui/sunny/animals/bull_walk_down
+  bounds: 1285, 88, 264, 34
+  index: -1
+ui/sunny/animals/bull_walk_left
+  bounds: 1551, 88, 264, 34
+  index: -1
+ui/sunny/animals/bull_walk_right
+  bounds: 1, 55, 264, 34
+  index: -1
+ui/sunny/animals/bull_walk_up
+  bounds: 267, 55, 264, 34
+  index: -1
+ui/sunny/animals/calf_idle_down
+  bounds: 1911, 351, 136, 24
+  index: -1
+ui/sunny/animals/calf_idle_left
+  bounds: 1539, 808, 136, 24
+  index: -1
+ui/sunny/animals/calf_idle_right
+  bounds: 1393, 815, 136, 24
+  index: -1
+ui/sunny/animals/calf_idle_up
+  bounds: 1201, 817, 136, 24
+  index: -1
+ui/sunny/animals/calf_walk_down
+  bounds: 1107, 321, 204, 24
+  index: -1
+ui/sunny/animals/calf_walk_left
+  bounds: 1527, 297, 204, 24
+  index: -1
+ui/sunny/animals/calf_walk_right
+  bounds: 1733, 297, 204, 24
+  index: -1
+ui/sunny/animals/calf_walk_up
+  bounds: 1527, 323, 204, 24
+  index: -1
+ui/sunny/animals/chick_idle_down
+  bounds: 433, 988, 40, 11
+  index: -1
+ui/sunny/animals/chick_idle_left
+  bounds: 377, 403, 40, 11
+  index: -1
+ui/sunny/animals/chick_idle_right
+  bounds: 523, 1003, 40, 11
+  index: -1
+ui/sunny/animals/chick_idle_up
+  bounds: 1005, 1164, 40, 11
+  index: -1
+ui/sunny/animals/chick_walk_down
+  bounds: 1659, 631, 60, 11
+  index: -1
+ui/sunny/animals/chick_walk_left
+  bounds: 1439, 1134, 60, 11
+  index: -1
+ui/sunny/animals/chick_walk_right
+  bounds: 1373, 1146, 60, 11
+  index: -1
+ui/sunny/animals/chick_walk_up
+  bounds: 1435, 1147, 60, 11
+  index: -1
+ui/sunny/animals/lamb_idle_down
+  bounds: 1941, 675, 104, 21
+  index: -1
+ui/sunny/animals/lamb_idle_left
+  bounds: 131, 976, 104, 21
+  index: -1
+ui/sunny/animals/lamb_idle_right
+  bounds: 1, 983, 104, 21
+  index: -1
+ui/sunny/animals/lamb_idle_up
+  bounds: 237, 976, 104, 21
+  index: -1
+ui/sunny/animals/lamb_walk_down
+  bounds: 987, 664, 156, 21
+  index: -1
+ui/sunny/animals/lamb_walk_left
+  bounds: 1323, 656, 156, 21
+  index: -1
+ui/sunny/animals/lamb_walk_right
+  bounds: 1659, 648, 156, 21
+  index: -1
+ui/sunny/animals/lamb_walk_up
+  bounds: 1481, 657, 156, 21
+  index: -1
+ui/sunny/animals/piglet_idle_down
+  bounds: 1247, 843, 88, 17
+  index: -1
+ui/sunny/animals/piglet_idle_left
+  bounds: 911, 435, 88, 17
+  index: -1
+ui/sunny/animals/piglet_idle_right
+  bounds: 583, 999, 88, 17
+  index: -1
+ui/sunny/animals/piglet_idle_up
+  bounds: 433, 1003, 88, 17
+  index: -1
+ui/sunny/animals/piglet_walk_down
+  bounds: 1895, 628, 132, 17
+  index: -1
+ui/sunny/animals/piglet_walk_left
+  bounds: 1267, 463, 132, 17
+  index: -1
+ui/sunny/animals/piglet_walk_right
+  bounds: 951, 847, 132, 17
+  index: -1
+ui/sunny/animals/piglet_walk_up
+  bounds: 269, 835, 132, 17
+  index: -1
+ui/sunny/animals/rooster_idle_down
+  bounds: 979, 796, 72, 20
+  index: -1
+ui/sunny/animals/rooster_idle_left
+  bounds: 1973, 647, 72, 20
+  index: -1
+ui/sunny/animals/rooster_idle_right
+  bounds: 1665, 899, 72, 20
+  index: -1
+ui/sunny/animals/rooster_idle_up
+  bounds: 1113, 819, 72, 20
+  index: -1
+ui/sunny/animals/rooster_walk_down
+  bounds: 1939, 297, 108, 20
+  index: -1
+ui/sunny/animals/rooster_walk_left
+  bounds: 1937, 516, 108, 20
+  index: -1
+ui/sunny/animals/rooster_walk_right
+  bounds: 1927, 703, 108, 20
+  index: -1
+ui/sunny/animals/rooster_walk_up
+  bounds: 485, 957, 108, 20
+  index: -1
+ui/sunny/animals/sheep_idle_down
+  bounds: 1933, 1, 112, 24
+  index: -1
+ui/sunny/animals/sheep_idle_left
+  bounds: 1929, 184, 112, 24
+  index: -1
+ui/sunny/animals/sheep_idle_right
+  bounds: 1933, 323, 112, 24
+  index: -1
+ui/sunny/animals/sheep_idle_up
+  bounds: 1933, 867, 112, 24
+  index: -1
+ui/sunny/animals/sheep_walk_down
+  bounds: 1875, 405, 168, 24
+  index: -1
+ui/sunny/animals/sheep_walk_left
+  bounds: 357, 581, 168, 24
+  index: -1
+ui/sunny/animals/sheep_walk_right
+  bounds: 179, 592, 168, 24
+  index: -1
+ui/sunny/animals/sheep_walk_up
+  bounds: 1, 613, 168, 24
+  index: -1
+ui/sunny/animals/turkey_idle_down
+  bounds: 1951, 488, 96, 22
+  index: -1
+ui/sunny/animals/turkey_idle_left
+  bounds: 717, 974, 96, 22
+  index: -1
+ui/sunny/animals/turkey_idle_right
+  bounds: 595, 975, 96, 22
+  index: -1
+ui/sunny/animals/turkey_idle_up
+  bounds: 485, 979, 96, 22
+  index: -1
+ui/sunny/animals/turkey_walk_down
+  bounds: 1393, 791, 144, 22
+  index: -1
+ui/sunny/animals/turkey_walk_left
+  bounds: 1873, 759, 144, 22
+  index: -1
+ui/sunny/animals/turkey_walk_right
+  bounds: 1873, 783, 144, 22
+  index: -1
+ui/sunny/animals/turkey_walk_up
+  bounds: 1703, 785, 144, 22
+  index: -1
+ui/sunny/box_dark
+  bounds: 385, 1325, 9, 9
+  split: 3, 3, 3, 3
+  index: -1
+ui/sunny/box_light
+  bounds: 396, 1325, 9, 9
+  split: 3, 3, 3, 3
+  index: -1
+ui/sunny/box_white
+  bounds: 1955, 1186, 9, 9
+  split: 3, 3, 3, 3
+  index: -1
+ui/sunny/crops/beetroot_00
+  bounds: 1202, 1424, 5, 5
+  index: -1
+ui/sunny/crops/beetroot_01
+  bounds: 997, 1361, 6, 5
+  index: -1
+ui/sunny/crops/beetroot_02
+  bounds: 1461, 886, 8, 6
+  index: -1
+ui/sunny/crops/beetroot_03
+  bounds: 2039, 1247, 8, 11
+  index: -1
+ui/sunny/crops/beetroot_04
+  bounds: 693, 1251, 12, 14
+  index: -1
+ui/sunny/crops/beetroot_05
+  bounds: 633, 1156, 16, 16
+  index: -1
+ui/sunny/crops/cabbage_00
+  bounds: 1059, 1462, 5, 5
+  index: -1
+ui/sunny/crops/cabbage_01
+  bounds: 1289, 724, 10, 7
+  index: -1
+ui/sunny/crops/cabbage_02
+  bounds: 742, 1458, 8, 7
+  index: -1
+ui/sunny/crops/cabbage_03
+  bounds: 973, 702, 12, 10
+  index: -1
+ui/sunny/crops/cabbage_04
+  bounds: 565, 1003, 16, 13
+  index: -1
+ui/sunny/crops/cabbage_05
+  bounds: 1081, 945, 12, 11
+  index: -1
+ui/sunny/crops/carrot_00
+  bounds: 1403, 1230, 7, 7
+  index: -1
+ui/sunny/crops/carrot_01
+  bounds: 827, 1288, 6, 7
+  index: -1
+ui/sunny/crops/carrot_02
+  bounds: 27, 1539, 6, 7
+  index: -1
+ui/sunny/crops/carrot_03
+  bounds: 1353, 1203, 8, 10
+  index: -1
+ui/sunny/crops/carrot_04
+  bounds: 1289, 709, 10, 13
+  index: -1
+ui/sunny/crops/carrot_05
+  bounds: 869, 914, 12, 12
+  index: -1
+ui/sunny/crops/cauliflower_00
+  bounds: 1412, 1230, 5, 5
+  index: -1
+ui/sunny/crops/cauliflower_01
+  bounds: 1733, 1336, 6, 7
+  index: -1
+ui/sunny/crops/cauliflower_02
+  bounds: 1441, 1038, 8, 8
+  index: -1
+ui/sunny/crops/cauliflower_03
+  bounds: 1837, 824, 10, 11
+  index: -1
+ui/sunny/crops/cauliflower_04
+  bounds: 1071, 1094, 12, 12
+  index: -1
+ui/sunny/crops/cauliflower_05
+  bounds: 1541, 1182, 12, 12
+  index: -1
+ui/sunny/crops/crate_base
+  bounds: 651, 1156, 16, 16
+  index: -1
+ui/sunny/crops/crate_top
+  bounds: 2010, 1325, 16, 14
+  index: -1
+ui/sunny/crops/egg
+  bounds: 1799, 854, 10, 11
+  index: -1
+ui/sunny/crops/fish
+  bounds: 685, 1361, 11, 11
+  index: -1
+ui/sunny/crops/gold_ore
+  bounds: 375, 945, 10, 10
+  index: -1
+ui/sunny/crops/kale_00
+  bounds: 1146, 1281, 5, 5
+  index: -1
+ui/sunny/crops/kale_01
+  bounds: 1103, 1452, 4, 7
+  index: -1
+ui/sunny/crops/kale_02
+  bounds: 395, 854, 6, 8
+  index: -1
+ui/sunny/crops/kale_03
+  bounds: 1805, 1175, 10, 9
+  index: -1
+ui/sunny/crops/kale_04
+  bounds: 947, 1381, 14, 11
+  index: -1
+ui/sunny/crops/kale_05
+  bounds: 421, 379, 14, 11
+  index: -1
+ui/sunny/crops/milk
+  bounds: 989, 1279, 10, 12
+  index: -1
+ui/sunny/crops/parsnip_00
+  bounds: 1555, 1173, 6, 6
+  index: -1
+ui/sunny/crops/parsnip_01
+  bounds: 651, 1353, 6, 6
+  index: -1
+ui/sunny/crops/parsnip_02
+  bounds: 1843, 1099, 8, 7
+  index: -1
+ui/sunny/crops/parsnip_03
+  bounds: 1293, 1136, 8, 8
+  index: -1
+ui/sunny/crops/parsnip_04
+  bounds: 893, 1044, 10, 14
+  index: -1
+ui/sunny/crops/parsnip_05
+  bounds: 1313, 1383, 14, 14
+  index: -1
+ui/sunny/crops/potato_00
+  bounds: 787, 1448, 6, 6
+  index: -1
+ui/sunny/crops/potato_01
+  bounds: 91, 1022, 6, 6
+  index: -1
+ui/sunny/crops/potato_02
+  bounds: 1872, 1340, 8, 8
+  index: -1
+ui/sunny/crops/potato_03
+  bounds: 2039, 1260, 8, 11
+  index: -1
+ui/sunny/crops/potato_04
+  bounds: 802, 998, 11, 15
+  index: -1
+ui/sunny/crops/potato_05
+  bounds: 832, 945, 10, 10
+  index: -1
+ui/sunny/crops/pumpkin_00
+  bounds: 1137, 1281, 7, 7
+  index: -1
+ui/sunny/crops/pumpkin_01
+  bounds: 1173, 1197, 8, 7
+  index: -1
+ui/sunny/crops/pumpkin_02
+  bounds: 1966, 1186, 9, 9
+  index: -1
+ui/sunny/crops/pumpkin_03
+  bounds: 1593, 1045, 12, 11
+  index: -1
+ui/sunny/crops/pumpkin_04
+  bounds: 519, 205, 12, 14
+  index: -1
+ui/sunny/crops/pumpkin_05
+  bounds: 1233, 550, 12, 14
+  index: -1
+ui/sunny/crops/radish_00
+  bounds: 99, 1022, 6, 6
+  index: -1
+ui/sunny/crops/radish_01
+  bounds: 1727, 1100, 6, 6
+  index: -1
+ui/sunny/crops/radish_02
+  bounds: 1529, 1223, 8, 7
+  index: -1
+ui/sunny/crops/radish_03
+  bounds: 1441, 995, 8, 10
+  index: -1
+ui/sunny/crops/radish_04
+  bounds: 335, 618, 12, 15
+  index: -1
+ui/sunny/crops/radish_05
+  bounds: 309, 760, 12, 15
+  index: -1
+ui/sunny/crops/rock
+  bounds: 343, 976, 10, 10
+  index: -1
+ui/sunny/crops/seeds_generic
+  bounds: 835, 1127, 11, 10
+  index: -1
+ui/sunny/crops/soil_00
+  bounds: 971, 1313, 16, 12
+  index: -1
+ui/sunny/crops/soil_01
+  bounds: 929, 1415, 16, 12
+  index: -1
+ui/sunny/crops/soil_03
+  bounds: 225, 1442, 16, 12
+  index: -1
+ui/sunny/crops/soil_04
+  bounds: 293, 1474, 16, 12
+  index: -1
+ui/sunny/crops/sunflower_00
+  bounds: 691, 1284, 7, 7
+  index: -1
+ui/sunny/crops/sunflower_01
+  bounds: 135, 809, 10, 7
+  index: -1
+ui/sunny/crops/sunflower_02
+  bounds: 1577, 1074, 11, 9
+  index: -1
+ui/sunny/crops/sunflower_03
+  bounds: 1555, 1158, 11, 13
+  index: -1
+ui/sunny/crops/sunflower_04
+  bounds: 437, 259, 13, 19
+  index: -1
+ui/sunny/crops/sunflower_05
+  bounds: 1789, 1268, 13, 16
+  index: -1
+ui/sunny/crops/wheat_00
+  bounds: 1735, 1100, 6, 6
+  index: -1
+ui/sunny/crops/wheat_01
+  bounds: 821, 1204, 11, 7
+  index: -1
+ui/sunny/crops/wheat_02
+  bounds: 819, 945, 11, 10
+  index: -1
+ui/sunny/crops/wheat_03
+  bounds: 421, 347, 13, 14
+  index: -1
+ui/sunny/crops/wheat_04
+  bounds: 825, 638, 13, 16
+  index: -1
+ui/sunny/crops/wheat_05
+  bounds: 1293, 1435, 13, 13
+  index: -1
+ui/sunny/crops/wood
+  bounds: 685, 1374, 11, 11
+  index: -1
+ui/sunny/gate/quarry_gate_0
+  bounds: 857, 1044, 16, 16
+  index: -1
+ui/sunny/gate/quarry_gate_1
+  bounds: 875, 1044, 16, 16
+  index: -1
+ui/sunny/gate/quarry_gate_2
+  bounds: 1441, 409, 16, 16
+  index: -1
+ui/sunny/gate/quarry_gate_3
+  bounds: 1459, 409, 16, 16
+  index: -1
+ui/sunny/icons/arrow_left
+  bounds: 855, 1456, 11, 12
+  index: -1
+ui/sunny/icons/arrow_right
+  bounds: 2035, 431, 11, 12
+  index: -1
+ui/sunny/icons/arrow_up
+  bounds: 1173, 1182, 10, 13
+  index: -1
+ui/sunny/icons/arrow_up-1
+  bounds: 1529, 1208, 10, 13
+  index: -1
+ui/sunny/icons/axe
+  bounds: 671, 1477, 15, 13
+  index: -1
+ui/sunny/icons/basket
+  bounds: 973, 688, 12, 12
+  index: -1
+ui/sunny/icons/bluebar_00
+  bounds: 895, 1406, 15, 7
+  index: -1
+ui/sunny/icons/bluebar_01
+  bounds: 35, 1421, 15, 7
+  index: -1
+ui/sunny/icons/bluebar_02
+  bounds: 767, 1390, 15, 7
+  index: -1
+ui/sunny/icons/bluebar_03
+  bounds: 725, 1458, 15, 7
+  index: -1
+ui/sunny/icons/bluebar_04
+  bounds: 1809, 1099, 15, 7
+  index: -1
+ui/sunny/icons/bluebar_05
+  bounds: 1826, 1099, 15, 7
+  index: -1
+ui/sunny/icons/cancel
+  bounds: 719, 1391, 11, 11
+  index: -1
+ui/sunny/icons/confirm
+  bounds: 855, 1470, 12, 11
+  index: -1
+ui/sunny/icons/cursor_01
+  bounds: 1165, 635, 11, 19
+  index: -1
+ui/sunny/icons/cursor_02
+  bounds: 274, 1030, 11, 14
+  index: -1
+ui/sunny/icons/cursor_03
+  bounds: 1513, 326, 12, 13
+  index: -1
+ui/sunny/icons/cursor_04
+  bounds: 1219, 578, 12, 14
+  index: -1
+ui/sunny/icons/cursor_05
+  bounds: 269, 818, 10, 15
+  index: -1
+ui/sunny/icons/expression_alerted
+  bounds: 687, 1018, 4, 9
+  index: -1
+ui/sunny/icons/expression_attack
+  bounds: 1812, 1352, 7, 8
+  index: -1
+ui/sunny/icons/expression_chat
+  bounds: 1833, 1126, 9, 9
+  index: -1
+ui/sunny/icons/expression_confused
+  bounds: 848, 1127, 7, 10
+  index: -1
+ui/sunny/icons/expression_confused-1
+  bounds: 1497, 1147, 8, 9
+  index: -1
+ui/sunny/icons/expression_love
+  bounds: 1579, 1247, 9, 8
+  index: -1
+ui/sunny/icons/expression_stress
+  bounds: 811, 1322, 7, 7
+  index: -1
+ui/sunny/icons/expression_working
+  bounds: 1259, 1136, 7, 9
+  index: -1
+ui/sunny/icons/greenbar_00
+  bounds: 1247, 862, 15, 7
+  index: -1
+ui/sunny/icons/greenbar_01
+  bounds: 1264, 862, 15, 7
+  index: -1
+ui/sunny/icons/greenbar_02
+  bounds: 1281, 862, 15, 7
+  index: -1
+ui/sunny/icons/greenbar_03
+  bounds: 1298, 862, 15, 7
+  index: -1
+ui/sunny/icons/greenbar_04
+  bounds: 1315, 862, 15, 7
+  index: -1
+ui/sunny/icons/greenbar_05
+  bounds: 137, 1448, 15, 7
+  index: -1
+ui/sunny/icons/greenbar_06
+  bounds: 1741, 1284, 15, 7
+  index: -1
+ui/sunny/icons/greenbar_06-1
+  bounds: 105, 1568, 15, 7
+  index: -1
+ui/sunny/icons/hammer
+  bounds: 1767, 1340, 13, 13
+  index: -1
+ui/sunny/icons/hand_closed_01
+  bounds: 1844, 1126, 9, 9
+  index: -1
+ui/sunny/icons/hand_closed_02
+  bounds: 871, 1247, 13, 12
+  index: -1
+ui/sunny/icons/hand_open_01
+  bounds: 719, 1404, 11, 11
+  index: -1
+ui/sunny/icons/hand_open_02
+  bounds: 845, 1331, 14, 14
+  index: -1
+ui/sunny/icons/happiness_01
+  bounds: 1763, 1355, 7, 8
+  index: -1
+ui/sunny/icons/happiness_02
+  bounds: 1733, 1361, 7, 8
+  index: -1
+ui/sunny/icons/happiness_03
+  bounds: 1742, 1361, 7, 8
+  index: -1
+ui/sunny/icons/happiness_04
+  bounds: 1751, 1361, 7, 8
+  index: -1
+ui/sunny/icons/indicator
+  bounds: 1513, 341, 8, 6
+  index: -1
+ui/sunny/icons/itemdisc_01
+  bounds: 357, 439, 18, 19
+  index: -1
+ui/sunny/icons/itemdisc_02
+  bounds: 979, 1043, 17, 18
+  index: -1
+ui/sunny/icons/label_left
+  bounds: 329, 646, 4, 13
+  index: -1
+ui/sunny/icons/label_middle
+  bounds: 759, 1341, 16, 13
+  index: -1
+ui/sunny/icons/label_right
+  bounds: 625, 926, 4, 13
+  index: -1
+ui/sunny/icons/pickaxe
+  bounds: 1733, 1346, 13, 13
+  index: -1
+ui/sunny/icons/plan_alt
+  bounds: 1661, 1058, 12, 12
+  index: -1
+ui/sunny/icons/plant
+  bounds: 821, 1165, 10, 11
+  index: -1
+ui/sunny/icons/playercount
+  bounds: 421, 363, 13, 14
+  index: -1
+ui/sunny/icons/redbar_00
+  bounds: 285, 1574, 15, 7
+  index: -1
+ui/sunny/icons/redbar_01
+  bounds: 435, 1270, 15, 7
+  index: -1
+ui/sunny/icons/redbar_02
+  bounds: 452, 1270, 15, 7
+  index: -1
+ui/sunny/icons/redbar_03
+  bounds: 535, 481, 15, 7
+  index: -1
+ui/sunny/icons/redbar_04
+  bounds: 1935, 1236, 15, 7
+  index: -1
+ui/sunny/icons/redbar_05
+  bounds: 109, 1369, 15, 7
+  index: -1
+ui/sunny/icons/redbar_06
+  bounds: 1645, 1207, 15, 7
+  index: -1
+ui/sunny/icons/rod
+  bounds: 997, 1462, 15, 14
+  index: -1
+ui/sunny/icons/rod_alt
+  bounds: 2028, 1325, 16, 14
+  index: -1
+ui/sunny/icons/sandtimer
+  bounds: 2039, 1273, 8, 11
+  index: -1
+ui/sunny/icons/search
+  bounds: 835, 1091, 16, 16
+  index: -1
+ui/sunny/icons/select_dots
+  bounds: 1332, 862, 5, 6
+  index: -1
+ui/sunny/icons/select_dots_large
+  bounds: 129, 1516, 6, 7
+  index: -1
+ui/sunny/icons/selectbox_bl
+  bounds: 388, 416, 8, 9
+  index: -1
+ui/sunny/icons/selectbox_br
+  bounds: 398, 416, 8, 9
+  index: -1
+ui/sunny/icons/selectbox_tl
+  bounds: 408, 416, 8, 9
+  index: -1
+ui/sunny/icons/selectbox_tr
+  bounds: 1441, 1007, 8, 9
+  index: -1
+ui/sunny/icons/shovel
+  bounds: 91, 1006, 14, 14
+  index: -1
+ui/sunny/icons/stopwatch
+  bounds: 2037, 713, 10, 12
+  index: -1
+ui/sunny/icons/sword
+  bounds: 1727, 1084, 14, 14
+  index: -1
+ui/sunny/icons/water
+  bounds: 1748, 1346, 13, 13
+  index: -1
+ui/sunny/items/acorn
+  bounds: 747, 1154, 10, 9
+  index: -1
+ui/sunny/items/book_1
+  bounds: 1772, 1355, 7, 8
+  index: -1
+ui/sunny/items/book_2
+  bounds: 1202, 1413, 5, 9
+  index: -1
+ui/sunny/items/bottle_blue
+  bounds: 1125, 1300, 10, 13
+  index: -1
+ui/sunny/items/bucket
+  bounds: 377, 416, 9, 9
+  index: -1
+ui/sunny/items/bucket_rope
+  bounds: 747, 1116, 9, 11
+  index: -1
+ui/sunny/items/chest_1
+  bounds: 1101, 742, 16, 21
+  index: -1
+ui/sunny/items/chest_2
+  bounds: 827, 1365, 16, 21
+  index: -1
+ui/sunny/items/chicken
+  bounds: 1187, 1256, 16, 19
+  index: -1
+ui/sunny/items/coin
+  bounds: 1125, 1315, 8, 7
+  index: -1
+ui/sunny/items/coins
+  bounds: 1503, 1319, 16, 11
+  index: -1
+ui/sunny/items/coral
+  bounds: 1782, 1340, 13, 13
+  index: -1
+ui/sunny/items/cow
+  bounds: 487, 1336, 23, 26
+  index: -1
+ui/sunny/items/crab
+  bounds: 2010, 1341, 16, 14
+  index: -1
+ui/sunny/items/cutlery
+  bounds: 349, 592, 6, 13
+  index: -1
+ui/sunny/items/drumstick
+  bounds: 1081, 931, 12, 12
+  index: -1
+ui/sunny/items/duck
+  bounds: 2028, 1341, 16, 14
+  index: -1
+ui/sunny/items/jar_1
+  bounds: 843, 1490, 10, 12
+  index: -1
+ui/sunny/items/jar_2
+  bounds: 2037, 157, 10, 13
+  index: -1
+ui/sunny/items/jug
+  bounds: 1837, 809, 10, 13
+  index: -1
+ui/sunny/items/meat
+  bounds: 1593, 1031, 12, 12
+  index: -1
+ui/sunny/items/mug_1
+  bounds: 1286, 1136, 5, 9
+  index: -1
+ui/sunny/items/mug_2
+  bounds: 1781, 1355, 7, 8
+  index: -1
+ui/sunny/items/mushroom_blue_1
+  bounds: 2035, 210, 10, 12
+  index: -1
+ui/sunny/items/mushroom_blue_2
+  bounds: 835, 1109, 16, 16
+  index: -1
+ui/sunny/items/mushroom_blue_3
+  bounds: 1268, 1136, 7, 9
+  index: -1
+ui/sunny/items/mushroom_red
+  bounds: 2035, 224, 10, 12
+  index: -1
+ui/sunny/items/mussel
+  bounds: 747, 1129, 9, 11
+  index: -1
+ui/sunny/items/oar
+  bounds: 637, 1447, 15, 10
+  index: -1
+ui/sunny/items/ore_bluestone
+  bounds: 355, 976, 10, 10
+  index: -1
+ui/sunny/items/ore_coal
+  bounds: 747, 1142, 10, 10
+  index: -1
+ui/sunny/items/ore_gold
+  bounds: 1089, 1469, 10, 10
+  index: -1
+ui/sunny/items/ore_silver
+  bounds: 1812, 1340, 10, 10
+  index: -1
+ui/sunny/items/ore_stone
+  bounds: 1824, 1340, 10, 10
+  index: -1
+ui/sunny/items/pig
+  bounds: 603, 1406, 18, 21
+  index: -1
+ui/sunny/items/plate
+  bounds: 1277, 1136, 7, 9
+  index: -1
+ui/sunny/items/plate_cutlery
+  bounds: 774, 1498, 7, 13
+  index: -1
+ui/sunny/items/plate_food
+  bounds: 1790, 1355, 7, 8
+  index: -1
+ui/sunny/items/sheep
+  bounds: 257, 1329, 18, 23
+  index: -1
+ui/sunny/items/shell
+  bounds: 1799, 839, 10, 13
+  index: -1
+ui/sunny/items/starfish
+  bounds: 1797, 1340, 13, 13
+  index: -1
+ui/sunny/items/sword_floor
+  bounds: 1836, 1340, 10, 10
+  index: -1
+ui/sunny/items/truffle
+  bounds: 1848, 1340, 10, 10
+  index: -1
+ui/sunny/items/water_bowl
+  bounds: 2039, 1286, 8, 11
+  index: -1
+ui/sunny/items/wool
+  bounds: 1860, 1340, 10, 10
+  index: -1
+ui/sunny/label
+  bounds: 1081, 353, 24, 13
+  split: 4, 4, 0, 0
+  index: -1
+ui/tab
+  bounds: 1053, 1094, 16, 12
+  split: 4, 6, 4, 0
+  pad: 5, 6, 4, 2
+  index: -1
+ui/tab_box
+  bounds: 1375, 817, 16, 16
+  split: 4, 6, 4, 4
+  pad: 5, 6, 4, 4
+  index: -1
+ui/tab_box_over
+  bounds: 209, 1602, 16, 16
+  split: 4, 6, 4, 4
+  pad: 5, 6, 4, 4
+  index: -1
+ui/tab_box_selected
+  bounds: 209, 1620, 16, 16
+  split: 4, 6, 4, 4
+  pad: 5, 6, 4, 4
+  index: -1
+ui/tab_disabled
+  bounds: 273, 1508, 16, 12
+  split: 4, 6, 4, 0
+  pad: 5, 6, 4, 2
+  index: -1
+ui/tab_over
+  bounds: 1719, 987, 16, 12
+  split: 4, 6, 4, 0
+  pad: 5, 6, 4, 2
+  index: -1
+ui/tab_selected
+  bounds: 205, 1476, 16, 12
+  split: 4, 6, 4, 0
+  pad: 5, 6, 4, 2
+  index: -1
+ui/theme/theme_wood/arrow_left
+  bounds: 761, 1029, 16, 16
+  index: -1
+ui/theme/theme_wood/arrow_left_hover
+  bounds: 761, 1047, 16, 16
+  index: -1
+ui/theme/theme_wood/arrow_right
+  bounds: 761, 1065, 16, 16
+  index: -1
+ui/theme/theme_wood/arrow_right_hover
+  bounds: 909, 1139, 16, 16
+  index: -1
+ui/theme/theme_wood/button_checked
+  bounds: 781, 723, 26, 14
+  index: -1
+ui/theme/theme_wood/button_checked_disabled
+  bounds: 951, 826, 26, 14
+  index: -1
+ui/theme/theme_wood/button_disabled
+  bounds: 431, 1524, 16, 8
+  index: -1
+ui/theme/theme_wood/button_hover
+  bounds: 1645, 946, 16, 8
+  index: -1
+ui/theme/theme_wood/button_normal
+  bounds: 725, 1311, 16, 8
+  index: -1
+ui/theme/theme_wood/button_pressed
+  bounds: 467, 1388, 16, 8
+  index: -1
+ui/theme/theme_wood/button_unchecked
+  bounds: 515, 1309, 26, 14
+  index: -1
+ui/theme/theme_wood/button_unchecked_disabled
+  bounds: 1479, 382, 26, 14
+  index: -1
+ui/theme/theme_wood/checked
+  bounds: 909, 1157, 16, 16
+  index: -1
+ui/theme/theme_wood/checked_disabled
+  bounds: 909, 1175, 16, 16
+  index: -1
+ui/theme/theme_wood/h_slidder_grabber
+  bounds: 886, 1247, 13, 11
+  index: -1
+ui/theme/theme_wood/h_slidder_grabber_disabled
+  bounds: 883, 883, 13, 11
+  index: -1
+ui/theme/theme_wood/h_slidder_grabber_hover
+  bounds: 898, 883, 13, 11
+  index: -1
+ui/theme/theme_wood/inventory_cell
+  bounds: 909, 1193, 16, 16
+  index: -1
+ui/theme/theme_wood/nine_path_bg
+  bounds: 1529, 1384, 16, 16
+  index: -1
+ui/theme/theme_wood/nine_path_bg_2
+  bounds: 1119, 714, 16, 16
+  index: -1
+ui/theme/theme_wood/nine_path_focus
+  bounds: 1882, 1340, 8, 8
+  index: -1
+ui/theme/theme_wood/nine_path_panel
+  bounds: 693, 975, 16, 16
+  index: -1
+ui/theme/theme_wood/nine_path_panel_2
+  bounds: 665, 1304, 16, 16
+  index: -1
+ui/theme/theme_wood/nine_path_panel_3
+  bounds: 801, 1399, 16, 16
+  index: -1
+ui/theme/theme_wood/nine_path_panel_disabled
+  bounds: 623, 1372, 16, 16
+  index: -1
+ui/theme/theme_wood/nine_path_panel_interior
+  bounds: 1473, 841, 16, 16
+  index: -1
+ui/theme/theme_wood/radio_checked
+  bounds: 1491, 841, 16, 16
+  index: -1
+ui/theme/theme_wood/radio_checked_disabled
+  bounds: 1509, 841, 16, 16
+  index: -1
+ui/theme/theme_wood/radio_unchecked
+  bounds: 1155, 1182, 16, 16
+  index: -1
+ui/theme/theme_wood/radio_unchecked_disabled
+  bounds: 675, 1251, 16, 16
+  index: -1
+ui/theme/theme_wood/slider_progress
+  bounds: 1339, 817, 16, 16
+  index: -1
+ui/theme/theme_wood/slider_progress_hover
+  bounds: 1357, 817, 16, 16
+  index: -1
+ui/theme/theme_wood/tab
+  bounds: 205, 1476, 16, 12
+  index: -1
+ui/theme/theme_wood/tab_box
+  bounds: 1375, 817, 16, 16
+  index: -1
+ui/theme/theme_wood/tab_box_over
+  bounds: 209, 1602, 16, 16
+  index: -1
+ui/theme/theme_wood/tab_box_selected
+  bounds: 209, 1620, 16, 16
+  index: -1
+ui/theme/theme_wood/tab_disabled
+  bounds: 273, 1508, 16, 12
+  index: -1
+ui/theme/theme_wood/tab_hover
+  bounds: 1719, 987, 16, 12
+  index: -1
+ui/theme/theme_wood/tab_selected
+  bounds: 851, 914, 16, 12
+  index: -1
+ui/theme/theme_wood/tab_unselected
+  bounds: 1053, 1094, 16, 12
+  index: -1
+ui/theme/theme_wood/unchecked
+  bounds: 389, 1584, 16, 16
+  index: -1
+ui/theme/theme_wood/unchecked_disabled
+  bounds: 1109, 1426, 16, 16
+  index: -1
+ui/theme/theme_wood/v_slidder_grabber
+  bounds: 651, 1338, 11, 13
+  index: -1
+ui/theme/theme_wood/v_slidder_grabber_disabled
+  bounds: 787, 1433, 11, 13
+  index: -1
+ui/theme/theme_wood/v_slidder_grabber_hover
+  bounds: 1187, 819, 11, 13
+  index: -1
+ui/toggle_off
+  bounds: 515, 1309, 26, 14
+  index: -1
+ui/toggle_off_disabled
+  bounds: 1479, 382, 26, 14
+  index: -1
+ui/toggle_on
+  bounds: 781, 723, 26, 14
+  index: -1
+ui/toggle_on_disabled
+  bounds: 951, 826, 26, 14
+  index: -1
+ui/vslider_knob
+  bounds: 651, 1338, 11, 13
+  index: -1
+ui/vslider_knob_disabled
+  bounds: 787, 1433, 11, 13
+  index: -1
+ui/vslider_knob_over
+  bounds: 1187, 819, 11, 13
+  index: -1
+ui/wheel/icon
+  bounds: 1247, 522, 18, 18
+  index: -1
+ui/wheel/pointer
+  bounds: 2035, 445, 11, 12
+  index: -1
+ui/wheel/turn_00
+  bounds: 1145, 960, 72, 72
+  index: -1
+ui/wheel/turn_01
+  bounds: 1011, 989, 72, 72
+  index: -1
+ui/wheel/turn_02
+  bounds: 905, 991, 72, 72
+  index: -1
+ui/wheel/turn_03
+  bounds: 783, 1017, 72, 72
+  index: -1
+ui/wheel/turn_04
+  bounds: 687, 1029, 72, 72
+  index: -1
+ui/wheel/turn_05
+  bounds: 1219, 988, 72, 72
+  index: -1
+ui/wheel/turn_06
+  bounds: 1293, 988, 72, 72
+  index: -1
+ui/wheel/turn_07
+  bounds: 1085, 1034, 72, 72
+  index: -1
+ui/wheel/turn_08
+  bounds: 979, 1063, 72, 72
+  index: -1
+ui/wheel/turn_09
+  bounds: 857, 1065, 72, 72
+  index: -1
+ui/wheel/turn_10
+  bounds: 761, 1091, 72, 72
+  index: -1
+ui/wheel/turn_11
+  bounds: 451, 1048, 72, 72
+  index: -1
+ui/wheel/turn_12
+  bounds: 337, 1052, 72, 72
+  index: -1
+ui/wheel/turn_13
+  bounds: 247, 1078, 72, 72
+  index: -1
+ui/wheel/turn_14
+  bounds: 525, 1048, 72, 72
+  index: -1
+ui/wheel/turn_15
+  bounds: 599, 1048, 72, 72
+  index: -1
+ui/wheel/turn_16
+  bounds: 673, 1103, 72, 72
+  index: -1
+ui/wheel/turn_17
+  bounds: 83, 1089, 72, 72
+  index: -1
+ui/wheel/turn_18
+  bounds: 1, 1096, 72, 72
+  index: -1
+ui/wheel/turn_19
+  bounds: 157, 1089, 72, 72
+  index: -1
+ui/wheel/turn_20
+  bounds: 411, 1122, 72, 72
+  index: -1
+ui/wheel/turn_21
+  bounds: 321, 1126, 72, 72
+  index: -1
+ui/wheel/turn_22
+  bounds: 231, 1152, 72, 72
+  index: -1
+ui/wheel/turn_23
+  bounds: 75, 1163, 72, 72
+  index: -1
+ui/wheel/turn_24
+  bounds: 1, 1170, 72, 72
+  index: -1
+ui/wheel/turn_25
+  bounds: 149, 1163, 72, 72
+  index: -1
+ui/wheel/turn_26
+  bounds: 485, 1122, 72, 72
+  index: -1
+ui/wheel/turn_27
+  bounds: 559, 1122, 72, 72
+  index: -1
+ui/wheel/turn_28
+  bounds: 1747, 927, 72, 72
+  index: -1
+ui/wheel/turn_29
+  bounds: 1645, 956, 72, 72
+  index: -1
+ui/wheel/turn_30
+  bounds: 1533, 957, 72, 72
+  index: -1
+ui/wheel/turn_31
+  bounds: 1451, 981, 72, 72
+  index: -1
+ui/wheel/turn_32
+  bounds: 1367, 995, 72, 72
+  index: -1
+ui/wheel/turn_33
+  bounds: 1159, 1062, 72, 72
+  index: -1
+ui/wheel/turn_34
+  bounds: 1053, 1108, 72, 72
+  index: -1
+ui/wheel/turn_35
+  bounds: 931, 1137, 72, 72
+  index: -1
+ui/wheel/turn_36
+  bounds: 835, 1139, 72, 72
+  index: -1
+ui/wheel/turn_37
+  bounds: 747, 1165, 72, 72
+  index: -1
+ui/wheel/turn_38
+  bounds: 633, 1177, 72, 72
+  index: -1
+ui/wheel/turn_39
+  bounds: 1233, 1062, 72, 72
+  index: -1
+ui/wheel/turn_40
+  bounds: 1821, 927, 72, 72
+  index: -1
+ui/wheel/turn_41
+  bounds: 1895, 927, 72, 72
+  index: -1
+ui/wheel/turn_42
+  bounds: 1969, 927, 72, 72
+  index: -1
+ui/wheel/turn_43
+  bounds: 395, 1196, 72, 72
+  index: -1
+ui/wheel/turn_44
+  bounds: 305, 1200, 72, 72
+  index: -1
+ui/wheel/turn_45
+  bounds: 223, 1226, 72, 72
+  index: -1
+ui/wheel/turn_46
+  bounds: 75, 1237, 72, 72
+  index: -1
+ui/wheel/turn_47
+  bounds: 1, 1244, 72, 72
+  index: -1
+ui/white
+  bounds: 529, 1432, 3, 3
+  split: 1, 1, 1, 1
+  index: -1

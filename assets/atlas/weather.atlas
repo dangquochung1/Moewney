@@ -1,0 +1,914 @@
+weather.png
+size: 4096,4096
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fx/weather/aurora_00
+  bounds: 773, 1, 320, 180
+  index: -1
+fx/weather/aurora_01
+  bounds: 1, 67, 320, 180
+  index: -1
+fx/weather/aurora_02
+  bounds: 323, 67, 320, 180
+  index: -1
+fx/weather/aurora_03
+  bounds: 1095, 1, 320, 180
+  index: -1
+fx/weather/aurora_04
+  bounds: 1417, 1, 320, 180
+  index: -1
+fx/weather/aurora_05
+  bounds: 1739, 1, 320, 180
+  index: -1
+fx/weather/aurora_06
+  bounds: 2061, 1, 320, 180
+  index: -1
+fx/weather/aurora_07
+  bounds: 2383, 1, 320, 180
+  index: -1
+fx/weather/aurora_08
+  bounds: 2705, 1, 320, 180
+  index: -1
+fx/weather/aurora_09
+  bounds: 3027, 1, 320, 180
+  index: -1
+fx/weather/aurora_10
+  bounds: 3349, 1, 320, 180
+  index: -1
+fx/weather/aurora_11
+  bounds: 3671, 1, 320, 180
+  index: -1
+fx/weather/aurora_12
+  bounds: 645, 183, 320, 180
+  index: -1
+fx/weather/aurora_13
+  bounds: 1, 249, 320, 180
+  index: -1
+fx/weather/aurora_14
+  bounds: 323, 249, 320, 180
+  index: -1
+fx/weather/aurora_15
+  bounds: 967, 183, 320, 180
+  index: -1
+fx/weather/aurora_16
+  bounds: 1289, 183, 320, 180
+  index: -1
+fx/weather/aurora_17
+  bounds: 1611, 183, 320, 180
+  index: -1
+fx/weather/aurora_18
+  bounds: 1933, 183, 320, 180
+  index: -1
+fx/weather/aurora_19
+  bounds: 2255, 183, 320, 180
+  index: -1
+fx/weather/aurora_20
+  bounds: 2577, 183, 320, 180
+  index: -1
+fx/weather/aurora_21
+  bounds: 2899, 183, 320, 180
+  index: -1
+fx/weather/aurora_22
+  bounds: 3221, 183, 320, 180
+  index: -1
+fx/weather/aurora_23
+  bounds: 3543, 183, 320, 180
+  index: -1
+fx/weather/aurora_24
+  bounds: 645, 365, 320, 180
+  index: -1
+fx/weather/aurora_25
+  bounds: 1, 431, 320, 180
+  index: -1
+fx/weather/aurora_26
+  bounds: 323, 431, 320, 180
+  index: -1
+fx/weather/aurora_27
+  bounds: 967, 365, 320, 180
+  index: -1
+fx/weather/aurora_28
+  bounds: 1289, 365, 320, 180
+  index: -1
+fx/weather/aurora_29
+  bounds: 1611, 365, 320, 180
+  index: -1
+fx/weather/aurora_30
+  bounds: 1933, 365, 320, 180
+  index: -1
+fx/weather/aurora_31
+  bounds: 2255, 365, 320, 180
+  index: -1
+fx/weather/aurora_32
+  bounds: 2577, 365, 320, 180
+  index: -1
+fx/weather/aurora_33
+  bounds: 2899, 365, 320, 180
+  index: -1
+fx/weather/aurora_34
+  bounds: 3221, 365, 320, 180
+  index: -1
+fx/weather/aurora_35
+  bounds: 3543, 365, 320, 180
+  index: -1
+fx/weather/aurora_36
+  bounds: 645, 547, 320, 180
+  index: -1
+fx/weather/aurora_37
+  bounds: 1, 613, 320, 180
+  index: -1
+fx/weather/aurora_38
+  bounds: 323, 613, 320, 180
+  index: -1
+fx/weather/aurora_39
+  bounds: 967, 547, 320, 180
+  index: -1
+fx/weather/aurora_40
+  bounds: 1289, 547, 320, 180
+  index: -1
+fx/weather/aurora_41
+  bounds: 1611, 547, 320, 180
+  index: -1
+fx/weather/aurora_42
+  bounds: 1933, 547, 320, 180
+  index: -1
+fx/weather/aurora_43
+  bounds: 2255, 547, 320, 180
+  index: -1
+fx/weather/aurora_44
+  bounds: 2577, 547, 320, 180
+  index: -1
+fx/weather/aurora_45
+  bounds: 2899, 547, 320, 180
+  index: -1
+fx/weather/aurora_46
+  bounds: 3221, 547, 320, 180
+  index: -1
+fx/weather/aurora_47
+  bounds: 3543, 547, 320, 180
+  index: -1
+fx/weather/aurora_48
+  bounds: 1, 795, 320, 180
+  index: -1
+fx/weather/aurora_49
+  bounds: 1, 977, 320, 180
+  index: -1
+fx/weather/aurora_50
+  bounds: 1, 1159, 320, 180
+  index: -1
+fx/weather/aurora_51
+  bounds: 1, 1341, 320, 180
+  index: -1
+fx/weather/aurora_52
+  bounds: 1, 1523, 320, 180
+  index: -1
+fx/weather/aurora_53
+  bounds: 1, 1705, 320, 180
+  index: -1
+fx/weather/aurora_54
+  bounds: 1, 1887, 320, 180
+  index: -1
+fx/weather/aurora_55
+  bounds: 1, 2069, 320, 180
+  index: -1
+fx/weather/aurora_56
+  bounds: 1, 2251, 320, 180
+  index: -1
+fx/weather/aurora_57
+  bounds: 1, 2433, 320, 180
+  index: -1
+fx/weather/aurora_58
+  bounds: 1, 2615, 320, 180
+  index: -1
+fx/weather/aurora_59
+  bounds: 1, 2797, 320, 180
+  index: -1
+fx/weather/butterflies_00
+  bounds: 3865, 183, 192, 128
+  index: -1
+fx/weather/butterflies_01
+  bounds: 3865, 313, 192, 128
+  index: -1
+fx/weather/butterflies_02
+  bounds: 3865, 443, 192, 128
+  index: -1
+fx/weather/butterflies_03
+  bounds: 3865, 573, 192, 128
+  index: -1
+fx/weather/butterflies_04
+  bounds: 3865, 703, 192, 128
+  index: -1
+fx/weather/butterflies_05
+  bounds: 3865, 833, 192, 128
+  index: -1
+fx/weather/butterflies_06
+  bounds: 3865, 963, 192, 128
+  index: -1
+fx/weather/butterflies_07
+  bounds: 3865, 1093, 192, 128
+  index: -1
+fx/weather/butterflies_08
+  bounds: 3865, 1223, 192, 128
+  index: -1
+fx/weather/butterflies_09
+  bounds: 3865, 1353, 192, 128
+  index: -1
+fx/weather/butterflies_10
+  bounds: 3865, 1483, 192, 128
+  index: -1
+fx/weather/butterflies_11
+  bounds: 3865, 1613, 192, 128
+  index: -1
+fx/weather/butterflies_12
+  bounds: 3865, 1743, 192, 128
+  index: -1
+fx/weather/butterflies_13
+  bounds: 1611, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_14
+  bounds: 1805, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_15
+  bounds: 1999, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_16
+  bounds: 2193, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_17
+  bounds: 2387, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_18
+  bounds: 2581, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_19
+  bounds: 2775, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_20
+  bounds: 2969, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_21
+  bounds: 3163, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_22
+  bounds: 3357, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_23
+  bounds: 3551, 1821, 192, 128
+  index: -1
+fx/weather/butterflies_24
+  bounds: 3745, 1873, 192, 128
+  index: -1
+fx/weather/butterflies_25
+  bounds: 1611, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_26
+  bounds: 1805, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_27
+  bounds: 1999, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_28
+  bounds: 2193, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_29
+  bounds: 2387, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_30
+  bounds: 2581, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_31
+  bounds: 2775, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_32
+  bounds: 2969, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_33
+  bounds: 3163, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_34
+  bounds: 3357, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_35
+  bounds: 3551, 1951, 192, 128
+  index: -1
+fx/weather/butterflies_36
+  bounds: 3745, 2003, 192, 128
+  index: -1
+fx/weather/butterflies_37
+  bounds: 1611, 2133, 192, 128
+  index: -1
+fx/weather/butterflies_38
+  bounds: 1611, 2263, 192, 128
+  index: -1
+fx/weather/butterflies_39
+  bounds: 1611, 2393, 192, 128
+  index: -1
+fx/weather/butterflies_40
+  bounds: 1611, 2523, 192, 128
+  index: -1
+fx/weather/butterflies_41
+  bounds: 1611, 2653, 192, 128
+  index: -1
+fx/weather/butterflies_42
+  bounds: 1611, 2783, 192, 128
+  index: -1
+fx/weather/butterflies_43
+  bounds: 1611, 2913, 192, 128
+  index: -1
+fx/weather/butterflies_44
+  bounds: 1611, 3043, 192, 128
+  index: -1
+fx/weather/butterflies_45
+  bounds: 1611, 3173, 192, 128
+  index: -1
+fx/weather/butterflies_46
+  bounds: 1611, 3303, 192, 128
+  index: -1
+fx/weather/butterflies_47
+  bounds: 1611, 3433, 192, 128
+  index: -1
+fx/weather/butterflies_48
+  bounds: 1611, 3563, 192, 128
+  index: -1
+fx/weather/butterflies_49
+  bounds: 1611, 3693, 192, 128
+  index: -1
+fx/weather/butterflies_50
+  bounds: 1611, 3823, 192, 128
+  index: -1
+fx/weather/butterflies_51
+  bounds: 1611, 3953, 192, 128
+  index: -1
+fx/weather/butterflies_52
+  bounds: 1805, 2081, 192, 128
+  index: -1
+fx/weather/butterflies_53
+  bounds: 1999, 2081, 192, 128
+  index: -1
+fx/weather/butterflies_54
+  bounds: 2193, 2081, 192, 128
+  index: -1
+fx/weather/butterflies_55
+  bounds: 2387, 2081, 192, 128
+  index: -1
+fx/weather/butterflies_56
+  bounds: 2581, 2081, 192, 128
+  index: -1
+fx/weather/butterflies_57
+  bounds: 2775, 2081, 192, 128
+  index: -1
+fx/weather/butterflies_58
+  bounds: 2969, 2081, 192, 128
+  index: -1
+fx/weather/butterflies_59
+  bounds: 3163, 2081, 192, 128
+  index: -1
+fx/weather/lightning_1
+  bounds: 1, 1, 384, 64
+  index: -1
+fx/weather/lightning_2
+  bounds: 387, 1, 384, 64
+  index: -1
+fx/weather/notes_00
+  bounds: 645, 67, 112, 96
+  index: -1
+fx/weather/notes_01
+  bounds: 3939, 1873, 112, 96
+  index: -1
+fx/weather/notes_02
+  bounds: 3939, 1971, 112, 96
+  index: -1
+fx/weather/notes_03
+  bounds: 3939, 2069, 112, 96
+  index: -1
+fx/weather/notes_04
+  bounds: 3357, 2081, 112, 96
+  index: -1
+fx/weather/notes_05
+  bounds: 3471, 2081, 112, 96
+  index: -1
+fx/weather/notes_06
+  bounds: 3585, 2081, 112, 96
+  index: -1
+fx/weather/notes_07
+  bounds: 3699, 2133, 112, 96
+  index: -1
+fx/weather/notes_08
+  bounds: 3813, 2133, 112, 96
+  index: -1
+fx/weather/notes_09
+  bounds: 3927, 2167, 112, 96
+  index: -1
+fx/weather/notes_10
+  bounds: 3357, 2179, 112, 96
+  index: -1
+fx/weather/notes_11
+  bounds: 3471, 2179, 112, 96
+  index: -1
+fx/weather/notes_12
+  bounds: 3585, 2179, 112, 96
+  index: -1
+fx/weather/notes_13
+  bounds: 3699, 2231, 112, 96
+  index: -1
+fx/weather/notes_14
+  bounds: 3813, 2231, 112, 96
+  index: -1
+fx/weather/notes_15
+  bounds: 3927, 2265, 112, 96
+  index: -1
+fx/weather/notes_16
+  bounds: 1805, 2211, 112, 96
+  index: -1
+fx/weather/notes_17
+  bounds: 1919, 2211, 112, 96
+  index: -1
+fx/weather/notes_18
+  bounds: 2033, 2211, 112, 96
+  index: -1
+fx/weather/notes_19
+  bounds: 2147, 2211, 112, 96
+  index: -1
+fx/weather/notes_20
+  bounds: 2261, 2211, 112, 96
+  index: -1
+fx/weather/notes_21
+  bounds: 2375, 2211, 112, 96
+  index: -1
+fx/weather/notes_22
+  bounds: 2489, 2211, 112, 96
+  index: -1
+fx/weather/notes_23
+  bounds: 2603, 2211, 112, 96
+  index: -1
+fx/weather/notes_24
+  bounds: 2717, 2211, 112, 96
+  index: -1
+fx/weather/notes_25
+  bounds: 2831, 2211, 112, 96
+  index: -1
+fx/weather/notes_26
+  bounds: 2945, 2211, 112, 96
+  index: -1
+fx/weather/notes_27
+  bounds: 3059, 2211, 112, 96
+  index: -1
+fx/weather/notes_28
+  bounds: 3173, 2211, 112, 96
+  index: -1
+fx/weather/notes_29
+  bounds: 3287, 2277, 112, 96
+  index: -1
+fx/weather/notes_30
+  bounds: 3401, 2277, 112, 96
+  index: -1
+fx/weather/notes_31
+  bounds: 3515, 2277, 112, 96
+  index: -1
+fx/weather/notes_32
+  bounds: 3629, 2329, 112, 96
+  index: -1
+fx/weather/notes_33
+  bounds: 3743, 2329, 112, 96
+  index: -1
+fx/weather/notes_34
+  bounds: 3857, 2363, 112, 96
+  index: -1
+fx/weather/notes_35
+  bounds: 3971, 2363, 112, 96
+  index: -1
+fx/weather/notes_36
+  bounds: 1805, 2309, 112, 96
+  index: -1
+fx/weather/notes_37
+  bounds: 1919, 2309, 112, 96
+  index: -1
+fx/weather/notes_38
+  bounds: 2033, 2309, 112, 96
+  index: -1
+fx/weather/notes_39
+  bounds: 2147, 2309, 112, 96
+  index: -1
+fx/weather/notes_40
+  bounds: 2261, 2309, 112, 96
+  index: -1
+fx/weather/notes_41
+  bounds: 2375, 2309, 112, 96
+  index: -1
+fx/weather/notes_42
+  bounds: 2489, 2309, 112, 96
+  index: -1
+fx/weather/notes_43
+  bounds: 2603, 2309, 112, 96
+  index: -1
+fx/weather/notes_44
+  bounds: 2717, 2309, 112, 96
+  index: -1
+fx/weather/notes_45
+  bounds: 2831, 2309, 112, 96
+  index: -1
+fx/weather/notes_46
+  bounds: 2945, 2309, 112, 96
+  index: -1
+fx/weather/notes_47
+  bounds: 3059, 2309, 112, 96
+  index: -1
+fx/weather/notes_48
+  bounds: 3173, 2309, 112, 96
+  index: -1
+fx/weather/notes_49
+  bounds: 3287, 2375, 112, 96
+  index: -1
+fx/weather/notes_50
+  bounds: 3401, 2375, 112, 96
+  index: -1
+fx/weather/notes_51
+  bounds: 3515, 2375, 112, 96
+  index: -1
+fx/weather/notes_52
+  bounds: 3629, 2427, 112, 96
+  index: -1
+fx/weather/notes_53
+  bounds: 3743, 2427, 112, 96
+  index: -1
+fx/weather/notes_54
+  bounds: 3857, 2461, 112, 96
+  index: -1
+fx/weather/notes_55
+  bounds: 3971, 2461, 112, 96
+  index: -1
+fx/weather/notes_56
+  bounds: 1805, 2407, 112, 96
+  index: -1
+fx/weather/notes_57
+  bounds: 1919, 2407, 112, 96
+  index: -1
+fx/weather/notes_58
+  bounds: 2033, 2407, 112, 96
+  index: -1
+fx/weather/notes_59
+  bounds: 2147, 2407, 112, 96
+  index: -1
+fx/weather/rain_00
+  bounds: 1, 2979, 320, 180
+  index: -1
+fx/weather/rain_01
+  bounds: 1, 3161, 320, 180
+  index: -1
+fx/weather/rain_02
+  bounds: 1, 3343, 320, 180
+  index: -1
+fx/weather/rain_03
+  bounds: 1, 3525, 320, 180
+  index: -1
+fx/weather/rain_04
+  bounds: 1, 3707, 320, 180
+  index: -1
+fx/weather/rain_05
+  bounds: 1, 3889, 320, 180
+  index: -1
+fx/weather/rain_06
+  bounds: 323, 795, 320, 180
+  index: -1
+fx/weather/rain_07
+  bounds: 323, 977, 320, 180
+  index: -1
+fx/weather/rain_08
+  bounds: 323, 1159, 320, 180
+  index: -1
+fx/weather/rain_09
+  bounds: 323, 1341, 320, 180
+  index: -1
+fx/weather/rain_10
+  bounds: 323, 1523, 320, 180
+  index: -1
+fx/weather/rain_11
+  bounds: 323, 1705, 320, 180
+  index: -1
+fx/weather/rain_12
+  bounds: 323, 1887, 320, 180
+  index: -1
+fx/weather/rain_13
+  bounds: 323, 2069, 320, 180
+  index: -1
+fx/weather/rain_14
+  bounds: 323, 2251, 320, 180
+  index: -1
+fx/weather/rain_15
+  bounds: 323, 2433, 320, 180
+  index: -1
+fx/weather/rain_16
+  bounds: 323, 2615, 320, 180
+  index: -1
+fx/weather/rain_17
+  bounds: 323, 2797, 320, 180
+  index: -1
+fx/weather/rain_18
+  bounds: 323, 2979, 320, 180
+  index: -1
+fx/weather/rain_19
+  bounds: 323, 3161, 320, 180
+  index: -1
+fx/weather/rain_20
+  bounds: 323, 3343, 320, 180
+  index: -1
+fx/weather/rain_21
+  bounds: 323, 3525, 320, 180
+  index: -1
+fx/weather/rain_22
+  bounds: 323, 3707, 320, 180
+  index: -1
+fx/weather/rain_23
+  bounds: 323, 3889, 320, 180
+  index: -1
+fx/weather/rain_24
+  bounds: 645, 729, 320, 180
+  index: -1
+fx/weather/rain_25
+  bounds: 967, 729, 320, 180
+  index: -1
+fx/weather/rain_26
+  bounds: 1289, 729, 320, 180
+  index: -1
+fx/weather/rain_27
+  bounds: 1611, 729, 320, 180
+  index: -1
+fx/weather/rain_28
+  bounds: 1933, 729, 320, 180
+  index: -1
+fx/weather/rain_29
+  bounds: 2255, 729, 320, 180
+  index: -1
+fx/weather/rain_30
+  bounds: 2577, 729, 320, 180
+  index: -1
+fx/weather/rain_31
+  bounds: 2899, 729, 320, 180
+  index: -1
+fx/weather/rain_32
+  bounds: 3221, 729, 320, 180
+  index: -1
+fx/weather/rain_33
+  bounds: 3543, 729, 320, 180
+  index: -1
+fx/weather/rain_34
+  bounds: 645, 911, 320, 180
+  index: -1
+fx/weather/rain_35
+  bounds: 967, 911, 320, 180
+  index: -1
+fx/weather/rain_36
+  bounds: 1289, 911, 320, 180
+  index: -1
+fx/weather/rain_37
+  bounds: 1611, 911, 320, 180
+  index: -1
+fx/weather/rain_38
+  bounds: 1933, 911, 320, 180
+  index: -1
+fx/weather/rain_39
+  bounds: 2255, 911, 320, 180
+  index: -1
+fx/weather/rain_40
+  bounds: 2577, 911, 320, 180
+  index: -1
+fx/weather/rain_41
+  bounds: 2899, 911, 320, 180
+  index: -1
+fx/weather/rain_42
+  bounds: 3221, 911, 320, 180
+  index: -1
+fx/weather/rain_43
+  bounds: 3543, 911, 320, 180
+  index: -1
+fx/weather/rain_44
+  bounds: 645, 1093, 320, 180
+  index: -1
+fx/weather/rain_45
+  bounds: 645, 1275, 320, 180
+  index: -1
+fx/weather/rain_46
+  bounds: 645, 1457, 320, 180
+  index: -1
+fx/weather/rain_47
+  bounds: 645, 1639, 320, 180
+  index: -1
+fx/weather/rain_48
+  bounds: 645, 1821, 320, 180
+  index: -1
+fx/weather/rain_49
+  bounds: 645, 2003, 320, 180
+  index: -1
+fx/weather/rain_50
+  bounds: 645, 2185, 320, 180
+  index: -1
+fx/weather/rain_51
+  bounds: 645, 2367, 320, 180
+  index: -1
+fx/weather/rain_52
+  bounds: 645, 2549, 320, 180
+  index: -1
+fx/weather/rain_53
+  bounds: 645, 2731, 320, 180
+  index: -1
+fx/weather/rain_54
+  bounds: 645, 2913, 320, 180
+  index: -1
+fx/weather/rain_55
+  bounds: 645, 3095, 320, 180
+  index: -1
+fx/weather/rain_56
+  bounds: 645, 3277, 320, 180
+  index: -1
+fx/weather/rain_57
+  bounds: 645, 3459, 320, 180
+  index: -1
+fx/weather/rain_58
+  bounds: 645, 3641, 320, 180
+  index: -1
+fx/weather/rain_59
+  bounds: 645, 3823, 320, 180
+  index: -1
+fx/weather/snow_00
+  bounds: 967, 1093, 320, 180
+  index: -1
+fx/weather/snow_01
+  bounds: 1289, 1093, 320, 180
+  index: -1
+fx/weather/snow_02
+  bounds: 1611, 1093, 320, 180
+  index: -1
+fx/weather/snow_03
+  bounds: 1933, 1093, 320, 180
+  index: -1
+fx/weather/snow_04
+  bounds: 2255, 1093, 320, 180
+  index: -1
+fx/weather/snow_05
+  bounds: 2577, 1093, 320, 180
+  index: -1
+fx/weather/snow_06
+  bounds: 2899, 1093, 320, 180
+  index: -1
+fx/weather/snow_07
+  bounds: 3221, 1093, 320, 180
+  index: -1
+fx/weather/snow_08
+  bounds: 3543, 1093, 320, 180
+  index: -1
+fx/weather/snow_09
+  bounds: 967, 1275, 320, 180
+  index: -1
+fx/weather/snow_10
+  bounds: 967, 1457, 320, 180
+  index: -1
+fx/weather/snow_11
+  bounds: 967, 1639, 320, 180
+  index: -1
+fx/weather/snow_12
+  bounds: 967, 1821, 320, 180
+  index: -1
+fx/weather/snow_13
+  bounds: 967, 2003, 320, 180
+  index: -1
+fx/weather/snow_14
+  bounds: 967, 2185, 320, 180
+  index: -1
+fx/weather/snow_15
+  bounds: 967, 2367, 320, 180
+  index: -1
+fx/weather/snow_16
+  bounds: 967, 2549, 320, 180
+  index: -1
+fx/weather/snow_17
+  bounds: 967, 2731, 320, 180
+  index: -1
+fx/weather/snow_18
+  bounds: 967, 2913, 320, 180
+  index: -1
+fx/weather/snow_19
+  bounds: 967, 3095, 320, 180
+  index: -1
+fx/weather/snow_20
+  bounds: 967, 3277, 320, 180
+  index: -1
+fx/weather/snow_21
+  bounds: 967, 3459, 320, 180
+  index: -1
+fx/weather/snow_22
+  bounds: 967, 3641, 320, 180
+  index: -1
+fx/weather/snow_23
+  bounds: 967, 3823, 320, 180
+  index: -1
+fx/weather/snow_24
+  bounds: 1289, 1275, 320, 180
+  index: -1
+fx/weather/snow_25
+  bounds: 1611, 1275, 320, 180
+  index: -1
+fx/weather/snow_26
+  bounds: 1933, 1275, 320, 180
+  index: -1
+fx/weather/snow_27
+  bounds: 2255, 1275, 320, 180
+  index: -1
+fx/weather/snow_28
+  bounds: 2577, 1275, 320, 180
+  index: -1
+fx/weather/snow_29
+  bounds: 2899, 1275, 320, 180
+  index: -1
+fx/weather/snow_30
+  bounds: 3221, 1275, 320, 180
+  index: -1
+fx/weather/snow_31
+  bounds: 3543, 1275, 320, 180
+  index: -1
+fx/weather/snow_32
+  bounds: 1289, 1457, 320, 180
+  index: -1
+fx/weather/snow_33
+  bounds: 1611, 1457, 320, 180
+  index: -1
+fx/weather/snow_34
+  bounds: 1933, 1457, 320, 180
+  index: -1
+fx/weather/snow_35
+  bounds: 2255, 1457, 320, 180
+  index: -1
+fx/weather/snow_36
+  bounds: 2577, 1457, 320, 180
+  index: -1
+fx/weather/snow_37
+  bounds: 2899, 1457, 320, 180
+  index: -1
+fx/weather/snow_38
+  bounds: 3221, 1457, 320, 180
+  index: -1
+fx/weather/snow_39
+  bounds: 3543, 1457, 320, 180
+  index: -1
+fx/weather/snow_40
+  bounds: 1289, 1639, 320, 180
+  index: -1
+fx/weather/snow_41
+  bounds: 1289, 1821, 320, 180
+  index: -1
+fx/weather/snow_42
+  bounds: 1289, 2003, 320, 180
+  index: -1
+fx/weather/snow_43
+  bounds: 1289, 2185, 320, 180
+  index: -1
+fx/weather/snow_44
+  bounds: 1289, 2367, 320, 180
+  index: -1
+fx/weather/snow_45
+  bounds: 1289, 2549, 320, 180
+  index: -1
+fx/weather/snow_46
+  bounds: 1289, 2731, 320, 180
+  index: -1
+fx/weather/snow_47
+  bounds: 1289, 2913, 320, 180
+  index: -1
+fx/weather/snow_48
+  bounds: 1289, 3095, 320, 180
+  index: -1
+fx/weather/snow_49
+  bounds: 1289, 3277, 320, 180
+  index: -1
+fx/weather/snow_50
+  bounds: 1289, 3459, 320, 180
+  index: -1
+fx/weather/snow_51
+  bounds: 1289, 3641, 320, 180
+  index: -1
+fx/weather/snow_52
+  bounds: 1289, 3823, 320, 180
+  index: -1
+fx/weather/snow_53
+  bounds: 1611, 1639, 320, 180
+  index: -1
+fx/weather/snow_54
+  bounds: 1933, 1639, 320, 180
+  index: -1
+fx/weather/snow_55
+  bounds: 2255, 1639, 320, 180
+  index: -1
+fx/weather/snow_56
+  bounds: 2577, 1639, 320, 180
+  index: -1
+fx/weather/snow_57
+  bounds: 2899, 1639, 320, 180
+  index: -1
+fx/weather/snow_58
+  bounds: 3221, 1639, 320, 180
+  index: -1
+fx/weather/snow_59
+  bounds: 3543, 1639, 320, 180
+  index: -1
+fx/weather/splash
+  bounds: 1, 4083, 60, 10
+  index: -1

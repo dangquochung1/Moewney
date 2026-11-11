@@ -1,0 +1,1415 @@
+fx.png
+size: 4096,4096
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fx/boss/batring
+  bounds: 2021, 1013, 582, 97
+  index: -1
+fx/boss/blast
+  bounds: 2727, 752, 805, 115
+  index: -1
+fx/boss/burst
+  bounds: 3266, 649, 808, 101
+  index: -1
+fx/boss/demon
+  bounds: 2857, 1295, 370, 37
+  index: -1
+fx/boss/demon_pop
+  bounds: 1542, 327, 222, 37
+  index: -1
+fx/boss/dust
+  bounds: 3137, 951, 630, 126
+  index: -1
+fx/boss/eruption
+  bounds: 2349, 649, 915, 61
+  index: -1
+fx/boss/fire_ground
+  bounds: 2379, 1, 1664, 128
+  index: -1
+fx/boss/fireball
+  bounds: 663, 1114, 512, 128
+  index: -1
+fx/boss/hit_heavy
+  bounds: 3938, 505, 124, 31
+  index: -1
+fx/boss/hit_light
+  bounds: 1265, 1030, 128, 32
+  index: -1
+fx/boss/knife
+  bounds: 3761, 1079, 330, 55
+  index: -1
+fx/boss/nova
+  bounds: 1183, 551, 1164, 97
+  index: -1
+fx/boss/phoenix
+  bounds: 1, 894, 768, 48
+  index: -1
+fx/boss/portal
+  bounds: 3285, 1179, 448, 64
+  index: -1
+fx/boss/ring
+  bounds: 1, 1010, 660, 110
+  index: -1
+fx/boss/rush
+  bounds: 1, 1, 2376, 216
+  index: -1
+fx/boss/slam
+  bounds: 883, 778, 768, 128
+  index: -1
+fx/boss/thrust_heavy
+  bounds: 3519, 1295, 270, 54
+  index: -1
+fx/boss/thrust_light
+  bounds: 2583, 1253, 200, 40
+  index: -1
+fx/boss/thunder_bolt
+  bounds: 3003, 1402, 160, 32
+  index: -1
+fx/boss/thunder_hit
+  bounds: 2141, 1210, 160, 32
+  index: -1
+fx/boss/thunder_splash
+  bounds: 2375, 963, 624, 48
+  index: -1
+fx/boss/thunder_strike
+  bounds: 3311, 551, 768, 64
+  index: -1
+fx/boss/trail
+  bounds: 1, 327, 1539, 171
+  index: -1
+fx/boss/vortex
+  bounds: 1399, 986, 620, 124
+  index: -1
+fx/boss/vortex_close
+  bounds: 1653, 778, 744, 124
+  index: -1
+fx/boss/vortex_open
+  bounds: 1, 620, 992, 124
+  index: -1
+fx/boss/ward
+  bounds: 1, 500, 1180, 118
+  index: -1
+fx/crypt/hex_bolt
+  bounds: 4025, 1243, 64, 32
+  index: -1
+fx/crypt/hex_ring
+  bounds: 1, 1426, 192, 32
+  index: -1
+fx/elemental/explosion/spritesheet
+  bounds: 3735, 1179, 360, 40
+  index: -1
+fx/elemental/flam/spritesheet
+  bounds: 1387, 1264, 200, 30
+  index: -1
+fx/elemental/ice/spritesheet
+  bounds: 3741, 181, 320, 32
+  index: -1
+fx/elemental/ice/spritesheetb
+  bounds: 2397, 1329, 288, 32
+  index: -1
+fx/elemental/ice/spritesheetflake
+  bounds: 773, 1362, 288, 32
+  index: -1
+fx/elemental/plant/spritesheet
+  bounds: 2952, 467, 240, 28
+  index: -1
+fx/elemental/plant/spritesheetb
+  bounds: 3769, 1051, 210, 26
+  index: -1
+fx/elemental/rock/spritesheet
+  bounds: 3311, 617, 420, 30
+  index: -1
+fx/elemental/rock/spritesheetb
+  bounds: 965, 1264, 420, 30
+  index: -1
+fx/elemental/rockspike/spritesheet
+  bounds: 3534, 752, 540, 48
+  index: -1
+fx/elemental/thunder/spritesheet
+  bounds: 483, 1214, 160, 28
+  index: -1
+fx/elemental/water/spritesheet
+  bounds: 2727, 712, 440, 33
+  index: -1
+fx/elemental/waterpillar/spritesheet
+  bounds: 3229, 1329, 270, 41
+  index: -1
+fx/festival/candle_light
+  bounds: 2529, 844, 96, 16
+  index: -1
+fx/festival/candle_loop
+  bounds: 2627, 844, 96, 16
+  index: -1
+fx/festival/candle_out
+  bounds: 2021, 986, 96, 16
+  index: -1
+fx/festival/lantern_light
+  bounds: 2119, 986, 96, 16
+  index: -1
+fx/festival/lantern_loop
+  bounds: 1095, 1244, 80, 16
+  index: -1
+fx/festival/lantern_out
+  bounds: 3095, 1153, 80, 16
+  index: -1
+fx/festival/streetlamp_light
+  bounds: 4025, 1277, 64, 16
+  index: -1
+fx/festival/streetlamp_loop
+  bounds: 387, 1328, 80, 16
+  index: -1
+fx/festival/streetlamp_out
+  bounds: 1589, 1264, 64, 16
+  index: -1
+fx/festival/torch_light
+  bounds: 1177, 1114, 80, 16
+  index: -1
+fx/festival/torch_loop
+  bounds: 2217, 986, 96, 16
+  index: -1
+fx/festival/torch_out
+  bounds: 3981, 1051, 96, 16
+  index: -1
+fx/fish/big_01
+  bounds: 737, 944, 28, 21
+  index: -1
+fx/fish/big_02
+  bounds: 2356, 1371, 28, 23
+  index: -1
+fx/fish/big_03
+  bounds: 949, 746, 28, 21
+  index: -1
+fx/fish/big_04
+  bounds: 1619, 1346, 28, 27
+  index: -1
+fx/fish/big_05
+  bounds: 1033, 1396, 28, 27
+  index: -1
+fx/fish/big_06
+  bounds: 1033, 1425, 28, 27
+  index: -1
+fx/fish/big_07
+  bounds: 2035, 1297, 27, 27
+  index: -1
+fx/fish/big_08
+  bounds: 707, 944, 28, 27
+  index: -1
+fx/fish/fry_01_00
+  bounds: 3274, 1229, 9, 9
+  index: -1
+fx/fish/fry_01_01
+  bounds: 3326, 485, 9, 9
+  index: -1
+fx/fish/fry_01_02
+  bounds: 3337, 485, 9, 9
+  index: -1
+fx/fish/fry_01_03
+  bounds: 3348, 485, 9, 9
+  index: -1
+fx/fish/fry_01_04
+  bounds: 3359, 485, 9, 9
+  index: -1
+fx/fish/fry_01_05
+  bounds: 3370, 485, 9, 9
+  index: -1
+fx/fish/fry_01_06
+  bounds: 3381, 485, 9, 9
+  index: -1
+fx/fish/fry_01_07
+  bounds: 3392, 485, 9, 9
+  index: -1
+fx/fish/fry_01_08
+  bounds: 3403, 485, 9, 9
+  index: -1
+fx/fish/fry_01_09
+  bounds: 3414, 485, 9, 9
+  index: -1
+fx/fish/fry_01_10
+  bounds: 3425, 485, 9, 9
+  index: -1
+fx/fish/fry_01_11
+  bounds: 3436, 485, 9, 9
+  index: -1
+fx/fish/fry_01_12
+  bounds: 3447, 485, 9, 9
+  index: -1
+fx/fish/fry_01_13
+  bounds: 3458, 485, 9, 9
+  index: -1
+fx/fish/fry_01_14
+  bounds: 3469, 485, 9, 9
+  index: -1
+fx/fish/fry_01_15
+  bounds: 3480, 485, 9, 9
+  index: -1
+fx/fish/fry_02_00
+  bounds: 3491, 485, 9, 9
+  index: -1
+fx/fish/fry_02_01
+  bounds: 3502, 485, 9, 9
+  index: -1
+fx/fish/fry_02_02
+  bounds: 3513, 485, 9, 9
+  index: -1
+fx/fish/fry_02_03
+  bounds: 3524, 485, 9, 9
+  index: -1
+fx/fish/fry_02_04
+  bounds: 3535, 485, 9, 9
+  index: -1
+fx/fish/fry_02_05
+  bounds: 3546, 485, 9, 9
+  index: -1
+fx/fish/fry_02_06
+  bounds: 3557, 485, 9, 9
+  index: -1
+fx/fish/fry_02_07
+  bounds: 3568, 485, 9, 9
+  index: -1
+fx/fish/fry_02_08
+  bounds: 3579, 485, 9, 9
+  index: -1
+fx/fish/fry_02_09
+  bounds: 3590, 485, 9, 9
+  index: -1
+fx/fish/fry_02_10
+  bounds: 3601, 485, 9, 9
+  index: -1
+fx/fish/fry_02_11
+  bounds: 3612, 485, 9, 9
+  index: -1
+fx/fish/fry_02_12
+  bounds: 3623, 485, 9, 9
+  index: -1
+fx/fish/fry_02_13
+  bounds: 3634, 485, 9, 9
+  index: -1
+fx/fish/fry_02_14
+  bounds: 3645, 485, 9, 9
+  index: -1
+fx/fish/fry_02_15
+  bounds: 3656, 485, 9, 9
+  index: -1
+fx/fish/fry_03_00
+  bounds: 3667, 485, 9, 9
+  index: -1
+fx/fish/fry_03_01
+  bounds: 3678, 485, 9, 9
+  index: -1
+fx/fish/fry_03_02
+  bounds: 3689, 485, 9, 9
+  index: -1
+fx/fish/fry_03_03
+  bounds: 3700, 485, 9, 9
+  index: -1
+fx/fish/fry_03_04
+  bounds: 3711, 485, 9, 9
+  index: -1
+fx/fish/fry_03_05
+  bounds: 3722, 485, 9, 9
+  index: -1
+fx/fish/fry_03_06
+  bounds: 3733, 485, 9, 9
+  index: -1
+fx/fish/fry_03_07
+  bounds: 3744, 485, 9, 9
+  index: -1
+fx/fish/fry_03_08
+  bounds: 3755, 485, 9, 9
+  index: -1
+fx/fish/fry_03_09
+  bounds: 3766, 485, 9, 9
+  index: -1
+fx/fish/fry_03_10
+  bounds: 3777, 485, 9, 9
+  index: -1
+fx/fish/fry_03_11
+  bounds: 3788, 485, 9, 9
+  index: -1
+fx/fish/fry_03_12
+  bounds: 3799, 485, 9, 9
+  index: -1
+fx/fish/fry_03_13
+  bounds: 3810, 485, 9, 9
+  index: -1
+fx/fish/fry_03_14
+  bounds: 3821, 485, 9, 9
+  index: -1
+fx/fish/fry_03_15
+  bounds: 3832, 485, 9, 9
+  index: -1
+fx/fish/fry_04_00
+  bounds: 3843, 485, 9, 9
+  index: -1
+fx/fish/fry_04_01
+  bounds: 3854, 485, 9, 9
+  index: -1
+fx/fish/fry_04_02
+  bounds: 3865, 485, 9, 9
+  index: -1
+fx/fish/fry_04_03
+  bounds: 3761, 635, 9, 9
+  index: -1
+fx/fish/fry_04_04
+  bounds: 3772, 635, 9, 9
+  index: -1
+fx/fish/fry_04_05
+  bounds: 3783, 635, 9, 9
+  index: -1
+fx/fish/fry_04_06
+  bounds: 3794, 635, 9, 9
+  index: -1
+fx/fish/fry_04_07
+  bounds: 3805, 635, 9, 9
+  index: -1
+fx/fish/fry_04_08
+  bounds: 3816, 635, 9, 9
+  index: -1
+fx/fish/fry_04_09
+  bounds: 3827, 635, 9, 9
+  index: -1
+fx/fish/fry_04_10
+  bounds: 3838, 635, 9, 9
+  index: -1
+fx/fish/fry_04_11
+  bounds: 3849, 635, 9, 9
+  index: -1
+fx/fish/fry_04_12
+  bounds: 3860, 635, 9, 9
+  index: -1
+fx/fish/fry_04_13
+  bounds: 3871, 635, 9, 9
+  index: -1
+fx/fish/fry_04_14
+  bounds: 3882, 635, 9, 9
+  index: -1
+fx/fish/fry_04_15
+  bounds: 3893, 635, 9, 9
+  index: -1
+fx/fish/fry_05_00
+  bounds: 3904, 635, 9, 9
+  index: -1
+fx/fish/fry_05_01
+  bounds: 3915, 635, 9, 9
+  index: -1
+fx/fish/fry_05_02
+  bounds: 3926, 635, 9, 9
+  index: -1
+fx/fish/fry_05_03
+  bounds: 3937, 635, 9, 9
+  index: -1
+fx/fish/fry_05_04
+  bounds: 3948, 635, 9, 9
+  index: -1
+fx/fish/fry_05_05
+  bounds: 3959, 635, 9, 9
+  index: -1
+fx/fish/fry_05_06
+  bounds: 3970, 635, 9, 9
+  index: -1
+fx/fish/fry_05_07
+  bounds: 3981, 635, 9, 9
+  index: -1
+fx/fish/fry_05_08
+  bounds: 3992, 635, 9, 9
+  index: -1
+fx/fish/fry_05_09
+  bounds: 4003, 635, 9, 9
+  index: -1
+fx/fish/fry_05_10
+  bounds: 4014, 635, 9, 9
+  index: -1
+fx/fish/fry_05_11
+  bounds: 4025, 635, 9, 9
+  index: -1
+fx/fish/fry_05_12
+  bounds: 4036, 635, 9, 9
+  index: -1
+fx/fish/fry_05_13
+  bounds: 4047, 635, 9, 9
+  index: -1
+fx/fish/fry_05_14
+  bounds: 4058, 635, 9, 9
+  index: -1
+fx/fish/fry_05_15
+  bounds: 3102, 997, 9, 9
+  index: -1
+fx/fish/fry_06_00
+  bounds: 3113, 997, 9, 9
+  index: -1
+fx/fish/fry_06_01
+  bounds: 3124, 997, 9, 9
+  index: -1
+fx/fish/fry_06_02
+  bounds: 2993, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_03
+  bounds: 3004, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_04
+  bounds: 3015, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_05
+  bounds: 3026, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_06
+  bounds: 3037, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_07
+  bounds: 3048, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_08
+  bounds: 3059, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_09
+  bounds: 3070, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_10
+  bounds: 3081, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_11
+  bounds: 3092, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_12
+  bounds: 3103, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_13
+  bounds: 3114, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_14
+  bounds: 3125, 1063, 9, 9
+  index: -1
+fx/fish/fry_06_15
+  bounds: 3203, 1334, 9, 9
+  index: -1
+fx/fish/school_01
+  bounds: 4061, 1069, 14, 8
+  index: -1
+fx/fish/school_02
+  bounds: 1659, 1200, 14, 8
+  index: -1
+fx/fish/school_03
+  bounds: 1139, 638, 14, 9
+  index: -1
+fx/fish/school_04
+  bounds: 4071, 939, 14, 10
+  index: -1
+fx/fish/school_05
+  bounds: 3230, 484, 14, 11
+  index: -1
+fx/fish/school_06
+  bounds: 1436, 974, 14, 10
+  index: -1
+fx/fish/school_07
+  bounds: 1452, 974, 14, 10
+  index: -1
+fx/fish/school_08
+  bounds: 995, 638, 14, 10
+  index: -1
+fx/fish/school_09
+  bounds: 1011, 638, 14, 10
+  index: -1
+fx/fish/school_10
+  bounds: 1027, 638, 14, 10
+  index: -1
+fx/fish/school_11
+  bounds: 3246, 484, 14, 11
+  index: -1
+fx/fish/school_12
+  bounds: 3262, 484, 14, 11
+  index: -1
+fx/fish/school_13
+  bounds: 3278, 485, 14, 9
+  index: -1
+fx/fish/school_14
+  bounds: 3938, 538, 14, 11
+  index: -1
+fx/fish/school_15
+  bounds: 3954, 538, 14, 11
+  index: -1
+fx/fish/school_16
+  bounds: 3970, 538, 14, 11
+  index: -1
+fx/fish/school_17
+  bounds: 1043, 638, 14, 10
+  index: -1
+fx/fish/school_18
+  bounds: 1059, 638, 14, 10
+  index: -1
+fx/fish/school_19
+  bounds: 1075, 638, 14, 10
+  index: -1
+fx/fish/school_20
+  bounds: 1091, 638, 14, 10
+  index: -1
+fx/fish/school_21
+  bounds: 3986, 538, 14, 11
+  index: -1
+fx/fish/school_22
+  bounds: 1107, 638, 14, 10
+  index: -1
+fx/fish/school_23
+  bounds: 3294, 485, 14, 9
+  index: -1
+fx/fish/school_24
+  bounds: 1123, 638, 14, 10
+  index: -1
+fx/fish/school_25
+  bounds: 4081, 584, 14, 13
+  index: -1
+fx/fish/school_26
+  bounds: 4081, 599, 14, 13
+  index: -1
+fx/fish/school_27
+  bounds: 365, 1462, 14, 13
+  index: -1
+fx/fish/school_28
+  bounds: 3001, 997, 14, 13
+  index: -1
+fx/fish/school_29
+  bounds: 3072, 997, 13, 13
+  index: -1
+fx/fish/school_30
+  bounds: 3017, 997, 14, 13
+  index: -1
+fx/fish/school_31
+  bounds: 1363, 1098, 19, 12
+  index: -1
+fx/fish/school_32
+  bounds: 3310, 485, 14, 9
+  index: -1
+fx/fish/school_33
+  bounds: 3253, 1229, 19, 14
+  index: -1
+fx/fish/school_34
+  bounds: 922, 764, 15, 12
+  index: -1
+fx/fish/school_35
+  bounds: 3194, 484, 17, 11
+  index: -1
+fx/fish/school_36
+  bounds: 883, 764, 19, 12
+  index: -1
+fx/fish/school_37
+  bounds: 4063, 199, 18, 14
+  index: -1
+fx/fish/school_38
+  bounds: 4048, 451, 18, 13
+  index: -1
+fx/garden/flower_00
+  bounds: 4063, 617, 11, 16
+  index: -1
+fx/garden/flower_01
+  bounds: 4084, 451, 11, 16
+  index: -1
+fx/garden/flower_02
+  bounds: 4084, 469, 11, 16
+  index: -1
+fx/garden/flower_03
+  bounds: 4084, 487, 11, 16
+  index: -1
+fx/garden/flower_04
+  bounds: 3251, 733, 11, 16
+  index: -1
+fx/garden/flower_05
+  bounds: 469, 1328, 11, 16
+  index: -1
+fx/garden/flower_06
+  bounds: 1639, 908, 11, 16
+  index: -1
+fx/garden/flower_07
+  bounds: 4083, 199, 11, 14
+  index: -1
+fx/garden/flower_08
+  bounds: 1251, 1150, 11, 14
+  index: -1
+fx/garden/flower_09
+  bounds: 3033, 997, 11, 14
+  index: -1
+fx/garden/flower_10
+  bounds: 3046, 997, 11, 14
+  index: -1
+fx/garden/flower_11
+  bounds: 3059, 997, 11, 14
+  index: -1
+fx/garden/flower_12
+  bounds: 1639, 926, 11, 15
+  index: -1
+fx/garden/flower_13
+  bounds: 1639, 943, 11, 15
+  index: -1
+fx/garden/flower_14
+  bounds: 1639, 960, 11, 15
+  index: -1
+fx/garden/flower_15
+  bounds: 4083, 1359, 11, 15
+  index: -1
+fx/garden/flower_16
+  bounds: 4083, 1376, 11, 15
+  index: -1
+fx/garden/flower_17
+  bounds: 4083, 1393, 11, 15
+  index: -1
+fx/garden/flower_18
+  bounds: 2593, 1112, 9, 15
+  index: -1
+fx/garden/flower_19
+  bounds: 2593, 1129, 9, 15
+  index: -1
+fx/garden/flower_20
+  bounds: 4083, 1410, 9, 15
+  index: -1
+fx/garden/flower_21
+  bounds: 4083, 1427, 9, 15
+  index: -1
+fx/garden/flower_22
+  bounds: 4081, 306, 9, 15
+  index: -1
+fx/garden/flower_23
+  bounds: 4081, 550, 9, 15
+  index: -1
+fx/garden/flower_24
+  bounds: 4081, 567, 9, 15
+  index: -1
+fx/garden/flower_25
+  bounds: 3501, 1329, 14, 20
+  index: -1
+fx/garden/flower_26
+  bounds: 2375, 904, 17, 18
+  index: -1
+fx/garden/flower_27
+  bounds: 4081, 265, 14, 19
+  index: -1
+fx/garden/flower_28
+  bounds: 2350, 986, 17, 21
+  index: -1
+fx/garden/flower_29
+  bounds: 3251, 712, 13, 19
+  index: -1
+fx/garden/flower_30
+  bounds: 4081, 286, 14, 18
+  index: -1
+fx/garden/flower_31
+  bounds: 4079, 1051, 16, 19
+  index: -1
+fx/garden/flower_32
+  bounds: 979, 746, 14, 24
+  index: -1
+fx/garden/flower_33
+  bounds: 3921, 467, 15, 18
+  index: -1
+fx/garden/flower_34
+  bounds: 1159, 620, 17, 20
+  index: -1
+fx/garden/flower_35
+  bounds: 2064, 1297, 19, 22
+  index: -1
+fx/garden/flower_36
+  bounds: 1619, 1375, 19, 16
+  index: -1
+fx/garden/head_00
+  bounds: 4079, 127, 15, 15
+  index: -1
+fx/garden/head_01
+  bounds: 1605, 1282, 12, 12
+  index: -1
+fx/garden/head_02
+  bounds: 4079, 144, 15, 15
+  index: -1
+fx/garden/head_03
+  bounds: 2785, 1253, 16, 16
+  index: -1
+fx/garden/head_04
+  bounds: 4079, 161, 15, 15
+  index: -1
+fx/garden/head_05
+  bounds: 2375, 924, 15, 15
+  index: -1
+fx/garden/head_06
+  bounds: 2375, 941, 15, 15
+  index: -1
+fx/garden/head_07
+  bounds: 3087, 997, 13, 13
+  index: -1
+fx/garden/lawn_00
+  bounds: 2785, 1271, 16, 16
+  index: -1
+fx/garden/lawn_01
+  bounds: 2303, 1210, 16, 16
+  index: -1
+fx/garden/lawn_02
+  bounds: 2303, 1228, 16, 16
+  index: -1
+fx/garden/lawn_03
+  bounds: 1821, 1166, 16, 16
+  index: -1
+fx/garden/lawn_04
+  bounds: 1821, 1184, 16, 16
+  index: -1
+fx/garden/lawn_05
+  bounds: 645, 1172, 16, 16
+  index: -1
+fx/garden/lawn_06
+  bounds: 645, 1190, 16, 16
+  index: -1
+fx/garden/leaf_00
+  bounds: 4079, 91, 15, 16
+  index: -1
+fx/garden/leaf_01
+  bounds: 4079, 109, 15, 16
+  index: -1
+fx/garden/leaf_02
+  bounds: 2386, 1371, 9, 16
+  index: -1
+fx/garden/leaf_03
+  bounds: 4071, 922, 15, 15
+  index: -1
+fx/garden/tuft_00
+  bounds: 4050, 538, 12, 9
+  index: -1
+fx/garden/tuft_01
+  bounds: 4068, 451, 14, 14
+  index: -1
+fx/garden/tuft_02
+  bounds: 1521, 539, 15, 10
+  index: -1
+fx/garden/tuft_03
+  bounds: 3921, 487, 15, 6
+  index: -1
+fx/garden/tuft_04
+  bounds: 1647, 1282, 10, 10
+  index: -1
+fx/garden/tuft_05
+  bounds: 3213, 484, 15, 11
+  index: -1
+fx/garden/tuft_06
+  bounds: 1384, 1098, 13, 9
+  index: -1
+fx/garden/tuft_07
+  bounds: 904, 764, 16, 12
+  index: -1
+fx/magic/aura/spritesheet
+  bounds: 2229, 1371, 125, 24
+  index: -1
+fx/magic/boost/spritesheet
+  bounds: 1659, 1260, 424, 35
+  index: -1
+fx/magic/circle/spritesheetorange
+  bounds: 1265, 1064, 128, 32
+  index: -1
+fx/magic/circle/spritesheetspark
+  bounds: 1257, 1396, 192, 32
+  index: -1
+fx/magic/circle/spritesheetspark2
+  bounds: 1659, 1166, 160, 32
+  index: -1
+fx/magic/circle/spritesheetwhite
+  bounds: 3962, 417, 128, 32
+  index: -1
+fx/magic/shield/spritesheetblue
+  bounds: 3779, 922, 144, 26
+  index: -1
+fx/magic/shield/spritesheetyellow
+  bounds: 3925, 922, 144, 26
+  index: -1
+fx/magic/spark/spritesheet
+  bounds: 2321, 1112, 270, 35
+  index: -1
+fx/magic/spirit/spritesheet
+  bounds: 1477, 908, 160, 32
+  index: -1
+fx/magic/spirit/spritesheetblue
+  bounds: 1477, 942, 160, 32
+  index: -1
+fx/magic/spirit/spritesheetdouble
+  bounds: 483, 1180, 160, 32
+  index: -1
+fx/night/burst
+  bounds: 1, 746, 880, 80
+  index: -1
+fx/night/satyr_beam
+  bounds: 2289, 1244, 12, 4
+  index: -1
+fx/particle/bamboo
+  bounds: 3194, 467, 96, 15
+  index: -1
+fx/particle/clouds
+  bounds: 3169, 712, 80, 36
+  index: -1
+fx/particle/fire
+  bounds: 1265, 1098, 96, 12
+  index: -1
+fx/particle/grass
+  bounds: 1177, 1150, 72, 13
+  index: -1
+fx/particle/leaf
+  bounds: 2141, 1244, 72, 7
+  index: -1
+fx/particle/leafpink
+  bounds: 2215, 1244, 72, 7
+  index: -1
+fx/particle/rain
+  bounds: 3759, 1351, 24, 8
+  index: -1
+fx/particle/rainonfloor
+  bounds: 845, 1352, 24, 8
+  index: -1
+fx/particle/rock
+  bounds: 1177, 1132, 80, 16
+  index: -1
+fx/particle/rockgray
+  bounds: 299, 1426, 80, 16
+  index: -1
+fx/particle/snow
+  bounds: 3981, 1069, 56, 8
+  index: -1
+fx/particle/spark
+  bounds: 773, 1352, 70, 8
+  index: -1
+fx/particle/vase
+  bounds: 3962, 451, 84, 14
+  index: -1
+fx/particle/wood
+  bounds: 995, 620, 96, 16
+  index: -1
+fx/projectile/arrow
+  bounds: 4077, 1072, 13, 5
+  index: -1
+fx/projectile/bigenergyball
+  bounds: 2997, 1153, 96, 24
+  index: -1
+fx/projectile/bigkunai
+  bounds: 1399, 974, 35, 9
+  index: -1
+fx/projectile/bigshuriken
+  bounds: 4049, 1295, 46, 23
+  index: -1
+fx/projectile/boomerang
+  bounds: 1093, 620, 64, 16
+  index: -1
+fx/projectile/canonball
+  bounds: 299, 1444, 80, 16
+  index: -1
+fx/projectile/disc
+  bounds: 3292, 467, 64, 16
+  index: -1
+fx/projectile/energyball
+  bounds: 3358, 467, 64, 16
+  index: -1
+fx/projectile/fireball
+  bounds: 3424, 467, 64, 16
+  index: -1
+fx/projectile/icespike
+  bounds: 2847, 1063, 144, 10
+  index: -1
+fx/projectile/kunai
+  bounds: 4081, 323, 14, 5
+  index: -1
+fx/projectile/kunai/spritesheet
+  bounds: 3429, 269, 650, 59
+  index: -1
+fx/projectile/own/boomerang_1
+  bounds: 3490, 467, 64, 16
+  index: -1
+fx/projectile/own/boomerang_2
+  bounds: 3556, 467, 64, 16
+  index: -1
+fx/projectile/own/boomerang_3
+  bounds: 3622, 467, 64, 16
+  index: -1
+fx/projectile/own/disc_1
+  bounds: 3688, 467, 64, 16
+  index: -1
+fx/projectile/own/disc_2
+  bounds: 3754, 467, 64, 16
+  index: -1
+fx/projectile/plantspike
+  bounds: 3995, 1221, 96, 20
+  index: -1
+fx/projectile/shuriken
+  bounds: 4063, 181, 32, 16
+  index: -1
+fx/projectile/shuriken/spritesheet
+  bounds: 707, 974, 690, 54
+  index: -1
+fx/projectile/shurikenmagic
+  bounds: 663, 1010, 32, 16
+  index: -1
+fx/projectile/spritesheetrock
+  bounds: 3820, 467, 64, 16
+  index: -1
+fx/santa/present_00
+  bounds: 1766, 327, 18, 37
+  index: -1
+fx/santa/present_01
+  bounds: 1521, 500, 18, 37
+  index: -1
+fx/santa/present_02
+  bounds: 1971, 1331, 18, 37
+  index: -1
+fx/santa/present_03
+  bounds: 1991, 1331, 18, 37
+  index: -1
+fx/santa/present_04
+  bounds: 2011, 1331, 18, 37
+  index: -1
+fx/santa/present_05
+  bounds: 4076, 617, 18, 37
+  index: -1
+fx/santa/present_06
+  bounds: 4076, 656, 18, 37
+  index: -1
+fx/santa/present_07
+  bounds: 4076, 695, 18, 37
+  index: -1
+fx/santa/present_08
+  bounds: 4076, 734, 18, 37
+  index: -1
+fx/santa/present_09
+  bounds: 4076, 773, 18, 37
+  index: -1
+fx/santa/present_10
+  bounds: 4049, 1320, 18, 37
+  index: -1
+fx/santa/present_11
+  bounds: 4069, 1320, 18, 37
+  index: -1
+fx/santa/santa_00
+  bounds: 645, 1208, 16, 16
+  index: -1
+fx/santa/santa_01
+  bounds: 645, 1226, 16, 16
+  index: -1
+fx/santa/santa_02
+  bounds: 4079, 1, 16, 16
+  index: -1
+fx/santa/santa_03
+  bounds: 4079, 19, 16, 16
+  index: -1
+fx/santa/santa_04
+  bounds: 4079, 37, 16, 16
+  index: -1
+fx/santa/santa_05
+  bounds: 4079, 55, 16, 16
+  index: -1
+fx/skill/aura
+  bounds: 2687, 1334, 256, 32
+  index: -1
+fx/skill/auraback
+  bounds: 1, 219, 1920, 48
+  index: -1
+fx/skill/aurafront
+  bounds: 1923, 219, 1920, 48
+  index: -1
+fx/skill/bell217
+  bounds: 663, 1030, 600, 40
+  index: -1
+fx/skill/bell218
+  bounds: 663, 1072, 600, 40
+  index: -1
+fx/skill/bell219
+  bounds: 995, 650, 900, 60
+  index: -1
+fx/skill/bolt
+  bounds: 3791, 1295, 256, 64
+  index: -1
+fx/skill/brightfire
+  bounds: 965, 1244, 128, 16
+  index: -1
+fx/skill/fireblast
+  bounds: 3769, 1017, 320, 32
+  index: -1
+fx/skill/firebloom
+  bounds: 3534, 802, 512, 64
+  index: -1
+fx/skill/fireburst
+  bounds: 1263, 1296, 384, 48
+  index: -1
+fx/skill/firehit
+  bounds: 2945, 1334, 256, 32
+  index: -1
+fx/skill/firering
+  bounds: 1, 828, 768, 64
+  index: -1
+fx/skill/firerun
+  bounds: 773, 1396, 192, 48
+  index: -1
+fx/skill/firestar
+  bounds: 2803, 1229, 448, 64
+  index: -1
+fx/skill/flamelash
+  bounds: 483, 1244, 480, 48
+  index: -1
+fx/skill/frostarc
+  bounds: 1, 1122, 504, 56
+  index: -1
+fx/skill/frostmace
+  bounds: 995, 712, 896, 64
+  index: -1
+fx/skill/frostmacehold
+  bounds: 3429, 1372, 64, 64
+  index: -1
+fx/skill/frostnova
+  bounds: 1795, 269, 1632, 96
+  index: -1
+fx/skill/frostspikes
+  bounds: 2605, 1013, 528, 48
+  index: -1
+fx/skill/hexorbit
+  bounds: 771, 828, 108, 36
+  index: -1
+fx/skill/hexring
+  bounds: 1063, 1362, 192, 64
+  index: -1
+fx/skill/holyblade
+  bounds: 1893, 712, 832, 64
+  index: -1
+fx/skill/holyclose
+  bounds: 3183, 1079, 576, 48
+  index: -1
+fx/skill/holycolumn
+  bounds: 2141, 1253, 440, 40
+  index: -1
+fx/skill/holydash
+  bounds: 387, 1352, 384, 48
+  index: -1
+fx/skill/holyfinale
+  bounds: 1542, 367, 1408, 128
+  index: -1
+fx/skill/holyfury
+  bounds: 771, 908, 704, 64
+  index: -1
+fx/skill/holyheal
+  bounds: 3183, 1129, 576, 48
+  index: -1
+fx/skill/holynova
+  bounds: 2349, 551, 960, 96
+  index: -1
+fx/skill/holyshield
+  bounds: 1265, 1112, 572, 52
+  index: -1
+fx/skill/holyslasha
+  bounds: 3845, 215, 240, 48
+  index: -1
+fx/skill/holyslashb
+  bounds: 387, 1402, 192, 48
+  index: -1
+fx/skill/holyslashc
+  bounds: 1183, 500, 336, 48
+  index: -1
+fx/skill/holysmash
+  bounds: 1542, 497, 1196, 52
+  index: -1
+fx/skill/holyswords
+  bounds: 2740, 497, 1196, 52
+  index: -1
+fx/skill/holyward
+  bounds: 2952, 417, 1008, 48
+  index: -1
+fx/skill/icegather
+  bounds: 3001, 963, 128, 32
+  index: -1
+fx/skill/icehit
+  bounds: 3741, 131, 336, 48
+  index: -1
+fx/skill/iceroot
+  bounds: 2397, 1363, 256, 32
+  index: -1
+fx/skill/iceshards
+  bounds: 1, 269, 1792, 56
+  index: -1
+fx/skill/iceshatter
+  bounds: 3429, 330, 544, 32
+  index: -1
+fx/skill/icicle
+  bounds: 1, 1278, 480, 48
+  index: -1
+fx/skill/icicleform
+  bounds: 507, 1122, 144, 48
+  index: -1
+fx/skill/jacklantern
+  bounds: 1263, 1346, 288, 48
+  index: -1
+fx/skill/lampglow
+  bounds: 1, 1328, 384, 96
+  index: -1
+fx/skill/lampslash
+  bounds: 483, 1294, 392, 56
+  index: -1
+fx/skill/lampstaff
+  bounds: 3938, 467, 144, 36
+  index: -1
+fx/skill/lightback
+  bounds: 1, 1180, 480, 96
+  index: -1
+fx/skill/lightfront
+  bounds: 1839, 1112, 480, 96
+  index: -1
+fx/skill/nova
+  bounds: 3501, 1351, 256, 64
+  index: -1
+fx/skill/pillarback
+  bounds: 2321, 1153, 480, 48
+  index: -1
+fx/skill/pillarfront
+  bounds: 2803, 1179, 480, 48
+  index: -1
+fx/skill/pumpkinbomb
+  bounds: 2952, 367, 1104, 48
+  index: -1
+fx/skill/pumpkinrain
+  bounds: 2399, 869, 736, 92
+  index: -1
+fx/skill/pumpkinsmash
+  bounds: 1653, 904, 720, 80
+  index: -1
+fx/skill/shadecut
+  bounds: 3779, 868, 312, 52
+  index: -1
+fx/skill/shadeorb
+  bounds: 2379, 131, 1360, 80
+  index: -1
+fx/skill/shadepalm
+  bounds: 3137, 869, 640, 80
+  index: -1
+fx/skill/shaderise
+  bounds: 2035, 1329, 360, 40
+  index: -1
+fx/skill/shadeslam
+  bounds: 1177, 1166, 480, 96
+  index: -1
+fx/skill/shadex
+  bounds: 3229, 1295, 288, 32
+  index: -1
+fx/skill/shock
+  bounds: 2399, 778, 320, 64
+  index: -1
+fx/skill/smite
+  bounds: 1, 944, 704, 64
+  index: -1
+fx/skill/starcomet
+  bounds: 3253, 1245, 384, 48
+  index: -1
+fx/skill/starward
+  bounds: 877, 1296, 384, 64
+  index: -1
+fx/skill/streetlamp
+  bounds: 1897, 650, 448, 56
+  index: -1
+fx/skill/strike
+  bounds: 3769, 951, 320, 64
+  index: -1
+fx/skill/sunburn
+  bounds: 3735, 1221, 128, 16
+  index: -1
+fx/skill/trail
+  bounds: 3759, 1361, 256, 64
+  index: -1
+fx/skill/venombolt
+  bounds: 3865, 1221, 128, 16
+  index: -1
+fx/skill/venomburst
+  bounds: 2085, 1295, 384, 32
+  index: -1
+fx/skill/venomdash
+  bounds: 1649, 1331, 320, 64
+  index: -1
+fx/skill/venomdrain
+  bounds: 1649, 1297, 384, 32
+  index: -1
+fx/skill/venomdrop
+  bounds: 2605, 1079, 576, 72
+  index: -1
+fx/skill/venomfall
+  bounds: 3639, 1245, 384, 48
+  index: -1
+fx/skill/venommark
+  bounds: 2803, 1153, 192, 24
+  index: -1
+fx/skill/venomorb
+  bounds: 3761, 1136, 288, 36
+  index: -1
+fx/skill/venomsplat
+  bounds: 1971, 1371, 256, 32
+  index: -1
+fx/skill/venomwave
+  bounds: 2655, 1368, 256, 32
+  index: -1
+fx/skill6/fire_arrow
+  bounds: 2913, 1368, 256, 32
+  index: -1
+fx/skill6/fire_ball
+  bounds: 3171, 1372, 256, 32
+  index: -1
+fx/skill6/fire_burst
+  bounds: 2321, 1203, 480, 48
+  index: -1
+fx/skill6/fire_spell
+  bounds: 2229, 1397, 256, 32
+  index: -1
+fx/skill6/water_arrow
+  bounds: 2487, 1402, 256, 32
+  index: -1
+fx/skill6/water_ball
+  bounds: 2471, 1295, 384, 32
+  index: -1
+fx/skill6/water_burst
+  bounds: 1659, 1210, 480, 48
+  index: -1
+fx/skill6/water_spell
+  bounds: 2745, 1402, 256, 32
+  index: -1
+fx/smoke/smoke/spritesheet
+  bounds: 1451, 1396, 192, 32
+  index: -1
+fx/smoke/smokecircular/spritesheet
+  bounds: 2605, 1063, 240, 14
+  index: -1
+fx/snow/ball_0
+  bounds: 2593, 1146, 5, 5
+  index: -1
+fx/snow/ball_1
+  bounds: 2386, 1389, 6, 6
+  index: -1
+fx/snow/ball_2
+  bounds: 1468, 974, 7, 7
+  index: -1
+fx/snow/ball_3
+  bounds: 3876, 485, 8, 8
+  index: -1
+fx/snow/puff_00
+  bounds: 4002, 538, 14, 11
+  index: -1
+fx/snow/puff_01
+  bounds: 4018, 538, 14, 11
+  index: -1
+fx/snow/puff_02
+  bounds: 4034, 538, 14, 11
+  index: -1
+fx/snow/puff_03
+  bounds: 1553, 1382, 14, 11
+  index: -1
+fx/snow/puff_04
+  bounds: 1569, 1382, 14, 11
+  index: -1
+fx/snow/puff_05
+  bounds: 1585, 1382, 14, 11
+  index: -1
+fx/snow/puff_06
+  bounds: 1601, 1382, 14, 11
+  index: -1
+fx/snow/puff_07
+  bounds: 1589, 1282, 14, 11
+  index: -1
+fx/snow/splat_00
+  bounds: 1619, 1282, 12, 12
+  index: -1
+fx/snow/splat_01
+  bounds: 1633, 1282, 12, 12
+  index: -1
+fx/snow/splat_02
+  bounds: 3733, 635, 12, 12
+  index: -1
+fx/snow/splat_03
+  bounds: 3747, 635, 12, 12
+  index: -1
+props/animated/flower/spritesheet16x16
+  bounds: 4039, 1069, 20, 8
+  index: -1
+props/animated/watermill/watermill_a_34x36
+  bounds: 771, 866, 102, 36
+  index: -1
+props/animated/watermill/watermill_b_34x36
+  bounds: 195, 1426, 102, 36
+  index: -1
+props/depths/arrow/arrow
+  bounds: 4017, 1361, 64, 32
+  index: -1
+props/depths/arrow/just_arrow
+  bounds: 4079, 73, 16, 16
+  index: -1
+props/depths/box_1/box_1
+  bounds: 883, 746, 64, 16
+  index: -1
+props/depths/box_2/box_2
+  bounds: 3733, 617, 64, 16
+  index: -1
+props/depths/chest/chest
+  bounds: 3799, 617, 64, 16
+  index: -1
+props/depths/chest/chest_open
+  bounds: 3865, 617, 64, 16
+  index: -1
+props/depths/coin/coin
+  bounds: 3931, 617, 64, 16
+  index: -1
+props/depths/flag/flag
+  bounds: 3997, 617, 64, 16
+  index: -1
+props/depths/flamethrower/flamethrower_1
+  bounds: 4017, 1395, 64, 32
+  index: -1
+props/depths/flamethrower/flamethrower_2
+  bounds: 2399, 844, 128, 16
+  index: -1
+props/depths/flasks/flasks_1
+  bounds: 1553, 1346, 64, 16
+  index: -1
+props/depths/flasks/flasks_2
+  bounds: 1553, 1364, 64, 16
+  index: -1
+props/depths/flasks/flasks_3
+  bounds: 967, 1396, 64, 16
+  index: -1
+props/depths/flasks/flasks_4
+  bounds: 967, 1414, 64, 16
+  index: -1
+props/depths/keys/keys_1
+  bounds: 581, 1402, 64, 16
+  index: -1
+props/depths/keys/keys_2
+  bounds: 647, 1402, 64, 16
+  index: -1
+props/depths/mini_box_1/mini_box_1
+  bounds: 581, 1420, 64, 16
+  index: -1
+props/depths/mini_box_2/mini_box_2
+  bounds: 647, 1420, 64, 16
+  index: -1
+props/depths/mini_chest/mini_chest
+  bounds: 581, 1438, 64, 16
+  index: -1
+props/depths/mini_chest/mini_chest_open
+  bounds: 647, 1438, 64, 16
+  index: -1
+props/depths/peaks/peaks
+  bounds: 1, 1460, 64, 16
+  index: -1
+props/depths/torch/candlestick_1
+  bounds: 67, 1460, 64, 16
+  index: -1
+props/depths/torch/candlestick_2
+  bounds: 381, 1452, 64, 16
+  index: -1
+props/depths/torch/side_torch
+  bounds: 299, 1462, 64, 16
+  index: -1
+props/depths/torch/torch
+  bounds: 447, 1452, 64, 16
+  index: -1
+props/overworld/boat
+  bounds: 3975, 330, 80, 32
+  index: -1
+props/overworld/crane
+  bounds: 4058, 330, 33, 36
+  index: -1
+props/overworld/fishnet
+  bounds: 2315, 986, 33, 25
+  index: -1
+props/overworld/fishnetfull
+  bounds: 3886, 467, 33, 25
+  index: -1
+props/overworld/sail
+  bounds: 4064, 505, 30, 43
+  index: -1

@@ -1,0 +1,66 @@
+// The animals that fight beside the ninja, from CraftPix's top-down hunt
+// animals (tools/make_pets.py cuts them into the actors atlas as pets/<id>).
+// Read by ContentLoader into ContentRegistry; checked by ContentValidator.
+//
+// THEIR OWN NUMBERS are shares of the ninja's live ones - "hpShare" of the
+// health, "damageShare" of the average blow, "armourShare" of the armour,
+// "critShare" of the chance to crit - so an animal is always under the ninja,
+// wears nothing, and grows with every piece of gear the ninja puts on. Then
+// "attackEvery" seconds between its blows, its running pace and how far its
+// blow reaches. Each is best at what it is for and the fox is good at all of
+// it, a little under each of the others at its own thing. "drawScale" is how
+// big it is drawn, as a share of the pack's art: the pack draws them life-size
+// beside a person, and the ninja is a chibi half that.
+//
+// WHAT IT GIVES THE NINJA while it comes along, and while it lies waiting to
+// come back: "effects" of the gear vocabulary, or the off hand's reach, with
+// their "magnitudes", folded in with everything worn (Loadout). Each of the
+// four has a thing of its own: the hare the off hand's bite, the deer its
+// reach, the boar health, the grouse the crits. The fox gives some of the
+// four everyday ones, less of each than the one that gives the most of it.
+//
+// ITS MEAL is "meal" goods of the village in "mealCounts", good for "fights"
+// trips down - a stage or a shrine each. With them spent it stays home, sad,
+// until fed. Fallen in a fight, it is back beside the ninja "revive" seconds
+// later.
+{
+  "pets": [
+    {"id": "hare", "nameKey": "pet.hare.name", "descKey": "pet.hare.desc", "sprite": "pets/hare",
+     // In and out: three quick bites, a hop clear, and back.
+     "style": "dart",
+     "hpShare": 0.3, "damageShare": 0.25, "armourShare": 0.3, "critShare": 0.5,
+     "attackEvery": 0.4, "moveSpeed": 100, "reach": 12, "drawScale": 0.8,
+     "effects": ["attack_speed_mult", "throw_damage_mult"], "magnitudes": [1.2, 1.25],
+     "meal": ["drumstick"], "mealCounts": [6], "fights": 3, "revive": 15},
+    {"id": "deer", "nameKey": "pet.deer.name", "descKey": "pet.deer.desc", "sprite": "pets/deer",
+     // A run straight through them, throwing them aside, and round again.
+     "style": "charge",
+     "hpShare": 0.4, "damageShare": 0.5, "armourShare": 0.4, "critShare": 0.5,
+     "attackEvery": 1.8, "moveSpeed": 130, "reach": 14, "drawScale": 0.7,
+     "effects": ["move_speed_mult", "throw_reach_mult"], "magnitudes": [1.2, 1.25],
+     "meal": ["meat"], "mealCounts": [5], "fights": 3, "revive": 15},
+    {"id": "boar", "nameKey": "pet.boar.name", "descKey": "pet.boar.desc", "sprite": "pets/boar",
+     // Takes the blows, and gores whatever is in front of it off its feet.
+     "style": "gore",
+     "hpShare": 0.75, "damageShare": 0.45, "armourShare": 0.8, "critShare": 0.5,
+     "attackEvery": 1.5, "moveSpeed": 70, "reach": 18, "drawScale": 0.7,
+     "effects": ["armour_add", "max_hp_add"], "magnitudes": [6, 25],
+     "meal": ["meat"], "mealCounts": [6], "fights": 3, "revive": 15},
+    {"id": "grouse", "nameKey": "pet.grouse.name", "descKey": "pet.grouse.desc", "sprite": "pets/grouse",
+     // Up out of reach, over its mark, and down on it hard.
+     "style": "dive",
+     "hpShare": 0.35, "damageShare": 0.8, "armourShare": 0.3, "critShare": 0.6,
+     "attackEvery": 1.8, "moveSpeed": 95, "reach": 12, "drawScale": 0.7,
+     "effects": ["damage_mult", "crit_chance_add", "crit_damage_mult"],
+     "magnitudes": [1.12, 0.05, 1.15],
+     "meal": ["drumstick"], "mealCounts": [6], "fights": 3, "revive": 15},
+    {"id": "fox", "nameKey": "pet.fox.name", "descKey": "pet.fox.desc", "sprite": "pets/fox",
+     // A pounce, two bites, and away: a bit of everything.
+     "style": "pounce",
+     "hpShare": 0.5, "damageShare": 0.45, "armourShare": 0.5, "critShare": 0.5,
+     "attackEvery": 0.9, "moveSpeed": 110, "reach": 14, "drawScale": 0.7,
+     "effects": ["attack_speed_mult", "move_speed_mult", "armour_add", "damage_mult"],
+     "magnitudes": [1.08, 1.08, 3, 1.06],
+     "meal": ["drumstick", "meat"], "mealCounts": [4, 3], "fights": 3, "revive": 15}
+  ]
+}

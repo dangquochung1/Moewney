@@ -1,0 +1,569 @@
+seasons.png
+size: 4096,4096
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+fx/moon/phase_1
+  bounds: 4027, 1, 64, 64
+  index: -1
+fx/moon/phase_2
+  bounds: 4027, 67, 64, 64
+  index: -1
+fx/moon/phase_3
+  bounds: 4027, 133, 64, 64
+  index: -1
+fx/moon/phase_4
+  bounds: 4027, 199, 64, 64
+  index: -1
+fx/moon/phase_5
+  bounds: 4027, 265, 64, 64
+  index: -1
+fx/moon/phase_6
+  bounds: 4027, 331, 64, 64
+  index: -1
+fx/moon/phase_7
+  bounds: 4027, 397, 64, 64
+  index: -1
+fx/moon/phase_8
+  bounds: 4027, 463, 64, 64
+  index: -1
+fx/seasons/leaves_00
+  bounds: 1, 1, 320, 180
+  index: -1
+fx/seasons/leaves_01
+  bounds: 323, 1, 320, 180
+  index: -1
+fx/seasons/leaves_02
+  bounds: 645, 1, 320, 180
+  index: -1
+fx/seasons/leaves_03
+  bounds: 967, 1, 320, 180
+  index: -1
+fx/seasons/leaves_04
+  bounds: 1289, 1, 320, 180
+  index: -1
+fx/seasons/leaves_05
+  bounds: 1611, 1, 320, 180
+  index: -1
+fx/seasons/leaves_06
+  bounds: 1933, 1, 320, 180
+  index: -1
+fx/seasons/leaves_07
+  bounds: 2255, 1, 320, 180
+  index: -1
+fx/seasons/leaves_08
+  bounds: 2577, 1, 320, 180
+  index: -1
+fx/seasons/leaves_09
+  bounds: 2899, 1, 320, 180
+  index: -1
+fx/seasons/leaves_10
+  bounds: 3221, 1, 320, 180
+  index: -1
+fx/seasons/leaves_11
+  bounds: 3543, 1, 320, 180
+  index: -1
+fx/seasons/leaves_12
+  bounds: 1, 183, 320, 180
+  index: -1
+fx/seasons/leaves_13
+  bounds: 323, 183, 320, 180
+  index: -1
+fx/seasons/leaves_14
+  bounds: 645, 183, 320, 180
+  index: -1
+fx/seasons/leaves_15
+  bounds: 967, 183, 320, 180
+  index: -1
+fx/seasons/leaves_16
+  bounds: 1289, 183, 320, 180
+  index: -1
+fx/seasons/leaves_17
+  bounds: 1611, 183, 320, 180
+  index: -1
+fx/seasons/leaves_18
+  bounds: 1933, 183, 320, 180
+  index: -1
+fx/seasons/leaves_19
+  bounds: 2255, 183, 320, 180
+  index: -1
+fx/seasons/leaves_20
+  bounds: 2577, 183, 320, 180
+  index: -1
+fx/seasons/leaves_21
+  bounds: 2899, 183, 320, 180
+  index: -1
+fx/seasons/leaves_22
+  bounds: 3221, 183, 320, 180
+  index: -1
+fx/seasons/leaves_23
+  bounds: 3543, 183, 320, 180
+  index: -1
+fx/seasons/leaves_24
+  bounds: 1, 365, 320, 180
+  index: -1
+fx/seasons/leaves_25
+  bounds: 1, 547, 320, 180
+  index: -1
+fx/seasons/leaves_26
+  bounds: 1, 729, 320, 180
+  index: -1
+fx/seasons/leaves_27
+  bounds: 1, 911, 320, 180
+  index: -1
+fx/seasons/leaves_28
+  bounds: 1, 1093, 320, 180
+  index: -1
+fx/seasons/leaves_29
+  bounds: 1, 1275, 320, 180
+  index: -1
+fx/seasons/leaves_30
+  bounds: 1, 1457, 320, 180
+  index: -1
+fx/seasons/leaves_31
+  bounds: 1, 1639, 320, 180
+  index: -1
+fx/seasons/leaves_32
+  bounds: 1, 1821, 320, 180
+  index: -1
+fx/seasons/leaves_33
+  bounds: 1, 2003, 320, 180
+  index: -1
+fx/seasons/leaves_34
+  bounds: 1, 2185, 320, 180
+  index: -1
+fx/seasons/leaves_35
+  bounds: 1, 2367, 320, 180
+  index: -1
+fx/seasons/leaves_36
+  bounds: 1, 2549, 320, 180
+  index: -1
+fx/seasons/leaves_37
+  bounds: 1, 2731, 320, 180
+  index: -1
+fx/seasons/leaves_38
+  bounds: 1, 2913, 320, 180
+  index: -1
+fx/seasons/leaves_39
+  bounds: 1, 3095, 320, 180
+  index: -1
+fx/seasons/leaves_40
+  bounds: 1, 3277, 320, 180
+  index: -1
+fx/seasons/leaves_41
+  bounds: 1, 3459, 320, 180
+  index: -1
+fx/seasons/leaves_42
+  bounds: 1, 3641, 320, 180
+  index: -1
+fx/seasons/leaves_43
+  bounds: 1, 3823, 320, 180
+  index: -1
+fx/seasons/leaves_44
+  bounds: 323, 365, 320, 180
+  index: -1
+fx/seasons/leaves_45
+  bounds: 645, 365, 320, 180
+  index: -1
+fx/seasons/leaves_46
+  bounds: 967, 365, 320, 180
+  index: -1
+fx/seasons/leaves_47
+  bounds: 1289, 365, 320, 180
+  index: -1
+fx/seasons/leaves_48
+  bounds: 1611, 365, 320, 180
+  index: -1
+fx/seasons/leaves_49
+  bounds: 1933, 365, 320, 180
+  index: -1
+fx/seasons/leaves_50
+  bounds: 2255, 365, 320, 180
+  index: -1
+fx/seasons/leaves_51
+  bounds: 2577, 365, 320, 180
+  index: -1
+fx/seasons/leaves_52
+  bounds: 2899, 365, 320, 180
+  index: -1
+fx/seasons/leaves_53
+  bounds: 3221, 365, 320, 180
+  index: -1
+fx/seasons/leaves_54
+  bounds: 3543, 365, 320, 180
+  index: -1
+fx/seasons/leaves_55
+  bounds: 323, 547, 320, 180
+  index: -1
+fx/seasons/leaves_56
+  bounds: 645, 547, 320, 180
+  index: -1
+fx/seasons/leaves_57
+  bounds: 967, 547, 320, 180
+  index: -1
+fx/seasons/leaves_58
+  bounds: 1289, 547, 320, 180
+  index: -1
+fx/seasons/leaves_59
+  bounds: 1611, 547, 320, 180
+  index: -1
+fx/seasons/mist_00
+  bounds: 1, 4005, 160, 90
+  index: -1
+fx/seasons/mist_01
+  bounds: 163, 4005, 160, 90
+  index: -1
+fx/seasons/mist_02
+  bounds: 3865, 1, 160, 90
+  index: -1
+fx/seasons/mist_03
+  bounds: 3865, 93, 160, 90
+  index: -1
+fx/seasons/mist_04
+  bounds: 3865, 185, 160, 90
+  index: -1
+fx/seasons/mist_05
+  bounds: 3865, 277, 160, 90
+  index: -1
+fx/seasons/mist_06
+  bounds: 3865, 369, 160, 90
+  index: -1
+fx/seasons/mist_07
+  bounds: 3865, 461, 160, 90
+  index: -1
+fx/seasons/mist_08
+  bounds: 1933, 547, 160, 90
+  index: -1
+fx/seasons/mist_09
+  bounds: 2095, 547, 160, 90
+  index: -1
+fx/seasons/mist_10
+  bounds: 2257, 547, 160, 90
+  index: -1
+fx/seasons/mist_11
+  bounds: 2419, 547, 160, 90
+  index: -1
+fx/seasons/mist_12
+  bounds: 2581, 547, 160, 90
+  index: -1
+fx/seasons/mist_13
+  bounds: 2743, 547, 160, 90
+  index: -1
+fx/seasons/mist_14
+  bounds: 2905, 547, 160, 90
+  index: -1
+fx/seasons/mist_15
+  bounds: 3067, 547, 160, 90
+  index: -1
+fx/seasons/mist_16
+  bounds: 3229, 547, 160, 90
+  index: -1
+fx/seasons/mist_17
+  bounds: 3391, 547, 160, 90
+  index: -1
+fx/seasons/mist_18
+  bounds: 3553, 547, 160, 90
+  index: -1
+fx/seasons/mist_19
+  bounds: 3715, 553, 160, 90
+  index: -1
+fx/seasons/mist_20
+  bounds: 3877, 553, 160, 90
+  index: -1
+fx/seasons/mist_21
+  bounds: 1933, 639, 160, 90
+  index: -1
+fx/seasons/mist_22
+  bounds: 325, 729, 160, 90
+  index: -1
+fx/seasons/mist_23
+  bounds: 487, 729, 160, 90
+  index: -1
+fx/seasons/mist_24
+  bounds: 649, 729, 160, 90
+  index: -1
+fx/seasons/mist_25
+  bounds: 811, 729, 160, 90
+  index: -1
+fx/seasons/mist_26
+  bounds: 973, 729, 160, 90
+  index: -1
+fx/seasons/mist_27
+  bounds: 1135, 729, 160, 90
+  index: -1
+fx/seasons/mist_28
+  bounds: 1297, 729, 160, 90
+  index: -1
+fx/seasons/mist_29
+  bounds: 1459, 729, 160, 90
+  index: -1
+fx/seasons/mist_30
+  bounds: 1621, 729, 160, 90
+  index: -1
+fx/seasons/mist_31
+  bounds: 2095, 639, 160, 90
+  index: -1
+fx/seasons/mist_32
+  bounds: 2257, 639, 160, 90
+  index: -1
+fx/seasons/mist_33
+  bounds: 2419, 639, 160, 90
+  index: -1
+fx/seasons/mist_34
+  bounds: 2581, 639, 160, 90
+  index: -1
+fx/seasons/mist_35
+  bounds: 2743, 639, 160, 90
+  index: -1
+fx/seasons/mist_36
+  bounds: 2905, 639, 160, 90
+  index: -1
+fx/seasons/mist_37
+  bounds: 3067, 639, 160, 90
+  index: -1
+fx/seasons/mist_38
+  bounds: 3229, 639, 160, 90
+  index: -1
+fx/seasons/mist_39
+  bounds: 3391, 639, 160, 90
+  index: -1
+fx/seasons/mist_40
+  bounds: 3553, 639, 160, 90
+  index: -1
+fx/seasons/mist_41
+  bounds: 3715, 645, 160, 90
+  index: -1
+fx/seasons/mist_42
+  bounds: 3877, 645, 160, 90
+  index: -1
+fx/seasons/mist_43
+  bounds: 1783, 731, 160, 90
+  index: -1
+fx/seasons/mist_44
+  bounds: 325, 821, 160, 90
+  index: -1
+fx/seasons/mist_45
+  bounds: 487, 821, 160, 90
+  index: -1
+fx/seasons/mist_46
+  bounds: 649, 821, 160, 90
+  index: -1
+fx/seasons/mist_47
+  bounds: 811, 821, 160, 90
+  index: -1
+fx/seasons/mist_48
+  bounds: 973, 821, 160, 90
+  index: -1
+fx/seasons/mist_49
+  bounds: 1135, 821, 160, 90
+  index: -1
+fx/seasons/mist_50
+  bounds: 1297, 821, 160, 90
+  index: -1
+fx/seasons/mist_51
+  bounds: 1459, 821, 160, 90
+  index: -1
+fx/seasons/mist_52
+  bounds: 1621, 821, 160, 90
+  index: -1
+fx/seasons/mist_53
+  bounds: 1945, 731, 160, 90
+  index: -1
+fx/seasons/mist_54
+  bounds: 2107, 731, 160, 90
+  index: -1
+fx/seasons/mist_55
+  bounds: 2269, 731, 160, 90
+  index: -1
+fx/seasons/mist_56
+  bounds: 2431, 731, 160, 90
+  index: -1
+fx/seasons/mist_57
+  bounds: 2593, 731, 160, 90
+  index: -1
+fx/seasons/mist_58
+  bounds: 2755, 731, 160, 90
+  index: -1
+fx/seasons/mist_59
+  bounds: 2917, 731, 160, 90
+  index: -1
+fx/seasons/rays_00
+  bounds: 3079, 731, 160, 90
+  index: -1
+fx/seasons/rays_01
+  bounds: 3241, 731, 160, 90
+  index: -1
+fx/seasons/rays_02
+  bounds: 3403, 731, 160, 90
+  index: -1
+fx/seasons/rays_03
+  bounds: 3565, 737, 160, 90
+  index: -1
+fx/seasons/rays_04
+  bounds: 3727, 737, 160, 90
+  index: -1
+fx/seasons/rays_05
+  bounds: 3889, 737, 160, 90
+  index: -1
+fx/seasons/rays_06
+  bounds: 1783, 823, 160, 90
+  index: -1
+fx/seasons/rays_07
+  bounds: 325, 913, 160, 90
+  index: -1
+fx/seasons/rays_08
+  bounds: 487, 913, 160, 90
+  index: -1
+fx/seasons/rays_09
+  bounds: 649, 913, 160, 90
+  index: -1
+fx/seasons/rays_10
+  bounds: 811, 913, 160, 90
+  index: -1
+fx/seasons/rays_11
+  bounds: 973, 913, 160, 90
+  index: -1
+fx/seasons/rays_12
+  bounds: 1135, 913, 160, 90
+  index: -1
+fx/seasons/rays_13
+  bounds: 1297, 913, 160, 90
+  index: -1
+fx/seasons/rays_14
+  bounds: 1459, 913, 160, 90
+  index: -1
+fx/seasons/rays_15
+  bounds: 1621, 913, 160, 90
+  index: -1
+fx/seasons/rays_16
+  bounds: 1945, 823, 160, 90
+  index: -1
+fx/seasons/rays_17
+  bounds: 2107, 823, 160, 90
+  index: -1
+fx/seasons/rays_18
+  bounds: 2269, 823, 160, 90
+  index: -1
+fx/seasons/rays_19
+  bounds: 2431, 823, 160, 90
+  index: -1
+fx/seasons/rays_20
+  bounds: 2593, 823, 160, 90
+  index: -1
+fx/seasons/rays_21
+  bounds: 2755, 823, 160, 90
+  index: -1
+fx/seasons/rays_22
+  bounds: 2917, 823, 160, 90
+  index: -1
+fx/seasons/rays_23
+  bounds: 3079, 823, 160, 90
+  index: -1
+fx/seasons/rays_24
+  bounds: 3241, 823, 160, 90
+  index: -1
+fx/seasons/rays_25
+  bounds: 3403, 823, 160, 90
+  index: -1
+fx/seasons/rays_26
+  bounds: 3565, 829, 160, 90
+  index: -1
+fx/seasons/rays_27
+  bounds: 3727, 829, 160, 90
+  index: -1
+fx/seasons/rays_28
+  bounds: 3889, 829, 160, 90
+  index: -1
+fx/seasons/rays_29
+  bounds: 1783, 915, 160, 90
+  index: -1
+fx/seasons/rays_30
+  bounds: 325, 1005, 160, 90
+  index: -1
+fx/seasons/rays_31
+  bounds: 487, 1005, 160, 90
+  index: -1
+fx/seasons/rays_32
+  bounds: 649, 1005, 160, 90
+  index: -1
+fx/seasons/rays_33
+  bounds: 811, 1005, 160, 90
+  index: -1
+fx/seasons/rays_34
+  bounds: 973, 1005, 160, 90
+  index: -1
+fx/seasons/rays_35
+  bounds: 1135, 1005, 160, 90
+  index: -1
+fx/seasons/rays_36
+  bounds: 1297, 1005, 160, 90
+  index: -1
+fx/seasons/rays_37
+  bounds: 1459, 1005, 160, 90
+  index: -1
+fx/seasons/rays_38
+  bounds: 1621, 1005, 160, 90
+  index: -1
+fx/seasons/rays_39
+  bounds: 1945, 915, 160, 90
+  index: -1
+fx/seasons/rays_40
+  bounds: 2107, 915, 160, 90
+  index: -1
+fx/seasons/rays_41
+  bounds: 2269, 915, 160, 90
+  index: -1
+fx/seasons/rays_42
+  bounds: 2431, 915, 160, 90
+  index: -1
+fx/seasons/rays_43
+  bounds: 2593, 915, 160, 90
+  index: -1
+fx/seasons/rays_44
+  bounds: 2755, 915, 160, 90
+  index: -1
+fx/seasons/rays_45
+  bounds: 2917, 915, 160, 90
+  index: -1
+fx/seasons/rays_46
+  bounds: 3079, 915, 160, 90
+  index: -1
+fx/seasons/rays_47
+  bounds: 3241, 915, 160, 90
+  index: -1
+fx/seasons/rays_48
+  bounds: 3403, 915, 160, 90
+  index: -1
+fx/seasons/rays_49
+  bounds: 3565, 921, 160, 90
+  index: -1
+fx/seasons/rays_50
+  bounds: 3727, 921, 160, 90
+  index: -1
+fx/seasons/rays_51
+  bounds: 3889, 921, 160, 90
+  index: -1
+fx/seasons/rays_52
+  bounds: 1783, 1007, 160, 90
+  index: -1
+fx/seasons/rays_53
+  bounds: 325, 1097, 160, 90
+  index: -1
+fx/seasons/rays_54
+  bounds: 487, 1097, 160, 90
+  index: -1
+fx/seasons/rays_55
+  bounds: 649, 1097, 160, 90
+  index: -1
+fx/seasons/rays_56
+  bounds: 811, 1097, 160, 90
+  index: -1
+fx/seasons/rays_57
+  bounds: 973, 1097, 160, 90
+  index: -1
+fx/seasons/rays_58
+  bounds: 1135, 1097, 160, 90
+  index: -1
+fx/seasons/rays_59
+  bounds: 1297, 1097, 160, 90
+  index: -1

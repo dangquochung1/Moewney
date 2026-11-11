@@ -1,0 +1,58 @@
+// The chess boards set out round the island, played against the bot. Read by
+// com.kagebi.data.VillageCatalog (ChessDef), played by com.kagebi.chess and
+// screen/ChessScreen; checked by ContentValidator.
+//
+// Cờ Nguyên Tử (atomic) is at the Guild Hall's reader, upstairs in its training
+// room, any time. The three Halloween boards come out only while the festival
+// is on - Bộ Xương by the graves, Bí Ngô at Mực's, Cờ Ma at Tôm's - and a game
+// begun then is played to its end, morning or not.
+//
+// Every number in a board's "rules" is the rules file's starting value, kept
+// here to be changed while trying the boards out.
+{
+  "chess": {
+    // Each side's clock: ten minutes. Out of time, that side has lost.
+    "clock": 600,
+    // How long the bot thinks a move: at the least, so that it is not instant,
+    // and at the most, in seconds.
+    "thinkMin": 0.6,
+    "thinkMax": 2.0,
+    // The bot's strengths: how many moves ahead it looks, how far chance sways
+    // it either way (in hundredths of a pawn), and the gold a win against it pays.
+    "levels": [
+      {"id": "easy", "depth": 1, "noise": 150, "gold": 100},
+      {"id": "normal", "depth": 2, "noise": 40, "gold": 250},
+      {"id": "hard", "depth": 3, "noise": 10, "gold": 500}
+    ],
+    // A paid win brings this many Mảnh Ngọc besides; only so many wins a day
+    // pay at all, the boards together.
+    "gems": 1,
+    "paidWinsPerDay": 3,
+    "boards": [
+      {"id": "atomic", "host": "reader", "festival": false, "rules": {}},
+      {
+        "id": "skeleton", "host": "crab", "festival": true,
+        // Moves each side before the points count; a soul candle's turns till
+        // it rises; how far a skeleton slides; the most skeletons a side keeps;
+        // the turns a skeleton that cursed may not curse.
+        "rules": {"moveLimit": 60, "candle": 3, "reach": 3, "skeletons": 6, "tired": 1}
+      },
+      {
+        "id": "pumpkin", "host": "explorer", "festival": true,
+        // Pumpkins at the start, full turns between new pairs, the most on the
+        // board; how often each kind comes up, and what a trick makes a piece.
+        "rules": {
+          "moveLimit": 60, "start": 6, "every": 6, "most": 6,
+          "bomb": 20, "scare": 20, "swap": 20, "shield": 25, "trick": 15,
+          "knight": 30, "bishop": 30, "rook": 25, "queen": 15
+        }
+      },
+      {
+        "id": "ghost", "host": "guard", "festival": true,
+        // Ghosts each side; pieces a ghost goes through; turns it may stay
+        // hidden; turns shown before it may hide again; lanterns each side.
+        "rules": {"moveLimit": 60, "ghosts": 2, "through": 1, "hidden": 3, "cooldown": 2, "lanterns": 2}
+      }
+    ]
+  }
+}

@@ -1,0 +1,606 @@
+{
+ "cell": 48,
+ "columns": 8,
+ "sprites": {
+  "common_bat_wing_buckler": {
+   "x": 0,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_battered_top_hat": {
+   "x": 48,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_bedsheet_ghost_hood": {
+   "x": 96,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_bent_harvest_sickle": {
+   "x": 144,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_bone_club": {
+   "x": 192,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_bone_dagger": {
+   "x": 240,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_broom_staff": {
+   "x": 288,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_burlap_candy_sack": {
+   "x": 336,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_candy_slingshot": {
+   "x": 0,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_carved_pumpkin_mask": {
+   "x": 48,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_felt_bat_mask": {
+   "x": 96,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_jack_o_lantern_torch": {
+   "x": 144,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_lantern_on_a_pole": {
+   "x": 192,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_old_wolf_mask": {
+   "x": 240,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_paper_costume_crown": {
+   "x": 288,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_paper_skull_mask": {
+   "x": 336,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_patched_witch_cloak": {
+   "x": 0,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_patched_witch_shoes": {
+   "x": 48,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_pointed_witch_hat": {
+   "x": 96,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_pumpkin_bomb": {
+   "x": 144,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_pumpkin_helmet": {
+   "x": 192,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_rusty_scythe": {
+   "x": 240,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_silver_dagger": {
+   "x": 288,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_simple_spider_bow": {
+   "x": 336,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_skeleton_gloves": {
+   "x": 0,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_straw_scarecrow_hat": {
+   "x": 48,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_torn_black_cape": {
+   "x": 96,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_wooden_pitchfork": {
+   "x": 144,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_wooden_pumpkin_shield": {
+   "x": 192,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_wooden_stake": {
+   "x": 240,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_broom_of_the_night_sky": {
+   "x": 288,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_crossbow_of_silver_moons": {
+   "x": 336,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_cursed_sword_with_a_bat_hilt": {
+   "x": 0,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_ghost_lantern_staff": {
+   "x": 48,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_masquerade_mask_with_bat_wings": {
+   "x": 96,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_scythe_of_the_harvest_moon": {
+   "x": 144,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_shield_of_the_screaming_pumpkin": {
+   "x": 192,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_skeleton_king_armour": {
+   "x": 240,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_spider_queen_bow": {
+   "x": 288,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_vampire_lord_cape": {
+   "x": 336,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_witch_hat_of_the_coven": {
+   "x": 0,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "epic_wolf_hunter_dagger": {
+   "x": 48,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_broom_staff": {
+   "x": 96,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_crossbow_with_pumpkin_bolts": {
+   "x": 144,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_jack_o_lantern_shield": {
+   "x": 192,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_pumpkin_helmet": {
+   "x": 240,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_scythe": {
+   "x": 288,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_witch_hat": {
+   "x": 336,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_pumpkin_king_crown": {
+   "x": 0,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_pumpkin_king_sword": {
+   "x": 48,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_cursed_bone_blade": {
+   "x": 96,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_cursed_scythe_with_a_spiral_pattern": {
+   "x": 144,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_hood_of_the_headless_rider": {
+   "x": 192,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_shadow_mask": {
+   "x": 240,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_void_cloak_with_a_moon_pattern": {
+   "x": 288,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "rare_bat_mask_with_jewels": {
+   "x": 336,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "rare_bat_wing_shield_with_a_gem": {
+   "x": 0,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_bone_club_with_blue_gems": {
+   "x": 48,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_broom_staff_with_a_blue_gem": {
+   "x": 96,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_chain_flail_of_pumpkins": {
+   "x": 144,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_costume_crown_with_blue_gems": {
+   "x": 192,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_crossbow_of_the_night_hunt": {
+   "x": 240,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_ghost_sword": {
+   "x": 288,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_jack_o_lantern_shield": {
+   "x": 336,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_lantern_staff_with_a_ghost": {
+   "x": 0,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_pumpkin_bomb_cluster": {
+   "x": 48,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_pumpkin_helmet_with_a_leaf_crest": {
+   "x": 96,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_pumpkin_mask_of_the_harvest": {
+   "x": 144,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_silver_dagger_with_a_blue_gem": {
+   "x": 192,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_skeleton_armour_vest": {
+   "x": 240,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_skull_mask_with_blue_eyes": {
+   "x": 288,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_spider_bow_of_black_silk": {
+   "x": 336,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_vampire_cape_with_a_blue_clasp": {
+   "x": 0,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "rare_witch_boots_with_silver_toes": {
+   "x": 48,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "rare_witch_hat_with_a_blue_gem": {
+   "x": 96,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_bat_mask_with_silver_ears": {
+   "x": 144,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_bone_flute": {
+   "x": 192,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_candy_slingshot_with_a_leather_pouch": {
+   "x": 240,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_crossbow_with_silver_bolts": {
+   "x": 288,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_ghost_veil_with_silver_trim": {
+   "x": 336,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_iron_buckler_with_a_bat": {
+   "x": 0,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_lantern_staff_with_a_bat_hook": {
+   "x": 48,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_pitchfork_with_iron_tines": {
+   "x": 96,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_pumpkin_bomb_with_a_fuse": {
+   "x": 144,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_pumpkin_helmet_with_a_visor": {
+   "x": 192,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_pumpkin_lantern_flail": {
+   "x": 240,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_pumpkin_mask_with_silver_eyes": {
+   "x": 288,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_scarecrow_hat_with_a_crow_feather": {
+   "x": 336,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_silver_dagger_with_a_bat_guard": {
+   "x": 0,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_silver_sickle": {
+   "x": 48,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_skeleton_gauntlets": {
+   "x": 96,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_skull_mask_with_a_jaw": {
+   "x": 144,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_spider_bow_with_silk_string": {
+   "x": 192,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_spiked_bone_club": {
+   "x": 240,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_top_hat_with_a_bat_band": {
+   "x": 288,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_trick_or_treat_sack_with_a_ribbon": {
+   "x": 336,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_vampire_cape_with_a_high_collar": {
+   "x": 0,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_witch_boots_with_buckles": {
+   "x": 48,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_witch_cloak_with_a_bat_clasp": {
+   "x": 96,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_wolf_mask_with_fur_trim": {
+   "x": 144,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  }
+ }
+}

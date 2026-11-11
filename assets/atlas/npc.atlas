@@ -1,0 +1,2702 @@
+npc.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+npc/boy/anim/attack
+  bounds: 133, 2005, 64, 16
+  index: -1
+npc/boy/anim/dead
+  bounds: 1825, 481, 16, 16
+  index: -1
+npc/boy/anim/idle
+  bounds: 133, 2023, 64, 16
+  index: -1
+npc/boy/anim/item
+  bounds: 2025, 503, 16, 16
+  index: -1
+npc/boy/anim/jump
+  bounds: 1651, 247, 64, 16
+  index: -1
+npc/boy/anim/special1
+  bounds: 2025, 521, 16, 16
+  index: -1
+npc/boy/anim/special2
+  bounds: 2025, 539, 16, 16
+  index: -1
+npc/boy/anim/walk
+  bounds: 1, 1939, 64, 64
+  index: -1
+npc/boy/faceset
+  bounds: 1849, 463, 38, 38
+  index: -1
+npc/boy/spritesheet
+  bounds: 1, 1, 64, 112
+  index: -1
+npc/camouflagegreen/anim/attack
+  bounds: 1717, 247, 64, 16
+  index: -1
+npc/camouflagegreen/anim/dead
+  bounds: 1984, 543, 16, 16
+  index: -1
+npc/camouflagegreen/anim/idle
+  bounds: 1783, 247, 64, 16
+  index: -1
+npc/camouflagegreen/anim/item
+  bounds: 2002, 543, 16, 16
+  index: -1
+npc/camouflagegreen/anim/jump
+  bounds: 1849, 247, 64, 16
+  index: -1
+npc/camouflagegreen/anim/special1
+  bounds: 2020, 557, 16, 16
+  index: -1
+npc/camouflagegreen/anim/special2
+  bounds: 1984, 561, 16, 16
+  index: -1
+npc/camouflagegreen/anim/walk
+  bounds: 67, 1939, 64, 64
+  index: -1
+npc/camouflagegreen/faceset
+  bounds: 1889, 463, 38, 38
+  index: -1
+npc/camouflagegreen/spritesheet
+  bounds: 1, 115, 64, 112
+  index: -1
+npc/camouflagered/anim/attack
+  bounds: 1915, 247, 64, 16
+  index: -1
+npc/camouflagered/anim/dead
+  bounds: 2002, 561, 16, 16
+  index: -1
+npc/camouflagered/anim/idle
+  bounds: 1981, 247, 64, 16
+  index: -1
+npc/camouflagered/anim/item
+  bounds: 2020, 575, 16, 16
+  index: -1
+npc/camouflagered/anim/jump
+  bounds: 1651, 265, 64, 16
+  index: -1
+npc/camouflagered/anim/special1
+  bounds: 1984, 579, 16, 16
+  index: -1
+npc/camouflagered/anim/special2
+  bounds: 2002, 579, 16, 16
+  index: -1
+npc/camouflagered/anim/walk
+  bounds: 133, 1939, 64, 64
+  index: -1
+npc/camouflagered/faceset
+  bounds: 1929, 463, 38, 38
+  index: -1
+npc/camouflagered/spritesheet
+  bounds: 1, 229, 64, 112
+  index: -1
+npc/cavegirl/anim/attack
+  bounds: 1717, 265, 64, 16
+  index: -1
+npc/cavegirl/anim/dead
+  bounds: 2020, 593, 16, 16
+  index: -1
+npc/cavegirl/anim/idle
+  bounds: 1783, 265, 64, 16
+  index: -1
+npc/cavegirl/anim/item
+  bounds: 265, 555, 16, 16
+  index: -1
+npc/cavegirl/anim/jump
+  bounds: 1849, 265, 64, 16
+  index: -1
+npc/cavegirl/anim/special1
+  bounds: 283, 555, 16, 16
+  index: -1
+npc/cavegirl/anim/special2
+  bounds: 301, 555, 16, 16
+  index: -1
+npc/cavegirl/anim/walk
+  bounds: 199, 1255, 64, 64
+  index: -1
+npc/cavegirl/faceset
+  bounds: 1969, 463, 38, 38
+  index: -1
+npc/cavegirl/spritesheet
+  bounds: 1, 343, 64, 112
+  index: -1
+npc/cavegirl2/anim/attack
+  bounds: 1915, 265, 64, 16
+  index: -1
+npc/cavegirl2/anim/dead
+  bounds: 319, 555, 16, 16
+  index: -1
+npc/cavegirl2/anim/idle
+  bounds: 1981, 265, 64, 16
+  index: -1
+npc/cavegirl2/anim/item
+  bounds: 337, 555, 16, 16
+  index: -1
+npc/cavegirl2/anim/jump
+  bounds: 1651, 283, 64, 16
+  index: -1
+npc/cavegirl2/anim/special1
+  bounds: 355, 555, 16, 16
+  index: -1
+npc/cavegirl2/anim/special2
+  bounds: 373, 555, 16, 16
+  index: -1
+npc/cavegirl2/anim/walk
+  bounds: 199, 1321, 64, 64
+  index: -1
+npc/cavegirl2/faceset
+  bounds: 1945, 543, 37, 38
+  index: -1
+npc/cavegirl2/spritesheet
+  bounds: 1, 457, 64, 112
+  index: -1
+npc/cavelion/anim/attack
+  bounds: 1717, 283, 64, 16
+  index: -1
+npc/cavelion/anim/dead
+  bounds: 391, 555, 16, 16
+  index: -1
+npc/cavelion/anim/idle
+  bounds: 1783, 283, 64, 16
+  index: -1
+npc/cavelion/anim/item
+  bounds: 409, 555, 16, 16
+  index: -1
+npc/cavelion/anim/jump
+  bounds: 1849, 283, 64, 16
+  index: -1
+npc/cavelion/anim/special1
+  bounds: 427, 555, 16, 16
+  index: -1
+npc/cavelion/anim/special2
+  bounds: 445, 555, 16, 16
+  index: -1
+npc/cavelion/anim/walk
+  bounds: 199, 1387, 64, 64
+  index: -1
+npc/cavelion/faceset
+  bounds: 2009, 463, 38, 38
+  index: -1
+npc/cavelion/spritesheet
+  bounds: 1, 571, 64, 112
+  index: -1
+npc/cavelion2/anim/attack
+  bounds: 1915, 283, 64, 16
+  index: -1
+npc/cavelion2/anim/dead
+  bounds: 463, 555, 16, 16
+  index: -1
+npc/cavelion2/anim/idle
+  bounds: 1981, 283, 64, 16
+  index: -1
+npc/cavelion2/anim/item
+  bounds: 481, 555, 16, 16
+  index: -1
+npc/cavelion2/anim/jump
+  bounds: 1651, 301, 64, 16
+  index: -1
+npc/cavelion2/anim/special1
+  bounds: 499, 555, 16, 16
+  index: -1
+npc/cavelion2/anim/special2
+  bounds: 517, 555, 16, 16
+  index: -1
+npc/cavelion2/anim/walk
+  bounds: 199, 1453, 64, 64
+  index: -1
+npc/cavelion2/faceset
+  bounds: 265, 475, 38, 38
+  index: -1
+npc/cavelion2/spritesheet
+  bounds: 1, 685, 64, 112
+  index: -1
+npc/caveman/anim/attack
+  bounds: 1717, 301, 64, 16
+  index: -1
+npc/caveman/anim/dead
+  bounds: 535, 555, 16, 16
+  index: -1
+npc/caveman/anim/idle
+  bounds: 1783, 301, 64, 16
+  index: -1
+npc/caveman/anim/item
+  bounds: 553, 555, 16, 16
+  index: -1
+npc/caveman/anim/jump
+  bounds: 1849, 301, 64, 16
+  index: -1
+npc/caveman/anim/special1
+  bounds: 571, 555, 16, 16
+  index: -1
+npc/caveman/anim/special2
+  bounds: 589, 555, 16, 16
+  index: -1
+npc/caveman/anim/walk
+  bounds: 199, 1519, 64, 64
+  index: -1
+npc/caveman/faceset
+  bounds: 305, 475, 38, 38
+  index: -1
+npc/caveman/spritesheet
+  bounds: 1, 799, 64, 112
+  index: -1
+npc/caveman2/anim/attack
+  bounds: 1915, 301, 64, 16
+  index: -1
+npc/caveman2/anim/dead
+  bounds: 607, 555, 16, 16
+  index: -1
+npc/caveman2/anim/idle
+  bounds: 1981, 301, 64, 16
+  index: -1
+npc/caveman2/anim/item
+  bounds: 625, 555, 16, 16
+  index: -1
+npc/caveman2/anim/jump
+  bounds: 265, 313, 64, 16
+  index: -1
+npc/caveman2/anim/special1
+  bounds: 643, 555, 16, 16
+  index: -1
+npc/caveman2/anim/special2
+  bounds: 661, 555, 16, 16
+  index: -1
+npc/caveman2/anim/walk
+  bounds: 199, 1585, 64, 64
+  index: -1
+npc/caveman2/faceset
+  bounds: 345, 475, 38, 38
+  index: -1
+npc/caveman2/spritesheet
+  bounds: 1, 913, 64, 112
+  index: -1
+npc/child/faceset
+  bounds: 385, 475, 38, 38
+  index: -1
+npc/child/spritesheet
+  bounds: 1, 2005, 64, 32
+  index: -1
+npc/demongreen/anim/attack
+  bounds: 331, 313, 64, 16
+  index: -1
+npc/demongreen/anim/dead
+  bounds: 679, 555, 16, 16
+  index: -1
+npc/demongreen/anim/idle
+  bounds: 397, 313, 64, 16
+  index: -1
+npc/demongreen/anim/item
+  bounds: 697, 555, 16, 16
+  index: -1
+npc/demongreen/anim/jump
+  bounds: 463, 313, 64, 16
+  index: -1
+npc/demongreen/anim/special1
+  bounds: 715, 555, 16, 16
+  index: -1
+npc/demongreen/anim/special2
+  bounds: 733, 555, 16, 16
+  index: -1
+npc/demongreen/anim/walk
+  bounds: 199, 1651, 64, 64
+  index: -1
+npc/demongreen/faceset
+  bounds: 425, 475, 38, 38
+  index: -1
+npc/demongreen/spritesheet
+  bounds: 1, 1027, 64, 112
+  index: -1
+npc/demonred/anim/attack
+  bounds: 529, 313, 64, 16
+  index: -1
+npc/demonred/anim/dead
+  bounds: 751, 555, 16, 16
+  index: -1
+npc/demonred/anim/idle
+  bounds: 595, 313, 64, 16
+  index: -1
+npc/demonred/anim/item
+  bounds: 769, 555, 16, 16
+  index: -1
+npc/demonred/anim/jump
+  bounds: 661, 313, 64, 16
+  index: -1
+npc/demonred/anim/special1
+  bounds: 787, 555, 16, 16
+  index: -1
+npc/demonred/anim/special2
+  bounds: 805, 555, 16, 16
+  index: -1
+npc/demonred/anim/walk
+  bounds: 199, 1717, 64, 64
+  index: -1
+npc/demonred/faceset
+  bounds: 465, 475, 38, 38
+  index: -1
+npc/demonred/spritesheet
+  bounds: 1, 1141, 64, 112
+  index: -1
+npc/eggboy/anim/attack
+  bounds: 727, 313, 64, 16
+  index: -1
+npc/eggboy/anim/dead
+  bounds: 823, 555, 16, 16
+  index: -1
+npc/eggboy/anim/idle
+  bounds: 793, 313, 64, 16
+  index: -1
+npc/eggboy/anim/item
+  bounds: 841, 555, 16, 16
+  index: -1
+npc/eggboy/anim/jump
+  bounds: 859, 313, 64, 16
+  index: -1
+npc/eggboy/anim/special1
+  bounds: 859, 555, 16, 16
+  index: -1
+npc/eggboy/anim/special2
+  bounds: 877, 555, 16, 16
+  index: -1
+npc/eggboy/anim/walk
+  bounds: 199, 1783, 64, 64
+  index: -1
+npc/eggboy/faceset
+  bounds: 505, 475, 38, 38
+  index: -1
+npc/eggboy/spritesheet
+  bounds: 1, 1255, 64, 112
+  index: -1
+npc/egggirl/anim/attack
+  bounds: 925, 313, 64, 16
+  index: -1
+npc/egggirl/anim/dead
+  bounds: 895, 555, 16, 16
+  index: -1
+npc/egggirl/anim/idle
+  bounds: 991, 313, 64, 16
+  index: -1
+npc/egggirl/anim/item
+  bounds: 913, 555, 16, 16
+  index: -1
+npc/egggirl/anim/jump
+  bounds: 1057, 313, 64, 16
+  index: -1
+npc/egggirl/anim/special1
+  bounds: 931, 555, 16, 16
+  index: -1
+npc/egggirl/anim/special2
+  bounds: 949, 555, 16, 16
+  index: -1
+npc/egggirl/anim/walk
+  bounds: 199, 1849, 64, 64
+  index: -1
+npc/egggirl/faceset
+  bounds: 545, 475, 38, 38
+  index: -1
+npc/egggirl/spritesheet
+  bounds: 1, 1369, 64, 112
+  index: -1
+npc/eskimo/anim/attack
+  bounds: 1123, 313, 64, 16
+  index: -1
+npc/eskimo/anim/dead
+  bounds: 967, 555, 16, 16
+  index: -1
+npc/eskimo/anim/idle
+  bounds: 1189, 313, 64, 16
+  index: -1
+npc/eskimo/anim/item
+  bounds: 985, 555, 16, 16
+  index: -1
+npc/eskimo/anim/jump
+  bounds: 1255, 313, 64, 16
+  index: -1
+npc/eskimo/anim/special1
+  bounds: 1003, 555, 16, 16
+  index: -1
+npc/eskimo/anim/special2
+  bounds: 1021, 555, 16, 16
+  index: -1
+npc/eskimo/anim/walk
+  bounds: 199, 1915, 64, 64
+  index: -1
+npc/eskimo/faceset
+  bounds: 585, 475, 38, 38
+  index: -1
+npc/eskimo/spritesheet
+  bounds: 1, 1483, 64, 112
+  index: -1
+npc/fighterred/anim/attack
+  bounds: 1321, 313, 64, 16
+  index: -1
+npc/fighterred/anim/dead
+  bounds: 1039, 555, 16, 16
+  index: -1
+npc/fighterred/anim/idle
+  bounds: 1387, 313, 64, 16
+  index: -1
+npc/fighterred/anim/item
+  bounds: 1057, 555, 16, 16
+  index: -1
+npc/fighterred/anim/jump
+  bounds: 1453, 313, 64, 16
+  index: -1
+npc/fighterred/anim/special1
+  bounds: 1075, 555, 16, 16
+  index: -1
+npc/fighterred/anim/special2
+  bounds: 1093, 555, 16, 16
+  index: -1
+npc/fighterred/anim/walk
+  bounds: 199, 1981, 64, 64
+  index: -1
+npc/fighterred/faceset
+  bounds: 625, 475, 38, 38
+  index: -1
+npc/fighterred/spritesheet
+  bounds: 1, 1597, 64, 112
+  index: -1
+npc/fighterwhite/anim/attack
+  bounds: 1519, 313, 64, 16
+  index: -1
+npc/fighterwhite/anim/dead
+  bounds: 1111, 555, 16, 16
+  index: -1
+npc/fighterwhite/anim/idle
+  bounds: 1585, 313, 64, 16
+  index: -1
+npc/fighterwhite/anim/item
+  bounds: 1129, 555, 16, 16
+  index: -1
+npc/fighterwhite/anim/jump
+  bounds: 1651, 319, 64, 16
+  index: -1
+npc/fighterwhite/anim/special1
+  bounds: 1147, 555, 16, 16
+  index: -1
+npc/fighterwhite/anim/special2
+  bounds: 1165, 555, 16, 16
+  index: -1
+npc/fighterwhite/anim/walk
+  bounds: 265, 115, 64, 64
+  index: -1
+npc/fighterwhite/faceset
+  bounds: 665, 475, 38, 38
+  index: -1
+npc/fighterwhite/spritesheet
+  bounds: 1, 1711, 64, 112
+  index: -1
+npc/flam/anim/attack
+  bounds: 1717, 319, 64, 16
+  index: -1
+npc/flam/anim/dead
+  bounds: 1183, 555, 16, 16
+  index: -1
+npc/flam/anim/idle
+  bounds: 1783, 319, 64, 16
+  index: -1
+npc/flam/anim/item
+  bounds: 1201, 555, 16, 16
+  index: -1
+npc/flam/anim/jump
+  bounds: 1849, 319, 64, 16
+  index: -1
+npc/flam/anim/special1
+  bounds: 1219, 555, 16, 16
+  index: -1
+npc/flam/anim/special2
+  bounds: 1237, 555, 16, 16
+  index: -1
+npc/flam/anim/walk
+  bounds: 331, 115, 64, 64
+  index: -1
+npc/flam/faceset
+  bounds: 705, 475, 38, 38
+  index: -1
+npc/flam/spritesheet
+  bounds: 1, 1825, 64, 112
+  index: -1
+npc/gladiatorblue/anim/attack
+  bounds: 1915, 319, 64, 16
+  index: -1
+npc/gladiatorblue/anim/dead
+  bounds: 1255, 555, 16, 16
+  index: -1
+npc/gladiatorblue/anim/idle
+  bounds: 1981, 319, 64, 16
+  index: -1
+npc/gladiatorblue/anim/item
+  bounds: 1273, 555, 16, 16
+  index: -1
+npc/gladiatorblue/anim/jump
+  bounds: 265, 331, 64, 16
+  index: -1
+npc/gladiatorblue/anim/special1
+  bounds: 1291, 555, 16, 16
+  index: -1
+npc/gladiatorblue/anim/special2
+  bounds: 1309, 555, 16, 16
+  index: -1
+npc/gladiatorblue/anim/walk
+  bounds: 397, 115, 64, 64
+  index: -1
+npc/gladiatorblue/faceset
+  bounds: 745, 475, 38, 38
+  index: -1
+npc/gladiatorblue/spritesheet
+  bounds: 67, 1, 64, 112
+  index: -1
+npc/goldstatue/anim/attack
+  bounds: 331, 331, 64, 16
+  index: -1
+npc/goldstatue/anim/dead
+  bounds: 1327, 555, 16, 16
+  index: -1
+npc/goldstatue/anim/idle
+  bounds: 397, 331, 64, 16
+  index: -1
+npc/goldstatue/anim/item
+  bounds: 1345, 555, 16, 16
+  index: -1
+npc/goldstatue/anim/jump
+  bounds: 463, 331, 64, 16
+  index: -1
+npc/goldstatue/anim/special1
+  bounds: 1363, 555, 16, 16
+  index: -1
+npc/goldstatue/anim/special2
+  bounds: 1381, 555, 16, 16
+  index: -1
+npc/goldstatue/anim/walk
+  bounds: 463, 115, 64, 64
+  index: -1
+npc/goldstatue/faceset
+  bounds: 785, 475, 38, 38
+  index: -1
+npc/goldstatue/spritesheet
+  bounds: 67, 115, 64, 112
+  index: -1
+npc/greenpig/anim/attack
+  bounds: 529, 331, 64, 16
+  index: -1
+npc/greenpig/anim/dead
+  bounds: 1399, 555, 16, 16
+  index: -1
+npc/greenpig/anim/idle
+  bounds: 595, 331, 64, 16
+  index: -1
+npc/greenpig/anim/item
+  bounds: 1417, 555, 16, 16
+  index: -1
+npc/greenpig/anim/jump
+  bounds: 661, 331, 64, 16
+  index: -1
+npc/greenpig/anim/special1
+  bounds: 1435, 555, 16, 16
+  index: -1
+npc/greenpig/anim/special2
+  bounds: 1453, 555, 16, 16
+  index: -1
+npc/greenpig/anim/walk
+  bounds: 529, 115, 64, 64
+  index: -1
+npc/greenpig/faceset
+  bounds: 825, 475, 38, 38
+  index: -1
+npc/greenpig/spritesheet
+  bounds: 67, 229, 64, 112
+  index: -1
+npc/hunter/anim/attack
+  bounds: 727, 331, 64, 16
+  index: -1
+npc/hunter/anim/dead
+  bounds: 1471, 555, 16, 16
+  index: -1
+npc/hunter/anim/idle
+  bounds: 793, 331, 64, 16
+  index: -1
+npc/hunter/anim/item
+  bounds: 1489, 555, 16, 16
+  index: -1
+npc/hunter/anim/jump
+  bounds: 859, 331, 64, 16
+  index: -1
+npc/hunter/anim/special1
+  bounds: 1507, 555, 16, 16
+  index: -1
+npc/hunter/anim/special2
+  bounds: 1525, 555, 16, 16
+  index: -1
+npc/hunter/anim/walk
+  bounds: 595, 115, 64, 64
+  index: -1
+npc/hunter/faceset
+  bounds: 865, 475, 38, 38
+  index: -1
+npc/hunter/spritesheet
+  bounds: 67, 343, 64, 112
+  index: -1
+npc/inspector/anim/attack
+  bounds: 925, 331, 64, 16
+  index: -1
+npc/inspector/anim/dead
+  bounds: 1543, 555, 16, 16
+  index: -1
+npc/inspector/anim/idle
+  bounds: 991, 331, 64, 16
+  index: -1
+npc/inspector/anim/item
+  bounds: 1561, 555, 16, 16
+  index: -1
+npc/inspector/anim/jump
+  bounds: 1057, 331, 64, 16
+  index: -1
+npc/inspector/anim/special1
+  bounds: 1579, 555, 16, 16
+  index: -1
+npc/inspector/anim/special2
+  bounds: 1597, 555, 16, 16
+  index: -1
+npc/inspector/anim/walk
+  bounds: 661, 115, 64, 64
+  index: -1
+npc/inspector/faceset
+  bounds: 905, 475, 38, 38
+  index: -1
+npc/inspector/spritesheet
+  bounds: 67, 457, 64, 112
+  index: -1
+npc/knight/anim/attack
+  bounds: 1123, 331, 64, 16
+  index: -1
+npc/knight/anim/dead
+  bounds: 1615, 561, 16, 16
+  index: -1
+npc/knight/anim/idle
+  bounds: 1189, 331, 64, 16
+  index: -1
+npc/knight/anim/item
+  bounds: 1633, 561, 16, 16
+  index: -1
+npc/knight/anim/jump
+  bounds: 1255, 331, 64, 16
+  index: -1
+npc/knight/anim/special1
+  bounds: 1651, 561, 16, 16
+  index: -1
+npc/knight/anim/special2
+  bounds: 1669, 561, 16, 16
+  index: -1
+npc/knight/anim/walk
+  bounds: 727, 115, 64, 64
+  index: -1
+npc/knight/faceset
+  bounds: 945, 475, 38, 38
+  index: -1
+npc/knight/spritesheet
+  bounds: 67, 571, 64, 112
+  index: -1
+npc/knightgold/anim/attack
+  bounds: 1321, 331, 64, 16
+  index: -1
+npc/knightgold/anim/dead
+  bounds: 1687, 561, 16, 16
+  index: -1
+npc/knightgold/anim/idle
+  bounds: 1387, 331, 64, 16
+  index: -1
+npc/knightgold/anim/item
+  bounds: 1705, 561, 16, 16
+  index: -1
+npc/knightgold/anim/jump
+  bounds: 1453, 331, 64, 16
+  index: -1
+npc/knightgold/anim/special1
+  bounds: 1723, 561, 16, 16
+  index: -1
+npc/knightgold/anim/special2
+  bounds: 1741, 561, 16, 16
+  index: -1
+npc/knightgold/anim/walk
+  bounds: 793, 115, 64, 64
+  index: -1
+npc/knightgold/faceset
+  bounds: 985, 475, 38, 38
+  index: -1
+npc/knightgold/spritesheet
+  bounds: 67, 685, 64, 112
+  index: -1
+npc/lion/anim/attack
+  bounds: 1519, 331, 64, 16
+  index: -1
+npc/lion/anim/dead
+  bounds: 1759, 561, 16, 16
+  index: -1
+npc/lion/anim/idle
+  bounds: 1585, 331, 64, 16
+  index: -1
+npc/lion/anim/item
+  bounds: 1777, 561, 16, 16
+  index: -1
+npc/lion/anim/jump
+  bounds: 1651, 337, 64, 16
+  index: -1
+npc/lion/anim/special1
+  bounds: 1795, 561, 16, 16
+  index: -1
+npc/lion/anim/special2
+  bounds: 265, 573, 16, 16
+  index: -1
+npc/lion/anim/walk
+  bounds: 859, 115, 64, 64
+  index: -1
+npc/lion/faceset
+  bounds: 1025, 475, 38, 38
+  index: -1
+npc/lion/spritesheet
+  bounds: 67, 799, 64, 112
+  index: -1
+npc/lionboy/anim/attack
+  bounds: 1717, 337, 64, 16
+  index: -1
+npc/lionboy/anim/dead
+  bounds: 283, 573, 16, 16
+  index: -1
+npc/lionboy/anim/idle
+  bounds: 1783, 337, 64, 16
+  index: -1
+npc/lionboy/anim/item
+  bounds: 301, 573, 16, 16
+  index: -1
+npc/lionboy/anim/jump
+  bounds: 1849, 337, 64, 16
+  index: -1
+npc/lionboy/anim/special1
+  bounds: 319, 573, 16, 16
+  index: -1
+npc/lionboy/anim/special2
+  bounds: 337, 573, 16, 16
+  index: -1
+npc/lionboy/anim/walk
+  bounds: 925, 115, 64, 64
+  index: -1
+npc/lionboy/faceset
+  bounds: 1065, 475, 38, 38
+  index: -1
+npc/lionboy/spritesheet
+  bounds: 67, 913, 64, 112
+  index: -1
+npc/lionorange/anim/attack
+  bounds: 1915, 337, 64, 16
+  index: -1
+npc/lionorange/anim/dead
+  bounds: 355, 573, 16, 16
+  index: -1
+npc/lionorange/anim/idle
+  bounds: 1981, 337, 64, 16
+  index: -1
+npc/lionorange/anim/item
+  bounds: 373, 573, 16, 16
+  index: -1
+npc/lionorange/anim/jump
+  bounds: 265, 349, 64, 16
+  index: -1
+npc/lionorange/anim/special1
+  bounds: 391, 573, 16, 16
+  index: -1
+npc/lionorange/anim/special2
+  bounds: 409, 573, 16, 16
+  index: -1
+npc/lionorange/anim/walk
+  bounds: 991, 115, 64, 64
+  index: -1
+npc/lionorange/faceset
+  bounds: 1105, 475, 38, 38
+  index: -1
+npc/lionorange/spritesheet
+  bounds: 67, 1027, 64, 112
+  index: -1
+npc/lionyellow/anim/attack
+  bounds: 331, 349, 64, 16
+  index: -1
+npc/lionyellow/anim/dead
+  bounds: 427, 573, 16, 16
+  index: -1
+npc/lionyellow/anim/idle
+  bounds: 397, 349, 64, 16
+  index: -1
+npc/lionyellow/anim/item
+  bounds: 445, 573, 16, 16
+  index: -1
+npc/lionyellow/anim/jump
+  bounds: 463, 349, 64, 16
+  index: -1
+npc/lionyellow/anim/special1
+  bounds: 463, 573, 16, 16
+  index: -1
+npc/lionyellow/anim/special2
+  bounds: 481, 573, 16, 16
+  index: -1
+npc/lionyellow/anim/walk
+  bounds: 1057, 115, 64, 64
+  index: -1
+npc/lionyellow/faceset
+  bounds: 1145, 475, 38, 38
+  index: -1
+npc/lionyellow/spritesheet
+  bounds: 67, 1141, 64, 112
+  index: -1
+npc/mangreen/anim/attack
+  bounds: 529, 349, 64, 16
+  index: -1
+npc/mangreen/anim/dead
+  bounds: 499, 573, 16, 16
+  index: -1
+npc/mangreen/anim/idle
+  bounds: 595, 349, 64, 16
+  index: -1
+npc/mangreen/anim/item
+  bounds: 517, 573, 16, 16
+  index: -1
+npc/mangreen/anim/jump
+  bounds: 661, 349, 64, 16
+  index: -1
+npc/mangreen/anim/special1
+  bounds: 535, 573, 16, 16
+  index: -1
+npc/mangreen/anim/special2
+  bounds: 553, 573, 16, 16
+  index: -1
+npc/mangreen/anim/walk
+  bounds: 1123, 115, 64, 64
+  index: -1
+npc/mangreen/faceset
+  bounds: 1185, 475, 38, 38
+  index: -1
+npc/mangreen/spritesheet
+  bounds: 67, 1255, 64, 112
+  index: -1
+npc/maskfrog/anim/attack
+  bounds: 727, 349, 64, 16
+  index: -1
+npc/maskfrog/anim/idle
+  bounds: 793, 349, 64, 16
+  index: -1
+npc/maskfrog/anim/item
+  bounds: 571, 573, 16, 16
+  index: -1
+npc/maskfrog/anim/jump
+  bounds: 859, 349, 64, 16
+  index: -1
+npc/maskfrog/anim/special1
+  bounds: 589, 573, 16, 16
+  index: -1
+npc/maskfrog/anim/special2
+  bounds: 607, 573, 16, 16
+  index: -1
+npc/maskfrog/anim/walk
+  bounds: 1189, 115, 64, 64
+  index: -1
+npc/maskfrog/faceset
+  bounds: 1225, 475, 38, 38
+  index: -1
+npc/maskfrog/spritesheet
+  bounds: 625, 573, 16, 16
+  index: -1
+npc/maskgoldracoon/anim/attack
+  bounds: 925, 349, 64, 16
+  index: -1
+npc/maskgoldracoon/anim/dead
+  bounds: 643, 573, 16, 16
+  index: -1
+npc/maskgoldracoon/anim/idle
+  bounds: 991, 349, 64, 16
+  index: -1
+npc/maskgoldracoon/anim/item
+  bounds: 661, 573, 16, 16
+  index: -1
+npc/maskgoldracoon/anim/jump
+  bounds: 1057, 349, 64, 16
+  index: -1
+npc/maskgoldracoon/anim/special1
+  bounds: 679, 573, 16, 16
+  index: -1
+npc/maskgoldracoon/anim/special2
+  bounds: 697, 573, 16, 16
+  index: -1
+npc/maskgoldracoon/anim/walk
+  bounds: 1255, 115, 64, 64
+  index: -1
+npc/maskgoldracoon/faceset
+  bounds: 1265, 475, 38, 38
+  index: -1
+npc/maskgoldracoon/spritesheet
+  bounds: 67, 1369, 64, 112
+  index: -1
+npc/maskracoon/anim/attack
+  bounds: 1123, 349, 64, 16
+  index: -1
+npc/maskracoon/anim/dead
+  bounds: 715, 573, 16, 16
+  index: -1
+npc/maskracoon/anim/idle
+  bounds: 1189, 349, 64, 16
+  index: -1
+npc/maskracoon/anim/item
+  bounds: 733, 573, 16, 16
+  index: -1
+npc/maskracoon/anim/jump
+  bounds: 1255, 349, 64, 16
+  index: -1
+npc/maskracoon/anim/special1
+  bounds: 751, 573, 16, 16
+  index: -1
+npc/maskracoon/anim/special2
+  bounds: 769, 573, 16, 16
+  index: -1
+npc/maskracoon/anim/walk
+  bounds: 1321, 115, 64, 64
+  index: -1
+npc/maskracoon/faceset
+  bounds: 1305, 475, 38, 38
+  index: -1
+npc/maskracoon/spritesheet
+  bounds: 67, 1483, 64, 112
+  index: -1
+npc/master/anim/attack
+  bounds: 1321, 349, 64, 16
+  index: -1
+npc/master/anim/dead
+  bounds: 787, 573, 16, 16
+  index: -1
+npc/master/anim/idle
+  bounds: 1387, 349, 64, 16
+  index: -1
+npc/master/anim/item
+  bounds: 805, 573, 16, 16
+  index: -1
+npc/master/anim/jump
+  bounds: 1453, 349, 64, 16
+  index: -1
+npc/master/anim/special1
+  bounds: 823, 573, 16, 16
+  index: -1
+npc/master/anim/special2
+  bounds: 841, 573, 16, 16
+  index: -1
+npc/master/anim/walk
+  bounds: 1387, 115, 64, 64
+  index: -1
+npc/master/faceset
+  bounds: 1345, 475, 38, 38
+  index: -1
+npc/master/spritesheet
+  bounds: 67, 1597, 64, 112
+  index: -1
+npc/monk/anim/attack
+  bounds: 1519, 349, 64, 16
+  index: -1
+npc/monk/anim/dead
+  bounds: 859, 573, 16, 16
+  index: -1
+npc/monk/anim/idle
+  bounds: 1585, 349, 64, 16
+  index: -1
+npc/monk/anim/item
+  bounds: 877, 573, 16, 16
+  index: -1
+npc/monk/anim/jump
+  bounds: 1651, 355, 64, 16
+  index: -1
+npc/monk/anim/special1
+  bounds: 895, 573, 16, 16
+  index: -1
+npc/monk/anim/special2
+  bounds: 913, 573, 16, 16
+  index: -1
+npc/monk/anim/walk
+  bounds: 1453, 115, 64, 64
+  index: -1
+npc/monk/faceset
+  bounds: 1385, 475, 38, 38
+  index: -1
+npc/monk/spritesheet
+  bounds: 67, 1711, 64, 112
+  index: -1
+npc/monk2/anim/attack
+  bounds: 1717, 355, 64, 16
+  index: -1
+npc/monk2/anim/dead
+  bounds: 931, 573, 16, 16
+  index: -1
+npc/monk2/anim/idle
+  bounds: 1783, 355, 64, 16
+  index: -1
+npc/monk2/anim/item
+  bounds: 949, 573, 16, 16
+  index: -1
+npc/monk2/anim/jump
+  bounds: 1849, 355, 64, 16
+  index: -1
+npc/monk2/anim/special1
+  bounds: 967, 573, 16, 16
+  index: -1
+npc/monk2/anim/special2
+  bounds: 985, 573, 16, 16
+  index: -1
+npc/monk2/anim/walk
+  bounds: 1519, 115, 64, 64
+  index: -1
+npc/monk2/faceset
+  bounds: 1425, 475, 38, 38
+  index: -1
+npc/monk2/spritesheet
+  bounds: 67, 1825, 64, 112
+  index: -1
+npc/monkey/anim/attack
+  bounds: 1915, 355, 64, 16
+  index: -1
+npc/monkey/anim/dead
+  bounds: 1003, 573, 16, 16
+  index: -1
+npc/monkey/anim/idle
+  bounds: 1981, 355, 64, 16
+  index: -1
+npc/monkey/anim/item
+  bounds: 1021, 573, 16, 16
+  index: -1
+npc/monkey/anim/jump
+  bounds: 265, 367, 64, 16
+  index: -1
+npc/monkey/anim/special1
+  bounds: 1039, 573, 16, 16
+  index: -1
+npc/monkey/anim/special2
+  bounds: 1057, 573, 16, 16
+  index: -1
+npc/monkey/anim/walk
+  bounds: 1585, 115, 64, 64
+  index: -1
+npc/monkey/faceset
+  bounds: 1465, 475, 38, 38
+  index: -1
+npc/monkey/spritesheet
+  bounds: 133, 1, 64, 112
+  index: -1
+npc/monkeyboxerblue/anim/attack
+  bounds: 331, 367, 64, 16
+  index: -1
+npc/monkeyboxerblue/anim/dead
+  bounds: 1075, 573, 16, 16
+  index: -1
+npc/monkeyboxerblue/anim/idle
+  bounds: 397, 367, 64, 16
+  index: -1
+npc/monkeyboxerblue/anim/item
+  bounds: 1093, 573, 16, 16
+  index: -1
+npc/monkeyboxerblue/anim/jump
+  bounds: 463, 367, 64, 16
+  index: -1
+npc/monkeyboxerblue/anim/special1
+  bounds: 1111, 573, 16, 16
+  index: -1
+npc/monkeyboxerblue/anim/special2
+  bounds: 1129, 573, 16, 16
+  index: -1
+npc/monkeyboxerblue/anim/walk
+  bounds: 1651, 115, 64, 64
+  index: -1
+npc/monkeyboxerblue/faceset
+  bounds: 1505, 475, 38, 38
+  index: -1
+npc/monkeyboxerblue/spritesheet
+  bounds: 199, 1, 64, 112
+  index: -1
+npc/monkeyboxerred/anim/attack
+  bounds: 529, 367, 64, 16
+  index: -1
+npc/monkeyboxerred/anim/dead
+  bounds: 1147, 573, 16, 16
+  index: -1
+npc/monkeyboxerred/anim/idle
+  bounds: 595, 367, 64, 16
+  index: -1
+npc/monkeyboxerred/anim/item
+  bounds: 1165, 573, 16, 16
+  index: -1
+npc/monkeyboxerred/anim/jump
+  bounds: 661, 367, 64, 16
+  index: -1
+npc/monkeyboxerred/anim/special1
+  bounds: 1183, 573, 16, 16
+  index: -1
+npc/monkeyboxerred/anim/special2
+  bounds: 1201, 573, 16, 16
+  index: -1
+npc/monkeyboxerred/anim/walk
+  bounds: 1717, 115, 64, 64
+  index: -1
+npc/monkeyboxerred/faceset
+  bounds: 1545, 475, 38, 38
+  index: -1
+npc/monkeyboxerred/spritesheet
+  bounds: 265, 1, 64, 112
+  index: -1
+npc/ninjablue/anim/attack
+  bounds: 727, 367, 64, 16
+  index: -1
+npc/ninjablue/anim/dead
+  bounds: 1219, 573, 16, 16
+  index: -1
+npc/ninjablue/anim/idle
+  bounds: 793, 367, 64, 16
+  index: -1
+npc/ninjablue/anim/item
+  bounds: 1237, 573, 16, 16
+  index: -1
+npc/ninjablue/anim/jump
+  bounds: 859, 367, 64, 16
+  index: -1
+npc/ninjablue/anim/special1
+  bounds: 1255, 573, 16, 16
+  index: -1
+npc/ninjablue/anim/special2
+  bounds: 1273, 573, 16, 16
+  index: -1
+npc/ninjablue/anim/walk
+  bounds: 1783, 115, 64, 64
+  index: -1
+npc/ninjablue/faceset
+  bounds: 1585, 475, 38, 38
+  index: -1
+npc/ninjablue/spritesheet
+  bounds: 331, 1, 64, 112
+  index: -1
+npc/ninjablue2/anim/attack
+  bounds: 925, 367, 64, 16
+  index: -1
+npc/ninjablue2/anim/dead
+  bounds: 1291, 573, 16, 16
+  index: -1
+npc/ninjablue2/anim/idle
+  bounds: 991, 367, 64, 16
+  index: -1
+npc/ninjablue2/anim/item
+  bounds: 1309, 573, 16, 16
+  index: -1
+npc/ninjablue2/anim/jump
+  bounds: 1057, 367, 64, 16
+  index: -1
+npc/ninjablue2/anim/special1
+  bounds: 1327, 573, 16, 16
+  index: -1
+npc/ninjablue2/anim/special2
+  bounds: 1345, 573, 16, 16
+  index: -1
+npc/ninjablue2/anim/walk
+  bounds: 1849, 115, 64, 64
+  index: -1
+npc/ninjablue2/faceset
+  bounds: 1625, 481, 38, 38
+  index: -1
+npc/ninjablue2/spritesheet
+  bounds: 397, 1, 64, 112
+  index: -1
+npc/ninjabomb/anim/attack
+  bounds: 1123, 367, 64, 16
+  index: -1
+npc/ninjabomb/anim/dead
+  bounds: 1363, 573, 16, 16
+  index: -1
+npc/ninjabomb/anim/idle
+  bounds: 1189, 367, 64, 16
+  index: -1
+npc/ninjabomb/anim/item
+  bounds: 1381, 573, 16, 16
+  index: -1
+npc/ninjabomb/anim/jump
+  bounds: 1255, 367, 64, 16
+  index: -1
+npc/ninjabomb/anim/special1
+  bounds: 1399, 573, 16, 16
+  index: -1
+npc/ninjabomb/anim/special2
+  bounds: 1417, 573, 16, 16
+  index: -1
+npc/ninjabomb/anim/walk
+  bounds: 1915, 115, 64, 64
+  index: -1
+npc/ninjabomb/faceset
+  bounds: 1665, 481, 38, 38
+  index: -1
+npc/ninjabomb/spritesheet
+  bounds: 463, 1, 64, 112
+  index: -1
+npc/ninjadark/anim/attack
+  bounds: 1321, 367, 64, 16
+  index: -1
+npc/ninjadark/anim/dead
+  bounds: 1435, 573, 16, 16
+  index: -1
+npc/ninjadark/anim/idle
+  bounds: 1387, 367, 64, 16
+  index: -1
+npc/ninjadark/anim/item
+  bounds: 1453, 573, 16, 16
+  index: -1
+npc/ninjadark/anim/jump
+  bounds: 1453, 367, 64, 16
+  index: -1
+npc/ninjadark/anim/special1
+  bounds: 1471, 573, 16, 16
+  index: -1
+npc/ninjadark/anim/special2
+  bounds: 1489, 573, 16, 16
+  index: -1
+npc/ninjadark/anim/walk
+  bounds: 1981, 115, 64, 64
+  index: -1
+npc/ninjadark/faceset
+  bounds: 1705, 481, 38, 38
+  index: -1
+npc/ninjadark/spritesheet
+  bounds: 529, 1, 64, 112
+  index: -1
+npc/ninjaeskimo/anim/attack
+  bounds: 1519, 367, 64, 16
+  index: -1
+npc/ninjaeskimo/anim/dead
+  bounds: 1507, 573, 16, 16
+  index: -1
+npc/ninjaeskimo/anim/idle
+  bounds: 1585, 367, 64, 16
+  index: -1
+npc/ninjaeskimo/anim/item
+  bounds: 1525, 573, 16, 16
+  index: -1
+npc/ninjaeskimo/anim/jump
+  bounds: 1651, 373, 64, 16
+  index: -1
+npc/ninjaeskimo/anim/special1
+  bounds: 1543, 573, 16, 16
+  index: -1
+npc/ninjaeskimo/anim/special2
+  bounds: 1561, 573, 16, 16
+  index: -1
+npc/ninjaeskimo/anim/walk
+  bounds: 265, 181, 64, 64
+  index: -1
+npc/ninjaeskimo/faceset
+  bounds: 1745, 481, 38, 38
+  index: -1
+npc/ninjaeskimo/spritesheet
+  bounds: 595, 1, 64, 112
+  index: -1
+npc/ninjafire/anim/attack
+  bounds: 1717, 373, 64, 16
+  index: -1
+npc/ninjafire/anim/dead
+  bounds: 1579, 573, 16, 16
+  index: -1
+npc/ninjafire/anim/item
+  bounds: 1597, 573, 16, 16
+  index: -1
+npc/ninjafire/anim/jump
+  bounds: 1783, 373, 64, 16
+  index: -1
+npc/ninjafire/anim/special1
+  bounds: 1615, 579, 16, 16
+  index: -1
+npc/ninjafire/anim/special2
+  bounds: 1633, 579, 16, 16
+  index: -1
+npc/ninjafire/anim/walk
+  bounds: 331, 181, 64, 64
+  index: -1
+npc/ninjafire/faceset
+  bounds: 1785, 481, 38, 38
+  index: -1
+npc/ninjafire/spritesheet
+  bounds: 661, 1, 64, 112
+  index: -1
+npc/ninjagray/anim/attack
+  bounds: 1849, 373, 64, 16
+  index: -1
+npc/ninjagray/anim/dead
+  bounds: 1651, 579, 16, 16
+  index: -1
+npc/ninjagray/anim/idle
+  bounds: 1915, 373, 64, 16
+  index: -1
+npc/ninjagray/anim/item
+  bounds: 1669, 579, 16, 16
+  index: -1
+npc/ninjagray/anim/jump
+  bounds: 1981, 373, 64, 16
+  index: -1
+npc/ninjagray/anim/special1
+  bounds: 1687, 579, 16, 16
+  index: -1
+npc/ninjagray/anim/special2
+  bounds: 1705, 579, 16, 16
+  index: -1
+npc/ninjagray/anim/walk
+  bounds: 397, 181, 64, 64
+  index: -1
+npc/ninjagray/faceset
+  bounds: 1825, 503, 38, 38
+  index: -1
+npc/ninjagray/spritesheet
+  bounds: 727, 1, 64, 112
+  index: -1
+npc/ninjagreen/anim/attack
+  bounds: 265, 385, 64, 16
+  index: -1
+npc/ninjagreen/anim/dead
+  bounds: 1723, 579, 16, 16
+  index: -1
+npc/ninjagreen/anim/idle
+  bounds: 331, 385, 64, 16
+  index: -1
+npc/ninjagreen/anim/item
+  bounds: 1741, 579, 16, 16
+  index: -1
+npc/ninjagreen/anim/jump
+  bounds: 397, 385, 64, 16
+  index: -1
+npc/ninjagreen/anim/special1
+  bounds: 1759, 579, 16, 16
+  index: -1
+npc/ninjagreen/anim/special2
+  bounds: 1777, 579, 16, 16
+  index: -1
+npc/ninjagreen/anim/walk
+  bounds: 463, 181, 64, 64
+  index: -1
+npc/ninjagreen/faceset
+  bounds: 1865, 503, 38, 38
+  index: -1
+npc/ninjagreen/spritesheet
+  bounds: 793, 1, 64, 112
+  index: -1
+npc/ninjaleaf/anim/attack
+  bounds: 463, 385, 64, 16
+  index: -1
+npc/ninjaleaf/anim/dead
+  bounds: 1795, 579, 16, 16
+  index: -1
+npc/ninjaleaf/anim/item
+  bounds: 1813, 583, 16, 16
+  index: -1
+npc/ninjaleaf/anim/jump
+  bounds: 529, 385, 64, 16
+  index: -1
+npc/ninjaleaf/anim/special1
+  bounds: 1831, 583, 16, 16
+  index: -1
+npc/ninjaleaf/anim/special2
+  bounds: 1849, 583, 16, 16
+  index: -1
+npc/ninjaleaf/anim/walk
+  bounds: 529, 181, 64, 64
+  index: -1
+npc/ninjaleaf/faceset
+  bounds: 1905, 503, 38, 38
+  index: -1
+npc/ninjaleaf/spritesheet
+  bounds: 859, 1, 64, 112
+  index: -1
+npc/ninjamageblack/anim/attack
+  bounds: 595, 385, 64, 16
+  index: -1
+npc/ninjamageblack/anim/dead
+  bounds: 1867, 583, 16, 16
+  index: -1
+npc/ninjamageblack/anim/idle
+  bounds: 661, 385, 64, 16
+  index: -1
+npc/ninjamageblack/anim/item
+  bounds: 1885, 583, 16, 16
+  index: -1
+npc/ninjamageblack/anim/jump
+  bounds: 727, 385, 64, 16
+  index: -1
+npc/ninjamageblack/anim/special1
+  bounds: 1903, 583, 16, 16
+  index: -1
+npc/ninjamageblack/anim/special2
+  bounds: 1921, 583, 16, 16
+  index: -1
+npc/ninjamageblack/anim/walk
+  bounds: 595, 181, 64, 64
+  index: -1
+npc/ninjamageblack/faceset
+  bounds: 1945, 503, 38, 38
+  index: -1
+npc/ninjamageblack/spritesheet
+  bounds: 925, 1, 64, 112
+  index: -1
+npc/ninjamageorange/anim/attack
+  bounds: 793, 385, 64, 16
+  index: -1
+npc/ninjamageorange/anim/dead
+  bounds: 1939, 583, 16, 16
+  index: -1
+npc/ninjamageorange/anim/idle
+  bounds: 859, 385, 64, 16
+  index: -1
+npc/ninjamageorange/anim/item
+  bounds: 1957, 583, 16, 16
+  index: -1
+npc/ninjamageorange/anim/jump
+  bounds: 925, 385, 64, 16
+  index: -1
+npc/ninjamageorange/anim/special1
+  bounds: 1975, 597, 16, 16
+  index: -1
+npc/ninjamageorange/anim/special2
+  bounds: 1993, 597, 16, 16
+  index: -1
+npc/ninjamageorange/anim/walk
+  bounds: 661, 181, 64, 64
+  index: -1
+npc/ninjamageorange/faceset
+  bounds: 1985, 503, 38, 38
+  index: -1
+npc/ninjamageorange/spritesheet
+  bounds: 991, 1, 64, 112
+  index: -1
+npc/ninjamasked/anim/attack
+  bounds: 991, 385, 64, 16
+  index: -1
+npc/ninjamasked/anim/dead
+  bounds: 2011, 611, 16, 16
+  index: -1
+npc/ninjamasked/anim/idle
+  bounds: 1057, 385, 64, 16
+  index: -1
+npc/ninjamasked/anim/item
+  bounds: 2029, 611, 16, 16
+  index: -1
+npc/ninjamasked/anim/jump
+  bounds: 1123, 385, 64, 16
+  index: -1
+npc/ninjamasked/anim/special1
+  bounds: 265, 591, 16, 16
+  index: -1
+npc/ninjamasked/anim/special2
+  bounds: 283, 591, 16, 16
+  index: -1
+npc/ninjamasked/anim/walk
+  bounds: 727, 181, 64, 64
+  index: -1
+npc/ninjamasked/faceset
+  bounds: 265, 515, 38, 38
+  index: -1
+npc/ninjamasked/spritesheet
+  bounds: 1057, 1, 64, 112
+  index: -1
+npc/ninjared/anim/attack
+  bounds: 1189, 385, 64, 16
+  index: -1
+npc/ninjared/anim/dead
+  bounds: 301, 591, 16, 16
+  index: -1
+npc/ninjared/anim/idle
+  bounds: 1255, 385, 64, 16
+  index: -1
+npc/ninjared/anim/item
+  bounds: 319, 591, 16, 16
+  index: -1
+npc/ninjared/anim/jump
+  bounds: 1321, 385, 64, 16
+  index: -1
+npc/ninjared/anim/special1
+  bounds: 337, 591, 16, 16
+  index: -1
+npc/ninjared/anim/special2
+  bounds: 355, 591, 16, 16
+  index: -1
+npc/ninjared/anim/walk
+  bounds: 793, 181, 64, 64
+  index: -1
+npc/ninjared/faceset
+  bounds: 305, 515, 38, 38
+  index: -1
+npc/ninjared/spritesheet
+  bounds: 1123, 1, 64, 112
+  index: -1
+npc/ninjared2/anim/attack
+  bounds: 1387, 385, 64, 16
+  index: -1
+npc/ninjared2/anim/dead
+  bounds: 373, 591, 16, 16
+  index: -1
+npc/ninjared2/anim/idle
+  bounds: 1453, 385, 64, 16
+  index: -1
+npc/ninjared2/anim/item
+  bounds: 391, 591, 16, 16
+  index: -1
+npc/ninjared2/anim/jump
+  bounds: 1519, 385, 64, 16
+  index: -1
+npc/ninjared2/anim/special1
+  bounds: 409, 591, 16, 16
+  index: -1
+npc/ninjared2/anim/special2
+  bounds: 427, 591, 16, 16
+  index: -1
+npc/ninjared2/anim/walk
+  bounds: 859, 181, 64, 64
+  index: -1
+npc/ninjared2/faceset
+  bounds: 345, 515, 38, 38
+  index: -1
+npc/ninjared2/spritesheet
+  bounds: 1189, 1, 64, 112
+  index: -1
+npc/ninjathunder/anim/attack
+  bounds: 1585, 385, 64, 16
+  index: -1
+npc/ninjathunder/anim/dead
+  bounds: 445, 591, 16, 16
+  index: -1
+npc/ninjathunder/anim/item
+  bounds: 463, 591, 16, 16
+  index: -1
+npc/ninjathunder/anim/jump
+  bounds: 1651, 391, 64, 16
+  index: -1
+npc/ninjathunder/anim/special1
+  bounds: 481, 591, 16, 16
+  index: -1
+npc/ninjathunder/anim/special2
+  bounds: 499, 591, 16, 16
+  index: -1
+npc/ninjathunder/anim/walk
+  bounds: 925, 181, 64, 64
+  index: -1
+npc/ninjathunder/faceset
+  bounds: 385, 515, 38, 38
+  index: -1
+npc/ninjathunder/spritesheet
+  bounds: 1255, 1, 64, 112
+  index: -1
+npc/ninjawater/anim/attack
+  bounds: 1717, 391, 64, 16
+  index: -1
+npc/ninjawater/anim/dead
+  bounds: 517, 591, 16, 16
+  index: -1
+npc/ninjawater/anim/item
+  bounds: 535, 591, 16, 16
+  index: -1
+npc/ninjawater/anim/jump
+  bounds: 1783, 391, 64, 16
+  index: -1
+npc/ninjawater/anim/special1
+  bounds: 553, 591, 16, 16
+  index: -1
+npc/ninjawater/anim/special2
+  bounds: 571, 591, 16, 16
+  index: -1
+npc/ninjawater/anim/walk
+  bounds: 991, 181, 64, 64
+  index: -1
+npc/ninjawater/faceset
+  bounds: 425, 515, 38, 38
+  index: -1
+npc/ninjawater/spritesheet
+  bounds: 1321, 1, 64, 112
+  index: -1
+npc/ninjayellow/anim/attack
+  bounds: 1849, 391, 64, 16
+  index: -1
+npc/ninjayellow/anim/dead
+  bounds: 589, 591, 16, 16
+  index: -1
+npc/ninjayellow/anim/idle
+  bounds: 1915, 391, 64, 16
+  index: -1
+npc/ninjayellow/anim/item
+  bounds: 607, 591, 16, 16
+  index: -1
+npc/ninjayellow/anim/jump
+  bounds: 1981, 391, 64, 16
+  index: -1
+npc/ninjayellow/anim/special1
+  bounds: 625, 591, 16, 16
+  index: -1
+npc/ninjayellow/anim/special2
+  bounds: 643, 591, 16, 16
+  index: -1
+npc/ninjayellow/anim/walk
+  bounds: 1057, 181, 64, 64
+  index: -1
+npc/ninjayellow/faceset
+  bounds: 465, 515, 38, 38
+  index: -1
+npc/ninjayellow/spritesheet
+  bounds: 1387, 1, 64, 112
+  index: -1
+npc/noble/anim/attack
+  bounds: 265, 403, 64, 16
+  index: -1
+npc/noble/anim/dead
+  bounds: 661, 591, 16, 16
+  index: -1
+npc/noble/anim/idle
+  bounds: 331, 403, 64, 16
+  index: -1
+npc/noble/anim/item
+  bounds: 679, 591, 16, 16
+  index: -1
+npc/noble/anim/jump
+  bounds: 397, 403, 64, 16
+  index: -1
+npc/noble/anim/special1
+  bounds: 697, 591, 16, 16
+  index: -1
+npc/noble/anim/special2
+  bounds: 715, 591, 16, 16
+  index: -1
+npc/noble/anim/walk
+  bounds: 1123, 181, 64, 64
+  index: -1
+npc/noble/faceset
+  bounds: 505, 515, 38, 38
+  index: -1
+npc/noble/spritesheet
+  bounds: 1453, 1, 64, 112
+  index: -1
+npc/oldman/anim/attack
+  bounds: 463, 403, 64, 16
+  index: -1
+npc/oldman/anim/dead
+  bounds: 733, 591, 16, 16
+  index: -1
+npc/oldman/anim/idle
+  bounds: 529, 403, 64, 16
+  index: -1
+npc/oldman/anim/item
+  bounds: 751, 591, 16, 16
+  index: -1
+npc/oldman/anim/jump
+  bounds: 595, 403, 64, 16
+  index: -1
+npc/oldman/anim/special1
+  bounds: 769, 591, 16, 16
+  index: -1
+npc/oldman/anim/special2
+  bounds: 787, 591, 16, 16
+  index: -1
+npc/oldman/anim/walk
+  bounds: 1189, 181, 64, 64
+  index: -1
+npc/oldman/faceset
+  bounds: 545, 515, 38, 38
+  index: -1
+npc/oldman/spritesheet
+  bounds: 1519, 1, 64, 112
+  index: -1
+npc/oldman2/anim/attack
+  bounds: 661, 403, 64, 16
+  index: -1
+npc/oldman2/anim/dead
+  bounds: 805, 591, 16, 16
+  index: -1
+npc/oldman2/anim/idle
+  bounds: 727, 403, 64, 16
+  index: -1
+npc/oldman2/anim/item
+  bounds: 823, 591, 16, 16
+  index: -1
+npc/oldman2/anim/jump
+  bounds: 793, 403, 64, 16
+  index: -1
+npc/oldman2/anim/special1
+  bounds: 841, 591, 16, 16
+  index: -1
+npc/oldman2/anim/special2
+  bounds: 859, 591, 16, 16
+  index: -1
+npc/oldman2/anim/walk
+  bounds: 1255, 181, 64, 64
+  index: -1
+npc/oldman2/faceset
+  bounds: 585, 515, 38, 38
+  index: -1
+npc/oldman2/spritesheet
+  bounds: 1585, 1, 64, 112
+  index: -1
+npc/oldman3/anim/attack
+  bounds: 859, 403, 64, 16
+  index: -1
+npc/oldman3/anim/dead
+  bounds: 877, 591, 16, 16
+  index: -1
+npc/oldman3/anim/idle
+  bounds: 925, 403, 64, 16
+  index: -1
+npc/oldman3/anim/item
+  bounds: 895, 591, 16, 16
+  index: -1
+npc/oldman3/anim/jump
+  bounds: 991, 403, 64, 16
+  index: -1
+npc/oldman3/anim/special1
+  bounds: 913, 591, 16, 16
+  index: -1
+npc/oldman3/anim/special2
+  bounds: 931, 591, 16, 16
+  index: -1
+npc/oldman3/anim/walk
+  bounds: 1321, 181, 64, 64
+  index: -1
+npc/oldman3/faceset
+  bounds: 625, 515, 38, 38
+  index: -1
+npc/oldman3/spritesheet
+  bounds: 1651, 1, 64, 112
+  index: -1
+npc/oldwoman/faceset
+  bounds: 665, 515, 38, 38
+  index: -1
+npc/oldwoman/spritesheet
+  bounds: 67, 2005, 64, 32
+  index: -1
+npc/pig/anim/attack
+  bounds: 1057, 403, 64, 16
+  index: -1
+npc/pig/anim/dead
+  bounds: 949, 591, 16, 16
+  index: -1
+npc/pig/anim/idle
+  bounds: 1123, 403, 64, 16
+  index: -1
+npc/pig/anim/item
+  bounds: 967, 591, 16, 16
+  index: -1
+npc/pig/anim/jump
+  bounds: 1189, 403, 64, 16
+  index: -1
+npc/pig/anim/special1
+  bounds: 985, 591, 16, 16
+  index: -1
+npc/pig/anim/special2
+  bounds: 1003, 591, 16, 16
+  index: -1
+npc/pig/anim/walk
+  bounds: 1387, 181, 64, 64
+  index: -1
+npc/pig/faceset
+  bounds: 705, 515, 38, 38
+  index: -1
+npc/pig/spritesheet
+  bounds: 1717, 1, 64, 112
+  index: -1
+npc/princess/anim/attack
+  bounds: 1255, 403, 64, 16
+  index: -1
+npc/princess/anim/dead
+  bounds: 1021, 591, 16, 16
+  index: -1
+npc/princess/anim/idle
+  bounds: 1321, 403, 64, 16
+  index: -1
+npc/princess/anim/item
+  bounds: 1039, 591, 16, 16
+  index: -1
+npc/princess/anim/jump
+  bounds: 1387, 403, 64, 16
+  index: -1
+npc/princess/anim/special1
+  bounds: 1057, 591, 16, 16
+  index: -1
+npc/princess/anim/special2
+  bounds: 1075, 591, 16, 16
+  index: -1
+npc/princess/anim/walk
+  bounds: 1453, 181, 64, 64
+  index: -1
+npc/princess/faceset
+  bounds: 745, 515, 38, 38
+  index: -1
+npc/princess/spritesheet
+  bounds: 1783, 1, 64, 112
+  index: -1
+npc/redgladiator/anim/attack
+  bounds: 1453, 403, 64, 16
+  index: -1
+npc/redgladiator/anim/dead
+  bounds: 1093, 591, 16, 16
+  index: -1
+npc/redgladiator/anim/idle
+  bounds: 1519, 403, 64, 16
+  index: -1
+npc/redgladiator/anim/item
+  bounds: 1111, 591, 16, 16
+  index: -1
+npc/redgladiator/anim/jump
+  bounds: 1585, 403, 64, 16
+  index: -1
+npc/redgladiator/anim/special1
+  bounds: 1129, 591, 16, 16
+  index: -1
+npc/redgladiator/anim/special2
+  bounds: 1147, 591, 16, 16
+  index: -1
+npc/redgladiator/anim/walk
+  bounds: 1519, 181, 64, 64
+  index: -1
+npc/redgladiator/faceset
+  bounds: 785, 515, 38, 38
+  index: -1
+npc/redgladiator/spritesheet
+  bounds: 1849, 1, 64, 112
+  index: -1
+npc/redninja3/anim/attack
+  bounds: 1651, 409, 64, 16
+  index: -1
+npc/redninja3/anim/dead
+  bounds: 1165, 591, 16, 16
+  index: -1
+npc/redninja3/anim/idle
+  bounds: 1717, 409, 64, 16
+  index: -1
+npc/redninja3/anim/item
+  bounds: 1183, 591, 16, 16
+  index: -1
+npc/redninja3/anim/jump
+  bounds: 1783, 409, 64, 16
+  index: -1
+npc/redninja3/anim/special1
+  bounds: 1201, 591, 16, 16
+  index: -1
+npc/redninja3/anim/special2
+  bounds: 1219, 591, 16, 16
+  index: -1
+npc/redninja3/anim/walk
+  bounds: 1585, 181, 64, 64
+  index: -1
+npc/redninja3/faceset
+  bounds: 825, 515, 38, 38
+  index: -1
+npc/redninja3/spritesheet
+  bounds: 1915, 1, 64, 112
+  index: -1
+npc/robotcamouflage/anim/attack
+  bounds: 1849, 409, 64, 16
+  index: -1
+npc/robotcamouflage/anim/dead
+  bounds: 1237, 591, 16, 16
+  index: -1
+npc/robotcamouflage/anim/idle
+  bounds: 1915, 409, 64, 16
+  index: -1
+npc/robotcamouflage/anim/item
+  bounds: 1255, 591, 16, 16
+  index: -1
+npc/robotcamouflage/anim/jump
+  bounds: 1981, 409, 64, 16
+  index: -1
+npc/robotcamouflage/anim/special1
+  bounds: 1273, 591, 16, 16
+  index: -1
+npc/robotcamouflage/anim/special2
+  bounds: 1291, 591, 16, 16
+  index: -1
+npc/robotcamouflage/anim/walk
+  bounds: 1651, 181, 64, 64
+  index: -1
+npc/robotcamouflage/faceset
+  bounds: 865, 515, 38, 38
+  index: -1
+npc/robotcamouflage/spritesheet
+  bounds: 1981, 1, 64, 112
+  index: -1
+npc/robotgreen/anim/attack
+  bounds: 265, 421, 64, 16
+  index: -1
+npc/robotgreen/anim/dead
+  bounds: 1309, 591, 16, 16
+  index: -1
+npc/robotgreen/anim/idle
+  bounds: 331, 421, 64, 16
+  index: -1
+npc/robotgreen/anim/item
+  bounds: 1327, 591, 16, 16
+  index: -1
+npc/robotgreen/anim/jump
+  bounds: 397, 421, 64, 16
+  index: -1
+npc/robotgreen/anim/special1
+  bounds: 1345, 591, 16, 16
+  index: -1
+npc/robotgreen/anim/special2
+  bounds: 1363, 591, 16, 16
+  index: -1
+npc/robotgreen/anim/walk
+  bounds: 1717, 181, 64, 64
+  index: -1
+npc/robotgreen/faceset
+  bounds: 905, 515, 38, 38
+  index: -1
+npc/robotgreen/spritesheet
+  bounds: 133, 115, 64, 112
+  index: -1
+npc/robotgrey/anim/attack
+  bounds: 463, 421, 64, 16
+  index: -1
+npc/robotgrey/anim/dead
+  bounds: 1381, 591, 16, 16
+  index: -1
+npc/robotgrey/anim/idle
+  bounds: 529, 421, 64, 16
+  index: -1
+npc/robotgrey/anim/item
+  bounds: 1399, 591, 16, 16
+  index: -1
+npc/robotgrey/anim/jump
+  bounds: 595, 421, 64, 16
+  index: -1
+npc/robotgrey/anim/special1
+  bounds: 1417, 591, 16, 16
+  index: -1
+npc/robotgrey/anim/special2
+  bounds: 1435, 591, 16, 16
+  index: -1
+npc/robotgrey/anim/walk
+  bounds: 1783, 181, 64, 64
+  index: -1
+npc/robotgrey/faceset
+  bounds: 945, 515, 38, 38
+  index: -1
+npc/robotgrey/spritesheet
+  bounds: 133, 229, 64, 112
+  index: -1
+npc/samurai/anim/attack
+  bounds: 661, 421, 64, 16
+  index: -1
+npc/samurai/anim/dead
+  bounds: 1453, 591, 16, 16
+  index: -1
+npc/samurai/anim/idle
+  bounds: 727, 421, 64, 16
+  index: -1
+npc/samurai/anim/item
+  bounds: 1471, 591, 16, 16
+  index: -1
+npc/samurai/anim/jump
+  bounds: 793, 421, 64, 16
+  index: -1
+npc/samurai/anim/special1
+  bounds: 1489, 591, 16, 16
+  index: -1
+npc/samurai/anim/special2
+  bounds: 1507, 591, 16, 16
+  index: -1
+npc/samurai/anim/walk
+  bounds: 1849, 181, 64, 64
+  index: -1
+npc/samurai/faceset
+  bounds: 985, 515, 38, 38
+  index: -1
+npc/samurai/spritesheet
+  bounds: 133, 343, 64, 112
+  index: -1
+npc/samuraiblue/anim/attack
+  bounds: 859, 421, 64, 16
+  index: -1
+npc/samuraiblue/anim/dead
+  bounds: 1525, 591, 16, 16
+  index: -1
+npc/samuraiblue/anim/idle
+  bounds: 925, 421, 64, 16
+  index: -1
+npc/samuraiblue/anim/item
+  bounds: 1543, 591, 16, 16
+  index: -1
+npc/samuraiblue/anim/jump
+  bounds: 991, 421, 64, 16
+  index: -1
+npc/samuraiblue/anim/special1
+  bounds: 1561, 591, 16, 16
+  index: -1
+npc/samuraiblue/anim/special2
+  bounds: 1579, 591, 16, 16
+  index: -1
+npc/samuraiblue/anim/walk
+  bounds: 1915, 181, 64, 64
+  index: -1
+npc/samuraiblue/faceset
+  bounds: 1025, 515, 38, 38
+  index: -1
+npc/samuraiblue/spritesheet
+  bounds: 133, 457, 64, 112
+  index: -1
+npc/samuraired/anim/attack
+  bounds: 1057, 421, 64, 16
+  index: -1
+npc/samuraired/anim/dead
+  bounds: 1597, 591, 16, 16
+  index: -1
+npc/samuraired/anim/idle
+  bounds: 1123, 421, 64, 16
+  index: -1
+npc/samuraired/anim/item
+  bounds: 1615, 597, 16, 16
+  index: -1
+npc/samuraired/anim/jump
+  bounds: 1189, 421, 64, 16
+  index: -1
+npc/samuraired/anim/special1
+  bounds: 1633, 597, 16, 16
+  index: -1
+npc/samuraired/anim/special2
+  bounds: 1651, 597, 16, 16
+  index: -1
+npc/samuraired/anim/walk
+  bounds: 1981, 181, 64, 64
+  index: -1
+npc/samuraired/faceset
+  bounds: 1065, 515, 38, 38
+  index: -1
+npc/samuraired/spritesheet
+  bounds: 133, 571, 64, 112
+  index: -1
+npc/shaman/anim/attack
+  bounds: 1255, 421, 64, 16
+  index: -1
+npc/shaman/anim/dead
+  bounds: 1669, 597, 16, 16
+  index: -1
+npc/shaman/anim/idle
+  bounds: 1321, 421, 64, 16
+  index: -1
+npc/shaman/anim/item
+  bounds: 1687, 597, 16, 16
+  index: -1
+npc/shaman/anim/jump
+  bounds: 1387, 421, 64, 16
+  index: -1
+npc/shaman/anim/special1
+  bounds: 1705, 597, 16, 16
+  index: -1
+npc/shaman/anim/special2
+  bounds: 1723, 597, 16, 16
+  index: -1
+npc/shaman/anim/walk
+  bounds: 265, 247, 64, 64
+  index: -1
+npc/shaman/faceset
+  bounds: 1105, 515, 38, 38
+  index: -1
+npc/shaman/spritesheet
+  bounds: 133, 685, 64, 112
+  index: -1
+npc/shamanlion/anim/attack
+  bounds: 1453, 421, 64, 16
+  index: -1
+npc/shamanlion/anim/dead
+  bounds: 1741, 597, 16, 16
+  index: -1
+npc/shamanlion/anim/idle
+  bounds: 1519, 421, 64, 16
+  index: -1
+npc/shamanlion/anim/item
+  bounds: 1759, 597, 16, 16
+  index: -1
+npc/shamanlion/anim/jump
+  bounds: 1585, 421, 64, 16
+  index: -1
+npc/shamanlion/anim/special1
+  bounds: 1777, 597, 16, 16
+  index: -1
+npc/shamanlion/anim/special2
+  bounds: 1795, 597, 16, 16
+  index: -1
+npc/shamanlion/anim/walk
+  bounds: 331, 247, 64, 64
+  index: -1
+npc/shamanlion/faceset
+  bounds: 1145, 515, 38, 38
+  index: -1
+npc/shamanlion/spritesheet
+  bounds: 133, 799, 64, 112
+  index: -1
+npc/skeleton/anim/attack
+  bounds: 1651, 427, 64, 16
+  index: -1
+npc/skeleton/anim/dead
+  bounds: 1813, 601, 16, 16
+  index: -1
+npc/skeleton/anim/idle
+  bounds: 1717, 427, 64, 16
+  index: -1
+npc/skeleton/anim/item
+  bounds: 1831, 601, 16, 16
+  index: -1
+npc/skeleton/anim/jump
+  bounds: 1783, 427, 64, 16
+  index: -1
+npc/skeleton/anim/special1
+  bounds: 1849, 601, 16, 16
+  index: -1
+npc/skeleton/anim/special2
+  bounds: 1867, 601, 16, 16
+  index: -1
+npc/skeleton/anim/walk
+  bounds: 397, 247, 64, 64
+  index: -1
+npc/skeleton/faceset
+  bounds: 1185, 515, 38, 38
+  index: -1
+npc/skeleton/spritesheet
+  bounds: 133, 913, 64, 112
+  index: -1
+npc/skeletondemon/anim/attack
+  bounds: 1849, 427, 64, 16
+  index: -1
+npc/skeletondemon/anim/dead
+  bounds: 1885, 601, 16, 16
+  index: -1
+npc/skeletondemon/anim/idle
+  bounds: 1915, 427, 64, 16
+  index: -1
+npc/skeletondemon/anim/item
+  bounds: 1903, 601, 16, 16
+  index: -1
+npc/skeletondemon/anim/jump
+  bounds: 1981, 427, 64, 16
+  index: -1
+npc/skeletondemon/anim/special1
+  bounds: 1921, 601, 16, 16
+  index: -1
+npc/skeletondemon/anim/special2
+  bounds: 1939, 601, 16, 16
+  index: -1
+npc/skeletondemon/anim/walk
+  bounds: 463, 247, 64, 64
+  index: -1
+npc/skeletondemon/faceset
+  bounds: 1225, 515, 38, 38
+  index: -1
+npc/skeletondemon/spritesheet
+  bounds: 133, 1027, 64, 112
+  index: -1
+npc/sorcererblack/anim/attack
+  bounds: 265, 439, 64, 16
+  index: -1
+npc/sorcererblack/anim/dead
+  bounds: 1957, 601, 16, 16
+  index: -1
+npc/sorcererblack/anim/idle
+  bounds: 331, 439, 64, 16
+  index: -1
+npc/sorcererblack/anim/item
+  bounds: 1975, 615, 16, 16
+  index: -1
+npc/sorcererblack/anim/jump
+  bounds: 397, 439, 64, 16
+  index: -1
+npc/sorcererblack/anim/special1
+  bounds: 1993, 615, 16, 16
+  index: -1
+npc/sorcererblack/anim/special2
+  bounds: 2011, 629, 16, 16
+  index: -1
+npc/sorcererblack/anim/walk
+  bounds: 529, 247, 64, 64
+  index: -1
+npc/sorcererblack/faceset
+  bounds: 1265, 515, 38, 38
+  index: -1
+npc/sorcererblack/spritesheet
+  bounds: 133, 1141, 64, 112
+  index: -1
+npc/sorcererorange/anim/attack
+  bounds: 463, 439, 64, 16
+  index: -1
+npc/sorcererorange/anim/dead
+  bounds: 2029, 629, 16, 16
+  index: -1
+npc/sorcererorange/anim/idle
+  bounds: 529, 439, 64, 16
+  index: -1
+npc/sorcererorange/anim/item
+  bounds: 265, 609, 16, 16
+  index: -1
+npc/sorcererorange/anim/jump
+  bounds: 595, 439, 64, 16
+  index: -1
+npc/sorcererorange/anim/special1
+  bounds: 283, 609, 16, 16
+  index: -1
+npc/sorcererorange/anim/special2
+  bounds: 301, 609, 16, 16
+  index: -1
+npc/sorcererorange/anim/walk
+  bounds: 595, 247, 64, 64
+  index: -1
+npc/sorcererorange/faceset
+  bounds: 1305, 515, 38, 38
+  index: -1
+npc/sorcererorange/spritesheet
+  bounds: 133, 1255, 64, 112
+  index: -1
+npc/spirit/anim/attack
+  bounds: 661, 439, 64, 16
+  index: -1
+npc/spirit/anim/dead
+  bounds: 319, 609, 16, 16
+  index: -1
+npc/spirit/anim/idle
+  bounds: 727, 439, 64, 16
+  index: -1
+npc/spirit/anim/item
+  bounds: 337, 609, 16, 16
+  index: -1
+npc/spirit/anim/jump
+  bounds: 793, 439, 64, 16
+  index: -1
+npc/spirit/anim/special1
+  bounds: 355, 609, 16, 16
+  index: -1
+npc/spirit/anim/special2
+  bounds: 373, 609, 16, 16
+  index: -1
+npc/spirit/anim/walk
+  bounds: 661, 247, 64, 64
+  index: -1
+npc/spirit/faceset
+  bounds: 1345, 515, 38, 38
+  index: -1
+npc/spirit/spritesheet
+  bounds: 133, 1369, 64, 112
+  index: -1
+npc/statue/anim/attack
+  bounds: 859, 439, 64, 16
+  index: -1
+npc/statue/anim/dead
+  bounds: 391, 609, 16, 16
+  index: -1
+npc/statue/anim/idle
+  bounds: 925, 439, 64, 16
+  index: -1
+npc/statue/anim/item
+  bounds: 409, 609, 16, 16
+  index: -1
+npc/statue/anim/jump
+  bounds: 991, 439, 64, 16
+  index: -1
+npc/statue/anim/special1
+  bounds: 427, 609, 16, 16
+  index: -1
+npc/statue/anim/special2
+  bounds: 445, 609, 16, 16
+  index: -1
+npc/statue/anim/walk
+  bounds: 727, 247, 64, 64
+  index: -1
+npc/statue/faceset
+  bounds: 1385, 515, 38, 38
+  index: -1
+npc/statue/spritesheet
+  bounds: 133, 1483, 64, 112
+  index: -1
+npc/sultan/anim/attack
+  bounds: 1057, 439, 64, 16
+  index: -1
+npc/sultan/anim/dead
+  bounds: 463, 609, 16, 16
+  index: -1
+npc/sultan/anim/idle
+  bounds: 1123, 439, 64, 16
+  index: -1
+npc/sultan/anim/item
+  bounds: 481, 609, 16, 16
+  index: -1
+npc/sultan/anim/jump
+  bounds: 1189, 439, 64, 16
+  index: -1
+npc/sultan/anim/special1
+  bounds: 499, 609, 16, 16
+  index: -1
+npc/sultan/anim/special2
+  bounds: 517, 609, 16, 16
+  index: -1
+npc/sultan/anim/walk
+  bounds: 793, 247, 64, 64
+  index: -1
+npc/sultan/faceset
+  bounds: 1425, 515, 38, 38
+  index: -1
+npc/sultan/spritesheet
+  bounds: 133, 1597, 64, 112
+  index: -1
+npc/sultan2/anim/attack
+  bounds: 1255, 439, 64, 16
+  index: -1
+npc/sultan2/anim/dead
+  bounds: 535, 609, 16, 16
+  index: -1
+npc/sultan2/anim/idle
+  bounds: 1321, 439, 64, 16
+  index: -1
+npc/sultan2/anim/item
+  bounds: 553, 609, 16, 16
+  index: -1
+npc/sultan2/anim/jump
+  bounds: 1387, 439, 64, 16
+  index: -1
+npc/sultan2/anim/special1
+  bounds: 571, 609, 16, 16
+  index: -1
+npc/sultan2/anim/special2
+  bounds: 589, 609, 16, 16
+  index: -1
+npc/sultan2/anim/walk
+  bounds: 859, 247, 64, 64
+  index: -1
+npc/sultan2/faceset
+  bounds: 1465, 515, 38, 38
+  index: -1
+npc/sultan2/spritesheet
+  bounds: 133, 1711, 64, 112
+  index: -1
+npc/tengu/anim/attack
+  bounds: 1453, 439, 64, 16
+  index: -1
+npc/tengu/anim/dead
+  bounds: 607, 609, 16, 16
+  index: -1
+npc/tengu/anim/idle
+  bounds: 1519, 439, 64, 16
+  index: -1
+npc/tengu/anim/item
+  bounds: 625, 609, 16, 16
+  index: -1
+npc/tengu/anim/jump
+  bounds: 1585, 439, 64, 16
+  index: -1
+npc/tengu/anim/special1
+  bounds: 643, 609, 16, 16
+  index: -1
+npc/tengu/anim/special2
+  bounds: 661, 609, 16, 16
+  index: -1
+npc/tengu/anim/walk
+  bounds: 925, 247, 64, 64
+  index: -1
+npc/tengu/faceset
+  bounds: 1505, 515, 38, 38
+  index: -1
+npc/tengu/spritesheet
+  bounds: 133, 1825, 64, 112
+  index: -1
+npc/tengu2/anim/attack
+  bounds: 1651, 445, 64, 16
+  index: -1
+npc/tengu2/anim/dead
+  bounds: 679, 609, 16, 16
+  index: -1
+npc/tengu2/anim/idle
+  bounds: 1717, 445, 64, 16
+  index: -1
+npc/tengu2/anim/item
+  bounds: 697, 609, 16, 16
+  index: -1
+npc/tengu2/anim/jump
+  bounds: 1783, 445, 64, 16
+  index: -1
+npc/tengu2/anim/special1
+  bounds: 715, 609, 16, 16
+  index: -1
+npc/tengu2/anim/special2
+  bounds: 733, 609, 16, 16
+  index: -1
+npc/tengu2/anim/walk
+  bounds: 991, 247, 64, 64
+  index: -1
+npc/tengu2/faceset
+  bounds: 1545, 515, 38, 38
+  index: -1
+npc/tengu2/spritesheet
+  bounds: 199, 115, 64, 112
+  index: -1
+npc/vampire/anim/attack
+  bounds: 1849, 445, 64, 16
+  index: -1
+npc/vampire/anim/dead
+  bounds: 751, 609, 16, 16
+  index: -1
+npc/vampire/anim/idle
+  bounds: 1915, 445, 64, 16
+  index: -1
+npc/vampire/anim/item
+  bounds: 769, 609, 16, 16
+  index: -1
+npc/vampire/anim/jump
+  bounds: 1981, 445, 64, 16
+  index: -1
+npc/vampire/anim/special1
+  bounds: 787, 609, 16, 16
+  index: -1
+npc/vampire/anim/special2
+  bounds: 805, 609, 16, 16
+  index: -1
+npc/vampire/anim/walk
+  bounds: 1057, 247, 64, 64
+  index: -1
+npc/vampire/faceset
+  bounds: 1585, 515, 38, 38
+  index: -1
+npc/vampire/spritesheet
+  bounds: 199, 229, 64, 112
+  index: -1
+npc/village6/anim/attack
+  bounds: 265, 457, 64, 16
+  index: -1
+npc/village6/anim/dead
+  bounds: 823, 609, 16, 16
+  index: -1
+npc/village6/anim/idle
+  bounds: 331, 457, 64, 16
+  index: -1
+npc/village6/anim/item
+  bounds: 841, 609, 16, 16
+  index: -1
+npc/village6/anim/jump
+  bounds: 397, 457, 64, 16
+  index: -1
+npc/village6/anim/special1
+  bounds: 859, 609, 16, 16
+  index: -1
+npc/village6/anim/special2
+  bounds: 877, 609, 16, 16
+  index: -1
+npc/village6/anim/walk
+  bounds: 1123, 247, 64, 64
+  index: -1
+npc/village6/faceset
+  bounds: 1625, 521, 38, 38
+  index: -1
+npc/village6/spritesheet
+  bounds: 199, 343, 64, 112
+  index: -1
+npc/villager/anim/attack
+  bounds: 463, 457, 64, 16
+  index: -1
+npc/villager/anim/dead
+  bounds: 895, 609, 16, 16
+  index: -1
+npc/villager/anim/idle
+  bounds: 529, 457, 64, 16
+  index: -1
+npc/villager/anim/item
+  bounds: 913, 609, 16, 16
+  index: -1
+npc/villager/anim/jump
+  bounds: 595, 457, 64, 16
+  index: -1
+npc/villager/anim/special1
+  bounds: 931, 609, 16, 16
+  index: -1
+npc/villager/anim/special2
+  bounds: 949, 609, 16, 16
+  index: -1
+npc/villager/anim/walk
+  bounds: 1189, 247, 64, 64
+  index: -1
+npc/villager/faceset
+  bounds: 1665, 521, 38, 38
+  index: -1
+npc/villager/spritesheet
+  bounds: 199, 457, 64, 112
+  index: -1
+npc/villager2/anim/attack
+  bounds: 661, 457, 64, 16
+  index: -1
+npc/villager2/anim/dead
+  bounds: 967, 609, 16, 16
+  index: -1
+npc/villager2/anim/idle
+  bounds: 727, 457, 64, 16
+  index: -1
+npc/villager2/anim/item
+  bounds: 985, 609, 16, 16
+  index: -1
+npc/villager2/anim/jump
+  bounds: 793, 457, 64, 16
+  index: -1
+npc/villager2/anim/special1
+  bounds: 1003, 609, 16, 16
+  index: -1
+npc/villager2/anim/special2
+  bounds: 1021, 609, 16, 16
+  index: -1
+npc/villager2/anim/walk
+  bounds: 1255, 247, 64, 64
+  index: -1
+npc/villager2/faceset
+  bounds: 1705, 521, 38, 38
+  index: -1
+npc/villager2/spritesheet
+  bounds: 199, 571, 64, 112
+  index: -1
+npc/villager3/anim/attack
+  bounds: 859, 457, 64, 16
+  index: -1
+npc/villager3/anim/dead
+  bounds: 1039, 609, 16, 16
+  index: -1
+npc/villager3/anim/idle
+  bounds: 925, 457, 64, 16
+  index: -1
+npc/villager3/anim/item
+  bounds: 1057, 609, 16, 16
+  index: -1
+npc/villager3/anim/jump
+  bounds: 991, 457, 64, 16
+  index: -1
+npc/villager3/anim/special1
+  bounds: 1075, 609, 16, 16
+  index: -1
+npc/villager3/anim/special2
+  bounds: 1093, 609, 16, 16
+  index: -1
+npc/villager3/anim/walk
+  bounds: 1321, 247, 64, 64
+  index: -1
+npc/villager3/faceset
+  bounds: 1745, 521, 38, 38
+  index: -1
+npc/villager3/spritesheet
+  bounds: 199, 685, 64, 112
+  index: -1
+npc/villager4/anim/attack
+  bounds: 1057, 457, 64, 16
+  index: -1
+npc/villager4/anim/dead
+  bounds: 1111, 609, 16, 16
+  index: -1
+npc/villager4/anim/idle
+  bounds: 1123, 457, 64, 16
+  index: -1
+npc/villager4/anim/item
+  bounds: 1129, 609, 16, 16
+  index: -1
+npc/villager4/anim/jump
+  bounds: 1189, 457, 64, 16
+  index: -1
+npc/villager4/anim/special1
+  bounds: 1147, 609, 16, 16
+  index: -1
+npc/villager4/anim/special2
+  bounds: 1165, 609, 16, 16
+  index: -1
+npc/villager4/anim/walk
+  bounds: 1387, 247, 64, 64
+  index: -1
+npc/villager4/faceset
+  bounds: 1785, 521, 38, 38
+  index: -1
+npc/villager4/spritesheet
+  bounds: 199, 799, 64, 112
+  index: -1
+npc/villager5/anim/attack
+  bounds: 1255, 457, 64, 16
+  index: -1
+npc/villager5/anim/dead
+  bounds: 1183, 609, 16, 16
+  index: -1
+npc/villager5/anim/idle
+  bounds: 1321, 457, 64, 16
+  index: -1
+npc/villager5/anim/item
+  bounds: 1201, 609, 16, 16
+  index: -1
+npc/villager5/anim/jump
+  bounds: 1387, 457, 64, 16
+  index: -1
+npc/villager5/anim/special1
+  bounds: 1219, 609, 16, 16
+  index: -1
+npc/villager5/anim/special2
+  bounds: 1237, 609, 16, 16
+  index: -1
+npc/villager5/anim/walk
+  bounds: 1453, 247, 64, 64
+  index: -1
+npc/villager5/faceset
+  bounds: 1825, 543, 38, 38
+  index: -1
+npc/villager5/spritesheet
+  bounds: 199, 913, 64, 112
+  index: -1
+npc/villager6/anim/attack
+  bounds: 1453, 457, 64, 16
+  index: -1
+npc/villager6/anim/dead
+  bounds: 1255, 609, 16, 16
+  index: -1
+npc/villager6/anim/idle
+  bounds: 1519, 457, 64, 16
+  index: -1
+npc/villager6/anim/item
+  bounds: 1273, 609, 16, 16
+  index: -1
+npc/villager6/anim/jump
+  bounds: 1585, 457, 64, 16
+  index: -1
+npc/villager6/anim/special1
+  bounds: 1291, 609, 16, 16
+  index: -1
+npc/villager6/anim/special2
+  bounds: 1309, 609, 16, 16
+  index: -1
+npc/villager6/anim/walk
+  bounds: 1519, 247, 64, 64
+  index: -1
+npc/villager6/faceset
+  bounds: 1865, 543, 38, 38
+  index: -1
+npc/villager6/spritesheet
+  bounds: 199, 1027, 64, 112
+  index: -1
+npc/woman/anim/attack
+  bounds: 1651, 463, 64, 16
+  index: -1
+npc/woman/anim/dead
+  bounds: 1327, 609, 16, 16
+  index: -1
+npc/woman/anim/idle
+  bounds: 1717, 463, 64, 16
+  index: -1
+npc/woman/anim/item
+  bounds: 1345, 609, 16, 16
+  index: -1
+npc/woman/anim/jump
+  bounds: 1783, 463, 64, 16
+  index: -1
+npc/woman/anim/special1
+  bounds: 1363, 609, 16, 16
+  index: -1
+npc/woman/anim/special2
+  bounds: 1381, 609, 16, 16
+  index: -1
+npc/woman/anim/walk
+  bounds: 1585, 247, 64, 64
+  index: -1
+npc/woman/faceset
+  bounds: 1905, 543, 38, 38
+  index: -1
+npc/woman/spritesheet
+  bounds: 199, 1141, 64, 112
+  index: -1

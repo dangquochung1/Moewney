@@ -1,0 +1,175 @@
+// Pickups: consumables, keys, gold and things that fire the moment they are
+// walked over.
+//
+// "sprite" names a region in ui.atlas under items/, which is Ninja Adventure
+// art and therefore in the same palette as the rooms these lie on the floor
+// of. "icon" is a Raven index and is the INVENTORY LIST fallback only - the
+// two packs share almost no colours and drawing both in one panel looks like
+// a bug. See notes/d.md section 6.
+//
+// stackSize is how many the player may carry. It is 1 for anything that
+// should force a decision and higher for the small stuff.
+{
+  "items": [
+
+    // ---------------- consumables -------------------------------------
+
+    {
+      "id": "potion_small", "nameKey": "item.potion_small.name", "descKey": "item.potion_small.desc",
+      "sprite": "items/potion/lifepot", "icon": "potion_red",
+      // 25 on a 100-point bar. Deliberately not a quarter of the bar after the
+      // vigor upgrades: at vigor 4 the player has 160 hit points and the small
+      // potion is worth 16% of it, which is the pressure that makes the large
+      // one worth 90 gold.
+      "kind": "CONSUMABLE", "effect": "heal", "magnitude": 25, "stackSize": 5, "price": 45
+    },
+    {
+      "id": "potion_large", "nameKey": "item.potion_large.name", "descKey": "item.potion_large.desc",
+      "sprite": "items/potion/medipack", "icon": "potion_red_bulb",
+      "kind": "CONSUMABLE", "effect": "heal", "magnitude": 55, "stackSize": 3, "price": 90
+    },
+    {
+      "id": "antidote", "nameKey": "item.antidote.name", "descKey": "item.antidote.desc",
+      "sprite": "items/potion/milkpot", "icon": "flask_green",
+      "kind": "CONSUMABLE", "effect": "cure_poison", "magnitude": 1, "stackSize": 3, "price": 35
+    },
+    {
+      "id": "draught_swift", "nameKey": "item.draught_swift.name", "descKey": "item.draught_swift.desc",
+      "sprite": "items/potion/waterpot", "icon": "flask_blue",
+      // All three buffs run 600 steps - ten seconds - so the player only has
+      // to learn one duration.
+      "kind": "CONSUMABLE", "effect": "speed_buff", "magnitude": 1.35, "stackSize": 2, "price": 60
+    },
+    {
+      "id": "draught_shadow", "nameKey": "item.draught_shadow.name", "descKey": "item.draught_shadow.desc",
+      "sprite": "items/object/gourd", "icon": "flask_purple",
+      "kind": "CONSUMABLE", "effect": "damage_buff", "magnitude": 1.50, "stackSize": 2, "price": 75
+    },
+    {
+      "id": "elixir_ward", "nameKey": "item.elixir_ward.name", "descKey": "item.elixir_ward.desc",
+      "sprite": "items/potion/heart", "icon": "shield_blessed",
+      // A flat 45-point pool absorbed before hit points, not a multiplier, so
+      // it is worth exactly as much on floor 1 as on floor 5 and is therefore
+      // something to save rather than something to drink.
+      "kind": "CONSUMABLE", "effect": "shield_buff", "magnitude": 45, "stackSize": 2, "price": 110
+    },
+    {
+      "id": "smoke_bomb", "nameKey": "item.smoke_bomb.name", "descKey": "item.smoke_bomb.desc",
+      "sprite": "items/projectile/bomb", "icon": "sleep",
+      // Drops aggro on everything in the room for 180 steps. The escape hatch
+      // for a fight that has gone wrong, which is why it is a consumable the
+      // shop sells rather than a relic.
+      "kind": "CONSUMABLE", "effect": "drop_aggro", "magnitude": 180, "stackSize": 2, "price": 55
+    },
+
+    // ---------------- village food --------------------------------
+
+    // Cooked by the village cook from what the island produces, and carried
+    // down in the pantry. No price, so the dungeon's trader never stocks one
+    // and the kitchen is the only way to a meal. What goes into each is in
+    // village.json, and BalanceTest keeps each one worth no more than the
+    // potion or draught its ingredients would buy.
+    {
+      "id": "food_grilled_fish", "nameKey": "item.food_grilled_fish.name", "descKey": "item.food_grilled_fish.desc",
+      "sprite": "items/food/fish",
+      "kind": "CONSUMABLE", "effect": "heal", "magnitude": 20, "stackSize": 3
+    },
+    {
+      "id": "food_veggie_noodles", "nameKey": "item.food_veggie_noodles.name", "descKey": "item.food_veggie_noodles.desc",
+      "sprite": "items/food/noodle",
+      "kind": "CONSUMABLE", "effect": "heal", "magnitude": 18, "stackSize": 3
+    },
+    {
+      "id": "food_onigiri", "nameKey": "item.food_onigiri.name", "descKey": "item.food_onigiri.desc",
+      "sprite": "items/food/onigiri",
+      "kind": "CONSUMABLE", "effect": "heal", "magnitude": 18, "stackSize": 3
+    },
+    {
+      "id": "food_yakitori", "nameKey": "item.food_yakitori.name", "descKey": "item.food_yakitori.desc",
+      "sprite": "items/food/yakitori",
+      "kind": "CONSUMABLE", "effect": "speed_buff", "magnitude": 1.35, "stackSize": 2
+    },
+    {
+      "id": "food_sushi", "nameKey": "item.food_sushi.name", "descKey": "item.food_sushi.desc",
+      "sprite": "items/food/sushi",
+      "kind": "CONSUMABLE", "effect": "damage_buff", "magnitude": 1.50, "stackSize": 2
+    },
+
+    // ---------------- keys ---------------------------------------------
+
+    {
+      "id": "key_iron", "nameKey": "item.key_iron.name", "descKey": "item.key_iron.desc",
+      "sprite": "items/treasure/silverkey", "icon": "key_silver",
+      // RunState.keys is a plain int, so keys pool there regardless of what
+      // stackSize says; the number here is what the inventory panel caps at.
+      "kind": "KEY", "effect": "key", "magnitude": 1, "stackSize": 9, "price": 70
+    },
+    {
+      "id": "key_ring", "nameKey": "item.key_ring.name", "descKey": "item.key_ring.desc",
+      "sprite": "items/treasure/goldkey", "icon": "key_bronze_skull",
+      "kind": "KEY", "effect": "key", "magnitude": 3, "stackSize": 9
+    },
+
+    // ---------------- gold ----------------------------------------------
+    // Three denominations so that a pile on the floor reads as an amount at a
+    // glance. magnitude is gold per unit; the loot entry's min/max is how many
+    // units drop, so gold_coin at 3-9 is 3 to 9 gold.
+
+    {
+      "id": "gold_coin", "nameKey": "item.gold_coin.name", "descKey": "item.gold_coin.desc",
+      "sprite": "items/treasure/goldcoin", "icon": "medallion_gold",
+      "kind": "GOLD", "effect": "gold", "magnitude": 1, "stackSize": 999
+    },
+    {
+      "id": "gold_pouch", "nameKey": "item.gold_pouch.name", "descKey": "item.gold_pouch.desc",
+      "sprite": "items/object/moneybag", "icon": "purse",
+      "kind": "GOLD", "effect": "gold", "magnitude": 10, "stackSize": 999
+    },
+    {
+      "id": "gold_cache", "nameKey": "item.gold_cache.name", "descKey": "item.gold_cache.desc",
+      "sprite": "items/treasure/goldcup", "icon": "coin_stack_gold",
+      "kind": "GOLD", "effect": "gold", "magnitude": 45, "stackSize": 999
+    },
+
+    // ---------------- gems ------------------------------------------------
+    // The second purse, and the lucky wheel's tickets: a shard is a spin at
+    // Cam's counter. Every floor and shrine may drop one - a monster now and
+    // then, a boss more often than not, a chest - and the stall sells a few a
+    // day for gold and goods. There was a cluster of five too; it drew the
+    // same picture and counted as one, and it is gone. Not priced: the trader
+    // will not take them.
+
+    {
+      "id": "gem_shard", "nameKey": "item.gem_shard.name", "descKey": "item.gem_shard.desc",
+      "sprite": "items/resource/gempurple", "icon": "gem_blue",
+      "kind": "DIAMOND", "effect": "diamond", "magnitude": 1, "stackSize": 999
+    },
+
+    // ---------------- instants -------------------------------------------
+    // Taken the moment they are stepped on. No inventory slot, no decision.
+
+    {
+      "id": "heart_small", "nameKey": "item.heart_small.name", "descKey": "item.heart_small.desc",
+      "sprite": "items/potion/heart", "icon": "heart_pink",
+      "kind": "INSTANT", "effect": "heal", "magnitude": 10, "stackSize": 1
+    },
+    {
+      "id": "heart_large", "nameKey": "item.heart_large.name", "descKey": "item.heart_large.desc",
+      "sprite": "items/food/onigiri", "icon": "heart_red",
+      "kind": "INSTANT", "effect": "heal", "magnitude": 25, "stackSize": 1
+    },
+    {
+      "id": "soul_ember", "nameKey": "item.soul_ember.name", "descKey": "item.soul_ember.desc",
+      "sprite": "items/resource/gemred", "icon": "star_orange",
+      // +5 max hit points for the rest of the run, and it heals for the same.
+      // The only permanent power in a chest, which is what makes a locked door
+      // worth a key rather than worth ignoring.
+      "kind": "INSTANT", "effect": "max_hp_add", "magnitude": 5, "stackSize": 1
+    },
+    {
+      "id": "map_scrap", "nameKey": "item.map_scrap.name", "descKey": "item.map_scrap.desc",
+      "sprite": "items/other/letter", "icon": "scroll_map",
+      "kind": "INSTANT", "effect": "reveal_map", "magnitude": 1, "stackSize": 1, "price": 40
+    }
+  ]
+}

@@ -1,0 +1,298 @@
+// The five floors of the descent, from the well under the village to the
+// stolen flame and the tengu who holds it - and, after them, the two side
+// stages, which are numbered 6 and 7 because ContentRegistry walks floors
+// from 1 and stops at the first gap. They read as optional everywhere else.
+//
+// nameKey points at floor.1 .. floor.7, which already exist in the interface
+// strings and are not mine to move. descKey is the world map's blurb - the
+// sentence the player reads before choosing the stage, so it says what the
+// place is rather than what fights there.
+//
+// MUSIC IS NAMED, NOT PATHED. A value that matches a constant on
+// assets/Assets.java (MUSIC_DUNGEON, MUSIC_FIGHT, ...) resolves to that
+// constant; anything else is read as a bare track filename under
+// Assets.MUSIC_DIR. Either way the directory lives in Assets and this file
+// never writes a path, which is what house rule 1 is protecting. Ambience
+// is a sound name relative to Assets.SFX_DIR - "ambient/river.wav" - the
+// audio equivalent of an atlas region name.
+//
+// BIOMES are folder names under assets/maps/rooms/. The ruins interior
+// tileset ships in three colourways and procgen generated each as its own
+// biome, so the three ruins floors each get one: brown for the well,
+// green for the flooded catacombs, orange for the shrine. Naming all three
+// "ruins" would draw every one of them from the brown set and make floors
+// 1 to 3 indistinguishable.
+//
+// PACING. Room counts and pack sizes come from a 25-to-40-minute target for
+// the whole descent. BalanceTest computes this table from the shipped files:
+// effective DPS of 14/17/20.5/25/30, the spawn-weighted hit points in
+// enemies.json, 2.6x overhead on trash for approach and dodging, 2.2x on a
+// boss, and 7 seconds of walking per room.
+//
+//   floor 1   13.5 rooms   38.0 kills          190s   3.2 min
+//   floor 2   14.5 rooms   42.0 kills          276s   4.6 min
+//   floor 3   14.5 rooms   38.3 kills + boss   389s   6.5 min
+//   floor 4   15.5 rooms   52.5 kills          446s   7.4 min
+//   floor 5   15.5 rooms   47.5 kills + boss   522s   8.7 min
+//                                             -----  --------
+//                                             1890s  31.5 min
+//
+// The two side stages are not in that total and are not meant to be; each is
+// its own outing, and BalanceTest asks only that one lasts at least four
+// minutes and no more than ten.
+//
+//   floor 6   15.5 rooms   47.5 kills + boss   247s   4.1 min
+//   floor 7   15.5 rooms   47.5 kills + boss   300s   5.0 min
+//
+// Floor 7 fights floor 6's roster and is the longer of the two because of
+// hpScale and damageScale, not because of anything in enemies.json: see the
+// entry itself, and notes/d.md.
+//
+// A player who skips the optional rooms lands near 25; one who opens every
+// door and reads every relic lands near 40. If a playtest says otherwise the
+// fix is roomsMax and packMax here, in that order, and no rebuild.
+{
+  "floors": [
+    {
+      "number": 1, "nameKey": "floor.1", "descKey": "floor.1.desc", "biome": "ruins",
+      // The Old Well. Dripping water under a dungeon bed - the story starts
+      // with the player climbing down a hole behind their own village.
+      "music": "MUSIC_DUNGEON", "ambient": "ambient/river.wav",
+      "roomsMin": 12, "roomsMax": 15,
+      "treasureRooms": 1, "shopRooms": 1,
+      // Slime is weighted heaviest because it is the enemy the whole combat
+      // system is taught on: it telegraphs, it is slow, it cannot chase.
+      "enemies":      ["slime", "mouse", "bluebat", "larva"],
+      "enemyWeights": [30,      28,      22,        20],
+      "packMin": 3, "packMax": 5
+    },
+    {
+      "number": 2, "nameKey": "floor.2", "descKey": "floor.2.desc", "biome": "ruins_green",
+      // Flooded Catacombs. 18_aquatic is the only track in the set with the
+      // right amount of water in it.
+      "music": "18_aquatic.ogg", "ambient": "ambient/wave.wav",
+      "roomsMin": 13, "roomsMax": 16,
+      "treasureRooms": 1, "shopRooms": 1,
+      // Octopus is the lightest weight on the floor and the most important
+      // one: it is the first thing that can hit the player from across a room.
+      "enemies":      ["axolot", "kappagreen", "kappared", "octopus", "mollusc"],
+      "enemyWeights": [26,       24,           16,         16,        18],
+      "packMin": 3, "packMax": 5
+    },
+    {
+      "number": 3, "nameKey": "floor.3", "descKey": "floor.3.desc", "biome": "ruins_orange",
+      // Broken Shrine, and the first boss. 12_temple for the floor,
+      // MUSIC_FIGHT for the frog.
+      "music": "12_temple.ogg", "ambient": "ambient/wind.wav",
+      "bossMusic": "MUSIC_FIGHT",
+      "roomsMin": 13, "roomsMax": 16,
+      // Two treasure rooms, because floor 3 is where a first-time player dies
+      // and the run before that death should be the richest one so far.
+      "treasureRooms": 2, "shopRooms": 1,
+      "enemies":      ["mushroom", "mushroom2", "spirit", "reptile"],
+      "enemyWeights": [30,         22,          26,       22],
+      "packMin": 4, "packMax": 5,
+      "boss": "giantfrog2"
+    },
+    {
+      "number": 4, "nameKey": "floor.4", "descKey": "floor.4.desc", "biome": "depths",
+      // The Cursed Depths. The pack changes here and so does the palette -
+      // the outlines go to #25131A and the Ninja Adventure monsters stop.
+      // No boss: floor 4's job is to be long and grim, and putting a fight at
+      // the end of it would make the run's last twenty minutes two bosses in
+      // a row.
+      "music": "10_dark_castle.ogg", "ambient": "ambient/wind2.wav",
+      "roomsMin": 14, "roomsMax": 17,
+      "treasureRooms": 2, "shopRooms": 1,
+      "enemies":      ["skeleton1", "skeleton2", "vampire"],
+      "enemyWeights": [40,          30,          30],
+      "packMin": 4, "packMax": 6
+    },
+    {
+      "number": 5, "nameKey": "floor.5", "descKey": "floor.5.desc", "biome": "depths",
+      // The Flame Core. MUSIC_FINAL for the floor and the boss both - the
+      // track already escalates, and cutting away from it at the door would
+      // throw away the only build-up the audio does on its own.
+      "music": "MUSIC_FINAL", "ambient": "ambient/storm.wav",
+      "bossMusic": "MUSIC_FINAL",
+      "roomsMin": 14, "roomsMax": 17,
+      "treasureRooms": 2, "shopRooms": 1,
+      // Weighted to average 84.7 hit points: 66*18 + 74*18 + 92*22 + 72*14
+      // + 58*10 + 130*18, over 100. bonelord at 18 is what pulls it up.
+      "enemies":      ["wraith", "acolyte", "zealot", "skeleton2", "vampire", "bonelord"],
+      "enemyWeights": [18,       18,        22,       14,          10,        18],
+      "packMin": 4, "packMax": 6,
+      "boss": "tengured"
+    },
+    {
+      // The Drowned Cove, and the first stage that is not part of the
+      // descent. "side" is the whole difference: the world map opens it from
+      // the first run instead of one past the last one cleared, and clearing
+      // it gives the stage-clear screen rather than the ending, which still
+      // belongs to floor 5.
+      //
+      // Numbered 6 because ContentRegistry walks floors from 1 and stops at
+      // the first gap, so a side stage cannot sit outside the numbering. It
+      // reads as sixth on the map and as optional everywhere else.
+      "number": 6, "nameKey": "floor.6", "descKey": "floor.6.desc",
+      "biome": "cove", "side": true,
+      // 39_boat and 40_crypt were both unused. The first is the only track in
+      // the set that sounds like water under stone, and the second is the
+      // only one that escalates without being MUSIC_FINAL, which floor 5 has
+      // and should keep.
+      "music": "39_boat.ogg", "ambient": "ambient/wave.wav",
+      "bossMusic": "40_crypt.ogg",
+      "roomsMin": 14, "roomsMax": 17,
+      "treasureRooms": 2, "shopRooms": 1,
+      // Weighted to average 37.1 hit points: 44*44 + 36*32 + 26*24, over 100.
+      // Well under floor 5's 84.7 on purpose - the cove is entered at
+      // whatever strength the player brought rather than at the end of four
+      // floors of relics - but not the 22.6 the first cut had, which made the
+      // whole stage 3.2 minutes. BalanceTest.everySideStageIsAStageLong is
+      // the floor under that.
+      "enemies":      ["slimespike", "slimetide", "slimeember"],
+      "enemyWeights": [44,           32,          24],
+      "packMin": 4, "packMax": 6,
+      // Only the first body of the chain is named. The other four are reached
+      // through it, and ContentValidator follows evolvesInto to see that they
+      // are placed - naming them here instead would put the boss's later
+      // bodies in the floor's ordinary rooms.
+      "boss": "pirateleader"
+    },
+    {
+      // The Sunken Vault. The second side stage, and the one the cove's art
+      // was carried into rather than a new pack: what is new here is the
+      // shape of the place, not the stone.
+      //
+      // Every room is 30x17 instead of 20x11, which is a screen and a half
+      // each way. The camera stops being a slide projector and follows, the
+      // doors fade instead of sliding, and no room is ever all in view - the
+      // floor reads as somewhere continuous rather than as a row of boxes.
+      // That is the whole design; see tools/make_maps.py DEEP_PLAN.
+      "number": 7, "nameKey": "floor.7", "descKey": "floor.7.desc",
+      "biome": "cove_deep", "side": true,
+      // 2_the_cave for stone under water and 28_tension for the fight; both
+      // were unused, and 28 escalates without being MUSIC_FINAL, which is
+      // floor 5's and should stay floor 5's. wavefar rather than the cove's
+      // wave: the same sea, further off.
+      "music": "2_the_cave.ogg", "ambient": "ambient/wavefar.wav",
+      "bossMusic": "28_tension.ogg",
+      "roomsMin": 14, "roomsMax": 17,
+      "treasureRooms": 2, "shopRooms": 1,
+      // The cove's roster, at the cove's weights. What makes this floor
+      // harder is hpScale and damageScale below, not a second set of defs on
+      // the same three sprites - see notes/d.md, where that field is the
+      // first thing on the list of what the data cannot say.
+      "enemies":      ["slimespike", "slimetide", "slimeember"],
+      "enemyWeights": [40,           32,          28],
+      "packMin": 4, "packMax": 6,
+      // 1.5x the hit points and 1.25x the damage. The cove is entered at
+      // whatever strength the player brought; the vault is the room after it,
+      // and BalanceTest models a floor 7 as having four more floors of relics
+      // behind it than the cove does. Without a scalar the same slimes would
+      // measure as a shorter, easier stage than the one before it.
+      "hpScale": 1.5, "damageScale": 1.25,
+      "boss": "squidlord"
+    },
+    {
+      // The Dead Land's three shrines. Not on the world map: each is entered
+      // at its shrine on the island - the marker `shrine` names on the
+      // village's map - and left in front of it, won or lost. A challenge,
+      // not a stage: a start, three or four fights and the vampire, with no
+      // treasure, no shop, no key to find and no wall to bomb, so
+      // lockedRooms and secretRooms are none.
+      //
+      // Numbered on from the side stages because ContentRegistry walks floors
+      // from 1 and stops at the first gap. The stone shrine is the easiest,
+      // at the cove's numbers; the lamp tomb and the bone throne each a floor
+      // harder than the one before, by their rosters and their vampires.
+      // 14_curse and 34_fight were unused.
+      "number": 8, "nameKey": "floor.8", "descKey": "floor.8.desc",
+      "biome": "crypt", "side": true, "shrine": "shrine_1",
+      "music": "14_curse.ogg", "ambient": "ambient/wind2.wav",
+      "bossMusic": "34_fight.ogg",
+      "roomsMin": 5, "roomsMax": 6,
+      "treasureRooms": 0, "shopRooms": 0, "lockedRooms": 0, "secretRooms": 0,
+      "enemies":      ["crypt_slime", "crypt_blueslime", "crypt_greenslime"],
+      "enemyWeights": [44,            30,                26],
+      "packMin": 5, "packMax": 6,
+      "boss": "vampire_moss"
+    },
+    {
+      "number": 9, "nameKey": "floor.9", "descKey": "floor.9.desc",
+      "biome": "crypt", "side": true, "shrine": "shrine_2",
+      "music": "14_curse.ogg", "ambient": "ambient/wind2.wav",
+      "bossMusic": "34_fight.ogg",
+      "roomsMin": 5, "roomsMax": 6,
+      "treasureRooms": 0, "shopRooms": 0, "lockedRooms": 0, "secretRooms": 0,
+      "enemies":      ["crypt_ghost", "crypt_phantom", "crypt_bat"],
+      "enemyWeights": [38,            28,              34],
+      "packMin": 5, "packMax": 6,
+      "boss": "vampire_horn"
+    },
+    {
+      "number": 10, "nameKey": "floor.10", "descKey": "floor.10.desc",
+      "biome": "crypt", "side": true, "shrine": "shrine_3",
+      "music": "14_curse.ogg", "ambient": "ambient/wind2.wav",
+      "bossMusic": "34_fight.ogg",
+      "roomsMin": 5, "roomsMax": 6,
+      "treasureRooms": 0, "shopRooms": 0, "lockedRooms": 0, "secretRooms": 0,
+      "enemies":      ["crypt_skeleton", "crypt_swordsman", "crypt_wizard"],
+      "enemyWeights": [40,               32,                28],
+      "packMin": 5, "packMax": 6,
+      "boss": "vampire_lord"
+    },
+    {
+      // The Nightborne Keep. The third side stage on the world map, numbered
+      // after the shrines because ContentRegistry walks floors from 1 and
+      // stops at the first gap; the world map lists the floors that are not
+      // shrines, in order, so it is the stage after 7 and reads as 8 there
+      // and on its card (ContentRegistry.stageLabel).
+      //
+      // Floor 7's size of room, 30x17, in the depths' purple stone, and fewer
+      // of them: nine to eleven rather than fourteen to seventeen. What makes
+      // up the difference is "waves" - every room the template stocks with
+      // monsters is fought twice, the second lot coming through portals as
+      // the first falls. So the stage is as long as its neighbours with half
+      // the walking. See notes/d.md.
+      "number": 11, "nameKey": "floor.11", "descKey": "floor.11.desc",
+      "biome": "night", "side": true,
+      // 13_mystical and 3_revelation were both unused.
+      "music": "13_mystical.ogg", "ambient": "ambient/wind2.wav",
+      "bossMusic": "3_revelation.ogg",
+      "roomsMin": 9, "roomsMax": 11,
+      "treasureRooms": 1, "shopRooms": 1,
+      "waves": 2,
+      // Weighted to average 33.7 hit points before the scale: 28*30 + 32*34
+      // + 40*36, over 100 - the cove's 37.1, near enough, a lot at a time.
+      "enemies":      ["flam2", "skullblue", "owl2"],
+      "enemyWeights": [30,      34,          36],
+      "packMin": 4, "packMax": 6,
+      // Floor 7's: the keep is a stage deeper than the cove, as the vault is.
+      "hpScale": 1.5, "damageScale": 1.25,
+      "boss": "nightborne"
+    },
+    {
+      // The Thunder Hall, stage 9 on the map: the Keep's rooms - its art,
+      // its size and its two waves - with a roster of its own, three
+      // monsters no floor had, and the Satyr at the end. A stage deeper than
+      // the Keep, by a tenth on each scale.
+      "number": 12, "nameKey": "floor.12", "descKey": "floor.12.desc",
+      "biome": "night", "side": true,
+      // 32_manor and 35_adventure were both unused; the storm is the
+      // thunder's.
+      "music": "32_manor.ogg", "ambient": "ambient/storm.wav",
+      "bossMusic": "35_adventure.ogg",
+      "roomsMin": 9, "roomsMax": 11,
+      "treasureRooms": 1, "shopRooms": 1,
+      "waves": 2,
+      // Weighted to average 35.5 hit points before the scale: 52*32 + 24*34
+      // + 30*34, over 100.
+      "enemies":      ["beast2", "yellowsbat", "eye2"],
+      "enemyWeights": [32,       34,           34],
+      "packMin": 4, "packMax": 6,
+      "hpScale": 1.6, "damageScale": 1.3,
+      "boss": "satyr"
+    }
+  ]
+}

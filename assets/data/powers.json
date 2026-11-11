@@ -1,0 +1,70 @@
+// The legend swords' own powers: what holding one of them gives, beside its
+// numbers. Read by com.kagebi.data.ContentLoader (PowerDef) and checked by
+// ContentValidator, which wants every power on a legend sword, one to a sword,
+// and exactly the knobs its kind reads (see PowerDef.Kind), each above nought.
+//
+// A power whose kind is struck (garden) is cast from the keys: down, right,
+// attack (S, D, J by default - whatever they are bound to), each within a
+// third of a second of the last. It runs for "lasts" seconds, and its
+// "cooldown" counts from when it ends, not from when it was struck.
+// The others are always on while the sword is held.
+//
+// Times are seconds; "damage", "attackSpeed" and "moveSpeed" multiply.
+{
+  "powers": [
+    {
+      // Khai Hoa (Bloom): "Xuân Sắc Mãn Viên" / "Spring Fills the Garden".
+      // The sword dances, the room blooms with grass and flowers, every
+      // monster in it (not a boss) flees from the player, and the player hits
+      // harder, swings faster and runs faster, for "lasts" seconds.
+      "id": "spring_garden", "weapon": "legend_bloom", "kind": "GARDEN",
+      "nameKey": "power.spring_garden.name", "descKey": "power.spring_garden.desc",
+      "knobs": {"lasts": 8, "cooldown": 20, "damage": 1.25, "attackSpeed": 1.25, "moveSpeed": 1.2}
+    },
+    {
+      // Bách Hợp (Lily): "Lạc Hoa Lưu Ảnh" / "Petalfall Shadowstep".
+      // Lily petals fall over a ring "radius" pixels round where it was
+      // struck: a wave every "every" seconds for "lasts" seconds, "petals" to
+      // a wave, the first of each on the monsters in it. One that settles on
+      // a monster sends the ninja to its back for a cut of "damage" times a
+      // blow; every cut is "critStep" likelier to crit than the one before.
+      "id": "petalfall", "weapon": "legend_lily", "kind": "PETAL_RAIN",
+      "nameKey": "power.petalfall.name", "descKey": "power.petalfall.desc",
+      "knobs": {"lasts": 6, "cooldown": 16, "radius": 110, "every": 0.8, "petals": 10, "damage": 1.2, "critStep": 0.15}
+    },
+    {
+      // Xà Cừ (Pearlescent): "Lục Kiếm Lạc Tinh" / "Six Falling Stars".
+      // "swords" of the sword's own blades hang over the ninja's head; each
+      // swing that lands sends one up and down on whoever it struck, a burst
+      // of "damage" times a blow on everything within "radius" pixels of
+      // where it lands. Over when all have fallen, or after "lasts" seconds.
+      "id": "six_stars", "weapon": "legend_pearlescent", "kind": "SWORD_HALO",
+      "nameKey": "power.six_stars.name", "descKey": "power.six_stars.desc",
+      "knobs": {"lasts": 20, "cooldown": 18, "swords": 6, "damage": 1.0, "radius": 32}
+    },
+    {
+      // Thử (Rodent): "Thử Nha Đột" / "Rat's Tooth Rush". Always there.
+      // A tap still swings. The attack held on past a swing gathers, for up to
+      // "hold" seconds, the ninja slowed to "pace" of their stride; let go,
+      // they rush the way they hold (or face) through everything in the way,
+      // from "near" to "far" pixels at "speed" pixels a second, its blow from
+      // "least" to "most" times a swing's as it gathered - a short hold hits
+      // softer than a swing, a full one far harder. Untouchable while rushing.
+      "id": "rat_tooth", "weapon": "legend_rodent", "kind": "CHARGE_DASH",
+      "nameKey": "power.rat_tooth.name", "descKey": "power.rat_tooth.desc",
+      "knobs": {"hold": 3, "least": 0.6, "most": 3, "near": 60, "far": 140, "speed": 420, "pace": 0.5}
+    },
+    {
+      // Thiên Nga (Swan): "Nhãn Thiên Nga" / "Swan's Eye". Always there.
+      // Every monster shows a weak side - above, below, left or right - as a
+      // small white spike pointing in at it. A swing begun within "window"
+      // seconds of a roll's end that lands from that side hits "monster"
+      // times as hard ("boss" on a boss); the side moves on then, and every
+      // "shift" seconds anyway. Held, the sword lends "guard" (times the
+      // damage taken) and "move" (times the pace).
+      "id": "swan_eye", "weapon": "legend_swan", "kind": "WEAK_POINT",
+      "nameKey": "power.swan_eye.name", "descKey": "power.swan_eye.desc",
+      "knobs": {"monster": 3, "boss": 2, "window": 0.35, "shift": 6, "guard": 0.9, "move": 1.1}
+    }
+  ]
+}

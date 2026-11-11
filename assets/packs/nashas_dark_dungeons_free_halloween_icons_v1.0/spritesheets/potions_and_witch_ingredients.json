@@ -1,0 +1,600 @@
+{
+ "cell": 48,
+ "columns": 8,
+ "sprites": {
+  "common_bag_of_grave_dust": {
+   "x": 0,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_black_wax_candle_stub": {
+   "x": 48,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_blank_spell_scroll": {
+   "x": 96,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_bone_charm_on_a_string": {
+   "x": 144,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_bowl_of_witch_salt": {
+   "x": 192,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_bundle_of_broom_twigs": {
+   "x": 240,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_corked_vial": {
+   "x": 288,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_cracked_hand_mirror": {
+   "x": 336,
+   "y": 0,
+   "w": 48,
+   "h": 48
+  },
+  "common_dried_toadstool": {
+   "x": 0,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_garlic_braid": {
+   "x": 48,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_hourglass_of_grey_sand": {
+   "x": 96,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_jar_of_bat_wings": {
+   "x": 144,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_jar_of_newt_eyes": {
+   "x": 192,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_jar_of_pickled_eyeballs": {
+   "x": 240,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_mandrake_root_with_a_face": {
+   "x": 288,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_moonflower_bloom": {
+   "x": 336,
+   "y": 48,
+   "w": 48,
+   "h": 48
+  },
+  "common_old_grimoire": {
+   "x": 0,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_pouch_of_cat_whiskers": {
+   "x": 48,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_pumpkin_lantern": {
+   "x": 96,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_raven_feather": {
+   "x": 144,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_round_potion_bottle": {
+   "x": 192,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_rusty_skeleton_key": {
+   "x": 240,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_small_iron_cauldron": {
+   "x": 288,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_spider_in_a_jar": {
+   "x": 336,
+   "y": 96,
+   "w": 48,
+   "h": 48
+  },
+  "common_sprig_of_dried_sage": {
+   "x": 0,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_sprig_of_wolfsbane": {
+   "x": 48,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_tall_potion_flask": {
+   "x": 96,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_tarnished_coin_with_a_skull": {
+   "x": 144,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "common_twig_wand": {
+   "x": 192,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_bottled_nightmare": {
+   "x": 240,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_bottled_storm_cloud": {
+   "x": 288,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_cursed_tiara_with_bat_wings": {
+   "x": 336,
+   "y": 144,
+   "w": 48,
+   "h": 48
+  },
+  "epic_hourglass_of_midnight": {
+   "x": 0,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_jar_of_captured_moonlight": {
+   "x": 48,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_lantern_of_lost_souls": {
+   "x": 96,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_moon_mirror_with_silver_bats": {
+   "x": 144,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_potion_of_the_harvest_moon": {
+   "x": 192,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_raven_feather_fan": {
+   "x": 240,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_spider_queen_amulet": {
+   "x": 288,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_violet_elixir_in_a_bat_flask": {
+   "x": 336,
+   "y": 192,
+   "w": 48,
+   "h": 48
+  },
+  "epic_wand_of_the_black_cat": {
+   "x": 0,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_amulet_of_the_harvest_moon": {
+   "x": 48,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_cauldron": {
+   "x": 96,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_grimoire_with_a_pumpkin_lock": {
+   "x": 144,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_hourglass": {
+   "x": 192,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_mandrake_root": {
+   "x": 240,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_pumpkin_elixir": {
+   "x": 288,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_golden_wand_with_a_pumpkin_gem": {
+   "x": 336,
+   "y": 240,
+   "w": 48,
+   "h": 48
+  },
+  "legendary_pumpkin_lantern_of_the_harvest_king": {
+   "x": 0,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_cursed_skull_goblet": {
+   "x": 48,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_shadow_grimoire_with_a_moon_pattern": {
+   "x": 96,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_veil_stone_with_a_spiral_pattern": {
+   "x": 144,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_void_potion_with_a_swirl_pattern": {
+   "x": 192,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "mystic_watching_eye_in_a_cage": {
+   "x": 240,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "rare_bone_wand_with_a_blue_gem": {
+   "x": 288,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "rare_bottled_ghost": {
+   "x": 336,
+   "y": 288,
+   "w": 48,
+   "h": 48
+  },
+  "rare_bronze_cauldron_with_bat_handles": {
+   "x": 0,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_candle_in_a_skull_holder": {
+   "x": 48,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_charm_bracelet_of_tiny_pumpkins": {
+   "x": 96,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_crystal_ball_with_a_ghost_inside": {
+   "x": 144,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_cursed_amulet_with_a_blue_gem": {
+   "x": 192,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_enchanted_toadstool": {
+   "x": 240,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_gold_coin_with_a_pumpkin": {
+   "x": 288,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_grimoire_with_a_moon_lock": {
+   "x": 336,
+   "y": 336,
+   "w": 48,
+   "h": 48
+  },
+  "rare_hand_mirror_with_a_bat_frame": {
+   "x": 0,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_heart_shaped_potion_flask": {
+   "x": 48,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_hourglass_of_blue_sand": {
+   "x": 96,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_mandrake_root_with_a_gold_band": {
+   "x": 144,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_moonflower_in_a_glass_dome": {
+   "x": 192,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_potion_in_a_pumpkin_flask": {
+   "x": 240,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_raven_skull_charm": {
+   "x": 288,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_spell_scroll_with_a_wax_seal": {
+   "x": 336,
+   "y": 384,
+   "w": 48,
+   "h": 48
+  },
+  "rare_spider_in_a_crystal_sphere": {
+   "x": 0,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "rare_vial_set_in_a_velvet_case": {
+   "x": 48,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_bat_wing_charm": {
+   "x": 96,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_black_candle_with_a_bat_holder": {
+   "x": 144,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_bone_charm_with_silver_wire": {
+   "x": 192,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_copper_cauldron": {
+   "x": 240,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_crystal_ball_on_a_claw_stand": {
+   "x": 288,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_cursed_ring_of_iron": {
+   "x": 336,
+   "y": 432,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_garlic_braid_with_a_ribbon": {
+   "x": 0,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_ghost_lantern": {
+   "x": 48,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_jar_of_moths": {
+   "x": 96,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_jar_of_newt_eyes_with_a_silver_lid": {
+   "x": 144,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_mandrake_root_in_a_pot": {
+   "x": 192,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_miniature_broom_charm": {
+   "x": 240,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_raven_feather_quill": {
+   "x": 288,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_round_potion_bottle_with_a_silver_cap": {
+   "x": 336,
+   "y": 480,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_silver_coin_with_a_bat": {
+   "x": 0,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_silver_hand_mirror": {
+   "x": 48,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_silver_key_with_a_moon_bow": {
+   "x": 96,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_spell_scroll_with_a_ribbon": {
+   "x": 144,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_spider_in_an_amber_cube": {
+   "x": 192,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_tall_potion_flask_with_a_ribbon": {
+   "x": 240,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_toadstool_ring_in_a_dish": {
+   "x": 288,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_vial_in_a_leather_holder": {
+   "x": 336,
+   "y": 528,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_vial_of_moon_dust": {
+   "x": 0,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_witch_ring_with_a_toad": {
+   "x": 48,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  },
+  "uncommon_wolfsbane_in_a_vase": {
+   "x": 96,
+   "y": 576,
+   "w": 48,
+   "h": 48
+  }
+ }
+}

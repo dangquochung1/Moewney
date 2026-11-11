@@ -1,0 +1,154 @@
+// Names for the Raven icon grid, so no other file carries a bare index.
+//
+// The sheet is assets/gfx/icons/raven_icons_16.png, 256x2192: 16 columns by
+// 137 rows of 16x16, addressed 1-based, so icon N sits at column (N-1)%16 and
+// row (N-1)/16. The filenames in the original pack carry no information
+// whatsoever - every icon is a number - so this map was built by rendering
+// crops of the sheet with the row index drawn down the left margin and reading
+// them. That is the only way to make it, and the only way to check it.
+//
+// Sections are found by their top-level key, never by filename, so this map
+// lives under "icons". Any other file here may write "icon": "potion_red" or
+// "icon": 505; ContentLoader accepts a name from here or a raw index.
+// The point of the indirection is that if the grid is ever re-packed, this is
+// the one file that changes.
+{
+  "icons": {
+    // ---- potions and flasks ---------------------------------------------
+    // 121-123 are one family (upright, round-bodied, narrow neck); 505/506 are
+    // another (bulbous, corked). Do not mix the two in one panel.
+    "flask_green":        121,
+    "flask_purple":       122,
+    "flask_blue":         123,
+    "potion_red":         505,
+    "potion_violet":      506,
+    "potion_red_round":   276,
+    "potion_red_small":   279,
+    "potion_red_bulb":    283,
+
+    // ---- keys ------------------------------------------------------------
+    // Row 4 is ten keys: 71-75 silver, 76-80 bronze, the last of each a
+    // skull-bitted skeleton key.
+    "key_silver":         71,
+    "key_silver_skull":   75,
+    "key_bronze":         76,
+    "key_bronze_skull":   80,
+
+    // ---- rings and amulets ----------------------------------------------
+    // 116-118 are plain bands; 1843-1847 carry stones.
+    "ring_silver":        116,
+    "ring_copper":        117,
+    "ring_gold":          118,
+    "ring_plain":         1843,
+    "ring_ruby":          1845,
+    "ring_emerald":       1846,
+    "ring_sapphire":      1847,
+
+    // ---- gems ------------------------------------------------------------
+    // Row 10 is the whole gem set: 161-164 cut rectangles, 165-168 crystals,
+    // 169-172 cabochons, 173-176 raw shards.
+    "gem_blue":           161,
+    "gem_green":          162,
+    "gem_red":            163,
+    "gem_amber":          164,
+    "crystal_purple":     166,
+    "crystal_white":      168,
+    "gem_teal":           170,
+    "shard_pink":         173,
+    "shard_white":        174,
+
+    // ---- money -----------------------------------------------------------
+    "medallion_gold":     131,
+    "coin_stack_gold":    133,
+    "ingot_silver":       137,
+    "purse":              158,
+    "coins_silver":       159,
+    "gold_sign":          160,
+
+    // ---- blades ----------------------------------------------------------
+    "dagger":             154,
+    "sword_blue":         155,
+    "sword_flame":        156,
+    "sword_teal":         157,
+    "swords_crossed":     721,
+    "sword_venom":        722,
+    "sword_blood":        730,
+    "sword_gold_spark":   736,
+    "sword_steel":        671,
+    "sword_blessed":      672,
+
+    // ---- held weapons ----------------------------------------------------
+    // Rows 90-93 are the weapon set proper: silver heads on orange hafts.
+    "weapon_katana":      1443,
+    "weapon_dagger":      1444,
+    "weapon_scimitar":    1452,
+    "weapon_axe":         1458,
+    "weapon_hammer":      1477,
+    "weapon_pickaxe":     1478,
+    "weapon_boomerang":   1485,
+    "weapon_rope":        1500,
+    "weapon_star":        1504,
+    "gauntlet":           1488,
+
+    // ---- attributes ------------------------------------------------------
+    // Rows 37-40 are a deliberate grid: eight attributes (strength, magic,
+    // vitality, mana, armour, resist, fury, nature) repeated four times - plain,
+    // gold-sparkled, green up-arrow, red down-arrow. The offsets are +0, +8,
+    // +16, +24 from 593.
+    "stat_strength":      593,
+    "stat_magic":         594,
+    "stat_vitality":      595,
+    "stat_mana":          596,
+    "stat_armour":        597,
+    "stat_resist":        598,
+    "stat_fury":          599,
+    "stat_nature":        600,
+    "stat_strength_up":   609,
+    "stat_vitality_up":   611,
+    "stat_armour_up":     613,
+    "runner_orange":      635,
+    "runner_silver":      651,
+
+    // ---- body and blessing ----------------------------------------------
+    "arm_strength":       657,
+    "boot":               658,
+    "heart_red":          659,
+    "hearts_pink":        661,
+    "fist":               663,
+    "shield_silver":      664,
+    "shield_blessed":     665,
+    "tail_purple":        666,
+    "clover":             668,
+    "soul_blue":          669,
+    "cross_heal":         670,
+
+    // ---- status ----------------------------------------------------------
+    "poison_skull":       673,
+    "drop_green":         675,
+    "drop_red":           677,
+    "heart_pink":         681,
+    "star_orange":        683,
+    "bleed":              684,
+    "sleep":              687,
+    "bolt":               688,
+    "flame_orange":       693,
+    "drop_blue":          694,
+    // The burst printed beside a critical hit's number (EntityWorld.CRIT_MARK).
+    "crit_burst":         1047,
+
+    // ---- elements --------------------------------------------------------
+    "fire_bolt":          993,
+    "ice_shard":          1009,
+    "lightning":          1025,
+
+    // ---- masks and oddments ---------------------------------------------
+    "mask_gold":          706,
+    "mask_silver":        707,
+    "scales_gold":        124,
+    "anvil":              125,
+    "hammer_smith":       126,
+    "scroll_map":         305,
+    "lantern_lit":        86,
+    "torch_lit":          81
+  }
+}

@@ -1,0 +1,1974 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<map version="1.10" tiledversion="1.10.2" orientation="orthogonal" renderorder="right-down" width="21" height="14" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="197">
+ <tileset firstgid="1" name="guild_walls_interior" tilewidth="16" tileheight="16" tilecount="192" columns="24">
+  <image source="../gfx/isles/guild/walls_interior.png" width="384" height="128" />
+ </tileset>
+ <tileset firstgid="193" name="guild_windows_doors" tilewidth="16" tileheight="16" tilecount="324" columns="18">
+  <image source="../gfx/isles/guild/windows_doors.png" width="288" height="288" />
+  <tile id="12">
+   <animation>
+    <frame tileid="12" duration="150" />
+    <frame tileid="12" duration="150" />
+    <frame tileid="12" duration="150" />
+    <frame tileid="12" duration="150" />
+    <frame tileid="66" duration="150" />
+    <frame tileid="120" duration="150" />
+    <frame tileid="174" duration="150" />
+    <frame tileid="174" duration="150" />
+    <frame tileid="174" duration="150" />
+    <frame tileid="174" duration="150" />
+    <frame tileid="228" duration="150" />
+    <frame tileid="282" duration="150" />
+   </animation>
+  </tile>
+  <tile id="13">
+   <animation>
+    <frame tileid="13" duration="150" />
+    <frame tileid="13" duration="150" />
+    <frame tileid="13" duration="150" />
+    <frame tileid="13" duration="150" />
+    <frame tileid="67" duration="150" />
+    <frame tileid="121" duration="150" />
+    <frame tileid="175" duration="150" />
+    <frame tileid="175" duration="150" />
+    <frame tileid="175" duration="150" />
+    <frame tileid="175" duration="150" />
+    <frame tileid="229" duration="150" />
+    <frame tileid="283" duration="150" />
+   </animation>
+  </tile>
+  <tile id="18">
+   <animation>
+    <frame tileid="18" duration="150" />
+    <frame tileid="18" duration="150" />
+    <frame tileid="18" duration="150" />
+    <frame tileid="18" duration="150" />
+    <frame tileid="72" duration="150" />
+    <frame tileid="126" duration="150" />
+    <frame tileid="180" duration="150" />
+    <frame tileid="180" duration="150" />
+    <frame tileid="180" duration="150" />
+    <frame tileid="180" duration="150" />
+    <frame tileid="234" duration="150" />
+    <frame tileid="288" duration="150" />
+   </animation>
+  </tile>
+  <tile id="19">
+   <animation>
+    <frame tileid="19" duration="150" />
+    <frame tileid="19" duration="150" />
+    <frame tileid="19" duration="150" />
+    <frame tileid="19" duration="150" />
+    <frame tileid="73" duration="150" />
+    <frame tileid="127" duration="150" />
+    <frame tileid="181" duration="150" />
+    <frame tileid="181" duration="150" />
+    <frame tileid="181" duration="150" />
+    <frame tileid="181" duration="150" />
+    <frame tileid="235" duration="150" />
+    <frame tileid="289" duration="150" />
+   </animation>
+  </tile>
+  <tile id="20">
+   <animation>
+    <frame tileid="20" duration="150" />
+    <frame tileid="20" duration="150" />
+    <frame tileid="20" duration="150" />
+    <frame tileid="20" duration="150" />
+    <frame tileid="74" duration="150" />
+    <frame tileid="128" duration="150" />
+    <frame tileid="182" duration="150" />
+    <frame tileid="182" duration="150" />
+    <frame tileid="182" duration="150" />
+    <frame tileid="182" duration="150" />
+    <frame tileid="236" duration="150" />
+    <frame tileid="290" duration="150" />
+   </animation>
+  </tile>
+  <tile id="21">
+   <animation>
+    <frame tileid="21" duration="150" />
+    <frame tileid="21" duration="150" />
+    <frame tileid="21" duration="150" />
+    <frame tileid="21" duration="150" />
+    <frame tileid="75" duration="150" />
+    <frame tileid="129" duration="150" />
+    <frame tileid="183" duration="150" />
+    <frame tileid="183" duration="150" />
+    <frame tileid="183" duration="150" />
+    <frame tileid="183" duration="150" />
+    <frame tileid="237" duration="150" />
+    <frame tileid="291" duration="150" />
+   </animation>
+  </tile>
+  <tile id="22">
+   <animation>
+    <frame tileid="22" duration="150" />
+    <frame tileid="22" duration="150" />
+    <frame tileid="22" duration="150" />
+    <frame tileid="22" duration="150" />
+    <frame tileid="76" duration="150" />
+    <frame tileid="130" duration="150" />
+    <frame tileid="184" duration="150" />
+    <frame tileid="184" duration="150" />
+    <frame tileid="184" duration="150" />
+    <frame tileid="184" duration="150" />
+    <frame tileid="238" duration="150" />
+    <frame tileid="292" duration="150" />
+   </animation>
+  </tile>
+  <tile id="23">
+   <animation>
+    <frame tileid="23" duration="150" />
+    <frame tileid="23" duration="150" />
+    <frame tileid="23" duration="150" />
+    <frame tileid="23" duration="150" />
+    <frame tileid="77" duration="150" />
+    <frame tileid="131" duration="150" />
+    <frame tileid="185" duration="150" />
+    <frame tileid="185" duration="150" />
+    <frame tileid="185" duration="150" />
+    <frame tileid="185" duration="150" />
+    <frame tileid="239" duration="150" />
+    <frame tileid="293" duration="150" />
+   </animation>
+  </tile>
+  <tile id="24">
+   <animation>
+    <frame tileid="24" duration="150" />
+    <frame tileid="24" duration="150" />
+    <frame tileid="24" duration="150" />
+    <frame tileid="24" duration="150" />
+    <frame tileid="78" duration="150" />
+    <frame tileid="132" duration="150" />
+    <frame tileid="186" duration="150" />
+    <frame tileid="186" duration="150" />
+    <frame tileid="186" duration="150" />
+    <frame tileid="186" duration="150" />
+    <frame tileid="240" duration="150" />
+    <frame tileid="294" duration="150" />
+   </animation>
+  </tile>
+  <tile id="25">
+   <animation>
+    <frame tileid="25" duration="150" />
+    <frame tileid="25" duration="150" />
+    <frame tileid="25" duration="150" />
+    <frame tileid="25" duration="150" />
+    <frame tileid="79" duration="150" />
+    <frame tileid="133" duration="150" />
+    <frame tileid="187" duration="150" />
+    <frame tileid="187" duration="150" />
+    <frame tileid="187" duration="150" />
+    <frame tileid="187" duration="150" />
+    <frame tileid="241" duration="150" />
+    <frame tileid="295" duration="150" />
+   </animation>
+  </tile>
+  <tile id="26">
+   <animation>
+    <frame tileid="26" duration="150" />
+    <frame tileid="26" duration="150" />
+    <frame tileid="26" duration="150" />
+    <frame tileid="26" duration="150" />
+    <frame tileid="80" duration="150" />
+    <frame tileid="134" duration="150" />
+    <frame tileid="188" duration="150" />
+    <frame tileid="188" duration="150" />
+    <frame tileid="188" duration="150" />
+    <frame tileid="188" duration="150" />
+    <frame tileid="242" duration="150" />
+    <frame tileid="296" duration="150" />
+   </animation>
+  </tile>
+  <tile id="27">
+   <animation>
+    <frame tileid="27" duration="150" />
+    <frame tileid="27" duration="150" />
+    <frame tileid="27" duration="150" />
+    <frame tileid="27" duration="150" />
+    <frame tileid="81" duration="150" />
+    <frame tileid="135" duration="150" />
+    <frame tileid="189" duration="150" />
+    <frame tileid="189" duration="150" />
+    <frame tileid="189" duration="150" />
+    <frame tileid="189" duration="150" />
+    <frame tileid="243" duration="150" />
+    <frame tileid="297" duration="150" />
+   </animation>
+  </tile>
+  <tile id="28">
+   <animation>
+    <frame tileid="28" duration="150" />
+    <frame tileid="28" duration="150" />
+    <frame tileid="28" duration="150" />
+    <frame tileid="28" duration="150" />
+    <frame tileid="82" duration="150" />
+    <frame tileid="136" duration="150" />
+    <frame tileid="190" duration="150" />
+    <frame tileid="190" duration="150" />
+    <frame tileid="190" duration="150" />
+    <frame tileid="190" duration="150" />
+    <frame tileid="244" duration="150" />
+    <frame tileid="298" duration="150" />
+   </animation>
+  </tile>
+  <tile id="29">
+   <animation>
+    <frame tileid="29" duration="150" />
+    <frame tileid="29" duration="150" />
+    <frame tileid="29" duration="150" />
+    <frame tileid="29" duration="150" />
+    <frame tileid="83" duration="150" />
+    <frame tileid="137" duration="150" />
+    <frame tileid="191" duration="150" />
+    <frame tileid="191" duration="150" />
+    <frame tileid="191" duration="150" />
+    <frame tileid="191" duration="150" />
+    <frame tileid="245" duration="150" />
+    <frame tileid="299" duration="150" />
+   </animation>
+  </tile>
+  <tile id="30">
+   <animation>
+    <frame tileid="30" duration="150" />
+    <frame tileid="30" duration="150" />
+    <frame tileid="30" duration="150" />
+    <frame tileid="30" duration="150" />
+    <frame tileid="84" duration="150" />
+    <frame tileid="138" duration="150" />
+    <frame tileid="192" duration="150" />
+    <frame tileid="192" duration="150" />
+    <frame tileid="192" duration="150" />
+    <frame tileid="192" duration="150" />
+    <frame tileid="246" duration="150" />
+    <frame tileid="300" duration="150" />
+   </animation>
+  </tile>
+  <tile id="31">
+   <animation>
+    <frame tileid="31" duration="150" />
+    <frame tileid="31" duration="150" />
+    <frame tileid="31" duration="150" />
+    <frame tileid="31" duration="150" />
+    <frame tileid="85" duration="150" />
+    <frame tileid="139" duration="150" />
+    <frame tileid="193" duration="150" />
+    <frame tileid="193" duration="150" />
+    <frame tileid="193" duration="150" />
+    <frame tileid="193" duration="150" />
+    <frame tileid="247" duration="150" />
+    <frame tileid="301" duration="150" />
+   </animation>
+  </tile>
+  <tile id="32">
+   <animation>
+    <frame tileid="32" duration="150" />
+    <frame tileid="32" duration="150" />
+    <frame tileid="32" duration="150" />
+    <frame tileid="32" duration="150" />
+    <frame tileid="86" duration="150" />
+    <frame tileid="140" duration="150" />
+    <frame tileid="194" duration="150" />
+    <frame tileid="194" duration="150" />
+    <frame tileid="194" duration="150" />
+    <frame tileid="194" duration="150" />
+    <frame tileid="248" duration="150" />
+    <frame tileid="302" duration="150" />
+   </animation>
+  </tile>
+  <tile id="33">
+   <animation>
+    <frame tileid="33" duration="150" />
+    <frame tileid="33" duration="150" />
+    <frame tileid="33" duration="150" />
+    <frame tileid="33" duration="150" />
+    <frame tileid="87" duration="150" />
+    <frame tileid="141" duration="150" />
+    <frame tileid="195" duration="150" />
+    <frame tileid="195" duration="150" />
+    <frame tileid="195" duration="150" />
+    <frame tileid="195" duration="150" />
+    <frame tileid="249" duration="150" />
+    <frame tileid="303" duration="150" />
+   </animation>
+  </tile>
+  <tile id="34">
+   <animation>
+    <frame tileid="34" duration="150" />
+    <frame tileid="34" duration="150" />
+    <frame tileid="34" duration="150" />
+    <frame tileid="34" duration="150" />
+    <frame tileid="88" duration="150" />
+    <frame tileid="142" duration="150" />
+    <frame tileid="196" duration="150" />
+    <frame tileid="196" duration="150" />
+    <frame tileid="196" duration="150" />
+    <frame tileid="196" duration="150" />
+    <frame tileid="250" duration="150" />
+    <frame tileid="304" duration="150" />
+   </animation>
+  </tile>
+  <tile id="35">
+   <animation>
+    <frame tileid="35" duration="150" />
+    <frame tileid="35" duration="150" />
+    <frame tileid="35" duration="150" />
+    <frame tileid="35" duration="150" />
+    <frame tileid="89" duration="150" />
+    <frame tileid="143" duration="150" />
+    <frame tileid="197" duration="150" />
+    <frame tileid="197" duration="150" />
+    <frame tileid="197" duration="150" />
+    <frame tileid="197" duration="150" />
+    <frame tileid="251" duration="150" />
+    <frame tileid="305" duration="150" />
+   </animation>
+  </tile>
+  <tile id="48">
+   <animation>
+    <frame tileid="48" duration="150" />
+    <frame tileid="48" duration="150" />
+    <frame tileid="48" duration="150" />
+    <frame tileid="48" duration="150" />
+    <frame tileid="102" duration="150" />
+    <frame tileid="156" duration="150" />
+    <frame tileid="210" duration="150" />
+    <frame tileid="210" duration="150" />
+    <frame tileid="210" duration="150" />
+    <frame tileid="210" duration="150" />
+    <frame tileid="264" duration="150" />
+    <frame tileid="318" duration="150" />
+   </animation>
+  </tile>
+  <tile id="49">
+   <animation>
+    <frame tileid="49" duration="150" />
+    <frame tileid="49" duration="150" />
+    <frame tileid="49" duration="150" />
+    <frame tileid="49" duration="150" />
+    <frame tileid="103" duration="150" />
+    <frame tileid="157" duration="150" />
+    <frame tileid="211" duration="150" />
+    <frame tileid="211" duration="150" />
+    <frame tileid="211" duration="150" />
+    <frame tileid="211" duration="150" />
+    <frame tileid="265" duration="150" />
+    <frame tileid="319" duration="150" />
+   </animation>
+  </tile>
+  <tile id="50">
+   <animation>
+    <frame tileid="50" duration="150" />
+    <frame tileid="50" duration="150" />
+    <frame tileid="50" duration="150" />
+    <frame tileid="50" duration="150" />
+    <frame tileid="104" duration="150" />
+    <frame tileid="158" duration="150" />
+    <frame tileid="212" duration="150" />
+    <frame tileid="212" duration="150" />
+    <frame tileid="212" duration="150" />
+    <frame tileid="212" duration="150" />
+    <frame tileid="266" duration="150" />
+    <frame tileid="320" duration="150" />
+   </animation>
+  </tile>
+  <tile id="51">
+   <animation>
+    <frame tileid="51" duration="150" />
+    <frame tileid="51" duration="150" />
+    <frame tileid="51" duration="150" />
+    <frame tileid="51" duration="150" />
+    <frame tileid="105" duration="150" />
+    <frame tileid="159" duration="150" />
+    <frame tileid="213" duration="150" />
+    <frame tileid="213" duration="150" />
+    <frame tileid="213" duration="150" />
+    <frame tileid="213" duration="150" />
+    <frame tileid="267" duration="150" />
+    <frame tileid="321" duration="150" />
+   </animation>
+  </tile>
+  <tile id="52">
+   <animation>
+    <frame tileid="52" duration="150" />
+    <frame tileid="52" duration="150" />
+    <frame tileid="52" duration="150" />
+    <frame tileid="52" duration="150" />
+    <frame tileid="106" duration="150" />
+    <frame tileid="160" duration="150" />
+    <frame tileid="214" duration="150" />
+    <frame tileid="214" duration="150" />
+    <frame tileid="214" duration="150" />
+    <frame tileid="214" duration="150" />
+    <frame tileid="268" duration="150" />
+    <frame tileid="322" duration="150" />
+   </animation>
+  </tile>
+  <tile id="53">
+   <animation>
+    <frame tileid="53" duration="150" />
+    <frame tileid="53" duration="150" />
+    <frame tileid="53" duration="150" />
+    <frame tileid="53" duration="150" />
+    <frame tileid="107" duration="150" />
+    <frame tileid="161" duration="150" />
+    <frame tileid="215" duration="150" />
+    <frame tileid="215" duration="150" />
+    <frame tileid="215" duration="150" />
+    <frame tileid="215" duration="150" />
+    <frame tileid="269" duration="150" />
+    <frame tileid="323" duration="150" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="517" name="guild_interior_objects" tilewidth="16" tileheight="16" tilecount="576" columns="24">
+  <image source="../gfx/isles/guild/interior_objects.png" width="384" height="384" />
+ </tileset>
+ <tileset firstgid="1093" name="guild_guildmaster" tilewidth="16" tileheight="16" tilecount="36" columns="18">
+  <image source="../gfx/isles/guild/guildmaster.png" width="288" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="150" />
+    <frame tileid="0" duration="150" />
+    <frame tileid="3" duration="150" />
+    <frame tileid="6" duration="150" />
+    <frame tileid="9" duration="150" />
+    <frame tileid="12" duration="150" />
+    <frame tileid="12" duration="150" />
+    <frame tileid="15" duration="150" />
+    <frame tileid="15" duration="150" />
+    <frame tileid="15" duration="150" />
+    <frame tileid="15" duration="150" />
+    <frame tileid="15" duration="150" />
+   </animation>
+  </tile>
+  <tile id="1">
+   <animation>
+    <frame tileid="1" duration="150" />
+    <frame tileid="1" duration="150" />
+    <frame tileid="4" duration="150" />
+    <frame tileid="7" duration="150" />
+    <frame tileid="10" duration="150" />
+    <frame tileid="13" duration="150" />
+    <frame tileid="13" duration="150" />
+    <frame tileid="16" duration="150" />
+    <frame tileid="16" duration="150" />
+    <frame tileid="16" duration="150" />
+    <frame tileid="16" duration="150" />
+    <frame tileid="16" duration="150" />
+   </animation>
+  </tile>
+  <tile id="2">
+   <animation>
+    <frame tileid="2" duration="150" />
+    <frame tileid="2" duration="150" />
+    <frame tileid="5" duration="150" />
+    <frame tileid="8" duration="150" />
+    <frame tileid="11" duration="150" />
+    <frame tileid="14" duration="150" />
+    <frame tileid="14" duration="150" />
+    <frame tileid="17" duration="150" />
+    <frame tileid="17" duration="150" />
+    <frame tileid="17" duration="150" />
+    <frame tileid="17" duration="150" />
+    <frame tileid="17" duration="150" />
+   </animation>
+  </tile>
+  <tile id="18">
+   <animation>
+    <frame tileid="18" duration="150" />
+    <frame tileid="18" duration="150" />
+    <frame tileid="21" duration="150" />
+    <frame tileid="24" duration="150" />
+    <frame tileid="27" duration="150" />
+    <frame tileid="30" duration="150" />
+    <frame tileid="30" duration="150" />
+    <frame tileid="33" duration="150" />
+    <frame tileid="33" duration="150" />
+    <frame tileid="33" duration="150" />
+    <frame tileid="33" duration="150" />
+    <frame tileid="33" duration="150" />
+   </animation>
+  </tile>
+  <tile id="19">
+   <animation>
+    <frame tileid="19" duration="150" />
+    <frame tileid="19" duration="150" />
+    <frame tileid="22" duration="150" />
+    <frame tileid="25" duration="150" />
+    <frame tileid="28" duration="150" />
+    <frame tileid="31" duration="150" />
+    <frame tileid="31" duration="150" />
+    <frame tileid="34" duration="150" />
+    <frame tileid="34" duration="150" />
+    <frame tileid="34" duration="150" />
+    <frame tileid="34" duration="150" />
+    <frame tileid="34" duration="150" />
+   </animation>
+  </tile>
+  <tile id="20">
+   <animation>
+    <frame tileid="20" duration="150" />
+    <frame tileid="20" duration="150" />
+    <frame tileid="23" duration="150" />
+    <frame tileid="26" duration="150" />
+    <frame tileid="29" duration="150" />
+    <frame tileid="32" duration="150" />
+    <frame tileid="32" duration="150" />
+    <frame tileid="35" duration="150" />
+    <frame tileid="35" duration="150" />
+    <frame tileid="35" duration="150" />
+    <frame tileid="35" duration="150" />
+    <frame tileid="35" duration="150" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1129" name="guild_talking_people" tilewidth="16" tileheight="16" tilecount="108" columns="36">
+  <image source="../gfx/isles/guild/talking_people.png" width="576" height="48" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="150" />
+    <frame tileid="3" duration="150" />
+    <frame tileid="6" duration="150" />
+    <frame tileid="9" duration="150" />
+    <frame tileid="12" duration="150" />
+    <frame tileid="15" duration="150" />
+    <frame tileid="18" duration="150" />
+    <frame tileid="21" duration="150" />
+    <frame tileid="24" duration="150" />
+    <frame tileid="27" duration="150" />
+    <frame tileid="30" duration="150" />
+    <frame tileid="33" duration="150" />
+   </animation>
+  </tile>
+  <tile id="1">
+   <animation>
+    <frame tileid="1" duration="150" />
+    <frame tileid="4" duration="150" />
+    <frame tileid="7" duration="150" />
+    <frame tileid="10" duration="150" />
+    <frame tileid="13" duration="150" />
+    <frame tileid="16" duration="150" />
+    <frame tileid="19" duration="150" />
+    <frame tileid="22" duration="150" />
+    <frame tileid="25" duration="150" />
+    <frame tileid="28" duration="150" />
+    <frame tileid="31" duration="150" />
+    <frame tileid="34" duration="150" />
+   </animation>
+  </tile>
+  <tile id="2">
+   <animation>
+    <frame tileid="2" duration="150" />
+    <frame tileid="5" duration="150" />
+    <frame tileid="8" duration="150" />
+    <frame tileid="11" duration="150" />
+    <frame tileid="14" duration="150" />
+    <frame tileid="17" duration="150" />
+    <frame tileid="20" duration="150" />
+    <frame tileid="23" duration="150" />
+    <frame tileid="26" duration="150" />
+    <frame tileid="29" duration="150" />
+    <frame tileid="32" duration="150" />
+    <frame tileid="35" duration="150" />
+   </animation>
+  </tile>
+  <tile id="36">
+   <animation>
+    <frame tileid="36" duration="150" />
+    <frame tileid="39" duration="150" />
+    <frame tileid="42" duration="150" />
+    <frame tileid="45" duration="150" />
+    <frame tileid="48" duration="150" />
+    <frame tileid="51" duration="150" />
+    <frame tileid="54" duration="150" />
+    <frame tileid="57" duration="150" />
+    <frame tileid="60" duration="150" />
+    <frame tileid="63" duration="150" />
+    <frame tileid="66" duration="150" />
+    <frame tileid="69" duration="150" />
+   </animation>
+  </tile>
+  <tile id="37">
+   <animation>
+    <frame tileid="37" duration="150" />
+    <frame tileid="40" duration="150" />
+    <frame tileid="43" duration="150" />
+    <frame tileid="46" duration="150" />
+    <frame tileid="49" duration="150" />
+    <frame tileid="52" duration="150" />
+    <frame tileid="55" duration="150" />
+    <frame tileid="58" duration="150" />
+    <frame tileid="61" duration="150" />
+    <frame tileid="64" duration="150" />
+    <frame tileid="67" duration="150" />
+    <frame tileid="70" duration="150" />
+   </animation>
+  </tile>
+  <tile id="38">
+   <animation>
+    <frame tileid="38" duration="150" />
+    <frame tileid="41" duration="150" />
+    <frame tileid="44" duration="150" />
+    <frame tileid="47" duration="150" />
+    <frame tileid="50" duration="150" />
+    <frame tileid="53" duration="150" />
+    <frame tileid="56" duration="150" />
+    <frame tileid="59" duration="150" />
+    <frame tileid="62" duration="150" />
+    <frame tileid="65" duration="150" />
+    <frame tileid="68" duration="150" />
+    <frame tileid="71" duration="150" />
+   </animation>
+  </tile>
+  <tile id="72">
+   <animation>
+    <frame tileid="72" duration="150" />
+    <frame tileid="75" duration="150" />
+    <frame tileid="78" duration="150" />
+    <frame tileid="81" duration="150" />
+    <frame tileid="84" duration="150" />
+    <frame tileid="87" duration="150" />
+    <frame tileid="90" duration="150" />
+    <frame tileid="93" duration="150" />
+    <frame tileid="96" duration="150" />
+    <frame tileid="99" duration="150" />
+    <frame tileid="102" duration="150" />
+    <frame tileid="105" duration="150" />
+   </animation>
+  </tile>
+  <tile id="73">
+   <animation>
+    <frame tileid="73" duration="150" />
+    <frame tileid="76" duration="150" />
+    <frame tileid="79" duration="150" />
+    <frame tileid="82" duration="150" />
+    <frame tileid="85" duration="150" />
+    <frame tileid="88" duration="150" />
+    <frame tileid="91" duration="150" />
+    <frame tileid="94" duration="150" />
+    <frame tileid="97" duration="150" />
+    <frame tileid="100" duration="150" />
+    <frame tileid="103" duration="150" />
+    <frame tileid="106" duration="150" />
+   </animation>
+  </tile>
+  <tile id="74">
+   <animation>
+    <frame tileid="74" duration="150" />
+    <frame tileid="77" duration="150" />
+    <frame tileid="80" duration="150" />
+    <frame tileid="83" duration="150" />
+    <frame tileid="86" duration="150" />
+    <frame tileid="89" duration="150" />
+    <frame tileid="92" duration="150" />
+    <frame tileid="95" duration="150" />
+    <frame tileid="98" duration="150" />
+    <frame tileid="101" duration="150" />
+    <frame tileid="104" duration="150" />
+    <frame tileid="107" duration="150" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1237" name="guild_citizen1_idle_down" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/citizen1_idle_down.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1249" name="guild_citizen1_idle_left" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/citizen1_idle_left.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1261" name="guild_citizen1_idle_right" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/citizen1_idle_right.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1273" name="guild_citizen1_idle_up" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen1_idle_up.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="600" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1279" name="guild_citizen1_walk_down" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen1_walk_down.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1285" name="guild_citizen1_walk_left" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen1_walk_left.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1291" name="guild_citizen1_walk_right" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen1_walk_right.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1297" name="guild_citizen1_walk_up" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen1_walk_up.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1303" name="guild_citizen2_idle_down" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/citizen2_idle_down.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1315" name="guild_citizen2_idle_left" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/citizen2_idle_left.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1327" name="guild_citizen2_idle_right" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/citizen2_idle_right.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1339" name="guild_citizen2_idle_up" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen2_idle_up.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="600" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1345" name="guild_citizen2_walk_down" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen2_walk_down.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1351" name="guild_citizen2_walk_left" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen2_walk_left.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1357" name="guild_citizen2_walk_right" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen2_walk_right.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1363" name="guild_citizen2_walk_up" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/citizen2_walk_up.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1369" name="guild_fighter2_idle_down" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/fighter2_idle_down.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1381" name="guild_fighter2_idle_left" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/fighter2_idle_left.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1393" name="guild_fighter2_idle_right" tilewidth="32" tileheight="32" tilecount="12" columns="12">
+  <image source="../gfx/isles/guild/folk/fighter2_idle_right.png" width="384" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+    <frame tileid="6" duration="100" />
+    <frame tileid="7" duration="100" />
+    <frame tileid="8" duration="100" />
+    <frame tileid="9" duration="100" />
+    <frame tileid="10" duration="100" />
+    <frame tileid="11" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1405" name="guild_fighter2_idle_up" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/fighter2_idle_up.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="600" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1411" name="guild_fighter2_walk_down" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/fighter2_walk_down.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1417" name="guild_fighter2_walk_left" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/fighter2_walk_left.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1423" name="guild_fighter2_walk_right" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/fighter2_walk_right.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <tileset firstgid="1429" name="guild_fighter2_walk_up" tilewidth="32" tileheight="32" tilecount="6" columns="6">
+  <image source="../gfx/isles/guild/folk/fighter2_walk_up.png" width="192" height="32" />
+  <tile id="0">
+   <animation>
+    <frame tileid="0" duration="100" />
+    <frame tileid="1" duration="100" />
+    <frame tileid="2" duration="100" />
+    <frame tileid="3" duration="100" />
+    <frame tileid="4" duration="100" />
+    <frame tileid="5" duration="100" />
+   </animation>
+  </tile>
+ </tileset>
+ <layer id="1" name="ground_isle_1" width="21" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,0,
+0,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,0,
+0,188,188,188,139,188,163,188,188,188,187,188,140,188,141,163,188,188,188,188,0,
+0,188,188,188,188,188,164,188,139,188,188,163,188,188,187,188,188,188,188,188,0,
+0,188,188,141,188,163,188,187,188,188,139,188,188,141,188,187,188,139,188,188,0,
+0,188,188,188,187,188,164,188,140,188,188,188,139,188,163,188,187,188,165,188,0,
+0,188,188,188,188,139,188,139,188,188,163,188,187,188,188,165,188,188,188,188,0,
+0,188,188,188,188,188,187,188,163,188,188,188,188,188,187,188,139,188,188,188,0,
+0,188,188,188,188,188,188,141,188,188,165,188,163,188,163,188,188,188,188,188,0,
+0,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,188,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="2" name="ground_isle_2" width="21" height="14">
+  <data encoding="csv">
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,
+26,26,26,22,23,23,23,23,23,23,23,23,23,23,23,23,23,24,26,26,26,
+26,26,26,46,15,50,129,130,50,131,132,50,123,124,133,134,16,48,26,26,26,
+22,23,23,192,17,74,153,154,74,155,156,74,147,148,225,226,18,191,23,23,24,
+46,12,125,50,41,98,177,178,98,179,180,98,171,172,243,244,42,125,131,13,48,
+46,36,149,148,65,0,0,0,0,0,0,0,0,0,0,0,66,147,155,37,48,
+46,60,173,172,89,0,0,0,0,0,0,0,0,0,0,0,90,171,179,61,48,
+26,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,25,48,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="3" name="ground_isle_3" width="21" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,645,0,647,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,853,854,855,854,855,856,857,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,877,878,903,928,879,880,881,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,901,902,880,878,903,904,905,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,925,926,903,926,927,928,929,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,949,950,952,950,951,952,953,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="4" name="ground_isle_4" width="21" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,529,530,531,532,533,534,535,536,537,0,0,0,0,0,0,
+0,0,0,0,0,0,553,554,555,556,557,558,559,560,561,0,0,0,0,0,0,
+0,0,0,0,0,0,577,0,0,0,0,582,583,584,585,0,0,0,0,0,0,
+0,0,0,0,0,0,601,0,0,0,0,606,607,608,609,610,611,612,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,630,631,632,633,634,635,636,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,654,655,656,657,658,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="5" name="sprites">
+  <object id="1" gid="626" x="240" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="2" gid="627" x="256" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="3" gid="650" x="240" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="4" gid="651" x="256" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="5" gid="597" x="112" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-18" type="int" />
+   </properties>
+  </object>
+  <object id="6" gid="598" x="128" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-18" type="int" />
+   </properties>
+  </object>
+  <object id="7" gid="599" x="144" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-18" type="int" />
+   </properties>
+  </object>
+  <object id="8" gid="621" x="112" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-2" type="int" />
+   </properties>
+  </object>
+  <object id="9" gid="622" x="128" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-2" type="int" />
+   </properties>
+  </object>
+  <object id="10" gid="623" x="144" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-2" type="int" />
+   </properties>
+  </object>
+  <object id="11" gid="646" x="128" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="14" type="int" />
+   </properties>
+  </object>
+  <object id="12" gid="527" x="192" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-20" type="int" />
+   </properties>
+  </object>
+  <object id="13" gid="528" x="208" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-20" type="int" />
+   </properties>
+  </object>
+  <object id="14" gid="551" x="192" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-4" type="int" />
+   </properties>
+  </object>
+  <object id="15" gid="552" x="208" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-4" type="int" />
+   </properties>
+  </object>
+  <object id="16" gid="575" x="192" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="12" type="int" />
+   </properties>
+  </object>
+  <object id="17" gid="576" x="208" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="12" type="int" />
+   </properties>
+  </object>
+  <object id="18" gid="984" x="144" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-31" type="int" />
+   </properties>
+  </object>
+  <object id="19" gid="985" x="160" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-31" type="int" />
+   </properties>
+  </object>
+  <object id="20" gid="986" x="176" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-31" type="int" />
+   </properties>
+  </object>
+  <object id="21" gid="1008" x="144" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-15" type="int" />
+   </properties>
+  </object>
+  <object id="22" gid="1009" x="160" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-15" type="int" />
+   </properties>
+  </object>
+  <object id="23" gid="1010" x="176" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-15" type="int" />
+   </properties>
+  </object>
+  <object id="24" gid="1032" x="144" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="1" type="int" />
+   </properties>
+  </object>
+  <object id="25" gid="1033" x="160" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="1" type="int" />
+   </properties>
+  </object>
+  <object id="26" gid="1034" x="176" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="1" type="int" />
+   </properties>
+  </object>
+  <object id="27" gid="1060" x="208" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-9" type="int" />
+   </properties>
+  </object>
+  <object id="28" gid="1061" x="224" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-9" type="int" />
+   </properties>
+  </object>
+  <object id="29" gid="1084" x="208" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="7" type="int" />
+   </properties>
+  </object>
+  <object id="30" gid="1085" x="224" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="7" type="int" />
+   </properties>
+  </object>
+  <object id="31" gid="669" x="64" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-46" type="int" />
+   </properties>
+  </object>
+  <object id="32" gid="670" x="80" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-46" type="int" />
+   </properties>
+  </object>
+  <object id="33" gid="671" x="96" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-46" type="int" />
+   </properties>
+  </object>
+  <object id="34" gid="672" x="112" y="48" width="16" height="16">
+   <properties>
+    <property name="foot" value="-46" type="int" />
+   </properties>
+  </object>
+  <object id="35" gid="693" x="64" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-30" type="int" />
+   </properties>
+  </object>
+  <object id="36" gid="694" x="80" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-30" type="int" />
+   </properties>
+  </object>
+  <object id="37" gid="695" x="96" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-30" type="int" />
+   </properties>
+  </object>
+  <object id="38" gid="696" x="112" y="64" width="16" height="16">
+   <properties>
+    <property name="foot" value="-30" type="int" />
+   </properties>
+  </object>
+  <object id="39" gid="717" x="64" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="40" gid="718" x="80" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="41" gid="719" x="96" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="42" gid="720" x="112" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="43" gid="741" x="64" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="44" gid="742" x="80" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="45" gid="743" x="96" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="46" gid="744" x="112" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="47" gid="769" x="16" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-45" type="int" />
+   </properties>
+  </object>
+  <object id="48" gid="770" x="32" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-45" type="int" />
+   </properties>
+  </object>
+  <object id="49" gid="771" x="48" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-45" type="int" />
+   </properties>
+  </object>
+  <object id="50" gid="793" x="16" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-29" type="int" />
+   </properties>
+  </object>
+  <object id="51" gid="794" x="32" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-29" type="int" />
+   </properties>
+  </object>
+  <object id="52" gid="795" x="48" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-29" type="int" />
+   </properties>
+  </object>
+  <object id="53" gid="817" x="16" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-13" type="int" />
+   </properties>
+  </object>
+  <object id="54" gid="818" x="32" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-13" type="int" />
+   </properties>
+  </object>
+  <object id="55" gid="819" x="48" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-13" type="int" />
+   </properties>
+  </object>
+  <object id="56" gid="841" x="16" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="3" type="int" />
+   </properties>
+  </object>
+  <object id="57" gid="842" x="32" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="3" type="int" />
+   </properties>
+  </object>
+  <object id="58" gid="843" x="48" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="3" type="int" />
+   </properties>
+  </object>
+  <object id="59" gid="766" x="272" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-45" type="int" />
+   </properties>
+  </object>
+  <object id="60" gid="767" x="288" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-45" type="int" />
+   </properties>
+  </object>
+  <object id="61" gid="768" x="304" y="80" width="16" height="16">
+   <properties>
+    <property name="foot" value="-45" type="int" />
+   </properties>
+  </object>
+  <object id="62" gid="790" x="272" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-29" type="int" />
+   </properties>
+  </object>
+  <object id="63" gid="791" x="288" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-29" type="int" />
+   </properties>
+  </object>
+  <object id="64" gid="792" x="304" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-29" type="int" />
+   </properties>
+  </object>
+  <object id="65" gid="814" x="272" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-13" type="int" />
+   </properties>
+  </object>
+  <object id="66" gid="815" x="288" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-13" type="int" />
+   </properties>
+  </object>
+  <object id="67" gid="816" x="304" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-13" type="int" />
+   </properties>
+  </object>
+  <object id="68" gid="838" x="272" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="3" type="int" />
+   </properties>
+  </object>
+  <object id="69" gid="839" x="288" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="3" type="int" />
+   </properties>
+  </object>
+  <object id="70" gid="840" x="304" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="3" type="int" />
+   </properties>
+  </object>
+  <object id="71" gid="866" x="128" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-20" type="int" />
+   </properties>
+  </object>
+  <object id="72" gid="867" x="144" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-20" type="int" />
+   </properties>
+  </object>
+  <object id="73" gid="873" x="160" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-20" type="int" />
+   </properties>
+  </object>
+  <object id="74" gid="869" x="176" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-20" type="int" />
+   </properties>
+  </object>
+  <object id="75" gid="870" x="192" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="-20" type="int" />
+   </properties>
+  </object>
+  <object id="76" gid="890" x="128" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-4" type="int" />
+   </properties>
+  </object>
+  <object id="77" gid="891" x="144" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-4" type="int" />
+   </properties>
+  </object>
+  <object id="78" gid="892" x="160" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-4" type="int" />
+   </properties>
+  </object>
+  <object id="79" gid="893" x="176" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-4" type="int" />
+   </properties>
+  </object>
+  <object id="80" gid="894" x="192" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-4" type="int" />
+   </properties>
+  </object>
+  <object id="81" gid="914" x="128" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="12" type="int" />
+   </properties>
+  </object>
+  <object id="82" gid="915" x="144" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="12" type="int" />
+   </properties>
+  </object>
+  <object id="83" gid="916" x="160" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="12" type="int" />
+   </properties>
+  </object>
+  <object id="84" gid="917" x="176" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="12" type="int" />
+   </properties>
+  </object>
+  <object id="85" gid="918" x="192" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="12" type="int" />
+   </properties>
+  </object>
+  <object id="86" gid="1093" x="144" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-10" type="int" />
+   </properties>
+  </object>
+  <object id="87" gid="1094" x="160" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-10" type="int" />
+   </properties>
+  </object>
+  <object id="88" gid="1095" x="176" y="96" width="16" height="16">
+   <properties>
+    <property name="foot" value="-10" type="int" />
+   </properties>
+  </object>
+  <object id="89" gid="1111" x="144" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="6" type="int" />
+   </properties>
+  </object>
+  <object id="90" gid="1112" x="160" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="6" type="int" />
+   </properties>
+  </object>
+  <object id="91" gid="1113" x="176" y="112" width="16" height="16">
+   <properties>
+    <property name="foot" value="6" type="int" />
+   </properties>
+  </object>
+  <object id="92" gid="578" x="112" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="93" gid="579" x="128" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="94" gid="580" x="144" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-14" type="int" />
+   </properties>
+  </object>
+  <object id="95" gid="602" x="112" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="96" gid="603" x="128" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="97" gid="604" x="144" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="2" type="int" />
+   </properties>
+  </object>
+  <object id="98" gid="1129" x="48" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-25" type="int" />
+   </properties>
+  </object>
+  <object id="99" gid="1130" x="64" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-25" type="int" />
+   </properties>
+  </object>
+  <object id="100" gid="1131" x="80" y="128" width="16" height="16">
+   <properties>
+    <property name="foot" value="-25" type="int" />
+   </properties>
+  </object>
+  <object id="101" gid="1165" x="48" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="-9" type="int" />
+   </properties>
+  </object>
+  <object id="102" gid="1166" x="64" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="-9" type="int" />
+   </properties>
+  </object>
+  <object id="103" gid="1167" x="80" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="-9" type="int" />
+   </properties>
+  </object>
+  <object id="104" gid="1201" x="48" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="7" type="int" />
+   </properties>
+  </object>
+  <object id="105" gid="1202" x="64" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="7" type="int" />
+   </properties>
+  </object>
+  <object id="106" gid="1203" x="80" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="7" type="int" />
+   </properties>
+  </object>
+  <object id="107" gid="989" x="288" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="-22" type="int" />
+   </properties>
+  </object>
+  <object id="108" gid="990" x="304" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="-22" type="int" />
+   </properties>
+  </object>
+  <object id="109" gid="1013" x="288" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="-6" type="int" />
+   </properties>
+  </object>
+  <object id="110" gid="1014" x="304" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="-6" type="int" />
+   </properties>
+  </object>
+  <object id="111" gid="1037" x="288" y="176" width="16" height="16">
+   <properties>
+    <property name="foot" value="10" type="int" />
+   </properties>
+  </object>
+  <object id="112" gid="1038" x="304" y="176" width="16" height="16">
+   <properties>
+    <property name="foot" value="10" type="int" />
+   </properties>
+  </object>
+  <object id="113" gid="987" x="16" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="-22" type="int" />
+   </properties>
+  </object>
+  <object id="114" gid="988" x="32" y="144" width="16" height="16">
+   <properties>
+    <property name="foot" value="-22" type="int" />
+   </properties>
+  </object>
+  <object id="115" gid="1011" x="16" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="-6" type="int" />
+   </properties>
+  </object>
+  <object id="116" gid="1012" x="32" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="-6" type="int" />
+   </properties>
+  </object>
+  <object id="117" gid="1035" x="16" y="176" width="16" height="16">
+   <properties>
+    <property name="foot" value="10" type="int" />
+   </properties>
+  </object>
+  <object id="118" gid="1036" x="32" y="176" width="16" height="16">
+   <properties>
+    <property name="foot" value="10" type="int" />
+   </properties>
+  </object>
+  <object id="119" gid="980" x="208" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="-32" type="int" />
+   </properties>
+  </object>
+  <object id="120" gid="981" x="224" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="-32" type="int" />
+   </properties>
+  </object>
+  <object id="121" gid="982" x="240" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="-32" type="int" />
+   </properties>
+  </object>
+  <object id="122" gid="983" x="256" y="160" width="16" height="16">
+   <properties>
+    <property name="foot" value="-32" type="int" />
+   </properties>
+  </object>
+  <object id="123" gid="1004" x="208" y="176" width="16" height="16">
+   <properties>
+    <property name="foot" value="-16" type="int" />
+   </properties>
+  </object>
+  <object id="124" gid="1005" x="224" y="176" width="16" height="16">
+   <properties>
+    <property name="foot" value="-16" type="int" />
+   </properties>
+  </object>
+  <object id="125" gid="1006" x="240" y="176" width="16" height="16">
+   <properties>
+    <property name="foot" value="-16" type="int" />
+   </properties>
+  </object>
+  <object id="126" gid="1007" x="256" y="176" width="16" height="16">
+   <properties>
+    <property name="foot" value="-16" type="int" />
+   </properties>
+  </object>
+  <object id="127" gid="1028" x="208" y="192" width="16" height="16">
+   <properties>
+    <property name="foot" value="0" type="int" />
+   </properties>
+  </object>
+  <object id="128" gid="1029" x="224" y="192" width="16" height="16">
+   <properties>
+    <property name="foot" value="0" type="int" />
+   </properties>
+  </object>
+  <object id="129" gid="1030" x="240" y="192" width="16" height="16">
+   <properties>
+    <property name="foot" value="0" type="int" />
+   </properties>
+  </object>
+  <object id="130" gid="1031" x="256" y="192" width="16" height="16">
+   <properties>
+    <property name="foot" value="0" type="int" />
+   </properties>
+  </object>
+ </objectgroup>
+ <layer id="6" name="overhead_isle_1" width="21" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+46,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,25,48,
+46,27,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,25,48,
+46,100,2,2,3,0,0,0,0,0,0,0,0,0,0,0,1,2,2,101,48,
+70,71,71,168,27,0,0,0,0,0,0,0,0,0,0,0,25,167,71,71,72,
+26,26,26,46,100,2,2,2,94,95,95,95,96,2,2,2,101,48,26,26,26,
+26,26,26,70,71,71,71,71,71,119,119,119,120,71,71,71,71,72,26,26,26,
+26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26,26
+</data>
+ </layer>
+ <layer id="7" name="overhead_isle_2" width="21" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,565,566,567,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,589,590,591,592,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,613,614,615,616,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <objectgroup id="8" name="folk">
+  <object id="131" name="citizen1" type="folk" x="176" y="138">
+   <properties>
+    <property name="lift" value="1" type="int" />
+    <property name="round" value="folk_citizen1_1,folk_citizen1_2,folk_citizen1_3,folk_citizen1_4,folk_citizen1_5,folk_citizen1_6,folk_citizen1_7,folk_citizen1_8,folk_citizen1_9" />
+    <property name="strips" value="guild_citizen1" />
+   </properties>
+  </object>
+  <object id="132" name="citizen2" type="folk" x="128" y="178">
+   <properties>
+    <property name="lift" value="1" type="int" />
+    <property name="round" value="folk_citizen2_1,folk_citizen2_2,folk_citizen2_3" />
+    <property name="strips" value="guild_citizen2" />
+   </properties>
+  </object>
+  <object id="133" name="fighter2" type="folk" x="290" y="132">
+   <properties>
+    <property name="lift" value="1" type="int" />
+    <property name="round" value="folk_fighter2_1,folk_fighter2_2,folk_fighter2_3,folk_fighter2_4,folk_fighter2_5" />
+    <property name="strips" value="guild_fighter2" />
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="9" name="spawns">
+  <object id="134" name="entry" type="spawn" x="168" y="186" />
+  <object id="135" name="door" type="spawn" x="168" y="186" />
+  <object id="136" name="upstairs" type="spawn" x="242" y="90">
+   <properties>
+    <property name="card" value="inside.guild_training" />
+    <property name="prompt" value="prompt.enter_room" />
+    <property name="to" value="assets/maps/guild_training.tmx" />
+   </properties>
+  </object>
+  <object id="137" name="folk_citizen1_1" type="folk" x="176" y="138">
+   <properties>
+    <property name="face" value="up" />
+    <property name="wait" value="6" type="float" />
+   </properties>
+  </object>
+  <object id="138" name="folk_citizen1_2" type="folk" x="160" y="150">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="139" name="folk_citizen1_3" type="folk" x="78" y="148">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="140" name="folk_citizen1_4" type="folk" x="78" y="142">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="141" name="folk_citizen1_5" type="folk" x="72" y="138">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="142" name="folk_citizen1_6" type="folk" x="44" y="130">
+   <properties>
+    <property name="face" value="up" />
+    <property name="wait" value="5" type="float" />
+   </properties>
+  </object>
+  <object id="143" name="folk_citizen1_7" type="folk" x="106" y="146">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="144" name="folk_citizen1_8" type="folk" x="144" y="150">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="145" name="folk_citizen1_9" type="folk" x="176" y="150">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="146" name="folk_citizen2_1" type="folk" x="128" y="178">
+   <properties>
+    <property name="face" value="down" />
+    <property name="wait" value="2.5" type="float" />
+   </properties>
+  </object>
+  <object id="147" name="folk_citizen2_2" type="folk" x="168" y="168">
+   <properties>
+    <property name="face" value="right" />
+    <property name="wait" value="2" type="float" />
+   </properties>
+  </object>
+  <object id="148" name="folk_citizen2_3" type="folk" x="108" y="152">
+   <properties>
+    <property name="face" value="left" />
+    <property name="wait" value="3" type="float" />
+   </properties>
+  </object>
+  <object id="149" name="folk_fighter2_1" type="folk" x="290" y="132">
+   <properties>
+    <property name="face" value="up" />
+    <property name="wait" value="6" type="float" />
+   </properties>
+  </object>
+  <object id="150" name="folk_fighter2_2" type="folk" x="272" y="134">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="151" name="folk_fighter2_3" type="folk" x="226" y="124">
+   <properties>
+    <property name="wait" value="0" type="float" />
+   </properties>
+  </object>
+  <object id="152" name="folk_fighter2_4" type="folk" x="226" y="98">
+   <properties>
+    <property name="face" value="up" />
+    <property name="wait" value="3.5" type="float" />
+   </properties>
+  </object>
+  <object id="153" name="folk_fighter2_5" type="folk" x="200" y="176">
+   <properties>
+    <property name="face" value="right" />
+    <property name="wait" value="4" type="float" />
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="collision" color="#ff3c3c" visible="0">
+  <object id="154" x="0" y="0" width="336" height="76" />
+  <object id="155" x="0" y="76" width="68" height="12" />
+  <object id="156" x="164" y="76" width="8" height="4" />
+  <object id="157" x="268" y="76" width="68" height="16" />
+  <object id="158" x="212" y="80" width="24" height="12" />
+  <object id="159" x="0" y="88" width="120" height="4" />
+  <object id="160" x="0" y="92" width="76" height="4" />
+  <object id="161" x="112" y="92" width="8" height="4" />
+  <object id="162" x="264" y="92" width="72" height="16" />
+  <object id="163" x="0" y="96" width="72" height="12" />
+  <object id="164" x="160" y="96" width="16" height="8" />
+  <object id="165" x="184" y="96" width="4" height="4" />
+  <object id="166" x="144" y="100" width="12" height="4" />
+  <object id="167" x="180" y="100" width="8" height="4" />
+  <object id="168" x="140" y="104" width="56" height="16" />
+  <object id="169" x="0" y="108" width="20" height="12" />
+  <object id="170" x="316" y="108" width="20" height="12" />
+  <object id="171" x="112" y="112" width="8" height="4" />
+  <object id="172" x="24" y="116" width="40" height="4" />
+  <object id="173" x="112" y="116" width="16" height="4" />
+  <object id="174" x="132" y="116" width="4" height="4" />
+  <object id="175" x="272" y="116" width="40" height="4" />
+  <object id="176" x="0" y="120" width="64" height="4" />
+  <object id="177" x="112" y="120" width="84" height="12" />
+  <object id="178" x="272" y="120" width="64" height="4" />
+  <object id="179" x="0" y="124" width="20" height="32" />
+  <object id="180" x="24" y="124" width="4" height="4" />
+  <object id="181" x="60" y="124" width="4" height="4" />
+  <object id="182" x="272" y="124" width="4" height="4" />
+  <object id="183" x="308" y="124" width="4" height="4" />
+  <object id="184" x="316" y="124" width="20" height="32" />
+  <object id="185" x="112" y="132" width="48" height="8" />
+  <object id="186" x="140" y="140" width="16" height="4" />
+  <object id="187" x="48" y="144" width="20" height="4" />
+  <object id="188" x="52" y="148" width="20" height="4" />
+  <object id="189" x="56" y="152" width="12" height="4" />
+  <object id="190" x="0" y="156" width="68" height="4" />
+  <object id="191" x="268" y="156" width="68" height="28" />
+  <object id="192" x="0" y="160" width="56" height="28" />
+  <object id="193" x="216" y="184" width="120" height="4" />
+  <object id="194" x="0" y="188" width="144" height="4" />
+  <object id="195" x="192" y="188" width="144" height="4" />
+  <object id="196" x="0" y="192" width="336" height="32" />
+ </objectgroup>
+ <objectgroup id="11" name="walk_block" color="#ff2d8a" />
+ <objectgroup id="12" name="walk_open" color="#2dff6e" />
+</map>

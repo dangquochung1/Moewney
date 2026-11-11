@@ -1,0 +1,190 @@
+// Twenty-four passives, picked up during a run and lost on death.
+//
+// Effects are NAMED, not scripted: the string here is a contract with the
+// combat package, and ContentValidator refuses to load a name combat does not
+// claim to know. That check is the entire reason this file is safe to edit -
+// a typo'd effect is a relic that looks fine in the panel, reads fine in the
+// tooltip, and does nothing at all, which is close to undetectable in play.
+// The full list with semantics is in notes/d.md section 1.
+//
+// MAGNITUDE BUDGET. A common relic is worth about 10% of a player's effective
+// power, a rare about 20%, an epic about 35%. A run that reaches floor 5 picks
+// up roughly eight, which is where the DPS curve in enemies.json comes from:
+// 1.10^8 is 2.14, and the floor hit-point averages rise by 6.3x across the
+// same span. The player is meant to end the run stronger than they started and
+// still behind the dungeon.
+//
+// RelicDef has no weight field, so rarity is the only signal the award code
+// gets. Intended pool weights: COMMON 60, RARE 30, EPIC 10.
+{
+  "relics": [
+
+    // ---------------- COMMON (12) -------------------------------------
+    // Flat, legible, and safe to hand out twice. Nothing here changes how the
+    // game is played; they all make the same play better.
+
+    {
+      "id": "flame_ember", "nameKey": "relic.flame_ember.name", "descKey": "relic.flame_ember.desc",
+      "icon": "flame_orange", "rarity": "COMMON",
+      "effect": "damage_mult", "magnitude": 1.10
+    },
+    {
+      "id": "iron_grip", "nameKey": "relic.iron_grip.name", "descKey": "relic.iron_grip.desc",
+      "icon": "gauntlet", "rarity": "COMMON",
+      // Divides windup and recover, not active. A 12% faster katana is 16
+      // steps rather than 18; a 12% faster hammer is 43 rather than 46, so the
+      // slow weapons gain the least from it in absolute terms and the most in
+      // felt responsiveness.
+      "effect": "attack_speed_mult", "magnitude": 1.12
+    },
+    {
+      "id": "stone_skin", "nameKey": "relic.stone_skin.name", "descKey": "relic.stone_skin.desc",
+      "icon": "stat_armour", "rarity": "COMMON",
+      "effect": "damage_taken_mult", "magnitude": 0.92
+    },
+    {
+      "id": "swift_tabi", "nameKey": "relic.swift_tabi.name", "descKey": "relic.swift_tabi.desc",
+      "icon": "boot", "rarity": "COMMON",
+      // 10% on 78px/s is 86, which crosses the line where a vampire at 50 and
+      // a spirit at 56 both become fully kiteable. The most quietly powerful
+      // common in the set.
+      "effect": "move_speed_mult", "magnitude": 1.10
+    },
+    {
+      "id": "long_reach", "nameKey": "relic.long_reach.name", "descKey": "relic.long_reach.desc",
+      "icon": "weapon_scimitar", "rarity": "COMMON",
+      // Four pixels is a quarter of a tile. On the pickaxe that is 30 to 34,
+      // which outranges a bonelord's 30 - the one number in this file chosen
+      // to beat one other specific number.
+      "effect": "reach_add", "magnitude": 4
+    },
+    {
+      "id": "spare_charm", "nameKey": "relic.spare_charm.name", "descKey": "relic.spare_charm.desc",
+      "icon": "heart_red", "rarity": "COMMON",
+      "effect": "max_hp_add", "magnitude": 15
+    },
+    {
+      "id": "coin_charm", "nameKey": "relic.coin_charm.name", "descKey": "relic.coin_charm.desc",
+      "icon": "purse", "rarity": "COMMON",
+      "effect": "gold_mult", "magnitude": 1.20
+    },
+    {
+      "id": "lucky_clover", "nameKey": "relic.lucky_clover.name", "descKey": "relic.lucky_clover.desc",
+      "icon": "clover", "rarity": "COMMON",
+      // Cuts nothingWeight by 8% before the roll, so on trash_f1 it moves the
+      // chance of any drop from 27% to 29%. Small, and it compounds with
+      // itself because it is the only effect that touches the loot pool.
+      "effect": "luck_add", "magnitude": 0.08
+    },
+    {
+      "id": "ward_bead", "nameKey": "relic.ward_bead.name", "descKey": "relic.ward_bead.desc",
+      "icon": "shield_silver", "rarity": "COMMON",
+      "effect": "invuln_steps_add", "magnitude": 6
+    },
+    {
+      "id": "scavenger_knot", "nameKey": "relic.scavenger_knot.name", "descKey": "relic.scavenger_knot.desc",
+      "icon": "cross_heal", "rarity": "COMMON",
+      // One hit point per kill is 38 across floor 1 and 55 across floor 5 -
+      // it scales with the number of enemies rather than their size, so it is
+      // strongest exactly where the player is weakest.
+      "effect": "heal_on_kill", "magnitude": 1
+    },
+    {
+      "id": "sharp_whetstone", "nameKey": "relic.sharp_whetstone.name", "descKey": "relic.sharp_whetstone.desc",
+      "icon": "anvil", "rarity": "COMMON",
+      "effect": "crit_chance_add", "magnitude": 0.08
+    },
+    {
+      "id": "keen_eye", "nameKey": "relic.keen_eye.name", "descKey": "relic.keen_eye.desc",
+      "icon": "gem_amber", "rarity": "COMMON",
+      // Worthless on its own - 0% crit chance times any multiplier is nothing.
+      // Deliberate: it is the first time the game asks the player to notice
+      // that two relics talk to each other.
+      "effect": "crit_damage_mult", "magnitude": 1.25
+    },
+
+    // ---------------- RARE (7) ----------------------------------------
+    // Each one changes a decision rather than a number.
+
+    {
+      "id": "thunder_seal", "nameKey": "relic.thunder_seal.name", "descKey": "relic.thunder_seal.desc",
+      "icon": "lightning", "rarity": "RARE",
+      "effect": "chain_lightning", "magnitude": 0.25
+    },
+    {
+      "id": "frost_lantern", "nameKey": "relic.frost_lantern.name", "descKey": "relic.frost_lantern.desc",
+      "icon": "ice_shard", "rarity": "RARE",
+      // 35% off a charger's speed for a second and a half. This is the relic
+      // that makes the hammer viable, which is why it is rare rather than common.
+      "effect": "slow_on_hit", "magnitude": 0.35
+    },
+    {
+      "id": "venom_flask", "nameKey": "relic.venom_flask.name", "descKey": "relic.venom_flask.desc",
+      "icon": "flask_green", "rarity": "RARE",
+      // 3 a second for five seconds is 15 total, which is a whole floor-1
+      // enemy and a fifth of a floor-5 one. Flat damage over time falls off
+      // hard, and that is correct: it should be a floor-2 pickup that the
+      // player outgrows.
+      "effect": "poison_on_hit", "magnitude": 3
+    },
+    {
+      "id": "phoenix_feather", "nameKey": "relic.phoenix_feather.name", "descKey": "relic.phoenix_feather.desc",
+      "icon": "fire_bolt", "rarity": "RARE",
+      "effect": "revive_once", "magnitude": 0.50
+    },
+    {
+      "id": "kunai_bandolier", "nameKey": "relic.kunai_bandolier.name", "descKey": "relic.kunai_bandolier.desc",
+      "icon": "weapon_dagger", "rarity": "RARE",
+      // Doubles a thrown weapon's output and does nothing at all for the other
+      // five. Dead pickups are acceptable in a roguelite; invisible ones are not,
+      // so the tooltip has to say "thrown" in both languages.
+      "effect": "throw_extra", "magnitude": 1
+    },
+    {
+      "id": "shadow_step", "nameKey": "relic.shadow_step.name", "descKey": "relic.shadow_step.desc",
+      "icon": "tail_purple", "rarity": "RARE",
+      "effect": "roll_invuln_add", "magnitude": 8
+    },
+    {
+      "id": "ronin_resolve", "nameKey": "relic.ronin_resolve.name", "descKey": "relic.ronin_resolve.desc",
+      "icon": "stat_fury", "rarity": "RARE",
+      // 40% below a third health. Worth about 13% averaged over a run, which
+      // is common-tier, and worth 40% in exactly the fight that was going to
+      // end the run, which is not.
+      "effect": "damage_mult_low_hp", "magnitude": 1.40
+    },
+
+    // ---------------- EPIC (4) ----------------------------------------
+    // One per run if the dice are kind. Each should be remembered afterwards.
+
+    {
+      "id": "masters_ashes", "nameKey": "relic.masters_ashes.name", "descKey": "relic.masters_ashes.desc",
+      "icon": "mask_gold", "rarity": "EPIC",
+      "effect": "damage_mult", "magnitude": 1.35
+    },
+    {
+      "id": "sacred_ember", "nameKey": "relic.sacred_ember.name", "descKey": "relic.sacred_ember.desc",
+      "icon": "star_orange", "rarity": "EPIC",
+      // 4 a second inside 24px - one and a half tiles. It kills floor-1 trash
+      // by being walked past and is a rounding error on a boss, so it is an
+      // epic that rewards going back down rather than one that wins the game.
+      "effect": "burn_aura", "magnitude": 4
+    },
+    {
+      "id": "hollow_mask", "nameKey": "relic.hollow_mask.name", "descKey": "relic.hollow_mask.desc",
+      "icon": "mask_silver", "rarity": "EPIC",
+      // ONE number, both directions: damage dealt x1.75 and damage taken x1.75.
+      // Expressing it as a single magnitude is what keeps it honest - there is
+      // no way to quietly tune the downside away later.
+      "effect": "glass_cannon", "magnitude": 1.75
+    },
+    {
+      "id": "well_of_years", "nameKey": "relic.well_of_years.name", "descKey": "relic.well_of_years.desc",
+      "icon": "soul_blue", "rarity": "EPIC",
+      // 8 per cleared room, about 11 rooms a floor, so 88 a floor - nearly a
+      // full bar. It does not help inside a fight, only between them, which
+      // turns the run from a survival problem into a per-room one.
+      "effect": "room_clear_heal", "magnitude": 8
+    }
+  ]
+}

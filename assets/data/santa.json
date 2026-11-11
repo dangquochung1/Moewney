@@ -1,0 +1,23 @@
+// Santa's visit, once a winter: the first time the ninja sleeps at home in a
+// winter, with no festival on, he comes down the chimney and leaves a present
+// on the shelf by the bed (village/SantaVisit, HomeScreen, the chimney in
+// HubScreen). Read by com.kagebi.data.VillageCatalog; checked by
+// ContentValidator.
+//
+// "santa" is what the present holds: "gold", "shards" of gem (the lucky
+// wheel's tickets), and "stones" socket stones of tier "stoneTier", each of
+// a colour picked at random. "keepsake" is the letter in it, kept the first
+// time only.
+//
+// "keepsakes" are things given to be kept rather than used: shown in the bag
+// under their own tab, read there, and listed in the dictionary. Each one's
+// "icon" is a region of ui.atlas; "source" names where it comes from,
+// codex.from.<source>. Its words are keepsake.<id>.name and .desc, and the
+// letter itself keepsake.<id>.text.1, .text.2 on, a paragraph each.
+{
+  "santa": {"gold": 1000, "shards": 5, "stoneTier": 2, "stones": 1, "keepsake": "santa_letter"},
+
+  "keepsakes": [
+    {"id": "santa_letter", "icon": "ui/paper/scroll5", "source": "christmas"}
+  ]
+}

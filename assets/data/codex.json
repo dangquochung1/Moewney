@@ -1,0 +1,486 @@
+// The dictionary: every thing the game has, every thing it means to have, and
+// where each one's picture comes from. Read by com.kagebi.data.CodexCatalog and
+// checked by CodexValidator at boot; see notes/d.md, "The dictionary".
+//
+// TWO KINDS OF ENTRY.
+//   Live - names a def: "item": "potion_small". Its name, words and picture are
+//     the def's own, so the dictionary cannot disagree with the game. EVERY gear,
+//     stone, weapon, item, relic, crop and worker's good must be here exactly
+//     once; the game refuses to start otherwise, and says which.
+//   Planned - names no def. It is a picture the game means to use, written down
+//     so the use can be chosen later: "status": "consider" for one still being
+//     weighed. Named either by an "id" (and codex.item.<id> in the translations)
+//     or by a "kind" and its number among that kind: the third unnamed sword is
+//     sword_3, "Kiếm 3".
+//
+// PICTURES. "raven" lists cells of the Raven Fantasy Icons sheet, 1-based; cell N
+// is the file Separated Files/16x16/faN.png (32x32: fbN, 64x64: fcN), at row
+// (N-1)/16 and column (N-1)%16 of the sheet. Cells listed together are one
+// thing at its successive levels, level 1 first, and how many there are is the
+// grade: 6 levels S, 5 A, 4 B, 3 C, 2 D, 1 F. "variants": true is instead one
+// shape in several colours: grade F, one level. "art" is a region of ui.atlas.
+// "source" is the file in the pack, where the region's name cannot spell it.
+//
+// EQUIPMENT comes from the sheet's equipment block, rows 115 to 136, counted
+// from 0 at the row of two witch hats: "row 1" below is sheet row 116. Rows 15
+// to 18 of the block are not used, and the validator keeps them out.
+//
+// MAIN WEAPONS are the 80 steel shapes of sheet rows 90-94 (cells 1441-1520).
+// Each is ONE weapon at three levels - steel, then gold (80 cells on), then blue
+// (160 on), the strongest - so every weapon is grade C. All 80 must be listed,
+// but for the five whose weapons left the game (CodexCatalog.RETIRED_SHAPES).
+{
+  // The thumb index, top to bottom. Group ids are unique across every tab.
+  "codexTabs": [
+    {"id": "gear", "groups": [
+      {"id": "head", "slot": "HEAD"},
+      {"id": "body", "slot": "BODY"},
+      {"id": "hands", "slot": "HANDS"},
+      {"id": "feet", "slot": "FEET"},
+      {"id": "trinket", "slot": "TRINKET"}
+    ]},
+    {"id": "weapons", "groups": [
+      {"id": "blades", "weapons": true},
+      {"id": "axes", "weapons": true},
+      {"id": "polearms", "weapons": true},
+      {"id": "blunt", "weapons": true},
+      {"id": "oddments", "weapons": true},
+      {"id": "tools"}
+    ]},
+    // Everything the off hand throws or shoots: knives and stars, the bows,
+    // crossbows, discs and boomerangs, and the wands, staves and sceptres.
+    {"id": "offhand", "groups": [
+      {"id": "thrown", "weapons": true},
+      {"id": "ranged", "weapons": true},
+      {"id": "magic", "weapons": true}
+    ]},
+    // The lucky wheel's sixty swords, tier SSS: their entries are in legends.json,
+    // written by tools/make_legends.py with the swords themselves.
+    {"id": "legend", "groups": [
+      {"id": "legends"}
+    ]},
+    {"id": "foes", "bestiary": true},
+    {"id": "crops", "groups": [
+      {"id": "crops"},
+      {"id": "seeds"},
+      {"id": "livestock"}
+    ]},
+    {"id": "gems", "groups": [
+      {"id": "ores"},
+      {"id": "stones"}
+    ]},
+    {"id": "goods", "groups": [
+      {"id": "work_goods"},
+      {"id": "forage"},
+      {"id": "shore"},
+      {"id": "household"}
+    ]},
+    {"id": "potions", "groups": [
+      {"id": "potions"},
+      {"id": "bombs"}
+    ]},
+    {"id": "meals", "groups": [
+      {"id": "meals"},
+      {"id": "tableware"}
+    ]},
+    {"id": "treasure", "groups": [
+      {"id": "gold"},
+      {"id": "gem_money"},
+      {"id": "keys"},
+      {"id": "pickups"},
+      {"id": "chests"},
+      // Things given to be kept (santa.json): in the bag under their own tab.
+      {"id": "keepsakes"}
+    ]},
+    {"id": "relics", "groups": [
+      {"id": "relic_common", "rarity": "COMMON"},
+      {"id": "relic_rare", "rarity": "RARE"},
+      {"id": "relic_epic", "rarity": "EPIC"}
+    ]}
+  ],
+
+  // Worn together, one piece in each of the five slots, for an effect of the set's
+  // own (codex.set.<id>.desc). Weapons are not part of any set.
+  "codexSets": [
+    {"id": "blue"}
+  ],
+
+  "codex": [
+
+    // ---- EQUIPMENT - head ------------------------------------------------------
+    // row 0: the two witch hats
+    {"group": "head", "gear": "wizard_hat_1", "kind": "wizard_hat", "raven": [1841]},
+    {"group": "head", "gear": "wizard_hat_2", "kind": "wizard_hat", "raven": [1842], "set": "blue"},
+    // row 4: helmets. Column 0 is plain iron; 1-6 run bronze to gold
+    {"group": "head", "gear": "helmet_1", "kind": "helmet", "raven": [1905]},
+    {"group": "head", "gear": "helmet_2", "kind": "helmet", "raven": [1906, 1907, 1908, 1909, 1910, 1911]},
+    // columns 7-13 again, a second cut of the same helmet
+    {"group": "head", "gear": "helmet_3", "kind": "helmet", "raven": [1912]},
+    {"group": "head", "gear": "helmet_4", "kind": "helmet", "raven": [1913, 1914, 1915, 1916, 1917, 1918]},
+    {"group": "head", "gear": "helmet_5", "kind": "helmet", "raven": [1919, 1920]},
+    // row 7: colour variants only
+    {"group": "head", "gear": "hood_1", "kind": "hood", "raven": [1953, 1954, 1955, 1956, 1957], "variants": true},
+    {"group": "head", "gear": "wizard_hat_3", "kind": "wizard_hat", "raven": [1958, 1959, 1960, 1961, 1962, 1963, 1964], "variants": true},
+    {"group": "head", "gear": "round_hat_1", "kind": "round_hat", "raven": [1965, 1966, 1967, 1968], "variants": true},
+    // row 10
+    {"group": "head", "gear": "cap_1", "kind": "cap", "raven": [2001, 2002], "variants": true},
+    {"group": "head", "gear": "pointed_hood_1", "kind": "pointed_hood", "raven": [2003, 2004, 2005, 2006, 2007, 2008], "variants": true},
+    {"group": "head", "gear": "top_hat_1", "kind": "top_hat", "raven": [2009, 2010, 2011, 2012, 2013, 2014], "variants": true},
+    {"group": "head", "gear": "hood_2", "kind": "hood", "raven": [2015, 2016], "variants": true},
+    // rows 13-14: unpainted, still being weighed
+    {"group": "head", "gear": "helmet_6", "kind": "helmet", "raven": [2052, 2053]},
+    {"group": "head", "gear": "helmet_7", "kind": "helmet", "raven": [2054]},
+    {"group": "head", "gear": "hood_3", "kind": "hood", "raven": [2075, 2076]},
+    {"group": "head", "gear": "helmet_8", "kind": "helmet", "raven": [2077, 2078, 2079, 2080]},
+
+    // ---- EQUIPMENT - body ------------------------------------------------------
+    {"group": "body", "gear": "body_t1"},
+    {"group": "body", "gear": "body_t2"},
+    {"group": "body", "gear": "body_t3"},
+    {"group": "body", "gear": "body_t4"},
+    // row 1: blue; two levels of a mage's robe, four, six and four
+    {"group": "body", "gear": "robe_1", "kind": "robe", "raven": [1857, 1858], "set": "blue"},
+    {"group": "body", "gear": "tunic_1", "kind": "tunic", "raven": [1859, 1860, 1861, 1862], "set": "blue"},
+    {"group": "body", "gear": "armour_1", "kind": "armour", "raven": [1863, 1864, 1865, 1866, 1867, 1868], "set": "blue"},
+    {"group": "body", "gear": "armour_2", "kind": "armour", "raven": [1869, 1870, 1871, 1872], "set": "blue"},
+    // row 2: blue
+    {"group": "body", "gear": "vest_1", "kind": "vest", "raven": [1873, 1874, 1875], "set": "blue"},
+    {"group": "body", "gear": "tunic_2", "kind": "tunic", "raven": [1876, 1877, 1878], "set": "blue"},
+    {"group": "body", "gear": "coat_1", "kind": "coat", "raven": [1879, 1880], "set": "blue"},
+    {"group": "body", "gear": "armour_3", "kind": "armour", "raven": [1881, 1882, 1883], "set": "blue"},
+    {"group": "body", "gear": "armour_4", "kind": "armour", "raven": [1884, 1885, 1886, 1887], "set": "blue"},
+    {"group": "body", "gear": "armour_5", "kind": "armour", "raven": [1888], "set": "blue"},
+    // row 3: blue
+    {"group": "body", "gear": "robe_2", "kind": "robe", "raven": [1889, 1890, 1891, 1892], "set": "blue"},
+    {"group": "body", "gear": "robe_3", "kind": "robe", "raven": [1893, 1894, 1895, 1896, 1897, 1898], "set": "blue"},
+    {"group": "body", "gear": "armour_6", "kind": "armour", "raven": [1899, 1900, 1901, 1902], "set": "blue"},
+    {"group": "body", "gear": "vest_2", "kind": "vest", "raven": [1903, 1904], "set": "blue"},
+    // row 5: breastplates, iron alone, then bronze to gold
+    {"group": "body", "gear": "armour_7", "kind": "armour", "raven": [1921]},
+    {"group": "body", "gear": "armour_8", "kind": "armour", "raven": [1922, 1923, 1924, 1925, 1926, 1927]},
+    {"group": "body", "gear": "armour_9", "kind": "armour", "raven": [1928]},
+    {"group": "body", "gear": "armour_10", "kind": "armour", "raven": [1929, 1930, 1931, 1932, 1933, 1934]},
+    {"group": "body", "gear": "armour_11", "kind": "armour", "raven": [1935, 1936]},
+    // row 8: colour variants only
+    {"group": "body", "gear": "robe_4", "kind": "robe", "raven": [1969, 1970, 1971, 1972, 1973], "variants": true},
+    {"group": "body", "gear": "coat_2", "kind": "coat", "raven": [1974, 1975, 1976, 1977, 1978, 1979, 1980], "variants": true},
+    {"group": "body", "gear": "tunic_3", "kind": "tunic", "raven": [1981, 1982, 1983, 1984], "variants": true},
+    // row 11
+    {"group": "body", "gear": "coat_3", "kind": "coat", "raven": [2017, 2018], "variants": true},
+    {"group": "body", "gear": "coat_4", "kind": "coat", "raven": [2019, 2020, 2021, 2022, 2023, 2024], "variants": true},
+    {"group": "body", "gear": "robe_5", "kind": "robe", "raven": [2025, 2026, 2027, 2028, 2029, 2030], "variants": true},
+    {"group": "body", "gear": "cloak_1", "kind": "cloak", "raven": [2031, 2032], "variants": true},
+    // rows 13-14: unpainted
+    {"group": "body", "gear": "armour_12", "kind": "armour", "raven": [2049]},
+    {"group": "body", "gear": "armour_13", "kind": "armour", "raven": [2050, 2051]},
+    {"group": "body", "gear": "cloak_2", "kind": "cloak", "raven": [2069]},
+    {"group": "body", "gear": "cloak_3", "kind": "cloak", "raven": [2070, 2071, 2072, 2073, 2074], "variants": true},
+
+    // ---- EQUIPMENT - hands -----------------------------------------------------
+    {"group": "hands", "gear": "hands_t1"},
+    {"group": "hands", "gear": "hands_t2"},
+    {"group": "hands", "gear": "hands_t3"},
+    {"group": "hands", "gear": "hands_t4"},
+    // row 13: unpainted
+    {"group": "hands", "gear": "gauntlets_1", "kind": "gauntlets", "raven": [2055, 2056]},
+    {"group": "hands", "gear": "gauntlets_2", "kind": "gauntlets", "raven": [2058, 2059]},
+    // row 20: blue, one gauntlet catching fire
+    {"group": "hands", "gear": "gauntlets_3", "kind": "gauntlets", "raven": [2168, 2169, 2170, 2171, 2172], "set": "blue"},
+    {"group": "hands", "gear": "gloves_1", "kind": "gloves", "raven": [2173, 2174], "set": "blue"},
+
+    // ---- EQUIPMENT - feet ------------------------------------------------------
+    {"group": "feet", "gear": "feet_t1"},
+    {"group": "feet", "gear": "feet_t2"},
+    {"group": "feet", "gear": "feet_t3"},
+    {"group": "feet", "gear": "feet_t4"},
+    // row 0: shoe then boot, in two leathers
+    {"group": "feet", "gear": "boots_1", "kind": "boots", "raven": [1853, 1854]},
+    {"group": "feet", "gear": "boots_2", "kind": "boots", "raven": [1855, 1856]},
+    // row 6: iron alone, then bronze to gold
+    {"group": "feet", "gear": "boots_3", "kind": "boots", "raven": [1937]},
+    {"group": "feet", "gear": "boots_4", "kind": "boots", "raven": [1938, 1939, 1940, 1941, 1942, 1943]},
+    {"group": "feet", "gear": "boots_5", "kind": "boots", "raven": [1944]},
+    {"group": "feet", "gear": "boots_6", "kind": "boots", "raven": [1945, 1946, 1947, 1948, 1949, 1950]},
+    {"group": "feet", "gear": "boots_7", "kind": "boots", "raven": [1951, 1952]},
+    // row 9: colour variants only
+    {"group": "feet", "gear": "shoes_1", "kind": "shoes", "raven": [1985, 1986, 1987, 1988, 1989], "variants": true},
+    {"group": "feet", "gear": "boots_8", "kind": "boots", "raven": [1990, 1991, 1992, 1993, 1994, 1995, 1996], "variants": true},
+    {"group": "feet", "gear": "boots_9", "kind": "boots", "raven": [1997, 1998, 1999, 2000], "variants": true},
+    // row 12
+    {"group": "feet", "gear": "shoes_2", "kind": "shoes", "raven": [2033, 2034], "variants": true},
+    {"group": "feet", "gear": "boots_10", "kind": "boots", "raven": [2035, 2036, 2037, 2038, 2039, 2040], "variants": true},
+    {"group": "feet", "gear": "boots_11", "kind": "boots", "raven": [2041, 2042, 2043, 2044, 2045, 2046], "variants": true},
+    {"group": "feet", "gear": "boots_12", "kind": "boots", "raven": [2047, 2048], "variants": true},
+    // row 13: unpainted
+    {"group": "feet", "gear": "boots_13", "kind": "boots", "raven": [2057]},
+    {"group": "feet", "gear": "greaves_1", "kind": "greaves", "raven": [2060]},
+    // row 20: blue
+    {"group": "feet", "gear": "boots_14", "kind": "boots", "raven": [2161, 2162, 2163, 2164], "set": "blue"},
+    {"group": "feet", "gear": "boots_15", "kind": "boots", "raven": [2166, 2167, 2165], "set": "blue"},
+    {"group": "feet", "gear": "greaves_2", "kind": "greaves", "raven": [2175, 2176], "set": "blue"},
+
+    // ---- EQUIPMENT - trinket (the badge slot) ----------------------------------
+    {"group": "trinket", "gear": "trinket_t1"},
+    {"group": "trinket", "gear": "trinket_t2"},
+    {"group": "trinket", "gear": "trinket_t3"},
+    {"group": "trinket", "gear": "trinket_t4"},
+    // row 0: a plain ring gaining stones; an amulet from plain silver up
+    {"group": "trinket", "gear": "ring_1", "kind": "ring", "raven": [1843, 1844, 1845, 1846, 1847]},
+    {"group": "trinket", "gear": "amulet_1", "kind": "amulet", "raven": [1852, 1851, 1848, 1849, 1850]},
+    // rows 13-14: unpainted
+    {"group": "trinket", "gear": "ring_2", "kind": "ring", "raven": [2061, 2062]},
+    {"group": "trinket", "gear": "ring_3", "kind": "ring", "raven": [2063, 2064]},
+    {"group": "trinket", "gear": "amulet_2", "kind": "amulet", "raven": [2065, 2066]},
+    {"group": "trinket", "gear": "bracelet_1", "kind": "bracelet", "raven": [2067]},
+    {"group": "trinket", "gear": "belt_1", "kind": "belt", "raven": [2068]},
+    // row 19: blue shields and crystals worn as the badge (its three arrows are thrown)
+    {"group": "trinket", "gear": "shield_1", "kind": "shield", "raven": [2152, 2145, 2149, 2150, 2148, 2151], "set": "blue"},
+    {"group": "trinket", "gear": "shield_2", "kind": "shield", "raven": [2160, 2157], "set": "blue"},
+    {"group": "trinket", "gear": "crystal_1", "kind": "crystal", "raven": [2146, 2158], "set": "blue"},
+    {"group": "trinket", "gear": "shard_1", "kind": "shard", "raven": [2147, 2153, 2159], "set": "blue"},
+    // row 21: blue
+    {"group": "trinket", "gear": "amulet_3", "kind": "amulet", "raven": [2177, 2178, 2179, 2180], "set": "blue"},
+    {"group": "trinket", "gear": "amulet_4", "kind": "amulet", "raven": [2184, 2181, 2182], "set": "blue"},
+    {"group": "trinket", "gear": "bracelet_2", "kind": "bracelet", "raven": [2183], "set": "blue"},
+    {"group": "trinket", "gear": "ring_4", "kind": "ring", "raven": [2185, 2186, 2187, 2188, 2189], "set": "blue"},
+    {"group": "trinket", "gear": "belt_2", "kind": "belt", "raven": [2190, 2191, 2192], "set": "blue"},
+
+    // ---- MAIN WEAPONS - blades -------------------------------------------------
+    {"group": "blades", "weapon": "sword_1", "kind": "sword", "raven": [1441, 1521, 1601]},
+    {"group": "blades", "weapon": "cleaver_1", "kind": "cleaver", "raven": [1442, 1522, 1602]},
+    {"group": "blades", "weapon": "katana", "raven": [1443, 1523, 1603], "source": "Actor/CharacterAnimated/Weapon/Katana.png"},
+    {"group": "blades", "weapon": "sword_2", "kind": "sword", "raven": [1445, 1525, 1605]},
+    {"group": "blades", "weapon": "sword_3", "kind": "sword", "raven": [1446, 1526, 1606]},
+    {"group": "blades", "weapon": "sword_4", "kind": "sword", "raven": [1447, 1527, 1607]},
+    {"group": "blades", "weapon": "sword_5", "kind": "sword", "raven": [1448, 1528, 1608]},
+    {"group": "blades", "weapon": "sword_6", "kind": "sword", "raven": [1449, 1529, 1609]},
+    {"group": "blades", "weapon": "hook_1", "kind": "hook", "raven": [1450, 1530, 1610]},
+    {"group": "blades", "weapon": "hook_2", "kind": "hook", "raven": [1451, 1531, 1611]},
+    {"group": "blades", "weapon": "hook_3", "kind": "hook", "raven": [1452, 1532, 1612]},
+    {"group": "blades", "weapon": "sword_7", "kind": "sword", "raven": [1453, 1533, 1613]},
+    {"group": "blades", "weapon": "rapier_1", "kind": "rapier", "raven": [1454, 1534, 1614]},
+    {"group": "blades", "weapon": "sword_8", "kind": "sword", "raven": [1455, 1535, 1615]},
+    {"group": "blades", "weapon": "greatsword_1", "kind": "greatsword", "raven": [1456, 1536, 1616]},
+    {"group": "blades", "weapon": "sword_9", "kind": "sword", "raven": [1505, 1585, 1665]},
+    {"group": "blades", "weapon": "scimitar_1", "kind": "scimitar", "raven": [1507, 1587, 1667]},
+    {"group": "blades", "weapon": "sword_10", "kind": "sword", "raven": [1508, 1588, 1668]},
+    {"group": "blades", "weapon": "scimitar_2", "kind": "scimitar", "raven": [1509, 1589, 1669]},
+    {"group": "blades", "weapon": "greatsword_2", "kind": "greatsword", "raven": [1510, 1590, 1670]},
+    {"group": "blades", "weapon": "rapier_2", "kind": "rapier", "raven": [1512, 1592, 1672]},
+    {"group": "blades", "weapon": "dagger_1", "kind": "dagger", "raven": [1513, 1593, 1673]},
+    {"group": "blades", "weapon": "sai_1", "kind": "sai", "raven": [1517, 1597, 1677]},
+    {"group": "blades", "weapon": "sword_11", "kind": "sword", "raven": [1518, 1598, 1678]},
+    {"group": "blades", "weapon": "scythe_1", "kind": "scythe", "raven": [1519, 1599, 1679]},
+    {"group": "blades", "weapon": "sickle_1", "kind": "sickle", "raven": [1520, 1600, 1680]},
+
+    // ---- MAIN WEAPONS - axes ---------------------------------------------------
+    {"group": "axes", "weapon": "pickaxe_1", "kind": "pickaxe", "raven": [1457, 1537, 1617]},
+    {"group": "axes", "weapon": "axe", "raven": [1458, 1538, 1618], "source": "Actor/CharacterAnimated/Weapon/Axe.png"},
+    {"group": "axes", "weapon": "axe_1", "kind": "axe", "raven": [1459, 1539, 1619]},
+    {"group": "axes", "weapon": "axe_2", "kind": "axe", "raven": [1464, 1544, 1624]},
+    {"group": "axes", "weapon": "axe_3", "kind": "axe", "raven": [1465, 1545, 1625]},
+    {"group": "axes", "weapon": "axe_4", "kind": "axe", "raven": [1466, 1546, 1626]},
+    {"group": "axes", "weapon": "axe_5", "kind": "axe", "raven": [1467, 1547, 1627]},
+    {"group": "axes", "weapon": "shovel_1", "kind": "shovel", "raven": [1469, 1549, 1629]},
+    {"group": "axes", "weapon": "pickaxe", "raven": [1478, 1558, 1638], "source": "Actor/CharacterAnimated/Weapon/Pickaxe.png"},
+
+    // ---- MAIN WEAPONS - polearms -----------------------------------------------
+    {"group": "polearms", "weapon": "spear_1", "kind": "spear", "raven": [1460, 1540, 1620]},
+    {"group": "polearms", "weapon": "spear_2", "kind": "spear", "raven": [1461, 1541, 1621]},
+    {"group": "polearms", "weapon": "trident_1", "kind": "trident", "raven": [1462, 1542, 1622]},
+    {"group": "polearms", "weapon": "spear_3", "kind": "spear", "raven": [1463, 1543, 1623]},
+    {"group": "polearms", "weapon": "spear_4", "kind": "spear", "raven": [1470, 1550, 1630]},
+    {"group": "polearms", "weapon": "spear_5", "kind": "spear", "raven": [1471, 1551, 1631]},
+    {"group": "polearms", "weapon": "halberd_1", "kind": "halberd", "raven": [1472, 1552, 1632]},
+
+    // ---- MAIN WEAPONS - blunt --------------------------------------------------
+    {"group": "blunt", "weapon": "club_1", "kind": "club", "raven": [1468, 1548, 1628]},
+    {"group": "blunt", "weapon": "hammer_1", "kind": "hammer", "raven": [1473, 1553, 1633]},
+    {"group": "blunt", "weapon": "flail_1", "kind": "flail", "raven": [1474, 1554, 1634]},
+    {"group": "blunt", "weapon": "flail_2", "kind": "flail", "raven": [1475, 1555, 1635]},
+    {"group": "blunt", "weapon": "hammer_2", "kind": "hammer", "raven": [1476, 1556, 1636]},
+    {"group": "blunt", "weapon": "hammer", "raven": [1477, 1557, 1637], "source": "Actor/CharacterAnimated/Weapon/Hammer.png"},
+    {"group": "blunt", "weapon": "mace_1", "kind": "mace", "raven": [1489, 1569, 1649]},
+    {"group": "blunt", "weapon": "mace_2", "kind": "mace", "raven": [1491, 1571, 1651]},
+    {"group": "blunt", "weapon": "mace_3", "kind": "mace", "raven": [1506, 1586, 1666]},
+    {"group": "blunt", "weapon": "anchor_1", "kind": "anchor", "raven": [1511, 1591, 1671]},
+
+    // ---- MAIN WEAPONS - ranged -------------------------------------------------
+    {"group": "ranged", "weapon": "crossbow_1", "kind": "crossbow", "raven": [1481, 1561, 1641], "source": "FX/Projectile/Arrow.png"},
+    {"group": "ranged", "weapon": "crossbow_2", "kind": "crossbow", "raven": [1482, 1562, 1642], "source": "FX/Projectile/Arrow.png"},
+    {"group": "ranged", "weapon": "bow_1", "kind": "bow", "raven": [1483, 1563, 1643], "source": "FX/Projectile/Arrow.png"},
+    {"group": "ranged", "weapon": "bow_2", "kind": "bow", "raven": [1484, 1564, 1644], "source": "FX/Projectile/Arrow.png"},
+    {"group": "ranged", "weapon": "disc_1", "kind": "disc", "raven": [1486, 1566, 1646]},
+    {"group": "ranged", "weapon": "disc_2", "kind": "disc", "raven": [1487, 1567, 1647]},
+    {"group": "ranged", "weapon": "boomerang_1", "kind": "boomerang", "raven": [1501, 1581, 1661]},
+    {"group": "ranged", "weapon": "boomerang_2", "kind": "boomerang", "raven": [1502, 1582, 1662]},
+    {"group": "ranged", "weapon": "boomerang_3", "kind": "boomerang", "raven": [1503, 1583, 1663]},
+    {"group": "ranged", "weapon": "bow_3", "kind": "bow", "raven": [1514, 1594, 1674], "source": "FX/Projectile/Arrow.png"},
+    {"group": "ranged", "weapon": "bow_4", "kind": "bow", "raven": [1515, 1595, 1675], "source": "FX/Projectile/Arrow.png"},
+    {"group": "ranged", "weapon": "bow_5", "kind": "bow", "raven": [1516, 1596, 1676], "source": "FX/Projectile/Arrow.png"},
+
+    // ---- MAIN WEAPONS - magic --------------------------------------------------
+    {"group": "magic", "weapon": "wand_1", "kind": "wand", "raven": [1490, 1570, 1650], "source": "FX/Projectile/EnergyBall.png"},
+    {"group": "magic", "weapon": "staff_1", "kind": "staff", "raven": [1492, 1572, 1652], "source": "FX/Projectile/EnergyBall.png"},
+    {"group": "magic", "weapon": "staff_2", "kind": "staff", "raven": [1493, 1573, 1653], "source": "FX/Projectile/EnergyBall.png"},
+    {"group": "magic", "weapon": "scepter_1", "kind": "scepter", "raven": [1494, 1574, 1654], "source": "FX/Projectile/EnergyBall.png"},
+    {"group": "magic", "weapon": "scepter_2", "kind": "scepter", "raven": [1495, 1575, 1655], "source": "FX/Projectile/EnergyBall.png"},
+    {"group": "magic", "weapon": "scepter_3", "kind": "scepter", "raven": [1496, 1576, 1656], "source": "FX/Projectile/EnergyBall.png"},
+    {"group": "magic", "weapon": "scepter_4", "kind": "scepter", "raven": [1497, 1577, 1657], "source": "FX/Projectile/EnergyBall.png"},
+    {"group": "magic", "weapon": "scepter_5", "kind": "scepter", "raven": [1498, 1578, 1658], "source": "FX/Projectile/EnergyBall.png"},
+
+    // ---- MAIN WEAPONS - oddments -----------------------------------------------
+    {"group": "oddments", "weapon": "net", "raven": [1500, 1580, 1660], "source": "Actor/CharacterAnimated/Weapon/Net.png"},
+    // tools: held like a weapon, drawn as Ninja Adventure draws it in the bag
+    // (Assets.Ui.weaponIcon), having no Raven icon; tools/make_rod.py draws it held
+    {"group": "tools", "weapon": "fishing_rod"},
+
+    // ---- OFF-HAND --------------------------------------------------------------
+    // thrown: the two the game has, each on a shape of the weapon rows
+    {"group": "thrown", "weapon": "kunai", "raven": [1444, 1524, 1604], "source": "FX/Projectile/Kunai/SpriteSheet.png"},
+    {"group": "thrown", "weapon": "shuriken", "raven": [1504, 1584, 1664], "source": "FX/Projectile/Shuriken/SpriteSheet.png"},
+
+    // ---- CROPS -----------------------------------------------------------------
+    {"group": "crops", "crop": "carrot"},
+    {"group": "crops", "crop": "radish"},
+    {"group": "crops", "crop": "potato"},
+    {"group": "crops", "crop": "parsnip"},
+    {"group": "crops", "crop": "beetroot"},
+    {"group": "crops", "crop": "kale"},
+    {"group": "crops", "crop": "cauliflower"},
+    {"group": "crops", "crop": "cabbage"},
+    {"group": "crops", "crop": "wheat"},
+    {"group": "crops", "crop": "sunflower"},
+    {"group": "crops", "crop": "pumpkin"},
+    {"group": "seeds", "good": "magic_seed", "source": "Sunnyside_World_Gamemaker/sprites/seeds_generic"},
+    {"group": "livestock", "id": "chicken", "art": ["ui/sunny/items/chicken"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_chicken_01"},
+    {"group": "livestock", "id": "cow", "art": ["ui/sunny/items/cow"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_cow"},
+    {"group": "livestock", "id": "pig", "art": ["ui/sunny/items/pig"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_pig_01"},
+    {"group": "livestock", "id": "sheep", "art": ["ui/sunny/items/sheep"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_sheep_01"},
+    {"group": "livestock", "id": "duck", "art": ["ui/sunny/items/duck"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_duck_01"},
+
+    // ---- GEMS - the five ore nuggets, lowest first: what the two mines dig ----
+    {"group": "ores", "good": "ore_stone", "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_ore_stone"},
+    {"group": "ores", "good": "ore_coal", "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_ore_coal"},
+    {"group": "ores", "good": "ore_silver", "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_ore_silver"},
+    {"group": "ores", "good": "ore_gold", "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_ore_gold"},
+    {"group": "ores", "good": "ore_bluestone", "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_ore_bluestone"},
+
+    // ---- GEMS - the forge's stones ---------------------------------------------
+    {"group": "stones", "gem": "red_t1"},
+    {"group": "stones", "gem": "red_t2"},
+    {"group": "stones", "gem": "red_t3"},
+    {"group": "stones", "gem": "green_t1"},
+    {"group": "stones", "gem": "green_t2"},
+    {"group": "stones", "gem": "green_t3"},
+    {"group": "stones", "gem": "blue_t1"},
+    {"group": "stones", "gem": "blue_t2"},
+    {"group": "stones", "gem": "blue_t3"},
+    {"group": "stones", "gem": "yellow_t1"},
+    {"group": "stones", "gem": "yellow_t2"},
+    {"group": "stones", "gem": "yellow_t3"},
+    {"group": "stones", "gem": "purple_t1"},
+    {"group": "stones", "gem": "purple_t2"},
+    {"group": "stones", "gem": "purple_t3"},
+
+    // ---- GOODS -----------------------------------------------------------------
+    {"group": "work_goods", "good": "wood"},
+    {"group": "work_goods", "good": "fish"},
+    {"group": "work_goods", "good": "egg"},
+    {"group": "work_goods", "good": "milk"},
+    {"group": "work_goods", "good": "wool", "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_wool"},
+    // the pen's two, from CraftPix's sixteen-pixel icons (Icon70, Icon71): food for the animals that fight beside you
+    {"group": "work_goods", "good": "drumstick"},
+    {"group": "work_goods", "good": "meat"},
+    {"group": "forage", "id": "truffle", "art": ["ui/sunny/items/truffle"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_truffle"},
+    {"group": "forage", "id": "acorn", "art": ["ui/sunny/items/acorn"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_acron"},
+    {"group": "forage", "id": "mushroom_blue_1", "art": ["ui/sunny/items/mushroom_blue_1"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_mushroom_blue_01"},
+    {"group": "forage", "id": "mushroom_blue_2", "art": ["ui/sunny/items/mushroom_blue_2"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_mushroom_blue_02"},
+    {"group": "forage", "id": "mushroom_blue_3", "art": ["ui/sunny/items/mushroom_blue_3"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_mushroom_blue_03"},
+    {"group": "forage", "id": "mushroom_red", "art": ["ui/sunny/items/mushroom_red"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_mushroom_red_01"},
+    {"group": "shore", "id": "bottle_blue", "art": ["ui/sunny/items/bottle_blue"], "source": "Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png, tile 19,49"},
+    {"group": "shore", "id": "jug", "art": ["ui/sunny/items/jug"], "source": "Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png, tile 19,50"},
+    {"group": "shore", "id": "mussel", "art": ["ui/sunny/items/mussel"], "source": "Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png, tile 19,56"},
+    {"group": "shore", "id": "coral", "art": ["ui/sunny/items/coral"], "source": "Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png, tile 19,57"},
+    {"group": "shore", "id": "starfish", "art": ["ui/sunny/items/starfish"], "source": "Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png, tile 19,58"},
+    {"group": "shore", "id": "shell", "art": ["ui/sunny/items/shell"], "source": "Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png, tile 19,59"},
+    {"group": "shore", "id": "crab", "art": ["ui/sunny/items/crab"], "source": "Sunnyside_World_Assets/Tileset/spr_tileset_sunnysideworld_16px.png, tile 19,60"},
+    {"group": "household", "id": "book_1", "art": ["ui/sunny/items/book_1"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_book_01"},
+    {"group": "household", "id": "book_2", "art": ["ui/sunny/items/book_2"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_book_02"},
+    {"group": "household", "id": "bucket", "art": ["ui/sunny/items/bucket"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_bucket"},
+    {"group": "household", "id": "bucket_rope", "art": ["ui/sunny/items/bucket_rope"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_buckect_rope"},
+    {"group": "household", "id": "oar", "art": ["ui/sunny/items/oar"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_oar"},
+    {"group": "household", "id": "sword_floor", "art": ["ui/sunny/items/sword_floor"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_sword_floor"},
+    {"group": "household", "id": "water_bowl", "art": ["ui/sunny/items/water_bowl"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_waterbowl"},
+
+    // ---- POTIONS ---------------------------------------------------------------
+    {"group": "potions", "item": "potion_small", "source": "Items/Potion/LifePot.png"},
+    {"group": "potions", "item": "potion_large", "source": "Items/Potion/Medipack.png"},
+    {"group": "potions", "item": "antidote", "source": "Items/Potion/MilkPot.png"},
+    {"group": "potions", "item": "draught_swift", "source": "Items/Potion/WaterPot.png"},
+    {"group": "potions", "item": "draught_shadow", "source": "Items/Object/Gourd.png"},
+    {"group": "potions", "item": "elixir_ward", "source": "Items/Potion/Heart.png"},
+    {"group": "bombs", "item": "smoke_bomb", "source": "Items/Projectile/Bomb.png"},
+
+    // ---- MEALS -----------------------------------------------------------------
+    {"group": "meals", "item": "food_grilled_fish", "source": "Items/Food/Fish.png"},
+    {"group": "meals", "item": "food_veggie_noodles", "source": "Items/Food/Noodle.png"},
+    {"group": "meals", "item": "food_onigiri", "source": "Items/Food/Onigiri.png"},
+    {"group": "meals", "item": "food_yakitori", "source": "Items/Food/Yakitori.png"},
+    {"group": "meals", "item": "food_sushi", "source": "Items/Food/Sushi.png"},
+    // the kitchen's table, for when the menu is drawn from Sunnyside
+    {"group": "tableware", "id": "plate", "art": ["ui/sunny/items/plate"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_plate"},
+    {"group": "tableware", "id": "plate_food", "art": ["ui/sunny/items/plate_food"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_plate_food"},
+    {"group": "tableware", "id": "plate_cutlery", "art": ["ui/sunny/items/plate_cutlery"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_plate_knifeandfork"},
+    {"group": "tableware", "id": "cutlery", "art": ["ui/sunny/items/cutlery"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_knifeandfork"},
+    {"group": "tableware", "id": "mug_1", "art": ["ui/sunny/items/mug_1"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_mug_01"},
+    {"group": "tableware", "id": "mug_2", "art": ["ui/sunny/items/mug_2"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_mug_02"},
+    {"group": "tableware", "id": "jar_1", "art": ["ui/sunny/items/jar_1"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_jar_01"},
+    {"group": "tableware", "id": "jar_2", "art": ["ui/sunny/items/jar_2"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_jar_02"},
+
+    // ---- TREASURE --------------------------------------------------------------
+    {"group": "gold", "item": "gold_coin", "source": "Items/Treasure/GoldCoin.png"},
+    {"group": "gold", "item": "gold_pouch", "source": "Items/Object/MoneyBag.png"},
+    {"group": "gold", "item": "gold_cache", "source": "Items/Treasure/GoldCup.png"},
+    {"group": "gem_money", "item": "gem_shard", "source": "Items/Resource/GemPurple.png"},
+    {"group": "keys", "item": "key_iron", "source": "Items/Treasure/SilverKey.png"},
+    {"group": "keys", "item": "key_ring", "source": "Items/Treasure/GoldKey.png"},
+    {"group": "pickups", "item": "heart_small", "source": "Items/Potion/Heart.png"},
+    {"group": "pickups", "item": "heart_large", "source": "Items/Food/Onigiri.png"},
+    {"group": "pickups", "item": "soul_ember", "source": "Items/Resource/GemRed.png"},
+    {"group": "pickups", "item": "map_scrap", "source": "Items/Other/Letter.png"},
+    {"group": "chests", "id": "coin", "art": ["ui/sunny/items/coin"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_coin"},
+    {"group": "chests", "id": "coins", "art": ["ui/sunny/items/coins"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_coins"},
+    {"group": "chests", "id": "chest_1", "art": ["ui/sunny/items/chest_1"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_chest_01_closed"},
+    {"group": "chests", "id": "chest_2", "art": ["ui/sunny/items/chest_2"], "source": "Sunnyside_World_Gamemaker/sprites/spr_deco_chest_02_closed"},
+
+    // ---- KEEPSAKES -------------------------------------------------------------
+    // Santa's letter, on paperpack's Scroll5 (LCSkeleton): see santa.json.
+    {"group": "keepsakes", "keepsake": "santa_letter"},
+
+    // ---- RELICS ----------------------------------------------------------------
+    {"group": "relic_common", "relic": "flame_ember"},
+    {"group": "relic_common", "relic": "iron_grip"},
+    {"group": "relic_common", "relic": "stone_skin"},
+    {"group": "relic_common", "relic": "swift_tabi"},
+    {"group": "relic_common", "relic": "long_reach"},
+    {"group": "relic_common", "relic": "spare_charm"},
+    {"group": "relic_common", "relic": "coin_charm"},
+    {"group": "relic_common", "relic": "lucky_clover"},
+    {"group": "relic_common", "relic": "ward_bead"},
+    {"group": "relic_common", "relic": "scavenger_knot"},
+    {"group": "relic_common", "relic": "sharp_whetstone"},
+    {"group": "relic_common", "relic": "keen_eye"},
+    {"group": "relic_rare", "relic": "thunder_seal"},
+    {"group": "relic_rare", "relic": "frost_lantern"},
+    {"group": "relic_rare", "relic": "venom_flask"},
+    {"group": "relic_rare", "relic": "phoenix_feather"},
+    {"group": "relic_rare", "relic": "kunai_bandolier"},
+    {"group": "relic_rare", "relic": "shadow_step"},
+    {"group": "relic_rare", "relic": "ronin_resolve"},
+    {"group": "relic_epic", "relic": "masters_ashes"},
+    {"group": "relic_epic", "relic": "sacred_ember"},
+    {"group": "relic_epic", "relic": "hollow_mask"},
+    {"group": "relic_epic", "relic": "well_of_years"}
+  ]
+}

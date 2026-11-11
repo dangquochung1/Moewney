@@ -1,0 +1,259 @@
+// Jobs.
+//
+// Every job has a giver now, and a mark over their head while they have one
+// to hand out or to pay for (HubScreen.drawQuestMarks). The givers are the
+// villagers' roles: `guide` is Ốc, `guard` Tôm, `trader` Cam, `explorer` Mực.
+// A giver offers the first of theirs that is open, in id order, so a giver's
+// jobs that must come in an order say so with `requires`.
+//
+// THE NEWCOMER'S ROUND. Ốc's nine, one after another: the island's every
+// trade, each paying what the next one wants - the wood for the first meal, the
+// seeds for the field, the shards for the forge - with gold and a stone, and the
+// thing the job was about. He walks the player to each (quest.Places).
+//
+// THE TUTORIAL. `first_blood`, `the_herbalists_errand`, `down_the_well` and
+// `the_masters_lesson`, Tôm, Cam, Mực and Tôm again: that monsters drop
+// things, that the village buys them, that the stairs go down. Two ids still
+// name who gave them before - an id is what a profile saves a job under.
+//
+// THE LOST NINJAS. Tôm pulled the ninjas out of the surf; the five he did not
+// find are out there still. Each `rescue_` brings one home (rewardCharacter),
+// one after another once his lesson is done. The stall still sells them.
+//
+// THE DUNGEON'S WORK. The bounties that used to hang with nobody to hand them
+// over, each now somebody's, paying gear and a weapon for the main hand or the
+// off hand. `three_counts` repeats: the Dead Land's three vampires, again and
+// again, for gold and stones and a chance at a heavy weapon - three in ten - and
+// one in twenty at the anchor, the hardest-hitting blow there is.
+//
+// Steps name things that already exist and are checked against them at boot
+// (notes/d.md, "Quest step kinds"); `any` meets every target of its kind.
+{
+  "quests": [
+    // ---- Ốc: the newcomer's round --------------------------------------------
+    {
+      "id": "newcomer_1_fish", "giver": "guide",
+      "nameKey": "quest.newcomer_1_fish.name", "descKey": "quest.newcomer_1_fish.desc",
+      "steps": [{ "kind": "FISH", "target": "fish", "count": 2 }],
+      "rewardGold": 80, "rewardGoods": {"wood": 2}, "rewardGems": {"red_t1": 1}
+    },
+    {
+      "id": "newcomer_2_cook", "giver": "guide", "requires": "newcomer_1_fish",
+      "nameKey": "quest.newcomer_2_cook.name", "descKey": "quest.newcomer_2_cook.desc",
+      "steps": [{ "kind": "COOK", "target": "any", "count": 1 }],
+      "rewardGold": 100, "rewardItems": ["food_grilled_fish"], "rewardGoods": {"magic_seed": 6},
+      "rewardGems": {"green_t1": 1}
+    },
+    {
+      "id": "newcomer_3_field", "giver": "guide", "requires": "newcomer_2_cook",
+      "nameKey": "quest.newcomer_3_field.name", "descKey": "quest.newcomer_3_field.desc",
+      "steps": [{ "kind": "PLANT", "target": "any", "count": 1 }],
+      "rewardGold": 150, "rewardGoods": {"carrot": 3}, "rewardGems": {"blue_t1": 1}, "rewardWeapon": "sword_1"
+    },
+    {
+      "id": "newcomer_4_milk", "giver": "guide", "requires": "newcomer_3_field",
+      "nameKey": "quest.newcomer_4_milk.name", "descKey": "quest.newcomer_4_milk.desc",
+      "steps": [
+        { "kind": "HIRE", "target": "ranch", "count": 1 },
+        { "kind": "RECEIVE", "target": "milk", "count": 1 }
+      ],
+      "rewardGold": 150, "rewardGoods": {"milk": 3, "egg": 3}, "rewardGems": {"yellow_t1": 1}
+    },
+    {
+      "id": "newcomer_5_pet", "giver": "guide", "requires": "newcomer_4_milk",
+      "nameKey": "quest.newcomer_5_pet.name", "descKey": "quest.newcomer_5_pet.desc",
+      "steps": [
+        { "kind": "HIRE", "target": "pasture", "count": 1 },
+        { "kind": "PET", "target": "any", "count": 1 }
+      ],
+      "rewardGold": 200, "rewardGoods": {"meat": 2, "drumstick": 2}, "rewardGems": {"purple_t1": 1},
+      "rewardGear": "helmet_1"
+    },
+    {
+      "id": "newcomer_6_spring", "giver": "guide", "requires": "newcomer_5_pet",
+      "nameKey": "quest.newcomer_6_spring.name", "descKey": "quest.newcomer_6_spring.desc",
+      "steps": [{ "kind": "SOAK", "target": "spring", "count": 1 }],
+      "rewardGold": 80, "rewardItems": ["potion_small"], "rewardGems": {"red_t1": 1}
+    },
+    {
+      "id": "newcomer_7_stones", "giver": "guide", "requires": "newcomer_6_spring",
+      "nameKey": "quest.newcomer_7_stones.name", "descKey": "quest.newcomer_7_stones.desc",
+      "steps": [
+        { "kind": "DIG", "target": "quarry", "count": 1 },
+        { "kind": "DIG", "target": "mine", "count": 1 }
+      ],
+      "rewardGold": 300, "rewardGoods": {"ore_silver": 3, "ore_gold": 2}, "rewardGems": {"red_t1": 2},
+      "rewardWeapon": "disc_1"
+    },
+    {
+      "id": "newcomer_8_forge", "giver": "guide", "requires": "newcomer_7_stones",
+      "nameKey": "quest.newcomer_8_forge.name", "descKey": "quest.newcomer_8_forge.desc",
+      "steps": [{ "kind": "FORGE", "target": "WEAPON", "count": 1 }],
+      "rewardGold": 300, "rewardGems": {"red_t1": 2}
+    },
+    {
+      "id": "newcomer_9_shelf", "giver": "guide", "requires": "newcomer_8_forge",
+      "nameKey": "quest.newcomer_9_shelf.name", "descKey": "quest.newcomer_9_shelf.desc",
+      "steps": [{ "kind": "UPGRADE", "target": "any", "count": 1 }],
+      "rewardGold": 400, "rewardGems": {"red_t2": 1}, "rewardGear": "boots_2"
+    },
+
+    // ---- the tutorial --------------------------------------------------------
+    {
+      "id": "first_blood", "giver": "guard",
+      "nameKey": "quest.first_blood.name", "descKey": "quest.first_blood.desc",
+      "steps": [
+        { "kind": "KILL", "target": "slime", "count": 5 }
+      ],
+      "rewardGold": 120, "rewardItems": ["potion_small"], "rewardWeapon": "dagger_1"
+    },
+    {
+      "id": "the_herbalists_errand", "giver": "trader", "requires": "first_blood",
+      "nameKey": "quest.the_herbalists_errand.name",
+      "descKey": "quest.the_herbalists_errand.desc",
+      "steps": [
+        { "kind": "COLLECT", "target": "heart_small", "count": 3 },
+        { "kind": "TALK", "target": "trader", "count": 1 }
+      ],
+      "rewardGold": 200, "rewardGear": "trinket_t1"
+    },
+    {
+      "id": "down_the_well", "giver": "explorer", "requires": "the_herbalists_errand",
+      "nameKey": "quest.down_the_well.name", "descKey": "quest.down_the_well.desc",
+      "steps": [
+        { "kind": "REACH", "target": "2", "count": 1 }
+      ],
+      "rewardGold": 350, "rewardGear": "body_t1"
+    },
+    {
+      "id": "the_masters_lesson", "giver": "guard", "requires": "down_the_well",
+      "nameKey": "quest.the_masters_lesson.name",
+      "descKey": "quest.the_masters_lesson.desc",
+      "steps": [
+        { "kind": "KILL", "target": "mouse", "count": 10 },
+        { "kind": "KILL", "target": "bluebat", "count": 8 }
+      ],
+      "rewardGold": 500, "rewardWeapon": "net"
+    },
+
+    // ---- Tôm: the lost ninjas ---------------------------------------------------
+    {
+      "id": "rescue_1_tieu_bi", "giver": "guard", "requires": "the_masters_lesson",
+      "nameKey": "quest.rescue_1_tieu_bi.name", "descKey": "quest.rescue_1_tieu_bi.desc",
+      "steps": [
+        { "kind": "PLANT", "target": "pumpkin", "count": 1 },
+        { "kind": "REACH", "target": "3", "count": 1 }
+      ],
+      "rewardGold": 300, "rewardCharacter": "ninjared", "rewardGems": {"red_t1": 2}, "rewardGear": "tunic_2"
+    },
+    {
+      "id": "rescue_2_tu_uyen", "giver": "guard", "requires": "rescue_1_tieu_bi",
+      "nameKey": "quest.rescue_2_tu_uyen.name", "descKey": "quest.rescue_2_tu_uyen.desc",
+      "steps": [
+        { "kind": "KILL", "target": "mushroom", "count": 10 },
+        { "kind": "KILL", "target": "mushroom2", "count": 10 }
+      ],
+      "rewardGold": 400, "rewardCharacter": "ninjablue", "rewardGems": {"green_t1": 2}, "rewardGear": "shard_1"
+    },
+    {
+      "id": "rescue_3_loi_vu", "giver": "guard", "requires": "rescue_2_tu_uyen",
+      "nameKey": "quest.rescue_3_loi_vu.name", "descKey": "quest.rescue_3_loi_vu.desc",
+      "steps": [
+        { "kind": "FISH", "target": "fish", "count": 5 },
+        { "kind": "KILL", "target": "kappagreen", "count": 10 }
+      ],
+      "rewardGold": 500, "rewardCharacter": "ninjawater", "rewardGems": {"blue_t1": 2}, "rewardGear": "boots_15"
+    },
+    {
+      "id": "rescue_4_linh_xuyen", "giver": "guard", "requires": "rescue_3_loi_vu",
+      "nameKey": "quest.rescue_4_linh_xuyen.name", "descKey": "quest.rescue_4_linh_xuyen.desc",
+      "steps": [
+        { "kind": "REACH", "target": "5", "count": 1 },
+        { "kind": "KILL", "target": "wraith", "count": 10 }
+      ],
+      "rewardGold": 700, "rewardCharacter": "ninjadark", "rewardGems": {"yellow_t1": 2}, "rewardGear": "belt_2"
+    },
+    {
+      "id": "rescue_5_hoa_tam", "giver": "guard", "requires": "rescue_4_linh_xuyen",
+      "nameKey": "quest.rescue_5_hoa_tam.name", "descKey": "quest.rescue_5_hoa_tam.desc",
+      "steps": [
+        { "kind": "REACH", "target": "7", "count": 1 },
+        { "kind": "KILL", "target": "slimeember", "count": 12 }
+      ],
+      "rewardGold": 1000, "rewardCharacter": "ninjafire", "rewardGems": {"red_t2": 1}, "rewardGear": "armour_3"
+    },
+
+    // ---- the dungeon's work ---------------------------------------------------
+    {
+      "id": "bounty_larva", "giver": "guard", "requires": "first_blood",
+      "nameKey": "quest.bounty_larva.name",
+      "descKey": "quest.bounty_larva.desc",
+      "steps": [
+        { "kind": "KILL", "target": "larva", "count": 12 }
+      ],
+      "rewardGold": 260, "rewardItems": ["potion_small", "potion_small"], "rewardWeapon": "bow_1"
+    },
+    {
+      "id": "a_pocketful_of_stones", "giver": "trader", "requires": "the_herbalists_errand",
+      "nameKey": "quest.a_pocketful_of_stones.name",
+      "descKey": "quest.a_pocketful_of_stones.desc",
+      "steps": [
+        { "kind": "COLLECT", "target": "gem_shard", "count": 6 }
+      ],
+      "rewardGold": 300, "rewardGear": "hood_1", "rewardGems": {"red_t1": 2, "blue_t1": 1}
+    },
+    {
+      "id": "deeper_still", "giver": "explorer", "requires": "down_the_well",
+      "nameKey": "quest.deeper_still.name",
+      "descKey": "quest.deeper_still.desc",
+      "steps": [
+        { "kind": "REACH", "target": "4", "count": 1 }
+      ],
+      "rewardGold": 700, "rewardGear": "hands_t2", "rewardWeapon": "boomerang_1"
+    },
+    {
+      "id": "the_long_walk", "giver": "explorer", "requires": "deeper_still",
+      "nameKey": "quest.the_long_walk.name",
+      "descKey": "quest.the_long_walk.desc",
+      "steps": [
+        { "kind": "REACH", "target": "5", "count": 1 },
+        { "kind": "COLLECT", "target": "gold_pouch", "count": 20 }
+      ],
+      "rewardGold": 1200, "rewardGear": "feet_t3", "rewardWeapon": "rapier_1"
+    },
+    {
+      "id": "the_drowned_crew", "giver": "guard", "requires": "the_masters_lesson",
+      "nameKey": "quest.the_drowned_crew.name",
+      "descKey": "quest.the_drowned_crew.desc",
+      "steps": [
+        { "kind": "KILL", "target": "slimespike", "count": 8 },
+        { "kind": "KILL", "target": "slimetide", "count": 8 }
+      ],
+      "rewardGold": 900, "rewardGear": "body_t3", "rewardWeapon": "trident_1"
+    },
+    {
+      "id": "what_stayed_down_there", "giver": "explorer", "requires": "the_long_walk",
+      "nameKey": "quest.what_stayed_down_there.name",
+      "descKey": "quest.what_stayed_down_there.desc",
+      "steps": [
+        { "kind": "REACH", "target": "7", "count": 1 },
+        { "kind": "KILL", "target": "slimeember", "count": 10 }
+      ],
+      "rewardGold": 1800, "rewardGear": "trinket_t3", "rewardWeapon": "scepter_2"
+    },
+    {
+      "id": "three_counts", "giver": "explorer", "requires": "down_the_well", "repeat": true,
+      "nameKey": "quest.three_counts.name", "descKey": "quest.three_counts.desc",
+      "steps": [
+        { "kind": "KILL", "target": "vampire_moss", "count": 1, "place": "stand_ferry" },
+        { "kind": "KILL", "target": "vampire_horn", "count": 1, "place": "stand_ferry" },
+        { "kind": "KILL", "target": "vampire_lord", "count": 1, "place": "stand_ferry" }
+      ],
+      "rewardGold": 1500, "rewardGems": {"red_t2": 2, "yellow_t2": 1},
+      "rewardRolls": [
+        { "weapons": ["mace_3", "hammer_1", "hammer_2", "mace_1", "flail_1", "halberd_1", "flail_2", "scepter_3"], "chance": 0.3 },
+        { "weapons": ["anchor_1"], "chance": 0.05 }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,148 @@
+{ "frames": [
+   {
+    "filename": "Streetlamps_32_ALL #Light On/Off (S1) 0.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light On/Off (S1) 1.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light On/Off (S1) 2.aseprite",
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light On/Off (S1) 3.aseprite",
+    "frame": { "x": 96, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 0.aseprite",
+    "frame": { "x": 0, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 1.aseprite",
+    "frame": { "x": 32, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 2.aseprite",
+    "frame": { "x": 64, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 3.aseprite",
+    "frame": { "x": 96, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 4.aseprite",
+    "frame": { "x": 96, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 5.aseprite",
+    "frame": { "x": 64, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 6.aseprite",
+    "frame": { "x": 32, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 7.aseprite",
+    "frame": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   },
+   {
+    "filename": "Streetlamps_32_ALL #Light Loop (S1) 8.aseprite",
+    "frame": { "x": 128, "y": 32, "w": 32, "h": 32 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 32, "h": 32 },
+    "sourceSize": { "w": 32, "h": 32 },
+    "duration": 100
+   }
+ ],
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.17-x64",
+  "image": "Streetlamp_Sample_32.png",
+  "format": "RGBA8888",
+  "size": { "w": 160, "h": 64 },
+  "scale": "1",
+  "frameTags": [
+   { "name": "Light On/Off (S1)", "from": 0, "to": 3, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light Loop (S1)", "from": 4, "to": 12, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light On/Off (S2)", "from": 13, "to": 16, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light Loop (S2)", "from": 17, "to": 20, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light On/Off (S3)", "from": 21, "to": 23, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light Loop (S3)", "from": 24, "to": 29, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light On/Off (S4)", "from": 30, "to": 33, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light Loop (S4)", "from": 34, "to": 37, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light On/Off", "from": 38, "to": 41, "direction": "forward", "color": "#000000ff" },
+   { "name": "Light Loop (S5)", "from": 42, "to": 45, "direction": "forward", "color": "#000000ff" }
+  ],
+  "layers": [
+   { "name": "Yellow (Base)" },
+   { "name": "Fire", "group": "Yellow (Base)", "opacity": 255, "blendMode": "normal" },
+   { "name": "Frame", "group": "Yellow (Base)", "opacity": 255, "blendMode": "normal" },
+   { "name": "Light", "group": "Yellow (Base)", "opacity": 89, "blendMode": "hard_light" }
+  ],
+  "slices": [
+  ]
+ }
+}

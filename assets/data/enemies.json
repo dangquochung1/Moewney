@@ -1,0 +1,816 @@
+// Every enemy and both bosses. Bosses are folded in here with "boss": true -
+// a boss is an enemy with more hit points and a scripted brain, and giving it
+// its own file would mean two loaders and two places to forget a field.
+//
+// HIT POINT BUDGET. Floors are tuned to an *effective* player DPS, which is
+// roughly 60% of a weapon's theoretical rate once approach, dodging and the
+// target's hurtInvulnSteps are paid for. Against the starting katana (7
+// damage on an 18-step cycle = 23.3 theoretical, 14 effective) the
+// spawn-weighted floor averages are 13.5 / 27.0 / 39.3 / 61.4 / 84.7 hit
+// points. They rise faster than the player's DPS does (14 / 17 / 20.5 / 25 /
+// 30 with two 10% relics per floor cleared), which is what makes floor 3 the
+// wall it is meant to be. BalanceTest recomputes all of this from this file
+// and fails if an edit breaks the pacing.
+//
+// All *Steps are fixed simulation steps at 60 to the second. All speeds are
+// virtual pixels per second - the player runs at 78, so anything above that
+// cannot be outrun and anything below 40 can be kited forever.
+//
+// "cell" is NOT uniform. Ninja Adventure trash is 16 on a 64x64 sheet of four
+// directions by four frames. The depths skeletons and vampire are 32 on a
+// 192x32 strip of six. The small depths idles are 16 on a 64x16 strip of four.
+// giantfrog2 is 40, tengured is 82. Read the field.
+{
+  "enemies": [
+
+    // ================= FLOOR 1 - The Old Well =========================
+    // Nothing here has a ranged attack and nothing here is faster than the
+    // player. Floor 1 teaches the swing and the roll, and a player who dies
+    // on it has not understood the controls rather than the game.
+
+    {
+      "id": "slime", "nameKey": "enemy.slime.name",
+      "sprite": "monsters/slime/spritesheet", "cell": 16,
+      "maxHp": 16, "contactDamage": 4, "attackDamage": 0, "moveSpeed": 24,
+      "brain": "hopper", "aggroRange": 90, "attackRange": 0,
+      // The long cooldown is the whole lesson: it telegraphs, it lands, and
+      // there is half a second afterwards in which it cannot hurt you.
+      "windupSteps": 20, "activeSteps": 10, "recoverSteps": 20, "cooldownSteps": 30,
+      "knockbackResist": 0.10, "hurtInvulnSteps": 10,
+      "lootTable": "trash_f1", "goldMin": 2, "goldMax": 5
+    },
+    {
+      "id": "mouse", "nameKey": "enemy.mouse.name",
+      "sprite": "monsters/mouse/spritesheet", "cell": 16,
+      "maxHp": 9, "contactDamage": 3, "attackDamage": 0, "moveSpeed": 52,
+      "brain": "wanderer", "aggroRange": 100, "attackRange": 0,
+      "windupSteps": 6, "activeSteps": 6, "recoverSteps": 10, "cooldownSteps": 20,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "lootTable": "trash_f1", "goldMin": 1, "goldMax": 4
+    },
+    {
+      "id": "bluebat", "nameKey": "enemy.bluebat.name",
+      "sprite": "monsters/bluebat/spritesheet", "cell": 16,
+      // Seven hit points, which is exactly the katana's damage: a flier that
+      // survives the first hit while weaving is genuinely unpleasant at 16px.
+      "maxHp": 7, "contactDamage": 4, "attackDamage": 0, "moveSpeed": 62,
+      "brain": "flyer", "aggroRange": 120, "attackRange": 0,
+      "windupSteps": 4, "activeSteps": 6, "recoverSteps": 8, "cooldownSteps": 24,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "lootTable": "trash_f1", "goldMin": 2, "goldMax": 5,
+      "flying": true
+    },
+    {
+      "id": "larva", "nameKey": "enemy.larva.name",
+      "sprite": "monsters/larva/spritesheet", "cell": 16,
+      "maxHp": 22, "contactDamage": 5, "attackDamage": 0, "moveSpeed": 16,
+      "brain": "chaser", "aggroRange": 70, "attackRange": 0,
+      "windupSteps": 10, "activeSteps": 8, "recoverSteps": 14, "cooldownSteps": 20,
+      // Resists knockback so that it cannot simply be pushed into a corner -
+      // the answer is to walk away from it, which is the point of a 16px/s mob.
+      "knockbackResist": 0.35, "hurtInvulnSteps": 12,
+      "lootTable": "trash_f1", "goldMin": 3, "goldMax": 6
+    },
+
+    // ================= FLOOR 2 - Flooded Catacombs ====================
+    // The first ranged attacker and the first ambush, and the floor where
+    // damage first outruns healing. A first-timer who takes half a hit per
+    // enemy met loses 159 here against 151 found, and so reaches floor 3
+    // with about 90 of 100 - and floor 3 takes all but three of them. A
+    // careless one dies here instead.
+
+    {
+      "id": "axolot", "nameKey": "enemy.axolot.name",
+      "sprite": "monsters/axolot/spritesheet", "cell": 16,
+      "maxHp": 24, "contactDamage": 5, "attackDamage": 0, "moveSpeed": 44,
+      "brain": "chaser", "aggroRange": 110, "attackRange": 0,
+      "windupSteps": 8, "activeSteps": 8, "recoverSteps": 12, "cooldownSteps": 18,
+      "knockbackResist": 0.10, "hurtInvulnSteps": 10,
+      "lootTable": "trash_f2", "goldMin": 4, "goldMax": 8
+    },
+    {
+      "id": "kappagreen", "nameKey": "enemy.kappagreen.name",
+      "sprite": "monsters/kappagreen/spritesheet", "cell": 16,
+      "maxHp": 28, "contactDamage": 5, "attackDamage": 9, "moveSpeed": 34,
+      "brain": "orbiter", "aggroRange": 130, "attackRange": 26,
+      "windupSteps": 18, "activeSteps": 6, "recoverSteps": 18, "cooldownSteps": 40,
+      "knockbackResist": 0.25, "hurtInvulnSteps": 12,
+      "lootTable": "trash_f2", "goldMin": 5, "goldMax": 9
+    },
+    {
+      "id": "kappared", "nameKey": "enemy.kappared.name",
+      "sprite": "monsters/kappared/spritesheet", "cell": 16,
+      "maxHp": 34, "contactDamage": 6, "attackDamage": 11, "moveSpeed": 30,
+      // Charges at roughly 2.6x its walking speed, so 78 - just fast enough to
+      // matter and just slow enough to roll out of.
+      "brain": "charger", "aggroRange": 140, "attackRange": 20,
+      "windupSteps": 26, "activeSteps": 14, "recoverSteps": 24, "cooldownSteps": 50,
+      "knockbackResist": 0.40, "hurtInvulnSteps": 12,
+      "lootTable": "trash_f2", "goldMin": 6, "goldMax": 11
+    },
+    {
+      "id": "octopus", "nameKey": "enemy.octopus.name",
+      "sprite": "monsters/octopus/spritesheet", "cell": 16,
+      // The first thing in the game that can hit the player from across a
+      // room, so it is also the softest thing on the floor. Fires "inkball".
+      "maxHp": 20, "contactDamage": 4, "attackDamage": 8, "moveSpeed": 26,
+      "brain": "shooter", "aggroRange": 150, "attackRange": 96,
+      "windupSteps": 22, "activeSteps": 4, "recoverSteps": 20, "cooldownSteps": 60,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 10,
+      "lootTable": "trash_f2", "goldMin": 4, "goldMax": 8
+    },
+    {
+      "id": "mollusc", "nameKey": "enemy.mollusc.name",
+      "sprite": "monsters/mollusc/spritesheet", "cell": 16,
+      "maxHp": 30, "contactDamage": 6, "attackDamage": 0, "moveSpeed": 18,
+      // Reads as scenery until stepped near. 0.6 knockback resist means a
+      // katana cannot shove it back out of its own lunge.
+      "brain": "ambusher", "aggroRange": 40, "attackRange": 0,
+      "windupSteps": 12, "activeSteps": 10, "recoverSteps": 26, "cooldownSteps": 40,
+      "knockbackResist": 0.60, "hurtInvulnSteps": 14,
+      "lootTable": "trash_f2", "goldMin": 5, "goldMax": 9
+    },
+
+    // ================= FLOOR 3 - Broken Shrine ========================
+    // The intended wall. Packs of four to five at 40 average hit points
+    // against a player carrying three or four relics, plus the first boss.
+
+    {
+      "id": "mushroom", "nameKey": "enemy.mushroom.name",
+      "sprite": "monsters/mushroom/spritesheet", "cell": 16,
+      "maxHp": 50, "contactDamage": 7, "attackDamage": 0, "moveSpeed": 33,
+      // Splits once into two half-HP copies. One generation only, or a room
+      // of six becomes a room of ninety-six.
+      "brain": "splitter", "aggroRange": 110, "attackRange": 0,
+      "windupSteps": 10, "activeSteps": 8, "recoverSteps": 14, "cooldownSteps": 22,
+      "knockbackResist": 0.30, "hurtInvulnSteps": 12,
+      "attackSpeed": 1.1,
+      "lootTable": "trash_f3", "goldMin": 7, "goldMax": 12
+    },
+    {
+      "id": "mushroom2", "nameKey": "enemy.mushroom2.name",
+      "sprite": "monsters/mushroom2/spritesheet", "cell": 16,
+      "maxHp": 34, "contactDamage": 6, "attackDamage": 10, "moveSpeed": 29,
+      // Stationary while casting; drops "sporecloud", which lingers. The first
+      // enemy that punishes standing still rather than moving badly.
+      "brain": "caster", "aggroRange": 140, "attackRange": 80,
+      "windupSteps": 34, "activeSteps": 8, "recoverSteps": 24, "cooldownSteps": 80,
+      "knockbackResist": 0.20, "hurtInvulnSteps": 12,
+      "attackSpeed": 1.1,
+      "lootTable": "trash_f3", "goldMin": 7, "goldMax": 12
+    },
+    {
+      "id": "spirit", "nameKey": "enemy.spirit.name",
+      "sprite": "monsters/spirit/spritesheet", "cell": 16,
+      // Fast, flying and ranged, and 30 hit points so that it is always worth
+      // turning to deal with rather than ignoring.
+      "maxHp": 30, "contactDamage": 6, "attackDamage": 12, "moveSpeed": 62,
+      "brain": "flyer", "aggroRange": 170, "attackRange": 110,
+      "windupSteps": 20, "activeSteps": 4, "recoverSteps": 16, "cooldownSteps": 70,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "attackSpeed": 1.1,
+      "lootTable": "trash_f3", "goldMin": 8, "goldMax": 14,
+      "flying": true
+    },
+    {
+      "id": "reptile", "nameKey": "enemy.reptile.name",
+      "sprite": "monsters/reptile/spritesheet", "cell": 16,
+      "maxHp": 66, "contactDamage": 9, "attackDamage": 14, "moveSpeed": 44,
+      "brain": "charger", "aggroRange": 160, "attackRange": 22,
+      "windupSteps": 22, "activeSteps": 16, "recoverSteps": 22, "cooldownSteps": 44,
+      "knockbackResist": 0.45, "hurtInvulnSteps": 12,
+      "armour": 1, "attackSpeed": 1.1,
+      "lootTable": "trash_f3", "goldMin": 9, "goldMax": 15
+    },
+
+    // ================= FLOOR 4 - The Cursed Depths ====================
+    // A different pack, a different palette, and a 32px frame rather than a
+    // 16px one, so everything here reads as physically bigger than what came
+    // before. There is no boss on 4; the floor's job is to be long and grim.
+
+    {
+      "id": "skeleton1", "nameKey": "enemy.skeleton1.name",
+      "sprite": "depths/skeleton1_idle", "cell": 32,
+      "maxHp": 64, "contactDamage": 9, "attackDamage": 15, "moveSpeed": 42,
+      "brain": "chaser", "aggroRange": 150, "attackRange": 24,
+      "windupSteps": 18, "activeSteps": 8, "recoverSteps": 20, "cooldownSteps": 34,
+      "knockbackResist": 0.30, "hurtInvulnSteps": 12,
+      "armour": 1, "attackSpeed": 1.15,
+      "lootTable": "trash_f4", "goldMin": 11, "goldMax": 19
+    },
+    {
+      "id": "skeleton2", "nameKey": "enemy.skeleton2.name",
+      "sprite": "depths/skeleton2_idle", "cell": 32,
+      "maxHp": 82, "contactDamage": 11, "attackDamage": 19, "moveSpeed": 35,
+      "brain": "charger", "aggroRange": 160, "attackRange": 26,
+      "windupSteps": 26, "activeSteps": 16, "recoverSteps": 26, "cooldownSteps": 50,
+      "knockbackResist": 0.55, "hurtInvulnSteps": 14,
+      "armour": 2, "attackSpeed": 1.15,
+      "lootTable": "trash_f4", "goldMin": 13, "goldMax": 22
+    },
+    {
+      "id": "vampire", "nameKey": "enemy.vampire.name",
+      "sprite": "depths/vampire_idle", "cell": 32,
+      // Fast enough to catch the player (50 against 78 is close once the
+      // player has to turn) and an ambusher, so it opens the fight on its own
+      // terms rather than the player's.
+      "maxHp": 66, "contactDamage": 10, "attackDamage": 17, "moveSpeed": 55,
+      "brain": "ambusher", "aggroRange": 90, "attackRange": 22,
+      "windupSteps": 14, "activeSteps": 10, "recoverSteps": 18, "cooldownSteps": 40,
+      "knockbackResist": 0.25, "hurtInvulnSteps": 10,
+      "attackSpeed": 1.15,
+      "lootTable": "trash_f4", "goldMin": 12, "goldMax": 21
+    },
+
+    // ================= FLOOR 5 - The Flame Core =======================
+    // The depths mix. These are separate defs rather than floor-4's roster at
+    // higher numbers because FloorDef has no difficulty scalar - see
+    // notes/d.md section 5. The weighted average works out at 84.7 hit points
+    // against the 84 the pacing budget asked for.
+
+    {
+      "id": "wraith", "nameKey": "enemy.wraith.name",
+      "sprite": "depths/monsters_idle/skull/v2/skull_v2", "cell": 16,
+      "maxHp": 66, "contactDamage": 12, "attackDamage": 0, "moveSpeed": 64,
+      "brain": "flyer", "aggroRange": 180, "attackRange": 0,
+      "windupSteps": 8, "activeSteps": 8, "recoverSteps": 12, "cooldownSteps": 26,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "attackSpeed": 1.2,
+      "lootTable": "trash_f5", "goldMin": 14, "goldMax": 23,
+      "flying": true
+    },
+    {
+      "id": "acolyte", "nameKey": "enemy.acolyte.name",
+      "sprite": "depths/priests_idle/priest1/v1/priest1_v1", "cell": 16,
+      "maxHp": 74, "contactDamage": 10, "attackDamage": 21, "moveSpeed": 33,
+      // Casts "flamewave". The 90-step windup is the longest telegraph in the
+      // game: on floor 5 the player has the tools to interrupt it and should.
+      "brain": "caster", "aggroRange": 170, "attackRange": 100,
+      "windupSteps": 90, "activeSteps": 10, "recoverSteps": 30, "cooldownSteps": 110,
+      "knockbackResist": 0.35, "hurtInvulnSteps": 12,
+      "armour": 1, "attackSpeed": 1.2,
+      "lootTable": "trash_f5", "goldMin": 16, "goldMax": 26
+    },
+    {
+      "id": "zealot", "nameKey": "enemy.zealot.name",
+      "sprite": "depths/priests_idle/priest3/v1/priest3_v1", "cell": 16,
+      "maxHp": 92, "contactDamage": 13, "attackDamage": 24, "moveSpeed": 40,
+      "brain": "shooter", "aggroRange": 180, "attackRange": 120,
+      "windupSteps": 28, "activeSteps": 6, "recoverSteps": 22, "cooldownSteps": 64,
+      "knockbackResist": 0.45, "hurtInvulnSteps": 14,
+      "armour": 1, "attackSpeed": 1.2,
+      "lootTable": "trash_f5", "goldMin": 18, "goldMax": 29
+    },
+    {
+      "id": "bonelord", "nameKey": "enemy.bonelord.name",
+      "sprite": "depths/monsters_idle/skeleton2/v2/skeleton2_v2", "cell": 16,
+      // The heaviest non-boss in the game. 0.80 knockback resist means it
+      // cannot be stun-locked, which is the only reason its 26px/s speed is
+      // not a joke.
+      "maxHp": 130, "contactDamage": 16, "attackDamage": 28, "moveSpeed": 29,
+      "brain": "charger", "aggroRange": 170, "attackRange": 30,
+      "windupSteps": 36, "activeSteps": 20, "recoverSteps": 34, "cooldownSteps": 70,
+      "knockbackResist": 0.80, "hurtInvulnSteps": 16,
+      "armour": 3, "attackSpeed": 1.2,
+      "lootTable": "elite", "goldMin": 26, "goldMax": 44
+    },
+    {
+      // ---- the Drowned Cove -------------------------------------------
+      //
+      // Three slimes with three ways of reaching the player, because a floor
+      // whose whole roster closes to arm's length teaches nothing the first
+      // five have not already taught. Between them they cover the three
+      // answers the game has: stand somewhere else, get out of the ring, and
+      // kill it before it arrives.
+      //
+      // Their art is a directional set - one sheet per animation, all four
+      // facings - so unlike the 16px monsters they have a real hurt, a real
+      // death and a run cycle. The cell is 64 because the attack frames need
+      // the width; the bodies inside are about a quarter of that.
+      "id": "slimespike", "nameKey": "enemy.slimespike.name",
+      "sprite": "slimes/slimespike/idle", "cell": 64,
+      // The cove's floor mob, and the one that reads as ordinary so the other
+      // two read as strange. It swings rather than bumping, which is what the
+      // spike burst in its attack sheet is drawn as.
+      "maxHp": 44, "contactDamage": 5, "attackDamage": 9, "moveSpeed": 44,
+      "brain": "chaser", "aggroRange": 110, "attackRange": 16,
+      "windupSteps": 18, "activeSteps": 8, "recoverSteps": 18, "cooldownSteps": 34,
+      "knockbackResist": 0.15, "hurtInvulnSteps": 10,
+      "armour": 1, "attackSpeed": 1.15,
+      "lootTable": "trash_f6", "goldMin": 5, "goldMax": 10
+    },
+    {
+      "id": "slimetide", "nameKey": "enemy.slimetide.name",
+      "sprite": "slimes/slimetide/idle", "cell": 64,
+      // Bursts a ring rather than aiming a shot, so the dodge is a distance
+      // and not a direction. Softest of the three: dangerous at the range it
+      // wants to hold, and helpless once that range is closed.
+      "maxHp": 36, "contactDamage": 4, "attackDamage": 7, "moveSpeed": 37,
+      "brain": "burster", "aggroRange": 150, "attackRange": 84,
+      "windupSteps": 26, "activeSteps": 4, "recoverSteps": 22, "cooldownSteps": 70,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 10,
+      "attackSpeed": 1.15,
+      "lootTable": "trash_f6", "goldMin": 6, "goldMax": 11
+    },
+    {
+      "id": "slimeember", "nameKey": "enemy.slimeember.name",
+      "sprite": "slimes/slimeember/idle", "cell": 64,
+      // Fast, fragile, and dangerous to kill in the wrong place: it blows up
+      // whether it reaches the player or dies trying. The softest thing on the
+      // floor at 26, four swings of a starting katana, which is the whole
+      // bargain - kill it early and far, or pay for killing it late and near.
+      "maxHp": 26, "contactDamage": 3, "attackDamage": 16, "moveSpeed": 68,
+      "brain": "bomber", "aggroRange": 160, "attackRange": 18,
+      "windupSteps": 34, "activeSteps": 6, "recoverSteps": 10, "cooldownSteps": 40,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "attackSpeed": 1.15,
+      "lootTable": "trash_f6", "goldMin": 6, "goldMax": 12
+    },
+
+    // ================= BOSSES =========================================
+
+    {
+      "id": "giantfrog2", "nameKey": "enemy.giantfrog2.name",
+      // Bosses are horizontal strips, one region per animation. The brain
+      // names the others: bosses/giantfrog2/{attack,charge,hit,jump}.
+      "sprite": "bosses/giantfrog2/idle", "cell": 40,
+      // 700 hit points. It was 900, which was right when the game was one
+      // descent and a player arrived at floor 3 carrying four floors' worth of
+      // relics; a stage starts from nothing, so the same 900 came to 117
+      // seconds of unbroken swinging on the starting katana, and it went to
+      // 520. Then characters got gear and a skill set each, and 520 went down
+      // in seconds; 700 with a point of armour is back to a fight for a built
+      // character and a long one, not an endless one, for a bare katana. See
+      // BalanceTest.bossSeconds.
+      //
+      // Its blows were 12 and 22 until 2026-10-18, a tenth more than now: a
+      // built character found its slam and its charge hit absurdly hard
+      // ("đánh dame khá ảo") while the fight's length was fine, so only the
+      // damage came down.
+      "maxHp": 700, "contactDamage": 11, "attackDamage": 20, "moveSpeed": 51,
+      "brain": "boss_frog", "aggroRange": 999, "attackRange": 72,
+      "windupSteps": 30, "activeSteps": 18, "recoverSteps": 36, "cooldownSteps": 60,
+      // Immovable. A boss that can be knocked back is a boss that can be
+      // pinned against a wall and never allowed to act.
+      "knockbackResist": 1.0, "hurtInvulnSteps": 6,
+      "armour": 1, "attackSpeed": 1.15, "percentResist": 0.75,
+      "lootTable": "boss_f3", "goldMin": 60, "goldMax": 100,
+      "boss": true, "phases": 1
+    },
+    {
+      "id": "tengured", "nameKey": "enemy.tengured.name",
+      "sprite": "bosses/tengured/idle", "cell": 82,
+      // The thief of the Kagebi, who fell through the island with it. 1120
+      // across two phases of 560; at half hit points the fight stops and
+      // plays bosses/tengured/trans, which is the only place the story is
+      // told without a line of text.
+      //
+      // It was 1800, and stages made that unplayable rather than hard: nearly
+      // four minutes of the same four attacks with the starting katana, since
+      // nobody arrives at stage 5 with stage 1-4's relics any more. Still the
+      // longest fight in the game at 880, which is what a last boss should be,
+      // and 1120 once the cast had gear and skills to bring to it - with a
+      // point of armour, a fifth more attack speed, and three quarters of any
+      // percentage damage shrugged off, which is what the poisoner had been
+      // killing it with.
+      //
+      // Its blows were 16 and 30 until 2026-10-18, a quarter more again in its
+      // second form: cut a tenth with the frog's, for the same report.
+      "maxHp": 1120, "contactDamage": 14, "attackDamage": 27, "moveSpeed": 70,
+      "brain": "boss_tengu", "aggroRange": 999, "attackRange": 90,
+      "windupSteps": 26, "activeSteps": 14, "recoverSteps": 30, "cooldownSteps": 48,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "attackSpeed": 1.2, "percentResist": 0.75,
+      "lootTable": "boss_f5", "goldMin": 150, "goldMax": 250,
+      "boss": true, "phases": 2, "flying": true
+    },
+    {
+      // ---- the Drowned Cove's boss: one fight, five bodies -------------
+      //
+      //   pirateleader -> fireorb -> piratezombie -> waterorb -> squidman
+      //
+      // Five defs rather than one with phases, because each body has its own
+      // full health bar - the player is told three times that they have won
+      // something, and three times that it was not enough. `phases` cuts one
+      // bar into slices and plays a trans strip between them, which is
+      // tengured's fight and needs art these packs do not ship.
+      //
+      // Each link names the next in `evolvesInto` and its brain summons it on
+      // death, so the chain is readable here rather than spelled out across
+      // five Java classes. ContentValidator walks it: a link that names
+      // nothing that exists, or names a loop, fails the build.
+      //
+      // 750 across the three bodies, against tengured's 1120 on one. The whole
+      // chain has to fit inside FullRunTest's two minutes of a bot swinging a
+      // starting katana, and sixteen seconds of that are the two orbs, which
+      // cannot be hurt at all.
+      "id": "pirateleader", "nameKey": "enemy.pirateleader.name",
+      "sprite": "bosses6/pirateleader/idle", "cell": 64,
+      // Melee only, on purpose. He has a charge, a swing, and a combo that
+      // walks the player backwards; everything he does he does by arriving.
+      // The two bodies after him are both ranged, so he is what they are an
+      // escalation from.
+      "maxHp": 270, "contactDamage": 12, "attackDamage": 24, "moveSpeed": 64,
+      "brain": "boss_pirateleader", "aggroRange": 999, "attackRange": 26,
+      // activeSteps is the SWING, and only the swing. It carried the combo's
+      // 190 until the combo learned to ask for its own window - and every
+      // ordinary swing he threw stood open for those 190 steps too, which is
+      // over three seconds of one animation and was reported as the chém
+      // being broken. See BossBrain.activeSteps: each move now names its own.
+      "windupSteps": 28, "activeSteps": 16, "recoverSteps": 34, "cooldownSteps": 54,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "attackSpeed": 1.15, "percentResist": 0.75,
+      "lootTable": "nothing", "goldMin": 0, "goldMax": 0,
+      "boss": true, "evolvesInto": "fireorb"
+    },
+    {
+      "id": "fireorb", "nameKey": "enemy.fireorb.name",
+      // No body of its own: build_cove.py writes the fireball strip a second
+      // time as a four-column actor sheet, because ActorSprites only ever
+      // reads the actors atlas and an orb has to stand in the room like
+      // anything else the player can see.
+      "sprite": "bosses6/fireorb/idle", "cell": 32,
+      // Untouchable, immobile, and on a timer - OrbBrain grants it i-frames
+      // longer than it can live and kills it itself when its eight seconds
+      // are up. The hit points are what the bar would show if anything could
+      // ever take one off it.
+      "maxHp": 1, "contactDamage": 0, "attackDamage": 14, "moveSpeed": 0,
+      "brain": "boss_orb", "aggroRange": 999, "attackRange": 1,
+      "windupSteps": 1, "activeSteps": 1, "recoverSteps": 1, "cooldownSteps": 1,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 0,
+      "percentResist": 0.75,
+      "lootTable": "nothing", "goldMin": 0, "goldMax": 0,
+      "boss": true, "evolvesInto": "piratezombie",
+      "projectile": "fx/skill6/fire_spell"
+    },
+    {
+      "id": "piratezombie", "nameKey": "enemy.piratezombie.name",
+      "sprite": "bosses6/piratezombie/idle", "cell": 64,
+      // The same fight at range: a three-arrow fan, a barrage down one line,
+      // and a wall of burning ground that cuts the arena in half. At 40% it
+      // slows, drops a wave of fire, and calls in three ember slimes - which
+      // is why `summons` names one the floor already has rather than
+      // something new, so the player already knows what a bomber does.
+      "maxHp": 240, "contactDamage": 10, "attackDamage": 20, "moveSpeed": 57,
+      "brain": "boss_piratezombie", "aggroRange": 999, "attackRange": 30,
+      // 96 was the barrage's length worn by every move, so a three-arrow fan
+      // left the boss standing still for a second and a half after the arrows
+      // had gone. The barrage asks for its own window now.
+      "windupSteps": 26, "activeSteps": 14, "recoverSteps": 32, "cooldownSteps": 50,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "attackSpeed": 1.15, "percentResist": 0.75,
+      "lootTable": "nothing", "goldMin": 0, "goldMax": 0,
+      "boss": true, "evolvesInto": "waterorb", "enrageAt": 0.4,
+      "summons": ["slimeember"],
+      "projectile": "fx/skill6/fire_arrow"
+    },
+    {
+      "id": "waterorb", "nameKey": "enemy.waterorb.name",
+      "sprite": "bosses6/waterorb/idle", "cell": 32,
+      // boss_orb_tide, not boss_orb: the fire orb drops spells on wherever the
+      // player is, so the answer is to keep moving. This one throws the same
+      // ring of arcs outward every turn regardless, so the answer is to stand
+      // where it has already been. Two intermissions, and the second one
+      // punishes the habit the first one taught.
+      "maxHp": 1, "contactDamage": 0, "attackDamage": 14, "moveSpeed": 0,
+      "brain": "boss_orb_tide", "aggroRange": 999, "attackRange": 1,
+      "windupSteps": 1, "activeSteps": 1, "recoverSteps": 1, "cooldownSteps": 1,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 0,
+      "percentResist": 0.75,
+      "lootTable": "nothing", "goldMin": 0, "goldMax": 0,
+      "boss": true, "evolvesInto": "squidman",
+      "projectile": "fx/skill6/water_spell"
+    },
+    {
+      "id": "squidman", "nameKey": "enemy.squidman.name",
+      "sprite": "bosses6/squidman/idle", "cell": 64,
+      // The last body, and the only one that pays out. Its ring is the
+      // fight's closing idea: hazards on every side but one, so the answer is
+      // to read the floor rather than the boss. At 40% it rains water and
+      // calls in tide slimes, whose own rings then overlap its.
+      "maxHp": 240, "contactDamage": 12, "attackDamage": 22, "moveSpeed": 62,
+      "brain": "boss_squidman", "aggroRange": 999, "attackRange": 28,
+      "windupSteps": 26, "activeSteps": 14, "recoverSteps": 30, "cooldownSteps": 46,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "attackSpeed": 1.15, "percentResist": 0.75,
+      "lootTable": "boss_f6", "goldMin": 140, "goldMax": 230,
+      "boss": true, "enrageAt": 0.4,
+      "summons": ["slimetide"],
+      "projectile": "fx/skill6/water_arrow"
+    },
+    {
+      // The Sunken Vault's boss, on the squidman's art and nothing else of
+      // his. Stage 6 is three bodies with a third of the moves each; this is
+      // one body with all of them, which is the only way to make a second
+      // cove stage a different fight rather than the same one at bigger
+      // numbers. boss_squidlord shoots water and rains fire - rainFx belongs
+      // to the brain, so that costs the data nothing.
+      //
+      // 680, and the floor's hpScale makes that 1020 in the room (it was 500,
+      // before gear and skill sets made a built character the norm). Set against
+      // FullRunTest rather than guessed: at 300 the bot put it down in 27
+      // seconds, half of what stage 6's chain of three bodies takes, and a
+      // boss one stage later that is over in half the time is not a boss. At
+      // 750 it is about fifty seconds of swinging, in line with the cove and
+      // well inside BalanceTest's two-minute cap. Its purse and table are the
+      // cove's, because a side stage that paid better than the descent would
+      // become the way to farm it.
+      "id": "squidlord", "nameKey": "enemy.squidlord.name",
+      "sprite": "bosses6/squidman/idle", "cell": 64,
+      "maxHp": 680, "contactDamage": 14, "attackDamage": 24, "moveSpeed": 66,
+      "brain": "boss_squidlord", "aggroRange": 999, "attackRange": 28,
+      "windupSteps": 24, "activeSteps": 14, "recoverSteps": 28, "cooldownSteps": 40,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "attackSpeed": 1.2, "percentResist": 0.75,
+      "lootTable": "boss_f6", "goldMin": 180, "goldMax": 280,
+      "boss": true, "enrageAt": 0.4,
+      // Both, where the cove's bodies called one each. The ember slimes
+      // detonate and the tide slimes burst, so the help arriving is itself
+      // the two elements the boss is fighting in.
+      "summons": ["slimeember", "slimetide"],
+      "projectile": "fx/skill6/water_arrow"
+    },
+    {
+      // ---- the Dead Land's shrines: floors 8, 9 and 10 -----------------
+      //
+      // Three creatures a shrine and a vampire at the end of each, easiest
+      // first: the stone shrine's slimes, the lamp tomb's ghosts and bat, the
+      // bone throne's skeletons and their wizard. The monsters are cut from
+      // two packs by tools/build_crypt.py into the same four-way sheets as
+      // the cove's slimes - DungeonMonsterSet's bat, ghost and slime at
+      // their own square crop, ASSETMonster's six at 32px, drawn facing right
+      // and mirrored for left.
+      //
+      // Each roster is priced a floor apart - the stone shrine at the cove's
+      // numbers, the lamp tomb at floor 5's, the throne above it - because
+      // the three are opened in whatever order the player walks to them and
+      // the only thing saying which is harder is the rooms behind the door.
+      // Their loot is the cove's table; their gold is the cove's too, give or
+      // take, so a shrine is not the place to farm.
+      "id": "crypt_slime", "nameKey": "enemy.crypt_slime.name",
+      "sprite": "crypt/crypt_slime/idle", "cell": 38,
+      // DungeonMonsterSet's three are drawn at half their art. The pack
+      // draws them 31 to 52 pixels across, where every other creature in the
+      // shrines is 12 to 21 and the ninja 15; half keeps every pixel of the
+      // art, two screen pixels to one in a 1280x720 window. Picture only: the
+      // body, the reach and the numbers are as they were. Tune it here.
+      "drawScale": 0.5,
+      // The grave slime hops, like the well's: a closing distance in bursts
+      // that a player learns to step aside from mid-air.
+      "maxHp": 40, "contactDamage": 7, "attackDamage": 0, "moveSpeed": 40,
+      "brain": "hopper", "aggroRange": 120, "attackRange": 0,
+      "windupSteps": 20, "activeSteps": 10, "recoverSteps": 20, "cooldownSteps": 30,
+      "knockbackResist": 0.15, "hurtInvulnSteps": 10,
+      "lootTable": "trash_f6", "goldMin": 5, "goldMax": 10
+    },
+    {
+      "id": "crypt_blueslime", "nameKey": "enemy.crypt_blueslime.name",
+      "sprite": "crypt/crypt_blueslime/idle", "cell": 32,
+      // Bursts a ring rather than aiming, as the cove's tide slime does.
+      "maxHp": 34, "contactDamage": 4, "attackDamage": 7, "moveSpeed": 36,
+      "brain": "burster", "aggroRange": 150, "attackRange": 84,
+      "windupSteps": 26, "activeSteps": 4, "recoverSteps": 22, "cooldownSteps": 72,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 10,
+      "lootTable": "trash_f6", "goldMin": 5, "goldMax": 10
+    },
+    {
+      "id": "crypt_greenslime", "nameKey": "enemy.crypt_greenslime.name",
+      "sprite": "crypt/crypt_greenslime/idle", "cell": 32,
+      // The poison one: it closes and bursts, and bursts again when killed -
+      // so it is killed early and far, or not near.
+      "maxHp": 26, "contactDamage": 3, "attackDamage": 15, "moveSpeed": 64,
+      "brain": "bomber", "aggroRange": 160, "attackRange": 18,
+      "windupSteps": 34, "activeSteps": 6, "recoverSteps": 10, "cooldownSteps": 40,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "lootTable": "trash_f6", "goldMin": 6, "goldMax": 11
+    },
+    {
+      "id": "crypt_ghost", "nameKey": "enemy.crypt_ghost.name",
+      "sprite": "crypt/crypt_ghost/idle", "cell": 36, "drawScale": 0.5,
+      // Hangs still in a corner of the room until the player comes close,
+      // then lunges - the lost soul of the lamp tomb.
+      "maxHp": 52, "contactDamage": 8, "attackDamage": 15, "moveSpeed": 52,
+      "brain": "ambusher", "aggroRange": 90, "attackRange": 22,
+      "windupSteps": 14, "activeSteps": 10, "recoverSteps": 18, "cooldownSteps": 40,
+      "knockbackResist": 0.25, "hurtInvulnSteps": 10,
+      "attackSpeed": 1.1,
+      "lootTable": "trash_f6", "goldMin": 7, "goldMax": 13
+    },
+    {
+      "id": "crypt_phantom", "nameKey": "enemy.crypt_phantom.name",
+      "sprite": "crypt/crypt_phantom/idle", "cell": 32,
+      // Casts its own ring where the player stands: the pack's effect row,
+      // a ring that closes and breaks, is exactly a hazard's life.
+      "maxHp": 48, "contactDamage": 6, "attackDamage": 15, "moveSpeed": 30,
+      "brain": "caster", "aggroRange": 170, "attackRange": 100,
+      "windupSteps": 70, "activeSteps": 10, "recoverSteps": 30, "cooldownSteps": 100,
+      "knockbackResist": 0.3, "hurtInvulnSteps": 12,
+      "lootTable": "trash_f6", "goldMin": 7, "goldMax": 13,
+      "projectile": "fx/crypt/hex_ring"
+    },
+    {
+      "id": "crypt_bat", "nameKey": "enemy.crypt_bat.name",
+      "sprite": "crypt/crypt_bat/idle", "cell": 58, "drawScale": 0.5,
+      // Over the pits and the urns alike, on a sine: the blood bat.
+      "maxHp": 30, "contactDamage": 8, "attackDamage": 0, "moveSpeed": 62,
+      "brain": "flyer", "aggroRange": 160, "attackRange": 0,
+      "windupSteps": 6, "activeSteps": 8, "recoverSteps": 10, "cooldownSteps": 26,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "lootTable": "trash_f6", "goldMin": 6, "goldMax": 11,
+      "flying": true
+    },
+    {
+      "id": "crypt_skeleton", "nameKey": "enemy.crypt_skeleton.name",
+      "sprite": "crypt/crypt_skeleton/idle", "cell": 32,
+      "maxHp": 64, "contactDamage": 9, "attackDamage": 16, "moveSpeed": 44,
+      "brain": "chaser", "aggroRange": 150, "attackRange": 20,
+      "windupSteps": 18, "activeSteps": 8, "recoverSteps": 20, "cooldownSteps": 34,
+      "knockbackResist": 0.3, "hurtInvulnSteps": 12,
+      "armour": 1, "attackSpeed": 1.15,
+      "lootTable": "trash_f6", "goldMin": 8, "goldMax": 14
+    },
+    {
+      "id": "crypt_swordsman", "nameKey": "enemy.crypt_swordsman.name",
+      "sprite": "crypt/crypt_swordsman/idle", "cell": 32,
+      // Telegraphs, then rushes in a line: the throne's guard.
+      "maxHp": 78, "contactDamage": 11, "attackDamage": 20, "moveSpeed": 36,
+      "brain": "charger", "aggroRange": 160, "attackRange": 24,
+      "windupSteps": 26, "activeSteps": 16, "recoverSteps": 26, "cooldownSteps": 50,
+      "knockbackResist": 0.5, "hurtInvulnSteps": 14,
+      "armour": 2, "attackSpeed": 1.15,
+      "lootTable": "trash_f6", "goldMin": 9, "goldMax": 15
+    },
+    {
+      "id": "crypt_wizard", "nameKey": "enemy.crypt_wizard.name",
+      "sprite": "crypt/crypt_wizard/idle", "cell": 32,
+      // Holds at range and fires the pack's own spark: the dark wizard.
+      "maxHp": 58, "contactDamage": 8, "attackDamage": 18, "moveSpeed": 36,
+      "brain": "shooter", "aggroRange": 180, "attackRange": 110,
+      "windupSteps": 28, "activeSteps": 6, "recoverSteps": 22, "cooldownSteps": 64,
+      "knockbackResist": 0.4, "hurtInvulnSteps": 12,
+      "armour": 1, "attackSpeed": 1.15,
+      "lootTable": "trash_f6", "goldMin": 9, "goldMax": 15,
+      "projectile": "fx/crypt/hex_bolt"
+    },
+    {
+      // ---- the shrines' vampires: one body, three sets of spells -------
+      //
+      // CraftPix's three vampires, 64px, each with a swing whose sheet draws
+      // the blood gathering, the bat and the golden slash itself. The attack
+      // strip plays across windup and active together, twelve frames, and
+      // the slash is frames 7 to 11: so each windup is seven twelfths of the
+      // two, and the blow lands as the slash does. attackSpeed stays at 1 so
+      // nothing stretches the windup away from its frames; enrageAt is the
+      // quickening at half health, and all of it.
+      "id": "vampire_moss", "nameKey": "enemy.vampire_moss.name",
+      "sprite": "crypt/vampire_moss/idle", "cell": 64,
+      "maxHp": 480, "contactDamage": 10, "attackDamage": 18, "moveSpeed": 52,
+      "brain": "boss_vampire_pull", "aggroRange": 999, "attackRange": 28,
+      "windupSteps": 35, "activeSteps": 25, "recoverSteps": 30, "cooldownSteps": 50,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "percentResist": 0.75,
+      "lootTable": "boss_crypt", "goldMin": 120, "goldMax": 200,
+      "boss": true, "enrageAt": 0.5
+    },
+    {
+      "id": "vampire_horn", "nameKey": "enemy.vampire_horn.name",
+      "sprite": "crypt/vampire_horn/idle", "cell": 64,
+      "maxHp": 640, "contactDamage": 12, "attackDamage": 22, "moveSpeed": 58,
+      "brain": "boss_vampire_shove", "aggroRange": 999, "attackRange": 28,
+      "windupSteps": 32, "activeSteps": 23, "recoverSteps": 28, "cooldownSteps": 46,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "percentResist": 0.75,
+      "lootTable": "boss_crypt", "goldMin": 150, "goldMax": 240,
+      "boss": true, "enrageAt": 0.5
+    },
+    {
+      "id": "vampire_lord", "nameKey": "enemy.vampire_lord.name",
+      "sprite": "crypt/vampire_lord/idle", "cell": 64,
+      "maxHp": 840, "contactDamage": 14, "attackDamage": 26, "moveSpeed": 64,
+      "brain": "boss_vampire_fire", "aggroRange": 999, "attackRange": 30,
+      "windupSteps": 30, "activeSteps": 21, "recoverSteps": 26, "cooldownSteps": 42,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "percentResist": 0.75,
+      "lootTable": "boss_crypt", "goldMin": 180, "goldMax": 280,
+      "boss": true, "enrageAt": 0.5
+    },
+
+    // ================= STAGE 11 - The Nightborne Keep =================
+    // Three of the Ninja Adventure monsters nothing else uses, on the cove's
+    // numbers: floor 11 makes them a stage harder with hpScale and
+    // damageScale, as floor 7 does the cove's slimes, and fills every room
+    // twice. All three fly - the keep's is a night of things on the wing.
+
+    {
+      // A flame on the wind that comes straight in and goes up: the cove's
+      // ember slime, a little tougher, since a room holds two lots of them.
+      "id": "flam2", "nameKey": "enemy.flam2.name",
+      "sprite": "monsters/flam2/spritesheet", "cell": 16,
+      "maxHp": 28, "contactDamage": 3, "attackDamage": 17, "moveSpeed": 66,
+      "brain": "bomber", "aggroRange": 160, "attackRange": 18,
+      "windupSteps": 34, "activeSteps": 6, "recoverSteps": 10, "cooldownSteps": 40,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "attackSpeed": 1.15,
+      "lootTable": "trash_f6", "goldMin": 6, "goldMax": 12,
+      "flying": true
+    },
+    {
+      // Weaves in and shoots from the edge of its range, as the spirit does.
+      "id": "skullblue", "nameKey": "enemy.skullblue.name",
+      "sprite": "monsters/skullblue/spritesheet", "cell": 16,
+      "maxHp": 32, "contactDamage": 6, "attackDamage": 11, "moveSpeed": 56,
+      "brain": "flyer", "aggroRange": 170, "attackRange": 100,
+      "windupSteps": 22, "activeSteps": 4, "recoverSteps": 16, "cooldownSteps": 72,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "attackSpeed": 1.1,
+      "lootTable": "trash_f6", "goldMin": 7, "goldMax": 13,
+      "flying": true
+    },
+    {
+      // Weaves in and dives with its body, as the bats and the wraith do; the
+      // heaviest of the three, and the one most often met.
+      "id": "owl2", "nameKey": "enemy.owl2.name",
+      "sprite": "monsters/owl2/spritesheet", "cell": 16,
+      "maxHp": 40, "contactDamage": 9, "attackDamage": 0, "moveSpeed": 64,
+      "brain": "flyer", "aggroRange": 180, "attackRange": 0,
+      "windupSteps": 8, "activeSteps": 8, "recoverSteps": 12, "cooldownSteps": 26,
+      "knockbackResist": 0.05, "hurtInvulnSteps": 8,
+      "attackSpeed": 1.15,
+      "lootTable": "trash_f6", "goldMin": 6, "goldMax": 12,
+      "flying": true
+    },
+    {
+      // The Nightborne, the Keep's boss: the NightBorne pack's one body,
+      // 80px cells, played at the pack's own tempo (tools/build_night.py).
+      // Its swing is the quick cut out of the attack row - set, the
+      // crescent, back - five frames over windup and active together, the
+      // blow on the crescent: two fifths of the way, which is 16 of 40.
+      // A gladiator, not a duellist: he runs at 80, faster than the player
+      // walks (78), and swings again two thirds of a second after the last.
+      // Its spells are entity/NightborneRites, its brain
+      // ai/NightborneBrain. 560 hit points become 840 at floor 11's scale.
+      "id": "nightborne", "nameKey": "enemy.nightborne.name",
+      "sprite": "night/nightborne/idle", "cell": 80,
+      "maxHp": 560, "contactDamage": 10, "attackDamage": 18, "moveSpeed": 80,
+      "brain": "boss_nightborne", "aggroRange": 999, "attackRange": 30,
+      "windupSteps": 16, "activeSteps": 24, "recoverSteps": 18, "cooldownSteps": 26,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "percentResist": 0.6,
+      "lootTable": "boss_night", "goldMin": 160, "goldMax": 260,
+      "boss": true, "enrageAt": 0.5
+    },
+    {
+      // The Thunder Hall's three, each a Ninja Adventure monster no floor had
+      // used. The beast runs at the player head down, as the reptile does.
+      "id": "beast2", "nameKey": "enemy.beast2.name",
+      "sprite": "monsters/beast2/spritesheet", "cell": 16,
+      "maxHp": 52, "contactDamage": 9, "attackDamage": 15, "moveSpeed": 50,
+      "brain": "charger", "aggroRange": 170, "attackRange": 22,
+      "windupSteps": 22, "activeSteps": 16, "recoverSteps": 22, "cooldownSteps": 44,
+      "knockbackResist": 0.4, "hurtInvulnSteps": 10,
+      "armour": 1, "attackSpeed": 1.1,
+      "lootTable": "trash_f6", "goldMin": 7, "goldMax": 13
+    },
+    {
+      // A yellow bat, quick as lightning and as hard to pin: weaves in and
+      // dives with its body.
+      "id": "yellowsbat", "nameKey": "enemy.yellowsbat.name",
+      "sprite": "monsters/yellowsbat/spritesheet", "cell": 16,
+      "maxHp": 24, "contactDamage": 7, "attackDamage": 0, "moveSpeed": 72,
+      "brain": "flyer", "aggroRange": 180, "attackRange": 0,
+      "windupSteps": 6, "activeSteps": 8, "recoverSteps": 10, "cooldownSteps": 24,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 8,
+      "lootTable": "trash_f6", "goldMin": 5, "goldMax": 10,
+      "flying": true
+    },
+    {
+      // The red eye keeps its distance and looses a bolt of the Satyr's
+      // thunder at whoever it sees.
+      "id": "eye2", "nameKey": "enemy.eye2.name",
+      "sprite": "monsters/eye2/spritesheet", "cell": 16,
+      "maxHp": 30, "contactDamage": 4, "attackDamage": 12, "moveSpeed": 30,
+      "brain": "shooter", "aggroRange": 170, "attackRange": 110,
+      "windupSteps": 24, "activeSteps": 4, "recoverSteps": 20, "cooldownSteps": 64,
+      "knockbackResist": 0.0, "hurtInvulnSteps": 10,
+      "lootTable": "trash_f6", "goldMin": 7, "goldMax": 13,
+      "projectile": "fx/boss/thunder_bolt"
+    },
+    {
+      // The Satyr, the Thunder Hall's boss: the SATYR_sprite_sheet pack's
+      // one body, 32px cells drawn twice their size (tools/build_satyr.py).
+      // His swing is the sweep of fire along the ground, seven frames over
+      // windup and active together, the blow on the fourth: 18 of 42. His
+      // spells are entity/SatyrRites, his brain ai/SatyrBrain. 580 hit
+      // points become 928 at floor 12's scale.
+      "id": "satyr", "nameKey": "enemy.satyr.name",
+      "sprite": "night/satyr/idle", "cell": 32, "drawScale": 2.0,
+      "maxHp": 580, "contactDamage": 10, "attackDamage": 16, "moveSpeed": 72,
+      "brain": "boss_satyr", "aggroRange": 999, "attackRange": 28,
+      "windupSteps": 18, "activeSteps": 24, "recoverSteps": 18, "cooldownSteps": 30,
+      "knockbackResist": 1.0, "hurtInvulnSteps": 5,
+      "armour": 1, "percentResist": 0.6,
+      "lootTable": "boss_satyr", "goldMin": 180, "goldMax": 280,
+      "boss": true, "enrageAt": 0.5
+    }
+  ]
+}

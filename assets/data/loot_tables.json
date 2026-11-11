@@ -1,0 +1,328 @@
+// Weighted drop tables: one per enemy tier, one per chest kind.
+//
+// nothingWeight sits in the SAME POOL as the entries, which is the thing to
+// understand before editing any of these. A table with nothingWeight 73 and
+// entries summing to 27 drops something 27% of the time. Every table here is
+// written to total exactly 100 so that a weight can be read as a percentage
+// without arithmetic - that is a convention, not a requirement, and
+// LootRoller divides by the real total either way.
+//
+// GOLD IS NOT IN THE TRASH TABLES. EnemyDef.goldMin/goldMax pays on every
+// kill and is the primary income; these tables are the occasional physical
+// pickup on top. That is why nothingWeight is around 70 for a mob and 0 for a
+// chest: a mob usually drops nothing visible and always drops coin, and a
+// chest always drops something or it was not worth opening.
+//
+// "rolls" is how many independent draws happen. A boss chest at 3 rolls can
+// legitimately draw the same entry three times; that is intended.
+{
+  "tables": [
+
+    // ---------------- enemy tiers -------------------------------------
+    // The chance of any drop climbs 27 -> 30 -> 32 -> 35 -> 37 across the
+    // floors, which is small on purpose. The felt increase in loot comes from
+    // gold values tripling, not from the tables.
+    //
+    // The 1 in each is a gem shard, a spin of the lucky wheel at Cam's: about
+    // one kill in a hundred. It was taken out of nothingWeight, so every other
+    // entry drops exactly as often as before it came. The elite's 6 came out of
+    // its nothingWeight the same way; a boss, with no nothing to take from, has
+    // one roll more and a shard weight that leaves what it dropped before
+    // dropping as often - about one shard a boss.
+    //
+    // Healing per kill is what these tables really set, and it is held
+    // around 3 to 3.6 hit points on EVERY floor rather than rising with
+    // enemy damage. When floors 4 and 5 dropped large hearts instead, BalanceTest
+    // measured a competent player finishing floor 5 with 622 points of healing
+    // found against 425 taken - the last boss fought at full health with
+    // potions to spare. At these weights the same player ends floor 5 near 40.
+
+    {
+      "id": "trash_f1", "rolls": 1, "nothingWeight": 73,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "heart_small",  "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "potion_small", "weight": 6,  "min": 1, "max": 1 },
+        { "itemId": "key_iron",     "weight": 4,  "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 4,  "min": 1, "max": 1 }
+      ]
+    },
+    {
+      "id": "trash_f2", "rolls": 1, "nothingWeight": 70,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "heart_small",  "weight": 13, "min": 1, "max": 1 },
+        { "itemId": "potion_small", "weight": 7,  "min": 1, "max": 1 },
+        { "itemId": "key_iron",     "weight": 5,  "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 4,  "min": 1, "max": 2 }
+      ]
+    },
+    {
+      "id": "trash_f3", "rolls": 1, "nothingWeight": 68,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "heart_small",  "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "potion_small", "weight": 8,  "min": 1, "max": 1 },
+        // The antidote appears exactly where poison does - mushroom2's spore
+        // cloud is on this floor and nowhere earlier.
+        { "itemId": "antidote",     "weight": 3,  "min": 1, "max": 1 },
+        { "itemId": "key_iron",     "weight": 5,  "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 3,  "min": 1, "max": 2 }
+      ]
+    },
+    {
+      "id": "trash_f4", "rolls": 1, "nothingWeight": 65,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "heart_small",  "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "potion_small", "weight": 7,  "min": 1, "max": 1 },
+        { "itemId": "potion_large", "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "key_iron",     "weight": 7,  "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 7,  "min": 1, "max": 2 }
+      ]
+    },
+    {
+      "id": "trash_f5", "rolls": 1, "nothingWeight": 63,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "heart_small",  "weight": 13, "min": 1, "max": 1 },
+        { "itemId": "potion_small", "weight": 7,  "min": 1, "max": 1 },
+        { "itemId": "potion_large", "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "key_iron",     "weight": 7,  "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 8,  "min": 1, "max": 3 }
+      ]
+    },
+    {
+      // The Drowned Cove. A side stage is entered at whatever strength the
+      // player already has rather than at the end of a descent, so this sits
+      // beside trash_f5 rather than past it: the same drop rate, weighted a
+      // little further towards keys and gold, because the cove has the run of
+      // locked and secret rooms every floor gets and none of the relics four
+      // floors of descent would have handed out on the way.
+      // What the links of a chain drop: nothing. Only the last body of
+      // stage 6's boss pays out, or the player is handed three boss rewards
+      // for one fight. rolls must be positive and a table must have an entry,
+      // so this is a weight of 99 against 1 - it drops a single coin's worth
+      // of item about once in a hundred kills, and there are two such kills
+      // in the game.
+      "id": "nothing", "rolls": 1, "nothingWeight": 99,
+      "entries": [
+        { "itemId": "heart_small", "weight": 1, "min": 1, "max": 1 }
+      ]
+    },
+    {
+      // The cove's boss, modelled on boss_f5. A little leaner: the cove is a
+      // side stage that can be replayed from the first run, so it must not be
+      // the cheapest route to a full kit.
+      "id": "boss_f6", "rolls": 4, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 29, "min": 1, "max": 2 },
+        { "itemId": "heart_large",  "weight": 20, "min": 1, "max": 1 },
+        { "itemId": "potion_large", "weight": 22, "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 30, "min": 2, "max": 4 },
+        { "itemId": "key_iron",     "weight": 14, "min": 1, "max": 2 }
+      ]
+    },
+    {
+      // The shrines' vampires. The cove's table, under its own name so the
+      // shrines can be tuned apart from the cove, and with an ember where the
+      // cove drops keys: a shrine has no locked door to open.
+      "id": "boss_crypt", "rolls": 4, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 29, "min": 1, "max": 2 },
+        { "itemId": "heart_large",  "weight": 20, "min": 1, "max": 1 },
+        { "itemId": "potion_large", "weight": 22, "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 30, "min": 2, "max": 4 },
+        { "itemId": "soul_ember",   "weight": 14, "min": 1, "max": 1 }
+      ]
+    },
+    {
+      // The Nightborne's. The shrines' table under its own name, so the keep
+      // can be tuned apart from them: the keep is a side stage on the map,
+      // replayable from the first run, and must not be the cheapest kit.
+      "id": "boss_night", "rolls": 4, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 29, "min": 1, "max": 2 },
+        { "itemId": "heart_large",  "weight": 20, "min": 1, "max": 1 },
+        { "itemId": "potion_large", "weight": 22, "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 30, "min": 2, "max": 4 },
+        { "itemId": "soul_ember",   "weight": 14, "min": 1, "max": 1 }
+      ]
+    },
+    {
+      // The Satyr's: the Keep's table under his own name, a gem shard more.
+      "id": "boss_satyr", "rolls": 4, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 31, "min": 1, "max": 3 },
+        { "itemId": "heart_large",  "weight": 20, "min": 1, "max": 1 },
+        { "itemId": "potion_large", "weight": 22, "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 30, "min": 2, "max": 4 },
+        { "itemId": "soul_ember",   "weight": 14, "min": 1, "max": 1 }
+      ]
+    },
+    {
+      "id": "trash_f6", "rolls": 1, "nothingWeight": 63,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "heart_small",  "weight": 13, "min": 1, "max": 1 },
+        { "itemId": "potion_small", "weight": 7,  "min": 1, "max": 1 },
+        { "itemId": "potion_large", "weight": 1,  "min": 1, "max": 1 },
+        { "itemId": "key_iron",     "weight": 8,  "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 9,  "min": 1, "max": 3 }
+      ]
+    },
+    {
+      // The one non-boss table worth seeking out. Two rolls at 81% each, so
+      // an elite drops 1.6 things on average and drops nothing at all only
+      // 4% of the time. Rewarding in keys and gold rather than in healing:
+      // bonelords are 18% of floor 5, and when this table carried large
+      // potions each one was worth 23 hit points - more than it dealt.
+      "id": "elite", "rolls": 2, "nothingWeight": 19,
+      "entries": [
+        { "itemId": "gem_shard",    "weight": 6,  "min": 1, "max": 2 },
+        { "itemId": "gold_pouch",   "weight": 30, "min": 1, "max": 2 },
+        { "itemId": "key_iron",     "weight": 16, "min": 1, "max": 1 },
+        { "itemId": "heart_large",  "weight": 10, "min": 1, "max": 1 },
+        { "itemId": "potion_small", "weight": 10, "min": 1, "max": 1 },
+        { "itemId": "soul_ember",   "weight": 5,  "min": 1, "max": 1 },
+        { "itemId": "gold_cache",   "weight": 4,  "min": 1, "max": 1 }
+      ]
+    },
+
+    // ---------------- bosses --------------------------------------------
+    // nothingWeight 0. A boss that drops nothing after ninety seconds is the
+    // single most demoralising outcome a roguelite can produce.
+
+    {
+      "id": "boss_f3", "rolls": 4, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gem_shard",      "weight": 33, "min": 1, "max": 2 },
+        { "itemId": "gold_cache",     "weight": 30, "min": 1, "max": 2 },
+        { "itemId": "potion_large",   "weight": 25, "min": 1, "max": 1 },
+        { "itemId": "key_iron",       "weight": 20, "min": 1, "max": 2 },
+        { "itemId": "soul_ember",     "weight": 15, "min": 1, "max": 1 },
+        { "itemId": "elixir_ward",    "weight": 10, "min": 1, "max": 1 }
+      ]
+    },
+    {
+      "id": "boss_f5", "rolls": 5, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gem_shard",      "weight": 25, "min": 1, "max": 2 },
+        { "itemId": "gold_cache",     "weight": 30, "min": 2, "max": 3 },
+        { "itemId": "potion_large",   "weight": 25, "min": 1, "max": 2 },
+        { "itemId": "soul_ember",     "weight": 20, "min": 1, "max": 2 },
+        { "itemId": "elixir_ward",    "weight": 15, "min": 1, "max": 1 },
+        { "itemId": "draught_shadow", "weight": 10, "min": 1, "max": 1 }
+      ]
+    },
+
+    // ---------------- chests --------------------------------------------
+    // Ordered by what they cost to reach: found, walked to, unlocked, hidden.
+    // Each tier adds a roll or drops the nothing weight rather than adding a
+    // strictly better item, so the progression is in reliability.
+
+    {
+      "id": "chest_common", "rolls": 2, "nothingWeight": 8,
+      "entries": [
+        { "itemId": "gold_pouch",     "weight": 22, "min": 1, "max": 2 },
+        { "itemId": "potion_small",   "weight": 20, "min": 1, "max": 1 },
+        { "itemId": "heart_large",    "weight": 14, "min": 1, "max": 1 },
+        { "itemId": "key_iron",       "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "antidote",       "weight": 7,  "min": 1, "max": 1 },
+        { "itemId": "draught_swift",  "weight": 5,  "min": 1, "max": 1 },
+        // The shelf, in a chest. Four in a hundred each, twice, so an
+        // ordinary chest hands over something the trader would charge ninety
+        // to a hundred and ten for about one time in seven. Rare enough that
+        // it is a moment; common enough that a player meets one before they
+        // have the gold to buy one.
+        { "itemId": "elixir_ward",    "weight": 4,  "min": 1, "max": 1 },
+        { "itemId": "draught_shadow", "weight": 4,  "min": 1, "max": 1 },
+        { "itemId": "gem_shard",      "weight": 4,  "min": 1, "max": 1 }
+      ]
+    },
+    {
+      "id": "chest_treasure", "rolls": 2, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gold_pouch",     "weight": 22, "min": 2, "max": 3 },
+        { "itemId": "potion_large",   "weight": 20, "min": 1, "max": 1 },
+        { "itemId": "key_iron",       "weight": 13, "min": 1, "max": 2 },
+        { "itemId": "draught_swift",  "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "draught_shadow", "weight": 10, "min": 1, "max": 1 },
+        { "itemId": "soul_ember",     "weight": 9,  "min": 1, "max": 1 },
+        { "itemId": "gold_cache",     "weight": 7,  "min": 1, "max": 1 },
+        { "itemId": "gem_shard",      "weight": 7,  "min": 1, "max": 1 }
+      ]
+    },
+    {
+      // Costs a key, so it must beat spending that key on the exit. Three
+      // rolls and no nothing weight is what buys that.
+      "id": "chest_locked", "rolls": 3, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gold_cache",     "weight": 20, "min": 1, "max": 2 },
+        { "itemId": "potion_large",   "weight": 16, "min": 1, "max": 1 },
+        { "itemId": "soul_ember",     "weight": 16, "min": 1, "max": 1 },
+        { "itemId": "elixir_ward",    "weight": 14, "min": 1, "max": 1 },
+        { "itemId": "draught_shadow", "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "smoke_bomb",     "weight": 8,  "min": 1, "max": 1 },
+        { "itemId": "map_scrap",      "weight": 6,  "min": 1, "max": 1 },
+        { "itemId": "gem_shard",      "weight": 8,  "min": 1, "max": 1 }
+      ]
+    },
+    {
+      // Weighted toward permanence rather than gold. A secret room should be
+      // remembered for what it did to the run, not for what it paid.
+      "id": "chest_secret", "rolls": 2, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "soul_ember",  "weight": 22, "min": 1, "max": 2 },
+        { "itemId": "gold_cache",  "weight": 18, "min": 1, "max": 2 },
+        { "itemId": "elixir_ward", "weight": 18, "min": 1, "max": 1 },
+        { "itemId": "map_scrap",   "weight": 14, "min": 1, "max": 1 },
+        { "itemId": "key_ring",    "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "smoke_bomb",  "weight": 8,  "min": 1, "max": 1 },
+        // The richest gem weights in the game, because a secret room is the
+        // one the player had to look for.
+        { "itemId": "gem_shard",   "weight": 8,  "min": 1, "max": 2 }
+      ]
+    },
+    {
+      "id": "chest_boss", "rolls": 3, "nothingWeight": 0,
+      "entries": [
+        { "itemId": "gold_cache",   "weight": 26, "min": 2, "max": 4 },
+        { "itemId": "potion_large", "weight": 20, "min": 1, "max": 2 },
+        { "itemId": "soul_ember",   "weight": 20, "min": 1, "max": 2 },
+        { "itemId": "elixir_ward",  "weight": 14, "min": 1, "max": 1 },
+        { "itemId": "key_ring",     "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "gem_shard",    "weight": 8,  "min": 1, "max": 2 }
+      ]
+    },
+
+    // ---------------- breakables ----------------------------------------
+
+    {
+      // Pots and crates. Deliberately stingy: a 24% drop rate over the
+      // hundreds of pots in a run is generous in total and never makes
+      // breaking one feel obligatory.
+      "id": "pot", "rolls": 1, "nothingWeight": 76,
+      "entries": [
+        { "itemId": "heart_small",  "weight": 12, "min": 1, "max": 1 },
+        { "itemId": "gold_pouch",   "weight": 8,  "min": 1, "max": 1 },
+        { "itemId": "key_iron",     "weight": 2,  "min": 1, "max": 1 },
+        { "itemId": "potion_small", "weight": 2,  "min": 1, "max": 1 }
+      ]
+    }
+  ],
+
+  // What monsters drop of the things that outlive a run - a weapon or a piece
+  // of gear - written into the profile the moment it is picked up, so a death
+  // later in the run does not take it back (loot.Spoils). For each stretch of
+  // floors: the chance one kill drops anything, for an ordinary monster, an
+  // elite (the "elite" table) and a boss; the share of it that is gear; and the
+  // weight of each tier, 1 to 5. Small on purpose, the high tiers very small,
+  // and a little less small further down. A weapon already owned never drops.
+  "spoils": [
+    { "floors": [1, 2],  "trash": 0.005, "elite": 0.04, "boss": 0.25, "gear": 0.5, "tiers": [70, 25, 5, 0, 0] },
+    { "floors": [3, 4],  "trash": 0.006, "elite": 0.05, "boss": 0.3,  "gear": 0.5, "tiers": [50, 32, 14, 3.5, 0.5] },
+    { "floors": [5, 7],  "trash": 0.007, "elite": 0.06, "boss": 0.35, "gear": 0.5, "tiers": [35, 33, 22, 8, 2] },
+    { "floors": [8, 12], "trash": 0.008, "elite": 0.07, "boss": 0.4,  "gear": 0.5, "tiers": [25, 30, 28, 13, 4] }
+  ]
+}

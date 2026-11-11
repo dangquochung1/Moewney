@@ -1,0 +1,683 @@
+{
+  "skills": [
+    {
+      "id": "thunder_lunge",
+      "nameKey": "skill.thunder_lunge.name",
+      "descKey": "skill.thunder_lunge.desc",
+      "icon": "bolt",
+      "slot": 2,
+      "kind": "LUNGE",
+      "cooldown": 6,
+      "damageMult": 1.2,
+      "range":40,
+      "knockback": 60,
+      "vfx": "bolt"
+    },
+    {
+      "id": "thunder_nova",
+      "nameKey": "skill.thunder_nova.name",
+      "descKey": "skill.thunder_nova.desc",
+      "icon": "nova",
+      "slot": 1,
+      "kind": "NOVA",
+      "cooldown": 12,
+      "damageMult": 1.0,
+      "range": 36,
+      "knockback": 140,
+      "vfx": "nova"
+    },
+    {
+      "id": "thunder_avatar",
+      "nameKey": "skill.thunder_avatar.name",
+      "descKey": "skill.thunder_avatar.desc",
+      "icon": "shock",
+      "slot": 3,
+      "kind": "AVATAR",
+      "cooldown": 10,
+      "duration": 8,
+      "damageMult": 1.0,
+      "range": 48,
+      "knockback": 40,
+      "strikeMult": 0.35,
+      "vfx": "aura",
+      // The streak a dash leaves while the storm is up, and the arc to the
+      // three nearest that makes the dash a weapon. Both were hard-coded for
+      // every ultimate once, which is how the fire set shipped dashing in
+      // lightning blue; and the bolt over every head a blow lands on was a
+      // default until the holy set wanted blows with nothing drawn on them.
+      "fx": {"dash": "trail", "chain": "strike", "strike": "shock"},
+      "effects": ["damage_mult", "crit_chance_add", "crit_damage_mult",
+                  "throw_damage_mult", "attack_speed_mult", "move_speed_mult",
+                  "armour_mult"],
+      "magnitudes": [1.2, 0.2, 1.2, 1.2, 1.2, 1.2, 0.9],
+      "hpCost": 0.1,
+      "hpFloor": 0.3
+    },
+
+    // ---------------------------------------------------------------------
+    // The passive of the one who still carries the thunder set. A passive is
+    // always a character's own, even when the three keys are shared:
+    // ContentRegistry.skillsFor hands out the shared keys and the owner's
+    // passive beside them. It was the perk on the character's shop row,
+    // which is where every character's single ability used to be split in
+    // two - a perk the sheet printed and a passive it named beneath it.
+    // ---------------------------------------------------------------------
+
+    {
+      "id": "swift_thunder",
+      "character": "ninjawater",
+      "nameKey": "skill.swift_thunder.name",
+      "descKey": "skill.swift_thunder.desc",
+      "icon": "swiftthunder",
+      "slot": 0,
+      "kind": "PASSIVE",
+      // A fifth quicker with the blade and on the feet. It replaced a flask:
+      // the perk said one more was carried, and nothing ever read it - the
+      // pantry counts the satchel and nothing else.
+      "effects": ["attack_speed_mult", "move_speed_mult"],
+      "magnitudes": [1.2, 1.2]
+    },
+
+    // ---------------------------------------------------------------------
+    // Tiểu Bí's three and his passive: the pumpkin set, from Frostwindz's
+    // Halloween animations, the Light source pack and Pipoya's light pillar
+    // (tools/make_pumpkinfx.py). He was Kình Thiên, the last but one on the
+    // thunder set.
+    //
+    // U and I each have a second shape (VORTEX and TOTEM, "empowered"),
+    // which they take while the lamp burns: the ultimate strengthens the
+    // keys, and blows under it bring them round. See notes/d.md, 3d.
+    // ---------------------------------------------------------------------
+
+    {
+      "id": "pumpkin_might",
+      "character": "ninjared",
+      "nameKey": "skill.pumpkin_might.name",
+      "descKey": "skill.pumpkin_might.desc",
+      "icon": "pumpkinmight",
+      "slot": 0,
+      "kind": "PASSIVE",
+      // His perk, and the same number, from the days he was Kình Thiên: a
+      // tenth on the blade and nothing on the throw.
+      "effects": ["melee_damage_mult"],
+      "magnitudes": [1.10]
+    },
+    {
+      "id": "pumpkin_vortex",
+      "character": "ninjared",
+      "nameKey": "skill.pumpkin_vortex.name",
+      "descKey": "skill.pumpkin_vortex.desc",
+      "icon": "pumpkinvortex",
+      "slot": 1,
+      "kind": "VORTEX",
+      "cooldown": 8,
+      // Once, on everything it catches: the vortex is for gathering, and the
+      // pumpkin is what does the damage to what it gathered.
+      "damageMult": 0.6,
+      // How far along the floor it is thrown.
+      "range": 96,
+      "vfx": "hexring",
+      "fx": {"orbit": "hexorbit"},
+      // Kept under him instead, for six seconds, three clouds going round at
+      // forty pixels; each strikes a body it touches for four tenths of a
+      // blow, at most twice a second, and shoves it away from him.
+      "empowered": {"duration": 6, "damageMult": 0.4, "range": 40, "knockback": 160}
+    },
+    {
+      "id": "pumpkin_lantern",
+      "character": "ninjared",
+      "nameKey": "skill.pumpkin_lantern.name",
+      "descKey": "skill.pumpkin_lantern.desc",
+      "icon": "pumpkinlantern",
+      "slot": 2,
+      "kind": "TOTEM",
+      "cooldown": 10,
+      // How long it burns, every half second, for this share of a blow.
+      "duration": 4,
+      "damageMult": 0.35,
+      // How far from him it may be set down: the thickest crowd inside this.
+      "range": 72,
+      "vfx": "jacklantern",
+      // Strengthened: what falls - forming, falling and bursting on the
+      // floor, the whole of it - and the pumpkin left on whatever it lands on.
+      "fx": {"rain": "pumpkinrain", "hit": "pumpkinbomb"},
+      // A rain of eighteen in three waves within eighty pixels, the first of
+      // each wave on the foes near him; one that lands on a body stuns it for
+      // six tenths of a second, and what it leaves bursts for a blow and a
+      // fifth round it. A fifth less than when three fell: many more do.
+      "empowered": {"duration": 0.6, "damageMult": 1.2, "range": 80, "knockback": 90}
+    },
+    {
+      "id": "pumpkin_lamp",
+      "character": "ninjared",
+      "nameKey": "skill.pumpkin_lamp.name",
+      "descKey": "skill.pumpkin_lamp.desc",
+      "icon": "pumpkinlamp",
+      "slot": 3,
+      "kind": "AVATAR",
+      "cooldown": 20,
+      "duration": 10,
+      // The opening strikes nothing: a lamp is planted, not swung.
+      "damageMult": 0,
+      // How far its light reaches across the floor, and so how wide the pen
+      // is: what is inside stays inside, and he, stepping out, puts it out.
+      "range": 88,
+      "knockback": 0,
+      // The change coming over him; drawn once, as the opening.
+      "vfx": "holyclose",
+      "fx": {"cast": "holyclose", "lamp": "streetlamp",
+             "light": ["lightback", "lightfront", "lampglow"],
+             "held": "lampstaff", "slash": ["lampslash"], "smash": "pumpkinsmash"},
+      // A pumpkin for a head once the change is done.
+      "form": "lamp",
+      // Harder and quicker, a twentieth of what he is missing back each
+      // second, and U and I strengthened - ready again the moment the lamp
+      // is planted, and every blow that lands takes four tenths of a second
+      // off both of their waits. Every third blow is a smash that always
+      // crits and is worth a tenth more. The staff is held in both hands, so
+      // nothing is thrown while it burns.
+      "effects": ["damage_mult", "attack_speed_mult", "reach_add", "heal_missing",
+                  "cooldown_on_hit", "third_blow_mult", "empower_keys", "no_throw",
+                  "refresh_keys"],
+      "magnitudes": [1.25, 1.2, 10, 0.05, 0.4, 1.1, 1, 1, 1],
+      "hpCost": 0,
+      "hpFloor": 0
+    },
+
+    // ---------------------------------------------------------------------
+    // Hoả Tâm's three, and the death a run hands back. `character` is what
+    // binds them: ContentRegistry.skillsFor hands a character its own set if
+    // it has one, so these sit on slots 1-3 beside the thunder three without
+    // either being unreachable.
+    // ---------------------------------------------------------------------
+
+    {
+      "id": "fire_rebirth",
+      "character": "ninjafire",
+      "nameKey": "skill.fire_rebirth.name",
+      "descKey": "skill.fire_rebirth.desc",
+      "icon": "rebirth",
+      "slot": 0,
+      "kind": "PASSIVE",
+      // Once a run, at full health: the perk he was bought for, and the only
+      // one that hands back a death. Counted against RunState.revivesSpent,
+      // so rebuilding the modifiers for an ultimate does not hand it back.
+      "effects": ["revive_once"],
+      "magnitudes": [1]
+    },
+
+    {
+      "id": "fire_nova",
+      "character": "ninjafire",
+      "nameKey": "skill.fire_nova.name",
+      "descKey": "skill.fire_nova.desc",
+      "icon": "firering",
+      "slot": 1,
+      "kind": "NOVA",
+      "cooldown": 12,
+      "damageMult": 1.0,
+      "range": 36,
+      // Harder than the thunder ring's 140. The ring is the one that clears a
+      // room's worth of bodies off you, and the fire one is the only skill in
+      // this set whose whole job is the shove.
+      "knockback": 200,
+      "vfx": "firering"
+    },
+    {
+      "id": "fire_charge",
+      "character": "ninjafire",
+      "nameKey": "skill.fire_charge.name",
+      "descKey": "skill.fire_charge.desc",
+      "icon": "fireblast",
+      "slot": 2,
+      "kind": "CHARGE",
+      "cooldown": 9,
+      // Three seconds, and a cooldown that is only three times it: this is the
+      // set's movement, so waiting nine seconds to cross a room is a skill
+      // nobody presses.
+      "duration": 3,
+      "damageMult": 0.9,
+      "range": 14,
+      "knockback": 120,
+      "vfx": "firerun",
+      "fx": {"cast": "fireburst", "hit": "fireblast"},
+      // Half again as fast. Faster than that and the player outruns the
+      // camera, which is a bug that looks like a feature until a wall arrives.
+      "effects": ["move_speed_mult"],
+      "magnitudes": [1.5]
+    },
+    {
+      "id": "fire_avatar",
+      "character": "ninjafire",
+      "nameKey": "skill.fire_avatar.name",
+      "descKey": "skill.fire_avatar.desc",
+      "icon": "firestar",
+      "slot": 3,
+      "kind": "AVATAR",
+      "cooldown": 14,
+      "duration": 10,
+      "damageMult": 1.0,
+      "range": 40,
+      "knockback": 150,
+      "strikeMult": 0.35,
+      "vfx": "firebloom",
+      // The opening's splash on each enemy it reaches is also what marks every
+      // blow while the fire is up: one strip, two roles.
+      "fx": {"cast": "firestar", "melee": "flamelash", "hit": "firehit",
+             "strike": "firehit", "thrown": "sunburn", "burn": "brightfire"},
+      // Costs no health, unlike the storm. It pays in swing speed instead: a
+      // burning weapon is a heavy one, and 0.8 is what leaves room for the
+      // flame arc to finish before the next swing starts.
+      //
+      // burn_aura is four a second, which is well under one enhanced swing -
+      // the aura is for pressure, not for killing, and a player who could
+      // stand still and win would never swing at all.
+      //
+      // burn_on_hit is 4% of what the target can take, three times, capped at
+      // 15 a tick so a boss's health bar is not the burn's private resource.
+      "effects": ["damage_mult", "move_speed_mult", "attack_speed_mult",
+                  "throw_reach_mult", "burn_aura", "burn_on_hit"],
+      "magnitudes": [1.3, 1.15, 0.8, 1.5, 4, 0.04],
+      "hpCost": 0,
+      "hpFloor": 0
+    },
+
+    // ---------------------------------------------------------------------
+    // Tu Uyen's three, and the one that is not on a key. `venom_touch` is a
+    // PASSIVE: no slot, no cooldown, never cast, folded into Modifiers for
+    // the whole run by Loadout the way an ultimate is folded in for ten
+    // seconds. The quicker step her shop row used to carry is folded into it:
+    // one ability each, with one name, rather than a perk and a passive.
+    // ---------------------------------------------------------------------
+
+    {
+      "id": "venom_touch",
+      "character": "ninjablue",
+      "nameKey": "skill.venom_touch.name",
+      "descKey": "skill.venom_touch.desc",
+      "icon": "venomstride",
+      "slot": 0,
+      "kind": "PASSIVE",
+      // The mark a venomed enemy carries, read by EntityWorld.venomMarkFx. A
+      // passive is never cast, so it has no vfx of its own - only roles.
+      "fx": {"mark": "venommark"},
+      // Two percent of what the target can take, per stack, per second. One
+      // stack is a nuisance and three are six percent a second - but the DoT
+      // is not the point of it, filling the meter is: three stacks detonate
+      // for a fifth of maximum health and reset to nothing.
+      "effects": ["venom_on_hit", "move_speed_mult"],
+      "magnitudes": [0.02, 1.10]
+    },
+    {
+      "id": "venom_stomp",
+      "character": "ninjablue",
+      "nameKey": "skill.venom_stomp.name",
+      "descKey": "skill.venom_stomp.desc",
+      "icon": "venomstomp",
+      "slot": 1,
+      "kind": "STOMP",
+      "cooldown": 11,
+      "damageMult": 1.1,
+      // How far the wave runs from the foot: three bursts, at 8, 24 and 40.
+      "range": 40,
+      // Knockback is a velocity that decays linearly to zero over its steps,
+      // so a body covers strength * (steps + 1) / 120 pixels. A stomp slides
+      // for twenty steps (EntityWorld.STOMP_SLIDE), so 480 throws an enemy
+      // that does not resist about 84px - five body widths, clear of the
+      // wave that threw it - and a skeleton at 0.55 about 38.
+      "knockback": 480,
+      "vfx": "venomwave",
+      // The splash under the foot the wave starts from.
+      "fx": {"cast": "venomsplat"}
+    },
+    {
+      "id": "venom_lunge",
+      "character": "ninjablue",
+      "nameKey": "skill.venom_lunge.name",
+      "descKey": "skill.venom_lunge.desc",
+      "icon": "venomlunge",
+      "slot": 2,
+      "kind": "LUNGE",
+      "cooldown": 6,
+      "damageMult": 1.2,
+      "range": 44,
+      "knockback": 70,
+      "vfx": "starcomet"
+    },
+    {
+      "id": "venom_avatar",
+      "character": "ninjablue",
+      "nameKey": "skill.venom_avatar.name",
+      "descKey": "skill.venom_avatar.desc",
+      "icon": "venommeteor",
+      "slot": 3,
+      "kind": "AVATAR",
+      "cooldown": 15,
+      "duration": 10,
+      "damageMult": 1.0,
+      // The room, not a radius. This is the only skill in the game whose
+      // range is meant to be "everything", and it is a number rather than a
+      // flag because within() already takes one: the largest room in the game
+      // is under 400px across a diagonal.
+      "range": 400,
+      "knockback": 60,
+      "vfx": "starward",
+      // No cast. Its opening is what lands on the enemies, not what happens
+      // where the player stands - and an ultimate that opens that way opens
+      // with meteors: an orb over every head, which hangs, winds up and drops
+      // (EntityWorld.meteors). The hit is the splash each one makes, and the
+      // same splash marks every blow and every dash arc while it is up.
+      "fx": {"hit": "venomdrop", "strike": "venomfall", "dash": "venomdash",
+             "chain": "venomfall", "thrown": "venombolt", "burn": "venommark"},
+      // Costs no health, like the fire one, and unlike the fire one it is
+      // defensive: a fifth off everything that lands, and four points back
+      // each time something does. heal_on_hurt is also what the ward bites
+      // with, so four is a real number twice over.
+      //
+      // venom_on_hit appears here as well as on the passive, and the two add:
+      // while this is up her poison ticks at twice its usual rate, so the
+      // ultimate sharpens the element rather than replacing it.
+      //
+      // reach_add is the relic's, borrowed whole: eight pixels on the blade,
+      // which takes the katana from 22 to 30.
+      "effects": ["damage_mult", "attack_speed_mult", "move_speed_mult",
+                  "damage_taken_mult", "heal_on_hurt", "venom_on_hit", "reach_add"],
+      "magnitudes": [1.25, 1.15, 1.15, 0.8, 4, 0.02, 8],
+      "hpCost": 0,
+      "hpFloor": 0
+    },
+
+    // ---------------------------------------------------------------------
+    // Lục Ảnh's three, from the Frostwindz Rogue pack: the shadow set. He was
+    // the last of the free cast on the shared lightning set; Linh Xuyên's
+    // holy set came after him, and Lôi Vũ is the one left.
+    //
+    // All three take the player in hand for a while (Player.hold) and play
+    // out over several steps (EntityWorld.Scripted), which is the shape the
+    // pack's art has: an orb that forms before it falls, a streak that ends
+    // in a blast, and a run of cuts from every side.
+    // ---------------------------------------------------------------------
+
+    {
+      "id": "shade_haste",
+      "character": "ninjagreen",
+      "nameKey": "skill.shade_haste.name",
+      "descKey": "skill.shade_haste.desc",
+      "icon": "shadehaste",
+      "slot": 0,
+      "kind": "PASSIVE",
+      // A quarter of a second off all three waits for every swing of the blade
+      // that lands - once a swing, however many it catches, and never for a
+      // throw or a skill. A katana lands three a second, so a ninja who keeps
+      // cutting brings his skills round nearly twice as fast; one who stands
+      // back waits the whole time.
+      "effects": ["cooldown_on_hit"],
+      "magnitudes": [0.25]
+    },
+    {
+      "id": "shade_orb",
+      "character": "ninjagreen",
+      "nameKey": "skill.shade_orb.name",
+      "descKey": "skill.shade_orb.desc",
+      "icon": "shadeorb",
+      "slot": 1,
+      "kind": "DIVE",
+      "cooldown": 9,
+      // 1.5 until the whole set was raised by three tenths: his three hit
+      // like a shadow's, which is to say not hard enough to be worth the wait.
+      "damageMult": 1.95,
+      // How wide the landing hurts. It was twenty-four, the width of the fan the
+      // strip bursts in - and with nothing aiming at a ninja who is not there,
+      // everything stands still while he dives along a line, and the line ran
+      // past what it meant to land on. Forty, with a blast drawn that wide.
+      "range": 40,
+      // Out from where he lands, over the usual twelve steps: about 24px.
+      "knockback": 220,
+      "vfx": "shadeorb",
+      "fx": {"hit": "shadeslam"}
+    },
+    {
+      "id": "shade_palm",
+      "character": "ninjagreen",
+      "nameKey": "skill.shade_palm.name",
+      "descKey": "skill.shade_palm.desc",
+      "icon": "shadepalm",
+      "slot": 2,
+      "kind": "PALM",
+      "cooldown": 6,
+      // 1.3, raised with the rest of the set.
+      "damageMult": 1.7,
+      // How far the step in carries before the blast.
+      "range": 24,
+      // A palm throws for sixteen steps (EntityWorld.PALM_SLIDE), and 420
+      // over sixteen carries a body that does not resist about 60px - out
+      // past the far edge of the red, which ends 42px ahead of his hand.
+      "knockback": 420,
+      "vfx": "shadepalm"
+    },
+    {
+      "id": "shade_flurry",
+      "character": "ninjagreen",
+      "nameKey": "skill.shade_flurry.name",
+      "descKey": "skill.shade_flurry.desc",
+      "icon": "shadeflurry",
+      "slot": 3,
+      "kind": "FLURRY",
+      "cooldown": 16,
+      // A second of that back for every body it puts down, the crosses'
+      // included: on anything weak the crosses are what kill it.
+      "refund": 1,
+      // Per cut, and there are seven on a lone target: three crosses and
+      // four cuts from the sides. About one blow each, because it is seven -
+      // and the cuts from the sides climb a quarter a cut from there
+      // (EntityWorld.CUT_STEP), the fourth at 1.75 and always a crit.
+      // 0.8 until the set was raised by three tenths.
+      "damageMult": 1.05,
+      // How far it looks for something to cut.
+      "range": 160,
+      // Enough to bat a body a couple of widths towards the next cut, not
+      // out of the room: about 30px.
+      "knockback": 280,
+      // The cut from the left and, mirrored, from the right.
+      "vfx": "shadecut",
+      // The cut rising from below and, flipped, falling from above; and the
+      // cross that lands on each of the nearest while he is unseen.
+      "fx": {"melee": "shaderise", "hit": "shadex"}
+    },
+
+    // ---------------------------------------------------------------------
+    // Linh Xuyên's three and her passive: the holy set, from Frostwindz's
+    // Priest and Paladin, Sentient Dream Studio's holy effects and Pipoya's
+    // bells and light pillar (tools/make_holyfx.py). Each of her keys rings
+    // in with a bell over her head - the prelude - and one stroke of the
+    // church bell, which is what the sound names.
+    // ---------------------------------------------------------------------
+
+    {
+      "id": "holy_judgement",
+      "character": "ninjadark",
+      "nameKey": "skill.holy_judgement.name",
+      "descKey": "skill.holy_judgement.desc",
+      "icon": "holysmite",
+      "slot": 0,
+      "kind": "PASSIVE",
+      // The last word: every foe that falls while she is the one fighting
+      // ends under a smite, whatever put it down - and pays a fifth more for
+      // it, the gold her shop row used to promise on its own.
+      "fx": {"kill": "smite"},
+      "effects": ["gold_mult"],
+      "magnitudes": [1.20]
+    },
+    {
+      "id": "holy_bind",
+      "character": "ninjadark",
+      "nameKey": "skill.holy_bind.name",
+      "descKey": "skill.holy_bind.desc",
+      "icon": "holybind",
+      "slot": 1,
+      "kind": "BIND",
+      "cooldown": 10,
+      // How long the light holds them before it strikes: the column's own
+      // eleven frames, slowed to this.
+      "duration": 0.9,
+      "damageMult": 1.6,
+      // Everything this close to her, and not the room: it is the answer to
+      // being surrounded, not to a boss across the arena.
+      "range": 56,
+      "vfx": "holyfury",
+      "fx": {"prelude": "bell217", "hit": "holycolumn"},
+      "sound": "bell"
+    },
+    {
+      "id": "holy_ward",
+      "character": "ninjadark",
+      "nameKey": "skill.holy_ward.name",
+      "descKey": "skill.holy_ward.desc",
+      "icon": "holyward",
+      "slot": 2,
+      "kind": "BLESS",
+      "cooldown": 12,
+      "duration": 5,
+      // Three tenths of what she is missing, when the cross flares.
+      "heal": 0.3,
+      "vfx": "holyheal",
+      "fx": {"prelude": "bell218", "cast": "holyward", "guard": "holyshield"},
+      "sound": "bell",
+      // Half of every blow, for five seconds; the shield flashes on each.
+      "effects": ["damage_taken_mult"],
+      "magnitudes": [0.5]
+    },
+    {
+      "id": "holy_ascend",
+      "character": "ninjadark",
+      "nameKey": "skill.holy_ascend.name",
+      "descKey": "skill.holy_ascend.desc",
+      "icon": "holyascend",
+      "slot": 3,
+      "kind": "AVATAR",
+      "cooldown": 18,
+      "duration": 10,
+      "damageMult": 1.0,
+      // The foes near her when it begins take a sword each, and the blast
+      // throws them back.
+      "range": 48,
+      "knockback": 160,
+      // Her cuts hit harder: a follow-up of three tenths on every blow, which
+      // prints a number of its own and draws nothing, since the cut is the
+      // picture.
+      "strikeMult": 0.3,
+      // The ring the light keeps sending out round her.
+      "vfx": "holynova",
+      "fx": {"prelude": "bell219", "cast": "holyswords", "hit": "holysmash",
+             "slash": ["holyslasha", "holyslashb", "holyslashc"],
+             "wrap": ["pillarback", "pillarfront"], "dash": "holydash",
+             "finale": ["holyfinale", "holyblade", "holyclose"]},
+      "sound": "bell",
+      // Stronger, sturdier and quicker, and it costs no health. reach_add is
+      // the relic's, as the poison ultimate borrows it: eight more pixels on
+      // her cuts, which were being drowned out by the ring round her.
+      "effects": ["damage_mult", "damage_taken_mult", "move_speed_mult",
+                  "attack_speed_mult", "reach_add"],
+      "magnitudes": [1.2, 0.75, 1.15, 1.15, 8],
+      "hpCost": 0,
+      "hpFloor": 0
+    },
+
+    // ---------------------------------------------------------------------
+    // Tuyết Nhi's three, and her passive. Ice that gathers, holds and is
+    // struck from above; a vault over what the spikes froze; and an ultimate
+    // that freezes what is near under four stakes, swings an ice mace and
+    // throws icicles. See notes/d.md, 3d, for BIND's rain and the VAULT.
+    // ---------------------------------------------------------------------
+
+    {
+      "id": "frost_heart",
+      "character": "ninjaice",
+      "nameKey": "skill.frost_heart.name",
+      "descKey": "skill.frost_heart.desc",
+      "icon": "frozenheart",
+      "slot": 0,
+      "kind": "PASSIVE",
+      // Crits twice as often - the whole chance, what her gear adds included
+      // (StatSheet.critChance) - and twice as hard: 0.6 on the base 1.4.
+      "effects": ["crit_chance_mult", "crit_damage_add"],
+      "magnitudes": [2, 0.6]
+    },
+    {
+      "id": "ice_rain",
+      "character": "ninjaice",
+      "nameKey": "skill.ice_rain.name",
+      "descKey": "skill.ice_rain.desc",
+      "icon": "icerain",
+      "slot": 1,
+      "kind": "BIND",
+      "cooldown": 10,
+      // How long the ice holds them once it has formed round their feet.
+      "duration": 1.0,
+      "damageMult": 1.8,
+      // Everything this close to her, like the holy bind it is the shape of.
+      "range": 56,
+      // What strikes: an icicle, falling from over each held head. The rain
+      // is what forms up there first; the mark is the ice gathering round a
+      // foot while the body is only slowed; the strike, the ice shattering
+      // under the icicle.
+      "vfx": "icicle",
+      "fx": {"mark": "icegather", "hit": "iceroot", "rain": "icicleform",
+             "strike": "iceshatter"}
+    },
+    {
+      "id": "ice_crescent",
+      "character": "ninjaice",
+      "nameKey": "skill.ice_crescent.name",
+      "descKey": "skill.ice_crescent.desc",
+      "icon": "icecrescent",
+      "slot": 2,
+      "kind": "VAULT",
+      "cooldown": 8,
+      // How long what the spikes catch stays frozen - past the landing.
+      "duration": 1.2,
+      // The mace coming down behind them, twice a blow.
+      "damageMult": 2.0,
+      // The spikes' share of that: six tenths of a blow each.
+      "strikeMult": 0.3,
+      // How far ahead the spikes reach.
+      "range": 44,
+      "knockback": 120,
+      "vfx": "frostspikes",
+      "fx": {"hit": "iceroot", "dash": "frostarc", "melee": "frostmace"}
+    },
+    {
+      "id": "ice_form",
+      "character": "ninjaice",
+      "nameKey": "skill.ice_form.name",
+      "descKey": "skill.ice_form.desc",
+      "icon": "iceform",
+      "slot": 3,
+      "kind": "AVATAR",
+      "cooldown": 18,
+      "duration": 10,
+      // The opening: split four ways, one share on each stake that lands.
+      "damageMult": 1.6,
+      // The foes near her when it begins are frozen under the stakes. Held,
+      // not thrown: nothing is knocked out from under a stake.
+      "range": 48,
+      "knockback": 0,
+      // The nova is the opening and nothing more: an ultimate whose vfx is
+      // its cast does not send it out again - the column of frost she wears
+      // is her wrap.
+      "vfx": "frostnova",
+      "fx": {"cast": "frostnova", "hit": "iceshards",
+             "wrap": ["auraback", "aurafront"], "slash": ["frostmace"],
+             "held": "frostmacehold", "combo": "frostspikes",
+             "thrown": "icicle", "impact": "icehit"},
+      // Harder and more often on the crit, a little thinner on the armour.
+      // reach_add is the mace's: its head comes down two strides from her
+      // hand, and a blow that hit only where a sword reaches missed under it.
+      "effects": ["damage_mult", "crit_chance_add", "crit_damage_add", "armour_mult",
+                  "reach_add"],
+      "magnitudes": [1.2, 0.15, 0.5, 0.95, 18],
+      "hpCost": 0,
+      "hpFloor": 0
+    }
+  ]
+}

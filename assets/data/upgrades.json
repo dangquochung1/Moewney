@@ -1,0 +1,194 @@
+// The village shop: what banked gold buys between runs, and what opens the
+// five locked characters and the six locked weapons.
+//
+// This is the only file in assets/data/ that ContentRegistry does not hold.
+// ContentRegistry is frozen for this session and cannot take another map, so
+// these load through com.kagebi.data.ShopCatalog instead. See notes/d.md
+// section 4 for the calls the village screen makes.
+//
+// PRICING, from BalanceTest's model of the shipped content. A first-time
+// player dies on floor 3 and banks about 635 gold after spending a fifth of
+// the run in the dungeon's own shops. The two cheapest things here cost 350
+// and 380, so a first death buys exactly one upgrade and leaves change - and
+// BalanceTest fails if a change anywhere in the content stops that being
+// true. Those two numbers are the most load-bearing in the file: a first
+// death that buys nothing means no second run, and one that buys three means
+// the shop has run out of things to say by run four.
+//
+// A death on floor 4 banks about 1,250 and a full clear about 2,900. Maxing
+// every upgrade costs 28,230 and every unlock another 10,050, so the
+// meta-progression is roughly thirty runs deep at an average of 1,250.
+// Costs per level roughly double, which keeps the FIRST level of an untouched
+// track cheaper than the next level of a maxed one - the shop should always be
+// offering breadth.
+{
+  "upgrades": [
+    {
+      "id": "vigor", "nameKey": "upgrade.vigor.name", "descKey": "upgrade.vigor.desc",
+      "icon": "heart_red",
+      // 100 base hit points to 160 at level 4. In BalanceTest's model a
+      // first-timer reached the end of floor 3 seven points short of alive,
+      // and one level of this got them through and into the depths - exactly
+      // the promise a first purchase should make, and why this is the
+      // cheapest thing in the shop. Since the frog's blows were cut a tenth
+      // (2026-10-18) they come out of floor 3 with three points to spare
+      // without it, and a level of this is the fifteen they carry down.
+      "maxLevel": 4, "costs": [350, 700, 1400, 2600],
+      "effect": "max_hp_add", "magnitudePerLevel": 15
+    },
+    {
+      "id": "edge", "nameKey": "upgrade.edge.name", "descKey": "upgrade.edge.desc",
+      "icon": "anvil",
+      // 1.08^4 = 1.36 at full. Kept below the vigor track's value on purpose:
+      // more damage shortens a run, more health lengthens one, and a
+      // meta-progression that mostly shortens runs eats its own content.
+      "maxLevel": 4, "costs": [400, 850, 1700, 3000],
+      "effect": "melee_damage_mult", "magnitudePerLevel": 1.08
+    },
+    {
+      "id": "swiftness", "nameKey": "upgrade.swiftness.name", "descKey": "upgrade.swiftness.desc",
+      "icon": "boot",
+      // 78 px/s to 90 at level 3. Capped at three levels because past about 95
+      // the player outruns the camera's own room-to-room snap and the game
+      // starts to feel like it is catching up.
+      "maxLevel": 3, "costs": [450, 1000, 2000],
+      "effect": "move_speed_mult", "magnitudePerLevel": 1.05
+    },
+    {
+      "id": "fortune", "nameKey": "upgrade.fortune.name", "descKey": "upgrade.fortune.desc",
+      "icon": "clover",
+      // At the 1,250 an average run banks, level 1 pays for itself in about
+      // three runs and all three levels in about seven. Anything that paid
+      // back faster would be the only correct first purchase, and there would
+      // be no shop.
+      "maxLevel": 3, "costs": [500, 1100, 2200],
+      "effect": "gold_mult", "magnitudePerLevel": 1.12
+    },
+    {
+      "id": "satchel", "nameKey": "upgrade.satchel.name", "descKey": "upgrade.satchel.desc",
+      "icon": "purse",
+      "maxLevel": 3, "costs": [380, 850, 1700],
+      "effect": "potion_capacity_add", "magnitudePerLevel": 1
+    },
+    {
+      "id": "keyring", "nameKey": "upgrade.keyring.name", "descKey": "upgrade.keyring.desc",
+      "icon": "key_silver",
+      // Starting a run with a key means the first locked door on floor 1 is
+      // openable, which is the cheapest way to make floor 1 stop being a
+      // formality on the twentieth run.
+      "maxLevel": 2, "costs": [550, 1500],
+      "effect": "start_keys_add", "magnitudePerLevel": 1
+    },
+    {
+      "id": "wardstone", "nameKey": "upgrade.wardstone.name", "descKey": "upgrade.wardstone.desc",
+      "icon": "shield_blessed",
+      // One level, 5,000 - nearly two winning runs - and it revives at 40%
+      // rather than the phoenix feather's 50% so that the relic stays worth
+      // picking up.
+      "maxLevel": 1, "costs": [5000],
+      "effect": "revive_once", "magnitudePerLevel": 0.40
+    }
+  ],
+
+  // Ninja and weapons. Both need gold AND a requirement met, so money alone
+  // never opens the whole rack on run two - and a requirement alone never does
+  // either, which keeps banked gold worth having late.
+  //
+  // requirement is one of: none, deepest_floor, wins, runs, bestiary.
+  //
+  // The five ninja below spent a while as SKIN entries, on the argument that a
+  // recolour is a palette rather than a roster. They are characters again.
+  // What each one is for is not on its row any more: it is the character's
+  // passive in skills.json, one each, and the row only says what it costs.
+  // A row's descKey is that passive's, so the shop describes the ninja with
+  // the same words the sheet and the skill bar do.
+  "unlocks": [
+    // The five ninja that have to be bought. The free ones - the green one
+    // and the ice one - have no row.
+    //
+    // Prices and requirements are the ones these carried as colours, unchanged.
+    // A player who already paid for a colour owns the ninja, and raising the
+    // price after the fact would be charging twice for the same purchase.
+    {
+      "id": "ninjared", "kind": "CHARACTER",
+      "nameKey": "char.ninjared.name", "descKey": "skill.pumpkin_might.desc",
+      "icon": "stat_strength", "cost": 600,
+      // The cheapest, and the one whose passive is easiest to feel: damage is
+      // the statistic a player can watch work on the very next enemy.
+      "requirement": "deepest_floor", "requirementValue": 3
+    },
+    {
+      "id": "ninjablue", "kind": "CHARACTER",
+      "nameKey": "char.ninjablue.name", "descKey": "skill.venom_touch.desc",
+      "icon": "runner_orange", "cost": 900,
+      // Twelve of the twenty-two enemies, which is everything on floors 1 to 3
+      // plus one of the depths. It asks the player to have looked around.
+      "requirement": "bestiary", "requirementValue": 12
+    },
+    {
+      "id": "ninjawater", "kind": "CHARACTER",
+      "nameKey": "char.ninjawater.name", "descKey": "skill.swift_thunder.desc",
+      "icon": "drop_blue", "cost": 1200,
+      // Fifteen runs. The consolation unlock: it arrives for persistence
+      // rather than for skill, and it is the one that catches a player who is
+      // stuck.
+      "requirement": "runs", "requirementValue": 15
+    },
+    {
+      "id": "ninjadark", "kind": "CHARACTER",
+      "nameKey": "char.ninjadark.name", "descKey": "skill.holy_judgement.desc",
+      "icon": "tail_purple", "cost": 1400,
+      "requirement": "deepest_floor", "requirementValue": 5
+    },
+    {
+      "id": "ninjafire", "kind": "CHARACTER",
+      "nameKey": "char.ninjafire.name", "descKey": "skill.fire_rebirth.desc",
+      "icon": "flame_orange", "cost": 2000,
+      // The flame's own colours, the only thing in the game gated behind
+      // finishing it, and the only passive that hands back a death.
+      "requirement": "wins", "requirementValue": 1
+    },
+
+    {
+      "id": "kunai", "kind": "WEAPON",
+      "nameKey": "weapon.kunai.name", "descKey": "weapon.kunai.desc",
+      "icon": "weapon_dagger", "cost": 350,
+      // The cheapest weapon and the earliest requirement, because the second
+      // run is the right time to learn that range exists.
+      "requirement": "runs", "requirementValue": 2
+    },
+    {
+      "id": "axe", "kind": "WEAPON",
+      "nameKey": "weapon.axe.name", "descKey": "weapon.axe.desc",
+      "icon": "weapon_axe", "cost": 400,
+      "requirement": "deepest_floor", "requirementValue": 2
+    },
+    {
+      "id": "net", "kind": "WEAPON",
+      "nameKey": "weapon.net.name", "descKey": "weapon.net.desc",
+      "icon": "weapon_rope", "cost": 500,
+      "requirement": "bestiary", "requirementValue": 8
+    },
+    {
+      "id": "pickaxe", "kind": "WEAPON",
+      "nameKey": "weapon.pickaxe.name", "descKey": "weapon.pickaxe.desc",
+      "icon": "weapon_pickaxe", "cost": 700,
+      "requirement": "deepest_floor", "requirementValue": 3
+    },
+    {
+      "id": "shuriken", "kind": "WEAPON",
+      "nameKey": "weapon.shuriken.name", "descKey": "weapon.shuriken.desc",
+      "icon": "weapon_star", "cost": 900,
+      "requirement": "deepest_floor", "requirementValue": 4
+    },
+    {
+      "id": "hammer", "kind": "WEAPON",
+      "nameKey": "weapon.hammer.name", "descKey": "weapon.hammer.desc",
+      "icon": "weapon_hammer", "cost": 1100,
+      // Last and dearest. The hammer is the weapon that needs the rest of the
+      // build to work - frost_lantern, the net, anything that stops a target
+      // walking away from a 24-step root.
+      "requirement": "deepest_floor", "requirementValue": 4
+    }
+  ]
+}
