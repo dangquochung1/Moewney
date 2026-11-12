@@ -1,6 +1,8 @@
 package app.meowney.feature.game
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -63,29 +65,6 @@ fun Cup(tier: Int, box: Dp) {
 }
 
 @Composable
-fun TrophyTab(vm: GiftViewModel) {
-    val have by vm.trophies.collectAsState()
-    val metrics by vm.metrics.collectAsState()
-    val m = LocalPixelMetrics.current
-    val type = LocalPixelType.current
-    LaunchedEffect(Unit) { vm.loadMetrics() }
-    val best = have.groupBy { it.id }.mapValues { (_, l) -> l.maxOf { it.tier } }
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-        item {
-            val cups = best.values.sum()
-            PixelText("Tủ cúp: ${best.size}/${AchievementEngine.all.size} thành tựu · $cups/${AchievementEngine.all.size * 3} bậc", style = type.bodyBold, color = Pal.Gold)
-            PixelText("Bậc Đồng / Bạc / Vàng thưởng 20 / 50 / 150 xu.", style = type.caption, color = Pal.InkSoft)
-        }
-        for (g in AchGroup.entries) {
-            item(key = g.name) { PixelText(g.label.uppercase(), style = type.caption, color = Pal.InkSoft) }
-            items(AchievementEngine.all.filter { it.group == g }, key = { it.id }) { a ->
-                TrophyRow(a, best[a.id] ?: 0, metrics[a.metric])
-            }
-        }
-    }
-}
-
-@Composable
 private fun TrophyRow(a: Achievement, tier: Int, value: Long?) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
@@ -109,26 +88,48 @@ private fun TrophyRow(a: Achievement, tier: Int, value: Long?) {
     }
 }
 
-// ------------------------------------------------------------------ monthly challenge + season quest
+// ------------------------------------------------------------------ achievements tab
 
+/** "Thành tích": what to aim for this month on top, the trophy shelf below. */
 @Composable
-fun ChallengeTab(vm: GiftViewModel) {
+fun AchievementsTab(vm: GiftViewModel) {
     val view by vm.challenge.collectAsState()
     val quest by vm.quest.collectAsState()
-    val m = LocalPixelMetrics.current
+    val have by vm.trophies.collectAsState()
+    val metrics by vm.metrics.collectAsState()
     val type = LocalPixelType.current
-    LaunchedEffect(Unit) { vm.loadChallenge() }
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-        view?.let { v -> item { ChallengeCard(v, vm) } }
-        quest?.let { q -> item { QuestCard(q, vm) } }
-        item {
-            PixelText(
-                "Mỗi tháng một thử thách, xong thì mở rương lớn: ${ChallengeEngine.CHEST_COINS} xu + 2 món ăn cho mèo.",
-                style = type.caption, color = Pal.InkSoft,
-            )
+    LaunchedEffect(Unit) {
+        vm.loadChallenge()
+        vm.loadMetrics()
+    }
+    val best = have.groupBy { it.id }.mapValues { (_, l) -> l.maxOf { it.tier } }
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        // one item that is always first: the list keeps its place by key, so cards arriving
+        // later must not be inserted above what is on screen
+        item(key = "month") {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                view?.let { ChallengeCard(it, vm) }
+                quest?.let { QuestCard(it, vm) }
+                PixelText("Mỗi tháng một thử thách, xong thì mở rương: ${ChallengeEngine.CHEST_COINS} xu + 2 món ăn cho mèo.", style = type.caption, color = Pal.InkSoft)
+            }
+        }
+        item(key = "shelf") {
+            Column(Modifier.padding(top = 8.dp)) {
+                val cups = best.values.sum()
+                PixelText("TỦ CÚP · ${best.size}/${AchievementEngine.all.size} · $cups/${AchievementEngine.all.size * 3} bậc", style = type.caption, color = Pal.AccentText)
+                PixelText("Bậc Đồng / Bạc / Vàng thưởng 20 / 50 / 150 xu.", style = type.caption, color = Pal.InkSoft)
+            }
+        }
+        for (g in AchGroup.entries) {
+            item(key = g.name) { PixelText(g.label.uppercase(), style = type.caption, color = Pal.InkSoft) }
+            items(AchievementEngine.all.filter { it.group == g }, key = { it.id }) { a ->
+                TrophyRow(a, best[a.id] ?: 0, metrics[a.metric])
+            }
         }
     }
 }
+
+// ------------------------------------------------------------------ monthly challenge + season quest
 
 @Composable
 private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {

@@ -367,9 +367,9 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                         onNote = { nav.navigate(NoteEditRoute(it)) },
                         onCheck = { vm.toggleCheck(it) },
                         onGift = { nav.navigate(GiftRoute()) },
-                        onShop = { nav.navigate(GiftRoute("SHOP")) },
-                        onWardrobe = { nav.navigate(GiftRoute("WARDROBE")) },
-                        onChallenge = { nav.navigate(GiftRoute("CHALLENGE")) },
+                        onShop = { nav.navigate(GiftRoute("SHOP")) { popUpTo<HomeRoute>(); launchSingleTop = true } },
+                        onWardrobe = { nav.navigate(GiftRoute("SHOP")) { popUpTo<HomeRoute>(); launchSingleTop = true } },
+                        onChallenge = { nav.navigate(GiftRoute("TROPHY")) { popUpTo<HomeRoute>(); launchSingleTop = true } },
                         onTodo = vm::todoToggle,
                     ),
                 )
@@ -517,7 +517,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             NotesGate(back) { NoteBinScreen(vm, onBack = back, onOpen = { nav.navigate(NoteEditRoute(it)) }) }
         }
         composable<GiftRoute> { entry ->
-            val tab = runCatching { GiftTab.valueOf(entry.toRoute<GiftRoute>().tab) }.getOrDefault(GiftTab.WHEEL)
+            val tab = GiftTab.of(entry.toRoute<GiftRoute>().tab)
             val vm: GiftViewModel = viewModel(factory = vmFactory { GiftViewModel(c, tab) })
             GiftScreen(vm, onBack = back, onUseVoucher = { v ->
                 nav.navigate(EntryRoute(amount = v.amount, note = v.name, categoryId = v.categoryId ?: -1))

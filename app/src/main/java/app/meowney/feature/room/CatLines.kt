@@ -128,7 +128,7 @@ object CatLines {
 
     fun ate(name: String) = listOf("Măm măm... $name ngon tuyệt!", "Sen chiều trẫm quá. $name hết sạch rồi.", "Trẫm no rồi, cảm ơn Sen nha.").random()
 
-    fun adopted(name: String) = "Chào mừng $name về nhà! Vào Tủ đồ để cho bé ra phòng nhé."
+    fun adopted(name: String) = "Chào mừng $name về nhà! Vào Cửa hàng chọn bé là bé ra hành tinh ngay."
 
     fun trophy(name: String, tier: Int) = "Sen mở được cúp \"$name\" bậc ${listOf("Đồng", "Bạc", "Vàng")[tier - 1]}!"
 

@@ -1,6 +1,12 @@
 package app.meowney.feature.game
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.lazy.grid.GridItemSpan
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
@@ -74,15 +80,25 @@ import java.time.LocalDate
 import kotlin.math.max
 import kotlin.math.min
 
+/** The four tabs of Quà: earn with the wheel, spend in the shop or on real treats, look back at achievements. */
 enum class GiftTab(val label: String) {
-    WHEEL("Vòng quay"), SHOP("Cửa hàng"), WARDROBE("Tủ đồ"), REAL("Thưởng thật"), TROPHY("Tủ cúp"), CHALLENGE("Thử thách"),
+    WHEEL("Vòng quay"), SHOP("Cửa hàng"), REAL("Tự thưởng"), TROPHY("Thành tích");
+
+    companion object {
+        /** A tab by name, old names included (the wardrobe is in the shop, the challenge in achievements). */
+        fun of(name: String): GiftTab = when (name) {
+            "WARDROBE" -> SHOP
+            "CHALLENGE" -> TROPHY
+            else -> runCatching { valueOf(name) }.getOrDefault(WHEEL)
+        }
+    }
 }
 
-enum class ShopSection(val label: String) { FOOD("Đồ ăn"), TOY("Đồ chơi"), CORNER("Góc mèo"), CATS("Mèo"), SEASON("Theo mùa") }
+enum class ShopSection(val label: String) { GEAR("Đồ dùng"), FOOD("Đồ ăn"), CATS("Mèo"), SEASON("Theo mùa") }
 
 class GiftViewModel(val c: AppContainer, initial: GiftTab) : ViewModel() {
     val tab = MutableStateFlow(initial)
-    val section = MutableStateFlow(ShopSection.FOOD)
+    val section = MutableStateFlow(ShopSection.GEAR)
     val today: LocalDate = LocalDate.now()
     val season = SeasonEngine.seasonOn(today)
     val state: StateFlow<GameState> = c.game.state.stateIn(viewModelScope, SharingStarted.Eagerly, GameState())
@@ -135,7 +151,7 @@ class GiftViewModel(val c: AppContainer, initial: GiftTab) : ViewModel() {
     fun claimQuest() = viewModelScope.launch {
         val got = c.game.claimQuest(today) ?: return@launch
         c.sfx.play(app.meowney.core.sound.Sfx.Sound.Success)
-        say(if (got.isEmpty()) "Nhiệm vụ xong! +${SeasonEngine.QUEST_COINS} xu và 2 món ăn cho trẫm." else "Nhiệm vụ xong! ${Catalog[got]?.name} vào Tủ đồ rồi.")
+        say(if (got.isEmpty()) "Nhiệm vụ xong! +${SeasonEngine.QUEST_COINS} xu và 2 món ăn cho trẫm." else "Nhiệm vụ xong! ${Catalog[got]?.name} có trong Cửa hàng rồi, bấm là dùng.")
         quest.value = c.game.questView(today)
     }
 
@@ -248,9 +264,7 @@ fun GiftScreen(
         }
     }
     PixelScreen("Quà", onBack = null, actions = { CoinTag(game.coins) }) {
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(bottom = m.unit * 2), horizontalArrangement = Arrangement.spacedBy(m.unit)) {
-            for (t in GiftTab.entries) PixelChip(t.label, selected = tab == t) { vm.tab.value = t }
-        }
+        app.meowney.core.ui.PixelTabs(GiftTab.entries, tab, { it.label }, Modifier.padding(bottom = 8.dp)) { vm.tab.value = it }
         message?.let {
             PixelPanel(Modifier.fillMaxWidth().padding(bottom = m.unit * 2), tone = CardTone.Lemon, extraPadding = 1) {
                 PixelText(it, style = type.body, color = Pal.Ink)
@@ -258,13 +272,10 @@ fun GiftScreen(
         }
         Box(Modifier.weight(1f).fillMaxWidth()) {
             when (tab) {
-                GiftTab.SHOP -> ShopTab(vm)
-                GiftTab.WARDROBE -> WardrobeTab(vm)
                 GiftTab.WHEEL -> WheelTab(vm)
+                GiftTab.SHOP -> ShopTab(vm)
                 GiftTab.REAL -> RewardsTab(vm, onUseVoucher)
-                GiftTab.TROPHY -> TrophyTab(vm)
-                GiftTab.CHALLENGE -> ChallengeTab(vm)
-                else -> content(tab)
+                GiftTab.TROPHY -> AchievementsTab(vm)
             }
         }
     }
@@ -318,83 +329,156 @@ fun ItemIcon(item: Item, box: Dp, catColor: Int = 5, modifier: Modifier = Modifi
     }
 }
 
-// ------------------------------------------------------------------ shop
+// ------------------------------------------------------------------ shop (with the wardrobe)
 
-private fun ShopSection.items(season: app.meowney.core.game.Season?): List<Item> = when (this) {
-    ShopSection.FOOD -> Catalog.items.filter { it.slot == Slot.FOOD }
-    ShopSection.TOY -> Catalog.items.filter { it.slot == Slot.TOY && !it.default }
-    ShopSection.CORNER -> Catalog.items.filter { (it.slot == Slot.BED || it.slot == Slot.BOWL) && !it.default }
+/** What a section of the shop shows. Gear: toys, bowls, beds, and the hats Sen has. */
+private fun ShopSection.items(game: GameState, season: app.meowney.core.game.Season?): List<Item> = when (this) {
+    ShopSection.FOOD -> Catalog.treats
+    ShopSection.GEAR -> Catalog.items.filter {
+        it.slot == Slot.TOY || it.slot == Slot.BOWL || it.slot == Slot.BED || (it.slot == Slot.HAT && (it.default || game.owns(it.id)))
+    }
     ShopSection.SEASON -> if (season != null) Catalog.seasonal(season) else emptyList()
     ShopSection.CATS -> emptyList()
 }
 
+/**
+ * Buy and use in one place: the cat on top (what it has on now), then the items. A thing not
+ * owned shows its price (Mua / Mua + dùng); owned, a tap puts it on ("Dùng"); the one in use
+ * says so. Treats can be bought again and fed.
+ */
 @Composable
 private fun ShopTab(vm: GiftViewModel) {
     val section by vm.section.collectAsState()
     val game by vm.state.collectAsState()
     val cat by vm.cat.collectAsState()
     val adoptPrice by vm.adoptPrice.collectAsState()
-    val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     var asking by remember { mutableStateOf<Item?>(null) }
     var adopting by remember { mutableStateOf<Int?>(null) }
-    Column(Modifier.fillMaxSize()) {
-        Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(bottom = m.unit * 2), horizontalArrangement = Arrangement.spacedBy(m.unit)) {
-            for (s in ShopSection.entries) {
-                if (s == ShopSection.SEASON && vm.season == null) continue
-                PixelChip(if (s == ShopSection.SEASON) vm.season!!.label else s.label, selected = section == s) { vm.section.value = s }
+    var renaming by remember { mutableStateOf(false) }
+    val look = game.look(vm.season)
+    val preview = remember(cat.first) { Cat(cat.first) }
+    LaunchedEffect(preview, look) {
+        preview.propSprites = mapOf(Prop.Bed to look.bed, Prop.Bowl to look.bowl, Prop.Yarn to look.toy)
+        preview.hat = look.hat
+    }
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        verticalArrangement = Arrangement.spacedBy(8.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        item(span = { GridItemSpan(maxLineSpan) }, key = "cat") {
+            PixelPanel(Modifier.fillMaxWidth(), extraPadding = 0) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    PlanetStage(
+                        preview,
+                        Modifier.fillMaxWidth().height(190.dp).clip(RoundedCornerShape(10.dp)),
+                        look = look,
+                        onCatTap = { preview.poke() },
+                    )
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                        PixelText(cat.second, style = type.title, color = Pal.Ink, maxLines = 1)
+                        game.pets.firstOrNull { it.color == cat.first }?.let { PixelText("♥ ${it.affection}", style = type.bodyBold, color = Pal.Red) }
+                        Spacer(Modifier.weight(1f))
+                        PixelTextButton("Đổi tên", onClick = { renaming = true }, look = ButtonLook.Light)
+                    }
+                    if (game.pets.size > 1) {
+                        Row(Modifier.horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                            for (p in game.pets) {
+                                val on = p.color == cat.first
+                                Column(
+                                    Modifier
+                                        .clip(RoundedCornerShape(10.dp))
+                                        .background(if (on) Pal.Selected else Pal.Card)
+                                        .border(1.dp, Pal.Line, RoundedCornerShape(10.dp))
+                                        .clickable { vm.show(p.color) }
+                                        .padding(horizontal = 8.dp, vertical = 4.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally,
+                                ) {
+                                    CatIcon(p.color, 36.dp)
+                                    PixelText(p.name, style = type.caption, color = Pal.Ink, maxLines = 1)
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        item(span = { GridItemSpan(maxLineSpan) }, key = "sections") {
+            Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(6.dp)) {
+                for (sec in ShopSection.entries) {
+                    if (sec == ShopSection.SEASON && vm.season == null) continue
+                    PixelChip(if (sec == ShopSection.SEASON) vm.season!!.label else sec.label, selected = section == sec) { vm.section.value = sec }
+                }
             }
         }
         if (section == ShopSection.SEASON) {
-            PixelText("Đồ mùa ${vm.season?.label} chỉ bán trong mùa, mua rồi giữ mãi.", style = type.caption, color = Pal.InkSoft, modifier = Modifier.padding(bottom = m.unit * 2))
+            item(span = { GridItemSpan(maxLineSpan) }, key = "season note") {
+                PixelText("Đồ mùa ${vm.season?.label} chỉ bán trong mùa, mua rồi giữ mãi.", style = type.caption, color = Pal.InkSoft)
+            }
         }
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(3),
-            verticalArrangement = Arrangement.spacedBy(m.unit * 2),
-            horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
-            modifier = Modifier.fillMaxSize(),
-        ) {
-            if (section == ShopSection.CATS) {
-                items(Catalog.catColors, key = { "cat${it.first}" }) { (color, label) ->
-                    val pet = game.pets.firstOrNull { it.color == color }
-                    ShopCell(
-                        title = pet?.name ?: label,
-                        price = if (pet != null) null else adoptPrice,
-                        note = if (pet != null) (if (cat.first == color) "Đang ở phòng" else "Đã nuôi") else null,
-                        affordable = game.coins >= adoptPrice,
-                        onClick = { if (pet == null) adopting = color else vm.show(color) },
-                    ) { CatIcon(color, m.unit * 26) }
-                }
-            } else {
-                items(section.items(vm.season), key = { it.id }) { item ->
-                    val owned = game.owns(item.id)
-                    ShopCell(
-                        title = item.name,
-                        price = if (item.slot == Slot.FOOD || !owned) item.price else null,
-                        note = when {
-                            item.slot == Slot.FOOD && game.qty(item.id) > 0 -> "Có ${game.qty(item.id)}"
-                            owned && game.equipped(item.slot) == item.id -> "Đang dùng"
-                            owned -> "Đã có"
-                            else -> null
-                        },
-                        affordable = game.coins >= item.price,
-                        onClick = { if (item.slot != Slot.FOOD && owned) vm.equip(item.slot, item.id) else asking = item },
-                    ) { ItemIcon(item, m.unit * 26, cat.first) }
-                }
+        if (section == ShopSection.CATS) {
+            items(Catalog.catColors, key = { "cat${it.first}" }) { (color, label) ->
+                val pet = game.pets.firstOrNull { it.color == color }
+                ShopCell(
+                    title = pet?.name ?: label,
+                    price = if (pet != null) null else adoptPrice,
+                    note = if (pet != null) (if (cat.first == color) "Đang ở đây" else "Đổi sang") else null,
+                    inUse = cat.first == color,
+                    affordable = game.coins >= adoptPrice,
+                    onClick = { if (pet == null) adopting = color else vm.show(color) },
+                ) { CatIcon(color, 56.dp) }
+            }
+        } else {
+            items(section.items(game, vm.season), key = { it.id }) { item ->
+                val owned = game.owns(item.id)
+                val food = item.slot == Slot.FOOD
+                val inUse = !food && owned && game.equipped(item.slot) == item.id
+                ShopCell(
+                    title = item.name,
+                    price = if (food || !owned) item.price else null,
+                    note = when {
+                        food && game.qty(item.id) > 0 -> "Có ${game.qty(item.id)}"
+                        inUse -> "Đang dùng"
+                        owned -> "Dùng"
+                        else -> null
+                    },
+                    inUse = inUse,
+                    affordable = game.coins >= item.price,
+                    onClick = { if (!food && owned) vm.equip(item.slot, item.id) else asking = item },
+                ) { ItemIcon(item, 56.dp, cat.first) }
             }
         }
     }
     asking?.let { item ->
-        BuyDialog(item, game.coins, cat.first, onDismiss = { asking = null }, onBuy = { use ->
-            asking = null
-            vm.buy(item, use)
-        })
+        BuyDialog(
+            item, game.coins, cat.first, have = game.qty(item.id),
+            onDismiss = { asking = null },
+            onBuy = { use ->
+                asking = null
+                vm.buy(item, use)
+            },
+            onFeed = {
+                asking = null
+                vm.feed(item)
+                preview.feed()
+            },
+        )
     }
     adopting?.let { color ->
         AdoptDialog(color, adoptPrice, game.coins, onDismiss = { adopting = null }, onAdopt = { name ->
             adopting = null
             vm.adopt(color, name)
         })
+    }
+    if (renaming) {
+        var name by remember { mutableStateOf(cat.second) }
+        PixelDialog(onDismiss = { renaming = false }) {
+            PixelText("Tên mèo", style = type.title, color = Pal.Ink)
+            PixelTextField(name, { name = it.take(16) }, Modifier.fillMaxWidth())
+            PixelTextButton("Lưu", onClick = { vm.rename(cat.first, name); renaming = false }, modifier = Modifier.fillMaxWidth())
+        }
     }
 }
 
@@ -409,44 +493,50 @@ fun CatIcon(color: Int, box: Dp, anim: String = "sit") {
 }
 
 @Composable
-private fun ShopCell(title: String, price: Int?, note: String?, affordable: Boolean, onClick: () -> Unit, icon: @Composable () -> Unit) {
-    val m = LocalPixelMetrics.current
+private fun ShopCell(title: String, price: Int?, note: String?, inUse: Boolean, affordable: Boolean, onClick: () -> Unit, icon: @Composable () -> Unit) {
     val type = LocalPixelType.current
-    PixelPanel(Modifier.fillMaxWidth().clickable(onClick = onClick), extraPadding = 0) {
-        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(m.unit)) {
+    PixelPanel(
+        Modifier.fillMaxWidth().clickable(onClick = onClick),
+        tone = if (inUse) app.meowney.core.ui.CardTone.Selected else app.meowney.core.ui.CardTone.Plain,
+        extraPadding = 0,
+    ) {
+        Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(4.dp)) {
             icon()
             PixelText(title, style = type.caption, color = Pal.Ink, align = TextAlign.Center, maxLines = 2)
             when {
-                note != null && price == null -> PixelText(note, style = type.caption, color = Pal.Green, align = TextAlign.Center)
                 price != null -> PixelText(
                     "$price xu" + (note?.let { " · $it" } ?: ""), style = type.bodyBold,
                     color = if (affordable) Pal.Ink else Pal.Red, align = TextAlign.Center, maxLines = 1,
                 )
+                note != null -> PixelText(note, style = type.bodyBold, color = if (inUse) Pal.Ink else Pal.Green, align = TextAlign.Center)
             }
         }
     }
 }
 
 @Composable
-private fun BuyDialog(item: Item, coins: Long, catColor: Int, onDismiss: () -> Unit, onBuy: (use: Boolean) -> Unit) {
-    val m = LocalPixelMetrics.current
+private fun BuyDialog(item: Item, coins: Long, catColor: Int, have: Int, onDismiss: () -> Unit, onBuy: (use: Boolean) -> Unit, onFeed: () -> Unit) {
     val type = LocalPixelType.current
     PixelDialog(onDismiss) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-            ItemIcon(item, m.unit * 34, catColor)
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            ItemIcon(item, 64.dp, catColor)
             Column(Modifier.weight(1f)) {
                 PixelText(item.name, style = type.title, color = Pal.Ink)
                 PixelText(item.slot.label + if (item.hearts > 0) " · +${item.hearts} tim" else "", style = type.caption, color = Pal.InkSoft)
-                PixelText("${item.price} xu", style = type.bodyBold, color = Pal.Ink)
+                PixelText("${item.price} xu" + if (have > 0) " · đang có $have" else "", style = type.bodyBold, color = Pal.Ink)
             }
         }
-        if (coins < item.price) {
+        if (item.slot == Slot.FOOD) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                if (have > 0) PixelTextButton("Cho ăn", onClick = onFeed, modifier = Modifier.weight(1f))
+                PixelTextButton("Mua", onClick = { onBuy(false) }, enabled = coins >= item.price, look = if (have > 0) ButtonLook.Light else ButtonLook.Orange, modifier = Modifier.weight(1f))
+            }
+            if (coins < item.price) PixelText("Còn thiếu ${item.price - coins} xu.", style = type.caption, color = Pal.Red)
+        } else if (coins < item.price) {
             PixelText("Còn thiếu ${item.price - coins} xu. Ghi sổ, làm thói quen để kiếm thêm nhé.", style = type.caption, color = Pal.Red)
             PixelTextButton("Để sau", onClick = onDismiss, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
-        } else if (item.slot == Slot.FOOD) {
-            PixelTextButton("Mua", onClick = { onBuy(false) }, modifier = Modifier.fillMaxWidth())
         } else {
-            Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 PixelTextButton("Mua", onClick = { onBuy(false) }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
                 PixelTextButton("Mua + dùng", onClick = { onBuy(true) }, modifier = Modifier.weight(1.3f))
             }
@@ -474,104 +564,6 @@ private fun AdoptDialog(color: Int, price: Int, coins: Long, onDismiss: () -> Un
             PixelTextButton("Để sau", onClick = onDismiss, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
         } else {
             PixelTextButton("Nhận nuôi", onClick = { onAdopt(name.trim()) }, modifier = Modifier.fillMaxWidth())
-        }
-    }
-}
-
-// ------------------------------------------------------------------ wardrobe
-
-@OptIn(ExperimentalLayoutApi::class)
-@Composable
-private fun WardrobeTab(vm: GiftViewModel) {
-    val game by vm.state.collectAsState()
-    val cat by vm.cat.collectAsState()
-    val m = LocalPixelMetrics.current
-    val type = LocalPixelType.current
-    val look = game.look(vm.season)
-    val preview = remember(cat.first) { Cat(cat.first) }
-    LaunchedEffect(preview, look) {
-        preview.propSprites = mapOf(Prop.Bed to look.bed, Prop.Bowl to look.bowl, Prop.Yarn to look.toy)
-        preview.hat = look.hat
-    }
-    var renaming by remember { mutableStateOf(false) }
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-        item {
-            Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                PlanetStage(preview, Modifier.fillMaxWidth().height(m.unit * 80), look = look, onCatTap = { preview.poke() })
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                    val pet = game.pets.firstOrNull { it.color == cat.first }
-                    PixelText(cat.second, style = type.title, color = Pal.Ink)
-                    pet?.let { PixelText("${it.affection} tim", style = type.bodyBold, color = Pal.Red) }
-                    PixelTextButton("Đổi tên", onClick = { renaming = true }, look = ButtonLook.Light)
-                }
-            }
-        }
-        item {
-            Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                PixelText("MÈO CỦA SEN", style = type.caption, color = Pal.InkSoft)
-                FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                    for (p in game.pets) {
-                        Column(
-                            Modifier.border(m.unit, if (p.color == cat.first) Pal.Orange else Pal.WoodDark).clickable { vm.show(p.color) }.padding(m.unit),
-                            horizontalAlignment = Alignment.CenterHorizontally,
-                        ) {
-                            CatIcon(p.color, m.unit * 20)
-                            PixelText(p.name, style = type.caption, color = Pal.Ink, maxLines = 1)
-                        }
-                    }
-                    if (game.pets.size < 6) {
-                        PixelTextButton("+ Nuôi thêm", onClick = { vm.section.value = ShopSection.CATS; vm.tab.value = GiftTab.SHOP }, look = ButtonLook.Light)
-                    }
-                }
-            }
-        }
-        val treats = Catalog.treats.filter { game.qty(it.id) > 0 }
-        item {
-            Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                PixelText("ĐỒ ĂN", style = type.caption, color = Pal.InkSoft)
-                if (treats.isEmpty()) PixelText("Chưa có món nào. Mua ở Cửa hàng hoặc quay trúng nhé.", style = type.caption, color = Pal.InkSoft)
-                for (t in treats) {
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                        ItemIcon(t, m.unit * 14)
-                        PixelText("${t.name} x${game.qty(t.id)}", style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f))
-                        PixelTextButton("Cho ăn", onClick = { vm.feed(t); preview.feed() })
-                    }
-                }
-            }
-        }
-        for (slot in Catalog.decorSlots) {
-            val options = Catalog.items.filter { it.slot == slot && game.owns(it.id) }
-            item(key = slot.name) {
-                Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                    PixelText(slot.label.uppercase(), style = type.caption, color = Pal.InkSoft)
-                    FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                        for (o in options) {
-                            val on = game.equipped(slot) == o.id
-                            Column(
-                                Modifier.width(m.unit * 28).border(m.unit, if (on) Pal.Orange else Pal.WoodDark).clickable { vm.equip(slot, o.id) }.padding(m.unit),
-                                horizontalAlignment = Alignment.CenterHorizontally,
-                            ) {
-                                ItemIcon(o, m.unit * 18, cat.first)
-                                PixelText(o.name, style = type.caption, color = if (on) Pal.Gold else Pal.Ink, align = TextAlign.Center, maxLines = 2)
-                            }
-                        }
-                        if (options.size <= 1) {
-                            PixelText("Mua thêm ở Cửa hàng", style = type.caption, color = Pal.InkSoft, modifier = Modifier.clickable {
-                                vm.section.value = if (slot == Slot.TOY) ShopSection.TOY else ShopSection.CORNER
-                                vm.tab.value = GiftTab.SHOP
-                            })
-                        }
-                    }
-                }
-            }
-        }
-    }
-    if (renaming) {
-        var name by remember { mutableStateOf(cat.second) }
-        PixelDialog(onDismiss = { renaming = false }) {
-            PixelText("Tên mèo", style = type.title, color = Pal.Ink)
-            PixelTextField(name, { name = it.take(16) }, Modifier.fillMaxWidth())
-            PixelTextButton("Lưu", onClick = { vm.rename(cat.first, name); renaming = false }, modifier = Modifier.fillMaxWidth())
         }
     }
 }

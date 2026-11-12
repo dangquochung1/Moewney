@@ -66,7 +66,7 @@ private fun Prize.icon(): Pair<String?, String?> = when (this) {
 }
 
 fun SpinOutcome.text(): String = when {
-    itemId != null -> "Trúng ${Catalog[itemId]?.name ?: itemId}!" + if (Catalog[itemId]?.slot == app.meowney.core.game.Slot.FOOD) " Cho mèo ăn ở Tủ đồ nhé." else " Vào Tủ đồ để dùng."
+    itemId != null -> "Trúng ${Catalog[itemId]?.name ?: itemId}!" + if (Catalog[itemId]?.slot == app.meowney.core.game.Slot.FOOD) " Cho mèo ăn ở mục Đồ ăn của Cửa hàng nhé." else " Vào Cửa hàng bấm Dùng là xong."
     ticketHabit != null -> "Trúng vé nghỉ cho \"$ticketHabit\". Lỡ một hôm cũng không mất chuỗi."
     boost -> "Hôm nay ghi sổ được gấp đôi xu!"
     coins > 0 -> "+$coins xu!"
