@@ -367,7 +367,8 @@ fun SpriteView(name: String, scale: Int, frame: Int = -1, once: Boolean = false)
     val sprite = sprites.getOrNull(name) ?: return
     val m = LocalPixelMetrics.current
     var f by remember(name, frame, once) { mutableIntStateOf(if (frame >= 0) frame else 0) }
-    if (frame < 0 && sprite.frames > 1) {
+    // fps 0 = a sheet of poses (sit, lie...): show the first, never cycle through them
+    if (frame < 0 && sprite.frames > 1 && sprite.entry.fps > 0) {
         LaunchedEffect(name, once) {
             while (true) {
                 delay(1000L / sprite.entry.fps.coerceAtLeast(1))

@@ -59,6 +59,7 @@ class SettingsViewModel(private val c: AppContainer, private val context: Contex
         c.settings.update(f)
         val s = c.settings.now()
         c.sfx.enabled = s.soundOn
+        c.purr.enabled = s.soundOn
         c.music.enabled = s.musicOn
         EveningReminder.schedule(context, s.reminderMinute, s.reminderOn)
         app.meowney.core.notify.CalendarReminder.schedule(context)

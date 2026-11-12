@@ -130,24 +130,32 @@ fun HomeScreen(
     actions: HomeActions,
 ) {
     val m = LocalPixelMetrics.current
-    val cat = remember(state.catColor) { Cat(state.catColor, corner.circle, corner.spots) }
+    val cat = remember(state.catColor) { Cat(state.catColor) }
     var bubble by remember {
+        val hour = LocalDateTime.now().hour
         mutableStateOf<String?>(
-            app.meowney.core.game.SeasonEngine.seasonOn(java.time.LocalDate.now())?.let { CatLines.season(it) }
-                ?: CatLines.greeting(LocalDateTime.now().hour, state.catName),
+            if (CatClock.sleepHour(hour)) {
+                CatLines.sleepyGreeting(state.catName)
+            } else {
+                app.meowney.core.game.SeasonEngine.seasonOn(java.time.LocalDate.now())?.let { CatLines.season(it) }
+                    ?: CatLines.greeting(hour, state.catName)
+            },
         )
     }
     // background music while home is on screen (paused when another screen or app is in front)
     val meowneyApp = androidx.compose.ui.platform.LocalContext.current.applicationContext as app.meowney.MeowneyApp
     val music = meowneyApp.container.music
-    val sfx = meowneyApp.container.sfx
+    val purr = meowneyApp.container.purr
     val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
     val track = app.meowney.core.game.SeasonEngine.music(state.look.season, java.time.LocalDate.now())
     androidx.compose.runtime.DisposableEffect(lifecycle, track) {
         val obs = androidx.lifecycle.LifecycleEventObserver { _, e ->
             when (e) {
                 androidx.lifecycle.Lifecycle.Event.ON_RESUME -> music.play(track)
-                androidx.lifecycle.Lifecycle.Event.ON_PAUSE -> music.pause()
+                androidx.lifecycle.Lifecycle.Event.ON_PAUSE -> {
+                    music.pause()
+                    purr.stop()
+                }
                 else -> Unit
             }
         }
@@ -156,6 +164,7 @@ fun HomeScreen(
         onDispose {
             lifecycle.removeObserver(obs)
             music.pause()
+            purr.stop()
         }
     }
     LaunchedEffect(bubble) {
@@ -268,13 +277,17 @@ fun HomeScreen(
                     cat = cat,
                     scale = scale,
                     onCatTap = {
-                        cat.poke()
-                        bubble = if (state.hasLoans) CatLines.worriedLoans() else CatLines.onTap()
+                        bubble = when {
+                            !cat.poke() -> CatLines.sleepy()
+                            state.hasLoans -> CatLines.worriedLoans()
+                            else -> CatLines.onTap()
+                        }
                     },
                     onCatLongPress = actions.onWardrobe,
                     look = state.look,
                     plain = true,
-                    onPet = { sfx.play(Sfx.Sound.Click, 0.45f) },
+                    onPet = purr::start,
+                    onPetEnd = purr::stop,
                 )
                 bubble?.let {
                     SpeechBubble(

@@ -124,7 +124,7 @@ fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     var editing by remember { mutableStateOf(false) }
-    val cat = remember(s.catColor) { Cat(s.catColor, corner.circle, corner.spots) }
+    val cat = remember(s.catColor) { Cat(s.catColor) }
     val paused = s.state?.pausedAt != null
     // focus: the cat curls up asleep; break: it plays with the yarn
     LaunchedEffect(s.phase, paused) {

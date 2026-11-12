@@ -90,7 +90,56 @@ SOUNDS = {
     "audio/sfx/alert/alert2.wav": "alert.wav",
     "audio/sfx/menu/menu5.wav": "click.wav",
     "audio/jingles/success1.wav": "success.wav",
+    # 6.9 s loop while Sen strokes the cat (Purr.kt; too long for SoundPool)
+    "audio/sfx/creature/cat_purr.mp3": "purr.mp3",
 }
+
+# Parallax skies -> assets/bg/<set>/<n>.png, back to front (ParallaxSky.kt drifts them).
+# Every layer is 576 x 324 and its left and right edges meet, so it tiles sideways.
+_BG5 = "packs/New free backgrounds part5"
+_MOON = "packs/free-moon-pixel-game-backgrounds/4 background"
+SKIES = {
+    "home_day": [f"{_BG5}/background 1/{n}.png" for n in range(1, 7)],
+    "home_night": [f"{_MOON}/1.png", f"{_MOON}/3.png"],
+    "cal_day": [f"{_BG5}/background 3/{n}.png" for n in range(1, 5)],
+    "cal_night": [f"{_BG5}/background 4/{n}.png" for n in range(1, 4)],
+}
+# The day sky of home has a white disc in its back layer; the planet scene is "morning",
+# so that layer becomes plain sky.
+FLAT_SKY = {"home_day/1.png"}
+
+# The ground under the cat's feet (scene pixels, 3 per art pixel of the Earth so it reads
+# as a little planet next to the cat).
+PLANET_SIZE = 102
+
+
+def write_planets(out: Path):
+    out.mkdir(parents=True, exist_ok=True)
+    earth = Image.open(ART / "packs/Earth 2.png").convert("RGBA")
+    earth = earth.crop(earth.getbbox())  # 34 x 33 art pixels drawn 16x
+    earth = earth.resize((earth.width // 16, earth.height // 16), Image.NEAREST)
+    earth = earth.resize((PLANET_SIZE, PLANET_SIZE), Image.NEAREST)
+    earth.save(out / "earth.png", optimize=True)
+    moon = Image.open(ART / _MOON / "2.png").convert("RGBA")
+    moon = moon.crop(moon.getbbox()).resize((PLANET_SIZE, PLANET_SIZE), Image.BOX)
+    # hard edge: the scene is pixel art, no half-transparent rim
+    alpha = moon.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
+    moon.putalpha(alpha)
+    moon.save(out / "moon.png", optimize=True)
+
+
+def write_skies(out: Path):
+    if out.exists():
+        shutil.rmtree(out)
+    for name, layers in SKIES.items():
+        d = out / name
+        d.mkdir(parents=True)
+        for i, src in enumerate(layers, start=1):
+            im = Image.open(ART / src).convert("RGBA")
+            if f"{name}/{i}.png" in FLAT_SKY:
+                im = Image.new("RGBA", im.size, im.getpixel((0, 0)))
+            im.save(d / f"{i}.png", optimize=True)
+
 
 # Licence files that must ship with the app (shown on the Credits screen).
 LICENSES = {
@@ -124,8 +173,10 @@ NINE = {
     "ui/wood/tab_box_over": (5, 5, 5, 5),
 }
 
-# Frames per second by animation name (cat strips).
+# Frames per second by animation name (cat strips). sit / lie / rest / stand are pose
+# sheets (one frame per facing), not loops: fps 0 keeps them still.
 FPS = [
+    (r"^(cat\d|hat_[a-z0-9]+)_(sit|lie|rest|stand)$", 0),
     (r"walk", 10), (r"scratch", 10), (r"wash|paw", 8), (r"eat|meow|yawn|hiss|stand|hind", 6),
     (r"sit", 5), (r"lie|rest", 4), (r"sleep", 2), (r"", 6),
 ]
@@ -301,6 +352,8 @@ def write(items, pages):
     music.mkdir(parents=True, exist_ok=True)
     for src, dst in MUSIC.items():
         shutil.copyfile(ART / src, music / dst)
+    write_skies(OUT / "bg")
+    write_planets(OUT / "planet")
     return entries
 
 

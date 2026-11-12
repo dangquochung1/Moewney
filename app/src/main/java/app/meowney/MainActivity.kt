@@ -206,6 +206,7 @@ class MainActivity : FragmentActivity() {
             loaded = withContext(Dispatchers.IO) {
                 val settings = c.settings.now()
                 c.sfx.enabled = settings.soundOn
+                c.purr.enabled = settings.soundOn
                 c.music.enabled = settings.musicOn
                 EveningReminder.createChannel(this@MainActivity)
                 EveningReminder.schedule(this@MainActivity, settings.reminderMinute, settings.reminderOn)
@@ -251,7 +252,9 @@ class MainActivity : FragmentActivity() {
 private suspend fun introPlan(c: AppContainer, settings: Settings, fromWidget: Boolean): IntroPlan? {
     if (!settings.onboarded) return null
     val today = LocalDate.now().toEpochDay()
-    val full = !fromWidget && settings.lastIntroDay != today
+    // in the cat's nap hours Sen finds it asleep, so the wake-up scene waits for a later open
+    val napping = app.meowney.feature.room.CatClock.sleepHour(LocalTime.now().hour)
+    val full = !fromWidget && !napping && settings.lastIntroDay != today
     if (full) c.settings.markIntro(today)
     val left = if (full) runCatching { todaySnapshot(c).left }.getOrNull() else null
     val greeting = wakeGreeting(LocalTime.now().hour, settings.catName, left, ::formatVnd)

@@ -38,6 +38,20 @@ object CatLines {
         else -> "Khuya rồi, Sen ngủ đi. $name cũng ngủ đây... zZ"
     }
 
+    /** Opening the app in the cat's nap hours. */
+    fun sleepyGreeting(name: String) = listOf(
+        "zZz... $name đang ngủ. Vuốt nhẹ là dậy đó.",
+        "Suỵt, hoàng thượng đang ngủ trưa... zZz",
+        "zZz... Sen cứ ghi sổ đi, trẫm ngủ chút.",
+    ).random()
+
+    /** A tap on the sleeping cat: it does not wake. */
+    fun sleepy() = listOf(
+        "zZz... (vuốt nhẹ thì trẫm dậy)",
+        "Ư... zZz",
+        "zZz... trẫm mơ thấy cá...",
+    ).random()
+
     fun poured(amount: String) = "Có tiền vào! Trẫm rót $amount vào 6 lọ rồi đó."
 
     fun worriedLoans() = "Lọ này đang nợ lọ kia đó Sen. Khoản thu sau trẫm trả lại trước."

@@ -60,6 +60,7 @@ fun CatStage(
     look: RoomLook = RoomLook(),
     plain: Boolean = false,
     onPet: () -> Unit = {},
+    onPetEnd: () -> Unit = {},
 ) {
     val atlas = LocalSprites.current
     val m = LocalPixelMetrics.current
@@ -72,6 +73,10 @@ fun CatStage(
 
     val clock = remember { mutableLongStateOf(0L) }
     val hearts = remember { mutableStateListOf<Heart>() }
+    val (homeX, homeY) = corner.spot("home")
+    val durationOf = remember(cat, atlas) {
+        { name: String -> atlas.getOrNull("cat/${cat.color}/$name")?.let { it.frames * 1000L / it.entry.fps.coerceAtLeast(1) } ?: 1_000L }
+    }
     LaunchedEffect(cat) {
         var last = withFrameMillis { it }
         val start = last
@@ -80,7 +85,7 @@ fun CatStage(
                 val dt = (now - last).coerceAtMost(100)
                 last = now
                 clock.longValue = now - start
-                cat.update(clock.longValue, dt, atlas, LocalTime.now().hour)
+                cat.update(clock.longValue, dt, LocalTime.now().hour, durationOf)
                 if (hearts.isNotEmpty()) {
                     val wall = System.currentTimeMillis()
                     hearts.removeAll { wall - it.born > 800 }
@@ -112,7 +117,7 @@ fun CatStage(
                         val down = awaitFirstDown()
                         fun scene(x: Float, y: Float) = (x - inset) / scale + originX to (y - inset) / scale + originY
                         val (sx, sy) = scene(down.position.x, down.position.y)
-                        if (!cat.hit(sx, sy)) return@awaitEachGesture
+                        if (!Cat.hit(sx, sy, homeX, homeY)) return@awaitEachGesture
                         var moved = 0f
                         var petting = false
                         var held = false
@@ -127,8 +132,7 @@ fun CatStage(
                             while (true) {
                                 val change = awaitPointerEvent().changes.firstOrNull() ?: break
                                 if (change.changedToUp() || !change.pressed) {
-                                    if (petting) cat.releasePet()
-                                    else if (!held) onCatTap()
+                                    if (!petting && !held) onCatTap()
                                     break
                                 }
                                 val delta = change.positionChange()
@@ -136,7 +140,7 @@ fun CatStage(
                                 if (!petting && !held && moved > slop) {
                                     petting = true
                                     longJob.cancel()
-                                    cat.pet()
+                                    cat.petStart()
                                     onPet()
                                 }
                                 if (petting) {
@@ -150,7 +154,10 @@ fun CatStage(
                             }
                         } finally {
                             longJob.cancel()
-                            if (petting) cat.releasePet()
+                            if (petting) {
+                                cat.petEnd()
+                                onPetEnd()
+                            }
                         }
                     }
                 }
@@ -166,9 +173,9 @@ fun CatStage(
                     look.decor?.let { with(RoomPaint) { decor(atlas, it) } }
                 } else {
                     drawRect(Pal.Canvas, Offset(originX, originY), Size(d.toFloat(), d.toFloat()))
-                    drawOval(Color(0x22000000), Offset(cat.x - 8f, cat.y - 2f), Size(16f, 5f))
+                    drawOval(Color(0x22000000), Offset(homeX - 8f, homeY - 2f), Size(16f, 5f))
                 }
-                cat.draw(this, atlas, now)
+                cat.draw(this, atlas, now, homeX, homeY)
                 if (!plain) with(SeasonOverlay) { season(look.season, now, atlas) }
                 val wall = System.currentTimeMillis()
                 for (h in hearts) {

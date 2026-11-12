@@ -522,7 +522,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val look = game.look(vm.season)
-    val preview = remember(cat.first) { Cat(cat.first, corner.circle, corner.spots) }
+    val preview = remember(cat.first) { Cat(cat.first) }
     LaunchedEffect(preview, look) {
         preview.propSprites = mapOf(Prop.Bed to look.bed, Prop.Bowl to look.bowl, Prop.Yarn to look.toy)
         preview.hat = look.hat
