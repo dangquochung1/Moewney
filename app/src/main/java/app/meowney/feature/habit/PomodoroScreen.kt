@@ -2,7 +2,8 @@ package app.meowney.feature.habit
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -44,9 +45,7 @@ import app.meowney.core.ui.PixelScreen
 import app.meowney.core.ui.PixelText
 import app.meowney.core.ui.PixelTextButton
 import app.meowney.feature.room.Cat
-import app.meowney.feature.room.CatStage
-import app.meowney.feature.room.RoomAssets
-import app.meowney.feature.room.stageScale
+import app.meowney.feature.room.PlanetStage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -119,7 +118,7 @@ class PomodoroViewModel(private val c: AppContainer, habitId: Long) : ViewModel(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit) {
+fun PomodoroScreen(vm: PomodoroViewModel, onBack: () -> Unit) {
     val s by vm.state.collectAsState()
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
@@ -143,10 +142,11 @@ fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(m.unit * 2),
         ) {
-            BoxWithConstraints(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                val scale = stageScale(constraints.maxWidth, (constraints.maxWidth * 1.6f).toInt(), corner.circle.diameter, heightShare = 0.36f, widthShare = 0.6f)
-                CatStage(corner, cat, scale, onCatTap = { cat.poke() }, onCatLongPress = {})
-            }
+            PlanetStage(
+                cat,
+                Modifier.fillMaxWidth().height(m.unit * 90).clip(androidx.compose.foundation.shape.RoundedCornerShape(m.unit * 4)),
+                onCatTap = { cat.poke() },
+            )
             PixelText(PomodoroTimer.phaseLabel(s.phase) + if (paused) " · tạm dừng" else "", style = type.title, color = Pal.Gold)
             val left = (s.remainingMs + 999) / 1000
             PixelText(

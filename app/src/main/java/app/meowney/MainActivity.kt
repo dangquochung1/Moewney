@@ -98,7 +98,6 @@ import app.meowney.feature.onboarding.OnboardingViewModel
 import app.meowney.feature.room.HomeActions
 import app.meowney.feature.room.HomeScreen
 import app.meowney.feature.room.HomeViewModel
-import app.meowney.feature.room.RoomAssets
 import app.meowney.feature.settings.CreditsScreen
 import app.meowney.feature.settings.SettingsScreen
 import app.meowney.feature.settings.SettingsViewModel
@@ -126,7 +125,6 @@ import java.time.LocalDate
 /** Everything the screens need from assets/, loaded once. */
 class GameAssets(
     val sprites: SpriteAtlas,
-    val corner: RoomAssets,
     val icons: ImageBitmap,
     val pixelTypeface: Typeface,
     val onboarded: Boolean,
@@ -221,9 +219,15 @@ class MainActivity : FragmentActivity() {
                 runCatching { c.notes.purge() }
                 CalendarReminder.schedule(this@MainActivity)
                 PomodoroTimer.catchUp(this@MainActivity)
+                // the home sky and planets, so the first frame has them
+                with(c.skies) {
+                    sky(app.meowney.core.ui.SkyLibrary.HOME_DAY)
+                    sky(app.meowney.core.ui.SkyLibrary.HOME_NIGHT)
+                    planet("earth")
+                    planet("moon")
+                }
                 GameAssets(
                     sprites = c.sprites,
-                    corner = RoomAssets.load(assets),
                     icons = c.icons,
                     pixelTypeface = c.typeface,
                     onboarded = settings.onboarded,
@@ -301,7 +305,6 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             val pending by vm.pending.collectAsState()
             if (state.ready) {
                 HomeScreen(
-                    corner = game.corner,
                     state = state,
                     catEvent = event,
                     onCatEventHandled = c.events::consume,
@@ -465,7 +468,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         composable<GiftRoute> { entry ->
             val tab = runCatching { GiftTab.valueOf(entry.toRoute<GiftRoute>().tab) }.getOrDefault(GiftTab.WHEEL)
             val vm: GiftViewModel = viewModel(factory = vmFactory { GiftViewModel(c, tab) })
-            GiftScreen(vm, game.corner, onBack = back, onUseVoucher = { v ->
+            GiftScreen(vm, onBack = back, onUseVoucher = { v ->
                 nav.navigate(EntryRoute(amount = v.amount, note = v.name, categoryId = v.categoryId ?: -1))
             }) { t ->
                 PixelText("${t.label}: sắp có", color = Pal.InkSoft)
@@ -478,7 +481,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         composable<PomodoroRoute> { entry ->
             val habitId = entry.toRoute<PomodoroRoute>().habitId
             val vm: PomodoroViewModel = viewModel(factory = vmFactory { PomodoroViewModel(c, habitId) })
-            PomodoroScreen(vm, game.corner, onBack = back)
+            PomodoroScreen(vm, onBack = back)
         }
         composable<HabitRoute> { entry ->
             val id = entry.toRoute<HabitRoute>().id

@@ -53,6 +53,7 @@ class AppContainer(val context: Context) {
     // Art shared by the app and the home-screen widgets (which may run without the activity).
     val sprites: SpriteAtlas by lazy { SpriteAtlas.load(context.assets) }
     val icons: ImageBitmap by lazy { SpriteAtlas.loadBitmap(context.assets, "icons/raven16.png") }
+    val skies: app.meowney.core.ui.SkyLibrary by lazy { app.meowney.core.ui.SkyLibrary(context.assets) }
     val typeface: Typeface by lazy { ResourcesCompat.getFont(context, R.font.meowney_pixel_regular)!! }
 }
 

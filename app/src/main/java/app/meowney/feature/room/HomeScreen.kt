@@ -123,7 +123,6 @@ class HomeActions(
 
 @Composable
 fun HomeScreen(
-    corner: RoomAssets,
     state: HomeState,
     catEvent: CatEvent?,
     onCatEventHandled: () -> Unit,
@@ -268,14 +267,13 @@ fun HomeScreen(
             .windowInsetsPadding(WindowInsets.safeDrawing),
     ) {
         val maxWidth = constraints.maxWidth
-        val scale = stageScale(maxWidth, constraints.maxHeight, corner.circle.diameter)
+        val stageHeight = m.dp((constraints.maxHeight * 0.45f).toInt())
         Column(Modifier.fillMaxSize().padding(horizontal = m.unit * 2)) {
             Hud(state.coins, zoomSettings, actions.onSettings, actions.onShop)
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
-                CatStage(
-                    corner = corner,
+                PlanetStage(
                     cat = cat,
-                    scale = scale,
+                    modifier = Modifier.fillMaxWidth().height(stageHeight),
                     onCatTap = {
                         bubble = when {
                             !cat.poke() -> CatLines.sleepy()
@@ -285,7 +283,6 @@ fun HomeScreen(
                     },
                     onCatLongPress = actions.onWardrobe,
                     look = state.look,
-                    plain = true,
                     onPet = purr::start,
                     onPetEnd = purr::stop,
                 )

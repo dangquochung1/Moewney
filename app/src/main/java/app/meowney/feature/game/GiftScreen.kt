@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -31,8 +32,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
-import androidx.compose.ui.graphics.drawscope.scale
-import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.lifecycle.ViewModel
@@ -60,10 +59,8 @@ import app.meowney.core.ui.PixelTextButton
 import app.meowney.core.ui.PixelTextField
 import app.meowney.feature.room.Cat
 import app.meowney.feature.room.CatLines
-import app.meowney.feature.room.CatStage
+import app.meowney.feature.room.PlanetStage
 import app.meowney.feature.room.Prop
-import app.meowney.feature.room.RoomAssets
-import app.meowney.feature.room.RoomPaint
 import app.meowney.feature.room.look
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -137,7 +134,7 @@ class GiftViewModel(val c: AppContainer, initial: GiftTab) : ViewModel() {
     fun claimQuest() = viewModelScope.launch {
         val got = c.game.claimQuest(today) ?: return@launch
         c.sfx.play(app.meowney.core.sound.Sfx.Sound.Success)
-        say(if (got.isEmpty()) "Nhiệm vụ xong! Sen có món đó rồi nên trẫm đổi ra 100 xu." else "Nhiệm vụ xong! ${Catalog[got]?.name} vào Tủ đồ rồi.")
+        say(if (got.isEmpty()) "Nhiệm vụ xong! +${SeasonEngine.QUEST_COINS} xu và 2 món ăn cho trẫm." else "Nhiệm vụ xong! ${Catalog[got]?.name} vào Tủ đồ rồi.")
         quest.value = c.game.questView(today)
     }
 
@@ -234,7 +231,6 @@ class GiftViewModel(val c: AppContainer, initial: GiftTab) : ViewModel() {
 @Composable
 fun GiftScreen(
     vm: GiftViewModel,
-    corner: RoomAssets,
     onBack: () -> Unit,
     onUseVoucher: (app.meowney.core.db.VoucherEntity) -> Unit,
     content: @Composable (GiftTab) -> Unit,
@@ -262,7 +258,7 @@ fun GiftScreen(
         Box(Modifier.weight(1f).fillMaxWidth()) {
             when (tab) {
                 GiftTab.SHOP -> ShopTab(vm)
-                GiftTab.WARDROBE -> WardrobeTab(vm, corner)
+                GiftTab.WARDROBE -> WardrobeTab(vm)
                 GiftTab.WHEEL -> WheelTab(vm)
                 GiftTab.REAL -> RewardsTab(vm, onUseVoucher)
                 GiftTab.TROPHY -> TrophyTab(vm)
@@ -309,37 +305,6 @@ fun ItemIcon(item: Item, box: Dp, catColor: Int = 5, modifier: Modifier = Modifi
                 val k = max(1, min(side / s.width, side / s.height).toInt().coerceAtMost(8))
                 drawSprite(s, 0, size.width / 2, size.height / 2 + s.height * k / 2f, scale = k)
             }
-            item.slot == Slot.FRAME -> {
-                val t = item.tint ?: 0xFF8A5536
-                val r = side * 0.38f
-                drawCircle(Pal.WoodDark, r + side * 0.08f, center)
-                drawCircle(RoomPaint.shade(t, 1.25f), r + side * 0.05f, center)
-                drawCircle(RoomPaint.shade(t, 0.75f), r, center)
-                drawCircle(Pal.Night, r - side * 0.05f, center)
-            }
-            item.slot == Slot.WALL || item.slot == Slot.FLOOR -> {
-                val t = item.tint ?: if (item.slot == Slot.WALL) 0xFF7A8494 else 0xFFB59A72
-                val u = side / 16f
-                drawRect(Pal.WoodDark, Offset(u, u), Size(side - 2 * u, side - 2 * u))
-                drawRect(RoomPaint.shade(t, 1f), Offset(2 * u, 2 * u), Size(side - 4 * u, side - 4 * u))
-                val line = RoomPaint.shade(t, 0.65f)
-                if (item.slot == Slot.WALL) {
-                    for (row in 0 until 4) {
-                        val y = 2 * u + row * 3 * u
-                        drawRect(line, Offset(2 * u, y + 3 * u - u), Size(side - 4 * u, u))
-                        val off = if (row % 2 == 0) 5 * u else 9 * u
-                        drawRect(line, Offset(off, y), Size(u, 2 * u))
-                    }
-                } else {
-                    for (col in 1 until 4) drawRect(line, Offset(2 * u + col * 3 * u, 2 * u), Size(u, side - 4 * u))
-                }
-            }
-            item.slot == Slot.RUG && item.tint != null -> {
-                val k = side / 40f
-                translate(size.width / 2 - 32 * k, size.height / 2 - 56 * k) {
-                    scale(k, pivot = Offset.Zero) { with(RoomPaint) { rug(item.tint) } }
-                }
-            }
             else -> {
                 // "không / để trống": a small cross
                 val u = side / 10f
@@ -357,7 +322,7 @@ fun ItemIcon(item: Item, box: Dp, catColor: Int = 5, modifier: Modifier = Modifi
 private fun ShopSection.items(season: app.meowney.core.game.Season?): List<Item> = when (this) {
     ShopSection.FOOD -> Catalog.items.filter { it.slot == Slot.FOOD }
     ShopSection.TOY -> Catalog.items.filter { it.slot == Slot.TOY && !it.default }
-    ShopSection.CORNER -> Catalog.items.filter { it.slot !in setOf(Slot.FOOD, Slot.TOY, Slot.HAT) && !it.default && it.season == null }
+    ShopSection.CORNER -> Catalog.items.filter { (it.slot == Slot.BED || it.slot == Slot.BOWL) && !it.default }
     ShopSection.SEASON -> if (season != null) Catalog.seasonal(season) else emptyList()
     ShopSection.CATS -> emptyList()
 }
@@ -516,7 +481,7 @@ private fun AdoptDialog(color: Int, price: Int, coins: Long, onDismiss: () -> Un
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
+private fun WardrobeTab(vm: GiftViewModel) {
     val game by vm.state.collectAsState()
     val cat by vm.cat.collectAsState()
     val m = LocalPixelMetrics.current
@@ -531,7 +496,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
         item {
             Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                CatStage(corner = corner, cat = preview, scale = m.ui + 1, onCatTap = { preview.poke() }, onCatLongPress = {}, look = look)
+                PlanetStage(preview, Modifier.fillMaxWidth().height(m.unit * 80), look = look, onCatTap = { preview.poke() })
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     val pet = game.pets.firstOrNull { it.color == cat.first }
                     PixelText(cat.second, style = type.title, color = Pal.Ink)

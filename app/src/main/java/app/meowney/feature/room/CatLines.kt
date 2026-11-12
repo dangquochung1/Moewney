@@ -38,6 +38,9 @@ object CatLines {
         else -> "Khuya rồi, Sen ngủ đi. $name cũng ngủ đây... zZ"
     }
 
+    /** The round room is gone; what Sen bought for it came back as coins. */
+    fun roomRefund(coins: Int) = "Trẫm dọn nhà ra hành tinh rồi! Đồ trang trí phòng cũ trẫm đổi lại thành $coins xu cho Sen."
+
     /** Opening the app in the cat's nap hours. */
     fun sleepyGreeting(name: String) = listOf(
         "zZz... $name đang ngủ. Vuốt nhẹ là dậy đó.",

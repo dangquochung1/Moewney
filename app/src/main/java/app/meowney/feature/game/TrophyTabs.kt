@@ -179,22 +179,22 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
 private fun QuestCard(q: QuestView, vm: GiftViewModel) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    val reward = Catalog[q.quest.rewardItem]
+    val reward = q.quest.rewardItem?.let { Catalog[it] }
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         PixelText("NHIỆM VỤ ${q.quest.season.label.uppercase()}", style = type.caption, color = Pal.Gold)
         PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-                reward?.let { ItemIcon(it, m.unit * 22) }
+                if (reward != null) ItemIcon(reward, m.unit * 22) else app.meowney.feature.money.SpriteView("treasure/littletreasurechest", scale = m.ui)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     PixelText(q.quest.label, style = type.bodyBold, color = Pal.Ink)
                     PixelProgress((q.value.toFloat() / q.quest.target).coerceIn(0f, 1f), color = if (q.done) Pal.Green else Pal.Gold)
                     PixelText(
-                        if (q.claimed) "Đã nhận ${reward?.name}." else "${minOf(q.value, q.quest.target)}/${q.quest.target} · thưởng: ${reward?.name}",
+                        if (q.claimed) "Đã nhận thưởng." else "${minOf(q.value, q.quest.target)}/${q.quest.target} · thưởng: ${reward?.name ?: "${app.meowney.core.game.SeasonEngine.QUEST_COINS} xu + 2 món ăn"}",
                         style = type.caption, color = Pal.InkSoft,
                     )
                 }
             }
         }
-        if (q.done && !q.claimed) PixelTextButton("Nhận ${reward?.name}", onClick = { vm.claimQuest() }, look = ButtonLook.Orange, modifier = Modifier.fillMaxWidth())
+        if (q.done && !q.claimed) PixelTextButton("Nhận thưởng", onClick = { vm.claimQuest() }, look = ButtonLook.Orange, modifier = Modifier.fillMaxWidth())
     }
 }

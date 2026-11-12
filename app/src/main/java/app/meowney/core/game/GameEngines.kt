@@ -125,7 +125,7 @@ object AchievementEngine {
         Achievement("photos", AchGroup.NOTES, "Nhiếp ảnh gia", "Dán %d ảnh vào sổ", Metric.PHOTOS, listOf(1, 10, 50)),
         Achievement("feeds", AchGroup.CAT, "Sen chiều trẫm", "Cho mèo ăn %d lần", Metric.FEEDS, listOf(5, 30, 100)),
         Achievement("cats", AchGroup.CAT, "Đàn mèo", "Nuôi %d con mèo", Metric.CATS, listOf(2, 4, 6)),
-        Achievement("items", AchGroup.CAT, "Góc mèo xinh", "Sắm %d món đồ", Metric.ITEMS, listOf(3, 10, 20)),
+        Achievement("items", AchGroup.CAT, "Góc mèo xinh", "Sắm %d món đồ", Metric.ITEMS, listOf(3, 7, 12)),
         Achievement("spins", AchGroup.CAT, "Tay quay", "Quay vòng quay %d lần", Metric.SPINS, listOf(7, 30, 100)),
         Achievement("challenges", AchGroup.CAT, "Chinh phục", "Xong %d thử thách tháng", Metric.CHALLENGES, listOf(1, 3, 6)),
         Achievement("coins", AchGroup.CAT, "Hũ xu đầy", "Kiếm tổng cộng %d xu", Metric.COINS, listOf(500, 3000, 10000)),
@@ -209,8 +209,12 @@ object ChallengeEngine {
 
 // ------------------------------------------------------------------ seasons
 
-/** A small quest of the season; done when [kind] reaches [target] inside the season. */
-data class SeasonQuest(val id: String, val season: Season, val label: String, val kind: String, val target: Int, val rewardItem: String)
+/**
+ * A small quest of the season; done when [kind] reaches [target] inside the season. The reward
+ * is [rewardItem] when there is one Sen does not own yet, else [SeasonEngine.QUEST_COINS] coins
+ * and two treats.
+ */
+data class SeasonQuest(val id: String, val season: Season, val label: String, val kind: String, val target: Int, val rewardItem: String? = null)
 
 object SeasonEngine {
     /** Mùng 1 Tết, from the lunar calendar. */
@@ -255,12 +259,15 @@ object SeasonEngine {
 
     val quests = listOf(
         SeasonQuest("q_noel", Season.NOEL, "Ghi sổ 10 ngày mùa Noel", "LOG_DAYS", 10, "hat_antlers"),
-        SeasonQuest("q_halloween", Season.HALLOWEEN, "Xong hết thói quen 3 ngày", "HABITS_ALL", 3, "decor_pumpkin"),
-        SeasonQuest("q_tet", Season.TET, "Viết nhật ký 3 ngày Tết", "DIARY_DAYS", 3, "decor_lantern"),
-        SeasonQuest("q_autumn", Season.AUTUMN, "Ghi sổ 15 ngày mùa thu", "LOG_DAYS", 15, "decor_sunflower"),
+        SeasonQuest("q_halloween", Season.HALLOWEEN, "Xong hết thói quen 3 ngày", "HABITS_ALL", 3),
+        SeasonQuest("q_tet", Season.TET, "Viết nhật ký 3 ngày Tết", "DIARY_DAYS", 3),
+        SeasonQuest("q_autumn", Season.AUTUMN, "Ghi sổ 15 ngày mùa thu", "LOG_DAYS", 15),
     )
 
     fun questFor(season: Season?) = quests.firstOrNull { it.season == season }
+
+    /** What a season quest pays when there is no item to give. */
+    const val QUEST_COINS = 150
 
     /** A key unique to this year's season, so quests come back next year. */
     fun questKey(q: SeasonQuest, d: LocalDate): String = "${q.id}_${window(q.season, d)?.start?.year ?: d.year}"

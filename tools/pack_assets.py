@@ -2,7 +2,7 @@
 
 Output (app/src/main/assets/):
   sprites/atlas_N.png + sprites/sprites.json   strips and single images, shelf-packed
-  room/*.png                                   whole tilesets (the room indexes them by tile)
+  bg/<sky>/<n>.png, planet/*.png               parallax skies and the cat's planet
   icons/raven16.png                            16 px icon sheet (indexed by cell)
 
 sprites.json entry: {"p": page, "x": .., "y": .., "w": cellW, "h": cellH, "n": frames,
@@ -108,9 +108,42 @@ SKIES = {
 # so that layer becomes plain sky.
 FLAT_SKY = {"home_day/1.png"}
 
-# The ground under the cat's feet (scene pixels, 3 per art pixel of the Earth so it reads
-# as a little planet next to the cat).
+# The ground under the cat's feet: a 102 x 102 image whose disc is 100 px wide with its top
+# at row 1 (PlanetScene in PlanetStage.kt relies on that). The Earth art is 34 x 33 px, so it
+# is blown up 3x with Scale3x, which keeps the pixel look but smooths the stair steps.
 PLANET_SIZE = 102
+
+
+def scale3x(im: Image.Image) -> Image.Image:
+    """AdvMAME3x / Scale3x."""
+    w, h = im.size
+    src = im.load()
+    out = Image.new("RGBA", (w * 3, h * 3))
+    dst = out.load()
+
+    def p(x, y):
+        return src[min(max(x, 0), w - 1), min(max(y, 0), h - 1)]
+
+    for y in range(h):
+        for x in range(w):
+            a, b, c = p(x - 1, y - 1), p(x, y - 1), p(x + 1, y - 1)
+            d, e, f = p(x - 1, y), p(x, y), p(x + 1, y)
+            g, hh, i = p(x - 1, y + 1), p(x, y + 1), p(x + 1, y + 1)
+            if b != hh and d != f:
+                e0 = d if d == b else e
+                e1 = b if (d == b and e != c) or (b == f and e != a) else e
+                e2 = f if b == f else e
+                e3 = d if (d == b and e != g) or (d == hh and e != a) else e
+                e5 = f if (b == f and e != i) or (hh == f and e != c) else e
+                e6 = d if d == hh else e
+                e7 = hh if (d == hh and e != i) or (hh == f and e != g) else e
+                e8 = f if hh == f else e
+            else:
+                e0 = e1 = e2 = e3 = e5 = e6 = e7 = e8 = e
+            for (dx, dy), v in zip(((0, 0), (1, 0), (2, 0), (0, 1), (1, 1), (2, 1), (0, 2), (1, 2), (2, 2)),
+                                   (e0, e1, e2, e3, e, e5, e6, e7, e8)):
+                dst[x * 3 + dx, y * 3 + dy] = v
+    return out
 
 
 def write_planets(out: Path):
@@ -118,14 +151,17 @@ def write_planets(out: Path):
     earth = Image.open(ART / "packs/Earth 2.png").convert("RGBA")
     earth = earth.crop(earth.getbbox())  # 34 x 33 art pixels drawn 16x
     earth = earth.resize((earth.width // 16, earth.height // 16), Image.NEAREST)
-    earth = earth.resize((PLANET_SIZE, PLANET_SIZE), Image.NEAREST)
-    earth.save(out / "earth.png", optimize=True)
+    earth = scale3x(earth)  # 102 x 99
+    canvas = Image.new("RGBA", (PLANET_SIZE, PLANET_SIZE))
+    canvas.alpha_composite(earth, ((PLANET_SIZE - earth.width) // 2, 1))
+    canvas.save(out / "earth.png", optimize=True)
     moon = Image.open(ART / _MOON / "2.png").convert("RGBA")
-    moon = moon.crop(moon.getbbox()).resize((PLANET_SIZE, PLANET_SIZE), Image.BOX)
+    moon = moon.crop(moon.getbbox()).resize((PLANET_SIZE - 2, PLANET_SIZE - 2), Image.BOX)
     # hard edge: the scene is pixel art, no half-transparent rim
-    alpha = moon.getchannel("A").point(lambda a: 255 if a >= 128 else 0)
-    moon.putalpha(alpha)
-    moon.save(out / "moon.png", optimize=True)
+    moon.putalpha(moon.getchannel("A").point(lambda a: 255 if a >= 128 else 0))
+    canvas = Image.new("RGBA", (PLANET_SIZE, PLANET_SIZE))
+    canvas.alpha_composite(moon, (1, 0))  # its soft rim was cut, so the disc starts a row lower
+    canvas.save(out / "moon.png", optimize=True)
 
 
 def write_skies(out: Path):
@@ -331,12 +367,6 @@ def write(items, pages):
     (sprites_dir / "sprites.json").write_text(
         json.dumps({"pages": names, "sprites": entries}, separators=(",", ":")), encoding="utf-8")
 
-    room = OUT / "room"
-    room.mkdir(parents=True, exist_ok=True)
-    for src, dst in (("gfx/tiles/home/walls_floor.png", "walls_floor.png"),
-                     ("gfx/tiles/home/interior.png", "interior.png"),
-                     ("gfx/tiles/home/doors_windows_animation.png", "doors_windows.png")):
-        shutil.copyfile(ART / src, room / dst)
     icons = OUT / "icons"
     icons.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(ART / "gfx/icons/raven_icons_16.png", icons / "raven16.png")

@@ -58,6 +58,18 @@ object Catalog {
         Item("bed_box", "Hộp các-tông", Slot.BED, 250, sprite = "prop/cardboardbox"),
         Item("bed_round", "Ổ tròn", Slot.BED, 300, sprite = "prop/pet_bed"),
         Item("bed_fish", "Ổ cá", Slot.BED, 400, sprite = "prop/pet_bed_fish"),
+        // seasonal
+        Item("hat_none", "Không đội", Slot.HAT, 0, default = true),
+        Item("hat_santa", "Mũ Noel", Slot.HAT, 250, sprite = "hat/santa/sit", season = Season.NOEL),
+        Item("hat_santa2", "Mũ Noel lông", Slot.HAT, 300, sprite = "hat/santa2/sit", season = Season.NOEL),
+        Item("hat_antlers", "Sừng tuần lộc", Slot.HAT, 300, sprite = "hat/antlers/sit", season = Season.NOEL),
+    )
+
+    /**
+     * Things for the round room, which is gone (the cat now lives on a little planet). Not sold
+     * any more; whatever Sen owned is turned back into coins once (GameRepository.retireRoomItems).
+     */
+    val retired: List<Item> = listOf(
         // tower (the habits toy)
         Item("tower_white", "Tháp trắng", Slot.TOWER, 0, sprite = "prop/tower_white", default = true),
         Item("tower_grey", "Tháp xám", Slot.TOWER, 400, sprite = "prop/tower_grey"),
@@ -90,24 +102,25 @@ object Catalog {
         Item("decor_flower", "Chậu hoa trắng", Slot.DECOR, 300, sprite = "decor/flower"),
         Item("decor_jug", "Bình gốm", Slot.DECOR, 200, sprite = "decor/jug"),
         Item("decor_herbs", "Bó lá treo", Slot.DECOR, 300, sprite = "decor/herbs"),
-        // seasonal
-        Item("hat_none", "Không đội", Slot.HAT, 0, default = true),
-        Item("hat_santa", "Mũ Noel", Slot.HAT, 250, sprite = "hat/santa/sit", season = Season.NOEL),
-        Item("hat_santa2", "Mũ Noel lông", Slot.HAT, 300, sprite = "hat/santa2/sit", season = Season.NOEL),
-        Item("hat_antlers", "Sừng tuần lộc", Slot.HAT, 300, sprite = "hat/antlers/sit", season = Season.NOEL),
         Item("decor_pumpkin", "Bí ngô", Slot.DECOR, 200, sprite = "crop/pumpkin_05", season = Season.HALLOWEEN),
         Item("decor_lantern", "Đèn lồng đỏ", Slot.DECOR, 250, sprite = "decor/lantern", season = Season.TET),
         Item("decor_sunflower", "Hoa hướng dương", Slot.DECOR, 200, sprite = "crop/sunflower_05", season = Season.AUTUMN),
     )
 
+    /** Slots that belonged to the round room. */
+    val retiredSlots = listOf(Slot.TOWER, Slot.FRAME, Slot.WALL, Slot.FLOOR, Slot.RUG, Slot.DECOR)
+
     private val byId = items.associateBy { it.id }
+    private val retiredById = retired.associateBy { it.id }
+
+    fun retiredItem(id: String): Item? = retiredById[id]
 
     operator fun get(id: String): Item? = byId[id]
 
     fun defaultFor(slot: Slot): Item? = items.firstOrNull { it.slot == slot && it.default }
 
-    /** Slots the cat's corner shows (FOOD is not a slot). */
-    val decorSlots = listOf(Slot.FRAME, Slot.WALL, Slot.FLOOR, Slot.RUG, Slot.BED, Slot.BOWL, Slot.TOY, Slot.DECOR, Slot.TOWER, Slot.HAT)
+    /** Slots shown with the cat (FOOD is used up, not a slot). */
+    val decorSlots = listOf(Slot.BED, Slot.BOWL, Slot.TOY, Slot.HAT)
 
     /** The 6 cat colours, with a short name for the shop. */
     val catColors = listOf(1 to "Mèo cam", 2 to "Mèo đen", 3 to "Mèo kem", 4 to "Mèo hồng", 5 to "Mèo trắng", 6 to "Mèo xám")

@@ -54,9 +54,11 @@ class GameRepositoryTest {
         give(500)
         assertThat(game.buy("bowl_blue", today)).isEqualTo(BuyResult.AlreadyOwned)
         assertThat(game.buy("bowl_red", today)).isEqualTo(BuyResult.AlreadyOwned) // the free one
-        // 550 coins: the gold frame (500) fits, then the fish bed (400) is 350 short
-        assertThat(game.buy("frame_gold", today)).isEqualTo(BuyResult.Ok("frame_gold"))
-        assertThat(game.buy("bed_fish", today)).isEqualTo(BuyResult.NotEnough(350))
+        // 550 coins: the fish bed (400) fits, then the round bed (300) is 150 short
+        assertThat(game.buy("bed_fish", today)).isEqualTo(BuyResult.Ok("bed_fish"))
+        assertThat(game.buy("bed_round", today)).isEqualTo(BuyResult.NotEnough(150))
+        // the old round-room things are not sold any more
+        assertThat(game.buy("frame_gold", today)).isEqualTo(BuyResult.NotForSale)
         // seasonal things only in their season
         assertThat(game.buy("hat_santa", today)).isEqualTo(BuyResult.NotForSale)
         give(300)
@@ -157,7 +159,7 @@ class GameRepositoryTest {
     }
 
     @Test fun achievementsPayOnce() = runBlocking<Unit> {
-        for (id in listOf("bowl_blue", "toy_bone", "decor_jug")) {
+        for (id in listOf("bowl_blue", "toy_bone", "bed_box")) {
             give(Catalog[id]!!.price)
             game.buy(id, today)
         }
@@ -178,6 +180,39 @@ class GameRepositoryTest {
         game.pickChallenge(month, (i + 1) % 3) // cannot change once picked
         assertThat(game.challengeView(month, today).picked).isEqualTo(view.options[i])
         assertThat(game.claimChallenge(month, today)).isEqualTo(0)
+    }
+
+    @Test fun roomThingsTurnIntoCoinsOnce() = runBlocking<Unit> {
+        val day = today.toEpochDay()
+        val dao = db.game()
+        give(200)
+        game.buy("bowl_blue", today)
+        // bought in 1.0: a rose wall (350, in use) and a gold frame (500)
+        dao.putOwned(app.meowney.core.db.OwnedItemEntity("wall_rose", 1, day))
+        dao.putOwned(app.meowney.core.db.OwnedItemEntity("frame_gold", 1, day))
+        dao.putEquip(app.meowney.core.db.EquipEntity(Slot.WALL.name, "wall_rose"))
+        val earnedBefore = dao.coinsEarned()
+        assertThat(game.retireRoomItems(today)).isEqualTo(850)
+        assertThat(coins()).isEqualTo(850)
+        assertThat(dao.ownedNow().map { it.itemId }).containsExactly("bowl_blue")
+        assertThat(game.state.first().equip).doesNotContainKey(Slot.WALL)
+        // once only, and not counted as coins earned
+        assertThat(game.retireRoomItems(today)).isEqualTo(0)
+        assertThat(coins()).isEqualTo(850)
+        assertThat(dao.coinsEarned()).isEqualTo(earnedBefore)
+    }
+
+    @Test fun seasonQuestWithoutAnItemPaysCoinsAndTreats() = runBlocking<Unit> {
+        val halloween = LocalDate.of(2026, 10, 30)
+        for (d in 25..27) {
+            db.money().insertCoins(listOf(CoinEntryEntity(delta = 10, reason = app.meowney.core.game.RewardRules.R_HABITS_ALL, day = LocalDate.of(2026, 10, d).toEpochDay())))
+        }
+        val before = coins()
+        assertThat(game.questView(halloween)!!.done).isTrue()
+        assertThat(game.claimQuest(halloween)).isEqualTo("")
+        assertThat(coins()).isEqualTo(before + app.meowney.core.game.SeasonEngine.QUEST_COINS)
+        assertThat(Catalog.treats.sumOf { game.state.first().qty(it.id) }).isEqualTo(2)
+        assertThat(game.claimQuest(halloween)).isNull()
     }
 
     @Test fun lixiOncePerTetDay() = runBlocking<Unit> {

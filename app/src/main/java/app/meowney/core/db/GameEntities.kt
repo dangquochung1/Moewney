@@ -196,7 +196,8 @@ interface GameDao {
     @Query("SELECT COALESCE(SUM(delta), 0) FROM coin_entry")
     suspend fun balance(): Long
 
-    @Query("SELECT COALESCE(SUM(delta), 0) FROM coin_entry WHERE delta > 0")
+    /** Coins earned so far; coins given back for the retired room items were never earned. */
+    @Query("SELECT COALESCE(SUM(delta), 0) FROM coin_entry WHERE delta > 0 AND reason != 'room_refund'")
     suspend fun coinsEarned(): Long
 
     @Query("SELECT COUNT(*) FROM coin_entry WHERE reason = :reason")
