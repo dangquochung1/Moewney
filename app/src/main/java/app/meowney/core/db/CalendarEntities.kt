@@ -88,6 +88,13 @@ data class TodoStepEntity(
     val sort: Int = 0,
 )
 
+/** What Sen wants from a week (the "Mục tiêu" line of the week view). [weekStart]: its Monday. */
+@Entity(tableName = "week_goal")
+data class WeekGoalEntity(
+    @PrimaryKey val weekStart: Long,
+    val goal: String,
+)
+
 @Dao
 interface CalendarDao {
     @Query("SELECT * FROM cal_label ORDER BY sort, id")
@@ -160,4 +167,13 @@ interface CalendarDao {
 
     @Query("DELETE FROM coin_entry WHERE reason = :reason AND refId = :refId")
     suspend fun deleteCoins(reason: String, refId: Long)
+
+    @Query("SELECT goal FROM week_goal WHERE weekStart = :weekStart")
+    fun weekGoal(weekStart: Long): Flow<String?>
+
+    @androidx.room.Upsert
+    suspend fun putWeekGoal(g: WeekGoalEntity)
+
+    @Query("DELETE FROM week_goal WHERE weekStart = :weekStart")
+    suspend fun deleteWeekGoal(weekStart: Long)
 }

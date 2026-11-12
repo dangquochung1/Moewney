@@ -426,8 +426,15 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         }
         composable<CalendarRoute> { entry ->
             val day = entry.toRoute<CalendarRoute>().day
+            // open on the view used last time (Day the first time)
+            val settings by c.settings.flow.collectAsState(initial = null)
+            val startView = settings?.calendarView ?: return@composable
             val vm: CalendarViewModel = viewModel(factory = vmFactory {
-                CalendarViewModel(c, if (day == Long.MIN_VALUE) LocalDate.now() else LocalDate.ofEpochDay(day))
+                CalendarViewModel(
+                    c,
+                    if (day == Long.MIN_VALUE) LocalDate.now() else LocalDate.ofEpochDay(day),
+                    runCatching { app.meowney.feature.calendar.CalView.valueOf(startView) }.getOrDefault(app.meowney.feature.calendar.CalView.DAY),
+                )
             })
             CalendarScreen(
                 vm,
@@ -440,6 +447,12 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                     onLabels = { nav.navigate(LabelsRoute) },
                     onSpend = { e -> nav.navigate(EntryRoute(amount = e.event.cost, note = e.event.title, categoryId = e.event.costCategoryId ?: -1)) },
                     onMoney = { nav.navigate(MoneyRoute) },
+                    onHabits = {
+                        nav.navigate(HabitsRoute) {
+                            popUpTo<HomeRoute>()
+                            launchSingleTop = true
+                        }
+                    },
                 ),
             )
         }

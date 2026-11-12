@@ -37,6 +37,8 @@ data class Settings(
     val lastBackupDay: Long? = null,
     val lastBackupNudgeDay: Long? = null,
     val lastIntroDay: Long? = null,
+    /** The calendar view used last: DAY, WEEK or MONTH (Day the first time). */
+    val calendarView: String = "DAY",
 )
 
 val Context.settingsDataStore by preferencesDataStore(name = "settings")
@@ -57,6 +59,7 @@ class SettingsStore(private val context: Context) {
         val lastBackupDay = longPreferencesKey("last_backup_day")
         val lastBackupNudgeDay = longPreferencesKey("last_backup_nudge_day")
         val lastIntroDay = longPreferencesKey("last_intro_day")
+        val calendarView = stringPreferencesKey("calendar_view")
         val pomoFocus = intPreferencesKey("pomo_focus")
         val pomoShort = intPreferencesKey("pomo_short")
         val pomoLong = intPreferencesKey("pomo_long")
@@ -137,6 +140,10 @@ class SettingsStore(private val context: Context) {
         }
     }
 
+    suspend fun setCalendarView(view: String) {
+        context.settingsDataStore.edit { it[K.calendarView] = view }
+    }
+
     suspend fun markIntro(day: Long) {
         context.settingsDataStore.edit { it[K.lastIntroDay] = day }
     }
@@ -156,5 +163,6 @@ class SettingsStore(private val context: Context) {
         lastBackupDay = this[K.lastBackupDay],
         lastBackupNudgeDay = this[K.lastBackupNudgeDay],
         lastIntroDay = this[K.lastIntroDay],
+        calendarView = this[K.calendarView] ?: "DAY",
     )
 }

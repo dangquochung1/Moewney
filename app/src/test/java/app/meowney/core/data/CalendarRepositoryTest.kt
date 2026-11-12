@@ -43,6 +43,17 @@ class CalendarRepositoryTest {
     private fun todo(title: String, due: LocalDate?, difficulty: Int = 2, repeat: String = "NONE") =
         TodoEntity(title = title, dueDay = due?.toEpochDay(), difficulty = difficulty, repeat = repeat, createdAt = 0)
 
+    @Test fun weekGoalPerWeek() = runBlocking<Unit> {
+        val monday = LocalDate.of(2026, 11, 9)
+        assertThat(cal.weekGoal(monday).first()).isEmpty()
+        cal.setWeekGoal(monday, "Ngủ trước 23h")
+        cal.setWeekGoal(monday.plusWeeks(1), "Đọc xong sách")
+        assertThat(cal.weekGoal(monday).first()).isEqualTo("Ngủ trước 23h")
+        assertThat(cal.weekGoal(monday.plusWeeks(1)).first()).isEqualTo("Đọc xong sách")
+        cal.setWeekGoal(monday, "  ")
+        assertThat(cal.weekGoal(monday).first()).isEmpty()
+    }
+
     @Test fun defaultLabelsOnce() = runBlocking<Unit> {
         cal.ensureLabels()
         val labels = cal.labels.first()

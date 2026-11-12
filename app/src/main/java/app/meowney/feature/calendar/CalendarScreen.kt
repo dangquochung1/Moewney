@@ -1,6 +1,10 @@
 package app.meowney.feature.calendar
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -14,10 +18,11 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,59 +31,68 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import app.meowney.AppContainer
+import app.meowney.container
 import app.meowney.core.CatEvent
 import app.meowney.core.calendar.CalendarEngine
 import app.meowney.core.calendar.EventRepeat
-import app.meowney.core.calendar.Occurrence
 import app.meowney.core.calendar.rep
-import app.meowney.core.calendar.start
 import app.meowney.core.data.CalDay
 import app.meowney.core.data.EventItem
 import app.meowney.core.data.TodoItem
 import app.meowney.core.db.CalLabelEntity
 import app.meowney.core.db.TodoStepEntity
-import app.meowney.core.format.formatVnd
 import app.meowney.core.format.formatVndShort
+import app.meowney.core.habit.HabitEngine
 import app.meowney.core.notify.CalendarReminder
 import app.meowney.core.sound.Sfx
 import app.meowney.core.ui.ButtonLook
-import app.meowney.core.ui.LocalPixelMetrics
 import app.meowney.core.ui.LocalPixelType
 import app.meowney.core.ui.Pal
+import app.meowney.core.ui.ParallaxSky
 import app.meowney.core.ui.PixelCheckbox
 import app.meowney.core.ui.PixelChip
 import app.meowney.core.ui.PixelDialog
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelScreen
+import app.meowney.core.ui.PixelTabs
 import app.meowney.core.ui.PixelText
 import app.meowney.core.ui.PixelTextButton
+import app.meowney.core.ui.SkyLibrary
+import app.meowney.core.ui.StatusBarIcons
 import app.meowney.core.ui.WEEKDAYS_SHORT
 import app.meowney.core.ui.hhmm
 import app.meowney.core.ui.shortDate
+import app.meowney.feature.room.rememberNight
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.ChronoUnit
 
-enum class CalView(val label: String) { MONTH("Tháng"), WEEK("Tuần"), DAY("Ngày"), AGENDA("Sắp tới") }
+enum class CalView(val label: String) { DAY("Ngày"), WEEK("Tuần"), MONTH("Tháng") }
 
 data class CalendarUi(
-    val view: CalView = CalView.MONTH,
+    val view: CalView = CalView.DAY,
     val month: YearMonth = YearMonth.now(),
     val selected: LocalDate = LocalDate.now(),
     val days: Map<LocalDate, CalDay> = emptyMap(),
@@ -87,6 +101,11 @@ data class CalendarUi(
     val filter: Set<Long> = emptySet(),
     val inbox: List<TodoItem> = emptyList(),
     val overdue: List<TodoItem> = emptyList(),
+    /** The goal of the selected week, and which week (its Monday) it belongs to. */
+    val goal: String = "",
+    val goalWeek: LocalDate? = null,
+    /** Today's habits: done and due (null until loaded). */
+    val habitsToday: Pair<Int, Int>? = null,
 ) {
     fun day(d: LocalDate): CalDay = filtered(days[d] ?: CalDay(d))
 
@@ -103,37 +122,47 @@ fun gridRange(month: YearMonth): Pair<LocalDate, LocalDate> {
     return start to start.plusDays(41)
 }
 
+/** The day picked when a week opens: today in this week, else its Monday. */
+fun dayPickedInWeek(anyDay: LocalDate, today: LocalDate): LocalDate {
+    val monday = HabitEngine.weekStart(anyDay)
+    return if (!today.isBefore(monday) && today.isBefore(monday.plusDays(7))) today else monday
+}
+
 @OptIn(ExperimentalCoroutinesApi::class)
-class CalendarViewModel(private val c: AppContainer, startDay: LocalDate) : ViewModel() {
-    private val view = MutableStateFlow(CalView.MONTH)
+class CalendarViewModel(private val c: AppContainer, startDay: LocalDate, startView: CalView) : ViewModel() {
+    private val view = MutableStateFlow(startView)
     private val selected = MutableStateFlow(startDay)
     private val filter = MutableStateFlow<Set<Long>>(emptySet())
 
-    /** The range loaded: the month grid, a week either side for the week/day views, 60 days for the agenda. */
-    private val range = combine(view, selected) { v, d ->
-        when (v) {
-            CalView.AGENDA -> d to d.plusDays(60)
-            else -> {
-                val (a, b) = gridRange(YearMonth.from(d))
-                minOf(a, d.minusDays(7)) to maxOf(b, d.plusDays(7))
-            }
-        }
-    }
+    /** The month grid, and a week either side of the chosen day for the day and week views. */
+    private val range = selected.map { d ->
+        val (a, b) = gridRange(YearMonth.from(d))
+        minOf(a, d.minusDays(7)) to maxOf(b, d.plusDays(7))
+    }.distinctUntilChanged()
 
-    val state: StateFlow<CalendarUi> = combine(
+    private val week = selected.map { HabitEngine.weekStart(it) }.distinctUntilChanged()
+    private val goal = week.flatMapLatest { w -> c.calendar.weekGoal(w).map { w to it } }
+    private val habits = c.habits.today(LocalDate.now()).map { l -> l.count { it.done } to l.size }
+
+    private val base = combine(
         view, selected, filter,
         range.flatMapLatest { (a, b) -> c.calendar.days(a, b) },
         combine(c.calendar.labels, c.calendar.inboxAndOverdue(LocalDate.now())) { l, io -> l to io },
     ) { v, sel, f, days, (labels, io) ->
         CalendarUi(v, YearMonth.from(sel), sel, days, labels, f, io.first, io.second)
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), CalendarUi(selected = startDay, month = YearMonth.from(startDay)))
+    }
+
+    val state: StateFlow<CalendarUi> = combine(base, goal, habits) { s, (w, g), h -> s.copy(goal = g, goalWeek = w, habitsToday = h) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), CalendarUi(view = startView, selected = startDay, month = YearMonth.from(startDay)))
 
     init {
         viewModelScope.launch { c.calendar.ensureLabels() }
     }
 
+    /** Switches the view and remembers it for next time. */
     fun setView(v: CalView) {
         view.value = v
+        viewModelScope.launch { c.settings.setCalendarView(v.name) }
     }
 
     fun select(d: LocalDate) {
@@ -149,6 +178,12 @@ class CalendarViewModel(private val c: AppContainer, startDay: LocalDate) : View
     fun shiftDays(n: Long) {
         selected.value = selected.value.plusDays(n)
     }
+
+    fun shiftWeek(n: Long) {
+        selected.value = dayPickedInWeek(selected.value.plusWeeks(n), LocalDate.now())
+    }
+
+    fun saveGoal(weekStart: LocalDate, text: String) = viewModelScope.launch { c.calendar.setWeekGoal(weekStart, text) }
 
     fun toggleFilter(id: Long) {
         filter.value = if (id in filter.value) filter.value - id else filter.value + id
@@ -185,33 +220,47 @@ class CalendarActions(
     val onLabels: () -> Unit,
     val onSpend: (EventItem) -> Unit,
     val onMoney: () -> Unit,
+    val onHabits: () -> Unit,
 )
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
     val s by vm.state.collectAsState()
-    val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
+    val skies = LocalContext.current.container.skies
+    val night by rememberNight()
     var adding by remember { mutableStateOf(false) }
-    var pickingView by remember { mutableStateOf(false) }
     var pickingLabels by remember { mutableStateOf(false) }
     var list by remember { mutableStateOf<String?>(null) } // "inbox" / "overdue"
     var eventMenu by remember { mutableStateOf<EventItem?>(null) }
+    // a sky behind the day and week views (day: clouds, 18h–7h: night clouds)
+    val sky = s.view != CalView.MONTH
+    if (sky) StatusBarIcons(darkBehind = night)
 
-    PixelScreen("Lịch", onBack = null, actions = {
-        PixelTextButton("+", onClick = { adding = true })
-    }) {
-        Row(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalAlignment = Alignment.CenterVertically) {
-            PixelTextButton(s.view.label, onClick = { pickingView = true }, look = ButtonLook.Light)
-            PixelTextButton(
-                if (s.filter.isEmpty()) "Nhãn" else "Nhãn ${s.filter.size}",
-                onClick = { pickingLabels = true }, look = ButtonLook.Light,
-            )
+    PixelScreen(
+        "Lịch",
+        onBack = null,
+        titleColor = if (sky && night) Pal.Card else Pal.Ink,
+        backdrop = if (!sky) null else {
+            {
+                Crossfade(night, animationSpec = tween(1_500), label = "calendar sky") { dark ->
+                    ParallaxSky(skies.sky(if (dark) SkyLibrary.CAL_NIGHT else SkyLibrary.CAL_DAY), Modifier.fillMaxSize())
+                }
+            }
+        },
+        actions = { PixelTextButton("+", onClick = { adding = true }) },
+    ) {
+        PixelTabs(CalView.entries, s.view, { it.label }) { vm.setView(it) }
+        Row(
+            Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.spacedBy(6.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            PixelChip(if (s.filter.isEmpty()) "Nhãn" else "Nhãn ${s.filter.size}", selected = s.filter.isNotEmpty()) { pickingLabels = true }
             if (s.inbox.isNotEmpty()) PixelChip("Chưa xếp (${s.inbox.size})", selected = list == "inbox") { list = if (list == "inbox") null else "inbox" }
             if (s.overdue.isNotEmpty()) PixelChip("Quá hạn (${s.overdue.size})", selected = list == "overdue") { list = if (list == "overdue") null else "overdue" }
         }
-        Spacer(Modifier.height(m.unit * 2))
         val detail: @Composable () -> Unit = {
             list?.let { which ->
                 TodoBox(
@@ -220,32 +269,22 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
                 )
             }
         }
-        when (s.view) {
-            CalView.MONTH -> MonthView(s, vm, actions, detail) { eventMenu = it }
-            CalView.WEEK -> WeekView(s, vm, actions, detail) { eventMenu = it }
-            CalView.DAY -> DayView(s, vm, actions, detail) { eventMenu = it }
-            CalView.AGENDA -> AgendaView(s, vm, actions, detail) { eventMenu = it }
-        }
-    }
-
-    if (pickingView) {
-        PixelDialog(onDismiss = { pickingView = false }) {
-            PixelText("Xem lịch", style = type.title)
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                for (v in CalView.entries) PixelChip(v.label, selected = s.view == v) {
-                    vm.setView(v)
-                    pickingView = false
-                }
+        Box(Modifier.weight(1f).fillMaxWidth()) {
+            when (s.view) {
+                CalView.DAY -> DayView(s, vm, actions, detail) { eventMenu = it }
+                CalView.WEEK -> WeekView(s, vm, actions, night, detail) { eventMenu = it }
+                CalView.MONTH -> MonthView(s, vm, actions, detail) { eventMenu = it }
             }
         }
     }
+
     if (pickingLabels) {
         PixelDialog(onDismiss = { pickingLabels = false }) {
             PixelText("Nhãn", style = type.title)
             if (s.filter.isNotEmpty()) PixelChip("Tất cả") { vm.clearFilter() }
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 for (l in s.labels) {
-                    Row(verticalAlignment = Alignment.CenterVertically) {
+                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(4.dp)) {
                         LabelDot(l.color)
                         PixelChip(l.name, selected = l.id in s.filter) { vm.toggleFilter(l.id) }
                     }
@@ -257,7 +296,7 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
     if (adding) {
         PixelDialog(onDismiss = { adding = false }) {
             PixelText("Thêm vào ${shortDate(s.selected)}", style = type.title)
-            Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 PixelTextButton("Sự kiện", onClick = { adding = false; actions.onNewEvent(s.selected, null) })
                 PixelTextButton("Việc", onClick = { adding = false; actions.onNewTodo(s.selected) })
                 PixelTextButton("Việc chưa xếp", onClick = { adding = false; actions.onNewTodo(null) }, look = ButtonLook.Light)
@@ -268,7 +307,7 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
         PixelDialog(onDismiss = { eventMenu = null }) {
             PixelText(e.event.title, style = type.title)
             PixelText(occLabel(e, e.occ.start), style = type.caption, color = Pal.InkSoft)
-            Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 PixelTextButton("Sửa", onClick = { eventMenu = null; actions.onEvent(e.event.id) })
                 if (e.event.rep != EventRepeat.NONE) PixelTextButton("Xoá lần này", onClick = { eventMenu = null; vm.skip(e) }, look = ButtonLook.Light)
                 if (e.event.cost > 0) PixelTextButton("Ghi chi", onClick = { eventMenu = null; actions.onSpend(e) }, look = ButtonLook.Light)
@@ -281,25 +320,39 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
 
 @Composable
 private fun MonthView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarActions, extra: @Composable () -> Unit, onEventMenu: (EventItem) -> Unit) {
-    val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+    val today = LocalDate.now()
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         item { extra() }
         item {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                PixelTextButton("<", onClick = { vm.shiftMonth(-1) }, look = ButtonLook.Light)
+                PixelTextButton("‹", onClick = { vm.shiftMonth(-1) }, look = ButtonLook.Light)
                 PixelText("Tháng ${s.month.monthValue}/${s.month.year}", style = type.title, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
-                PixelTextButton(">", onClick = { vm.shiftMonth(1) }, look = ButtonLook.Light)
+                PixelTextButton("›", onClick = { vm.shiftMonth(1) }, look = ButtonLook.Light)
             }
         }
         item { MonthGrid(s, vm) }
-        item { DayDetail(s.day(s.selected), vm, actions, onEventMenu) }
+        item {
+            PixelPanel(Modifier.fillMaxWidth()) {
+                Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
+                    val d = s.day(s.selected)
+                    PixelText(shortDate(d.day) + if (d.day == today) " · hôm nay" else "", style = type.title)
+                    DayAgenda(d, s, vm, actions, onEventMenu)
+                    val money = if (d.spent > 0 || d.earned > 0) {
+                        "Chi ${formatVndShort(d.spent)}" + (if (d.earned > 0) " · Thu ${formatVndShort(d.earned)}" else "") + if (d.overLimit) " (vượt hạn mức)" else ""
+                    } else {
+                        null
+                    }
+                    money?.let { PixelText(it, style = type.caption, color = if (d.overLimit) Pal.Red else Pal.InkSoft, modifier = Modifier.clickable { actions.onMoney() }) }
+                }
+            }
+        }
+        item { Spacer(Modifier.height(12.dp)) }
     }
 }
 
 @Composable
 private fun MonthGrid(s: CalendarUi, vm: CalendarViewModel) {
-    val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val (start, _) = gridRange(s.month)
     val today = LocalDate.now()
@@ -336,46 +389,49 @@ private fun MonthGrid(s: CalendarUi, vm: CalendarViewModel) {
     }
 }
 
+/** A day of the month grid: rounded, its number, multi-day bands, up to three dots, money spent. */
 @Composable
 private fun DayCell(d: CalDay, inMonth: Boolean, today: Boolean, selected: Boolean, bands: List<Pair<EventItem, Int>>, modifier: Modifier) {
-    val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val dots = (d.events.filter { !it.occ.multiDay }.map { it.color } + d.todos.filter { !it.done }.map { it.color }).take(3)
-    Box(modifier.aspectRatio(0.82f)) {
+    val shape = RoundedCornerShape(10.dp)
+    Box(
+        modifier
+            .aspectRatio(0.82f)
+            .padding(2.dp)
+            .alpha(if (inMonth) 1f else 0.45f)
+            .clip(shape)
+            .background(if (selected) Pal.Selected else Pal.Card)
+            .border(if (today) 1.5.dp else 1.dp, if (today) Pal.Accent else Pal.Line, shape),
+    ) {
         Canvas(Modifier.fillMaxSize()) {
-            val u = m.ui.toFloat()
-            drawRect(if (selected) Pal.Orange else if (today) Pal.Gold else Pal.WoodDark)
-            drawRect(if (inMonth) Pal.Cream else Pal.Paper.copy(alpha = 0.55f), Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
-            // multi-day bands under the number, edge to edge so they join the next cell
+            val u = 2.dp.toPx()
+            // multi-day bands under the number
             for ((e, slot) in bands) {
                 if (slot > 1) continue
-                val top = size.height * 0.34f + slot * 4 * u
-                val left = if (e.occ.start == d.day) u * 2 else 0f
-                val right = if (e.occ.end == d.day) size.width - u * 2 else size.width
-                drawRect(Color(e.color), Offset(left, top), Size(right - left, 3 * u))
+                val top = size.height * 0.36f + slot * 3 * u
+                drawRect(Color(e.color), Offset(0f, top), Size(size.width, 2 * u))
             }
-            // up to three dots
             dots.forEachIndexed { i, c ->
-                drawRect(Color(c), Offset(u * 3 + i * u * 4, size.height * 0.58f), Size(u * 3, u * 3))
+                drawCircle(Color(c), radius = 1.5f * u, center = Offset(3 * u + i * 4 * u, size.height * 0.62f))
             }
             // every habit done that day
-            if (d.habitsAllDone) drawRect(Pal.Green, Offset(u, size.height - 3 * u), Size(size.width - 2 * u, 2 * u))
+            if (d.habitsAllDone) drawRect(Pal.OceanMist, Offset(0f, size.height - 2 * u), Size(size.width, 2 * u))
         }
         PixelText(
-            "${d.day.dayOfMonth}", style = type.caption,
-            color = if (inMonth) Pal.Ink else Pal.InkSoft,
-            modifier = Modifier.padding(start = m.unit * 2, top = m.unit),
+            "${d.day.dayOfMonth}", style = if (today || selected) type.bodyBold else type.caption,
+            color = Pal.Ink, modifier = Modifier.padding(start = 5.dp, top = 2.dp),
         )
         if (d.spent > 0) {
             PixelText(
-                formatVndShort(d.spent), style = type.caption, color = if (d.overLimit) Pal.Red else Pal.InkSoft,
-                maxLines = 1, modifier = Modifier.align(Alignment.BottomStart).padding(start = m.unit * 2, bottom = m.unit * 3),
+                formatVndShort(d.spent), style = type.caption.copy(fontSize = type.caption.fontSize * 0.85f), color = if (d.overLimit) Pal.Red else Pal.InkSoft,
+                maxLines = 1, modifier = Modifier.align(Alignment.BottomStart).padding(start = 4.dp, bottom = 4.dp),
             )
         }
     }
 }
 
-// ------------------------------------------------------------------ the day's list
+// ------------------------------------------------------------------ to-do lists
 
 fun occLabel(e: EventItem, day: LocalDate): String {
     val o = e.occ
@@ -388,71 +444,11 @@ fun occLabel(e: EventItem, day: LocalDate): String {
 }
 
 @Composable
-fun DayDetail(d: CalDay, vm: CalendarViewModel, actions: CalendarActions, onEventMenu: (EventItem) -> Unit) {
-    val m = LocalPixelMetrics.current
-    val type = LocalPixelType.current
-    val today = LocalDate.now()
-    PixelPanel(Modifier.fillMaxWidth()) {
-        Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                PixelText(shortDate(d.day) + if (d.day == today) " · hôm nay" else "", style = type.title, modifier = Modifier.weight(1f))
-                PixelTextButton("+ Sự kiện", onClick = { actions.onNewEvent(d.day, null) }, look = ButtonLook.Light)
-                Spacer(Modifier.width(m.unit))
-                PixelTextButton("+ Việc", onClick = { actions.onNewTodo(d.day) }, look = ButtonLook.Light)
-            }
-            if (d.events.isEmpty() && d.todos.isEmpty()) PixelText("Không có gì. Trẫm cho Sen rảnh.", style = type.caption, color = Pal.InkSoft)
-            for (e in d.events) EventRow(e, d.day, today, actions, onEventMenu)
-            for (t in d.todos) TodoRow(t, vm, actions, showDay = false)
-            val bits = listOfNotNull(
-                if (d.spent > 0 || d.earned > 0) "Chi ${formatVndShort(d.spent)}" + (if (d.earned > 0) " · Thu ${formatVndShort(d.earned)}" else "") + (if (d.overLimit) " (vượt hạn mức)" else "") else null,
-                if (d.habitsDone > 0) "Thói quen: xong ${d.habitsDone}" + if (d.habitsAllDone) " (hết)" else "" else null,
-            )
-            if (bits.isNotEmpty()) {
-                PixelText(bits.joinToString(" · "), style = type.caption, color = Pal.InkSoft, modifier = Modifier.clickable { actions.onMoney() })
-            }
-        }
-    }
-}
-
-@Composable
-fun EventRow(e: EventItem, day: LocalDate, today: LocalDate, actions: CalendarActions, onEventMenu: (EventItem) -> Unit) {
-    val m = LocalPixelMetrics.current
-    val type = LocalPixelType.current
-    Row(
-        Modifier.fillMaxWidth().clickable { onEventMenu(e) },
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
-    ) {
-        LabelDot(e.color, 4)
-        Column(Modifier.weight(1f)) {
-            PixelText(e.event.title, style = type.bodyBold, maxLines = 1)
-            val bits = listOfNotNull(
-                occLabel(e, day),
-                e.label?.name,
-                e.event.location.ifBlank { null },
-                if (e.birthday) {
-                    val n = CalendarEngine.countdown(e.event.start, today)
-                    if (n == 0L) "hôm nay!" else "còn $n ngày"
-                } else {
-                    null
-                },
-                if (e.event.cost > 0) "dự chi ${formatVndShort(e.event.cost)}" else null,
-            )
-            PixelText(bits.joinToString(" · "), style = type.caption, color = Pal.InkSoft, maxLines = 2)
-        }
-        if (e.event.cost > 0 && !day.isAfter(today)) {
-            PixelTextButton("Ghi chi", onClick = { actions.onSpend(e) })
-        }
-    }
-}
-
-@Composable
 fun TodoRow(t: TodoItem, vm: CalendarViewModel, actions: CalendarActions, showDay: Boolean) {
-    val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val today = LocalDate.now()
-    Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
-        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+    Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
+        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             PixelCheckbox(t.done, onCheckedChange = { vm.toggleTodo(t) })
             Column(Modifier.weight(1f).clickable { actions.onTodo(t.todo.id) }) {
                 PixelText((if (t.todo.starred) "★ " else "") + t.todo.title, style = type.bodyBold, color = if (t.done) Pal.InkSoft else Pal.Ink, maxLines = 1)
@@ -468,22 +464,13 @@ fun TodoRow(t: TodoItem, vm: CalendarViewModel, actions: CalendarActions, showDa
             }
             LabelDot(t.color)
         }
-        if (!t.done) {
-            for (step in t.steps) {
-                Row(Modifier.padding(start = m.unit * 8), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                    PixelCheckbox(step.done, onCheckedChange = { vm.toggleStep(step, t.todo.title) })
-                    PixelText(step.text, style = type.caption, color = if (step.done) Pal.InkSoft else Pal.Ink)
-                }
-            }
-        }
     }
 }
 
 @Composable
 private fun TodoBox(title: String, items: List<TodoItem>, vm: CalendarViewModel, actions: CalendarActions, showDay: Boolean) {
-    val m = LocalPixelMetrics.current
-    PixelPanel(Modifier.fillMaxWidth()) {
-        Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+    PixelPanel(Modifier.fillMaxWidth().padding(bottom = 4.dp)) {
+        Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             PixelText(title, style = LocalPixelType.current.caption, color = Pal.InkSoft)
             for (t in items) TodoRow(t, vm, actions, showDay)
         }

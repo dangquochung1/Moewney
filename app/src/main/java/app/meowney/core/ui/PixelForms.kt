@@ -88,6 +88,7 @@ fun PixelScreen(
     title: String,
     onBack: (() -> Unit)?,
     modifier: Modifier = Modifier,
+    titleColor: androidx.compose.ui.graphics.Color = Pal.Ink,
     backdrop: (@Composable () -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
@@ -106,7 +107,7 @@ fun PixelScreen(
                 horizontalArrangement = Arrangement.spacedBy(10.dp),
             ) {
                 if (onBack != null) BackButton(onBack)
-                PixelText(title, style = LocalPixelType.current.title, color = Pal.Ink, modifier = Modifier.weight(1f), maxLines = 1)
+                PixelText(title, style = LocalPixelType.current.title, color = titleColor, modifier = Modifier.weight(1f), maxLines = 1)
                 actions()
             }
             content()

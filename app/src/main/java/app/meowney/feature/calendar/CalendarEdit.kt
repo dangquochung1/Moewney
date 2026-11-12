@@ -71,10 +71,8 @@ private val OFFSETS = listOf(0 to "Đúng giờ", 5 to "5p", 15 to "15p", 30 to 
 @Composable
 fun LabelDot(color: Long, sizeUnits: Int = 3) {
     val m = LocalPixelMetrics.current
-    Canvas(Modifier.size(m.unit * sizeUnits)) {
-        drawRect(Pal.WoodDark)
-        val u = m.ui.toFloat()
-        drawRect(Color(color), androidx.compose.ui.geometry.Offset(u, u), androidx.compose.ui.geometry.Size(size.width - 2 * u, size.height - 2 * u))
+    Canvas(Modifier.size(m.unit * sizeUnits * 1.6f)) {
+        drawRoundRect(Color(color), cornerRadius = androidx.compose.ui.geometry.CornerRadius(size.minDimension / 3))
     }
 }
 
