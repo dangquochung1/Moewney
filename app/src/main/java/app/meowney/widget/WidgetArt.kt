@@ -23,7 +23,6 @@ import app.meowney.core.format.formatVndShort
 import app.meowney.core.sprite.SpriteAtlas
 import app.meowney.core.sprite.drawNinePatch
 import app.meowney.core.sprite.drawSprite
-import app.meowney.core.ui.Pal
 import app.meowney.feature.room.Mood
 import java.time.LocalTime
 
@@ -67,24 +66,24 @@ object WidgetArt {
         val cat = atlas.getOrNull("cat/${s.catColor}/${catAnim(s.mood)}") ?: atlas["cat/${s.catColor}/sit"]
         if (!s.onboarded) {
             drawSprite(cat, 0, w / 2f, h * 0.7f, scale = k)
-            text("Mở Meowney để bắt đầu", w / 2f, h * 0.88f, (k / 2).coerceAtLeast(1), Pal.Ink, tf, center = true)
+            text("Mở Meowney để bắt đầu", w / 2f, h * 0.88f, (k / 2).coerceAtLeast(1), WidgetPal.Ink, tf, center = true)
             return@paint
         }
         val t = (k / 2).coerceAtLeast(1) // font pixel
         val big = if (wide) k else t + 1
-        val leftColor = if (s.left < 0) Pal.Red else Pal.Ink
+        val leftColor = if (s.left < 0) WidgetPal.Red else WidgetPal.Ink
         if (wide) {
             val catScale = (h * 0.6f / cat.height).toInt().coerceAtLeast(2)
             drawSprite(cat, 0, w * 0.2f, h * 0.85f, scale = catScale)
             val x = w * 0.4f
-            text("HÔM NAY CÒN", x, h * 0.32f, t, Pal.InkSoft, tf)
+            text("HÔM NAY CÒN", x, h * 0.32f, t, WidgetPal.InkSoft, tf)
             text(formatVnd(s.left), x, h * 0.32f + 13f * big, big, leftColor, tf)
-            text(if (s.spent == 0L) "chưa tiêu đồng nào" else "đã tiêu ${formatVndShort(s.spent)}", x, h * 0.32f + 13f * big + 13f * t, t, Pal.InkSoft, tf)
+            text(if (s.spent == 0L) "chưa tiêu đồng nào" else "đã tiêu ${formatVndShort(s.spent)}", x, h * 0.32f + 13f * big + 13f * t, t, WidgetPal.InkSoft, tf)
         } else {
             val catScale = (h * 0.4f / cat.height).toInt().coerceAtLeast(2)
             val foot = h * 0.52f
             drawSprite(cat, 0, w / 2f, foot, scale = catScale)
-            text("CÒN", w / 2f, foot + 11f * t, t, Pal.InkSoft, tf, center = true)
+            text("CÒN", w / 2f, foot + 11f * t, t, WidgetPal.InkSoft, tf, center = true)
             text(formatVndShort(s.left), w / 2f, foot + 11f * t + 11f * big, big, leftColor, tf, center = true)
         }
     }
@@ -93,7 +92,7 @@ object WidgetArt {
     fun button(atlas: SpriteAtlas, tf: Typeface, label: String, w: Int, h: Int, primary: Boolean): Bitmap = paint(w, h) {
         val k = (h / 16).coerceAtLeast(2)
         drawNinePatch(atlas[if (primary) "ui/wood/button_normal" else "ui/wood/button_hover"], IntOffset.Zero, IntSize(w, h), k)
-        val ink = if (primary) Pal.Cream else Pal.Ink
+        val ink = if (primary) WidgetPal.Cream else WidgetPal.Ink
         if (label == "+") {
             // the font's "+" is tiny; draw a chunky pixel plus instead
             val u = (h / 16).coerceAtLeast(2).toFloat()
@@ -115,7 +114,15 @@ object WidgetArt {
         val lineH = 10f * t
         val top = h / 2f - lineH * lines.size / 2f
         lines.forEachIndexed { i, line ->
-            text(line, w / 2f, top + lineH * (i + 1) - 2f * t, t, if (i == 0) ink else Pal.InkSoft.takeIf { !primary } ?: ink, tf, center = true)
+            text(line, w / 2f, top + lineH * (i + 1) - 2f * t, t, if (i == 0) ink else WidgetPal.InkSoft.takeIf { !primary } ?: ink, tf, center = true)
         }
     }
+}
+
+/** The widgets keep the wood look of 1.0 (wood panels and the pixel font), so they keep its colours. */
+private object WidgetPal {
+    val Ink = androidx.compose.ui.graphics.Color(0xFF2A2027)
+    val InkSoft = androidx.compose.ui.graphics.Color(0xFF6B5446)
+    val Cream = androidx.compose.ui.graphics.Color(0xFFF6E7C8)
+    val Red = androidx.compose.ui.graphics.Color(0xFFD9534F)
 }

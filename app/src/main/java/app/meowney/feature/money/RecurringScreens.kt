@@ -88,7 +88,7 @@ fun RecurringScreen(vm: RecurringViewModel, onBack: () -> Unit) {
             if (ui.bills.isEmpty()) item { PixelText("Chưa có khoản nào. Tiền nhà, điện, mạng, Netflix... bấm + để thêm.", style = type.body, color = Pal.InkSoft) }
             items(ui.bills, key = { it.id }) { r ->
                 val cat = ui.categories.firstOrNull { it.id == r.categoryId }
-                PixelPanel(Modifier.fillMaxWidth().clickable { editing = r }, sprite = "ui/wood/nine_path_panel_3") {
+                PixelPanel(Modifier.fillMaxWidth().clickable { editing = r }) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                         RavenIcon(cat?.icon ?: 12, scale = (m.ui - 1).coerceAtLeast(2))
                         Column(Modifier.weight(1f)) {

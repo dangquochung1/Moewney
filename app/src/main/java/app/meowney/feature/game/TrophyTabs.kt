@@ -89,7 +89,7 @@ fun TrophyTab(vm: GiftViewModel) {
 private fun TrophyRow(a: Achievement, tier: Int, value: Long?) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3", extraPadding = 1) {
+    PixelPanel(Modifier.fillMaxWidth(), extraPadding = 1) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             Cup(tier, m.unit * 16)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
@@ -100,7 +100,7 @@ private fun TrophyRow(a: Achievement, tier: Int, value: Long?) {
                 val next = a.tiers.getOrNull(tier)
                 if (next != null) {
                     PixelText(a.text.format(next) + (value?.let { " · $it/$next" } ?: ""), style = type.caption, color = Pal.InkSoft, maxLines = 2)
-                    PixelProgress(((value ?: 0).toFloat() / next).coerceIn(0f, 1f), heightPx = 4, color = Pal.Gold)
+                    PixelProgress(((value ?: 0).toFloat() / next).coerceIn(0f, 1f), heightPx = 4, color = Pal.Mint)
                 } else {
                     PixelText(a.text.format(a.tiers.last()) + " · đủ cả 3 bậc!", style = type.caption, color = Pal.Green)
                 }
@@ -141,7 +141,7 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
         if (picked == null) {
             PixelText("Trẫm có 3 gợi ý, Sen chọn 1 nhé (chọn rồi không đổi được):", style = type.body, color = Pal.Ink)
             v.options.forEachIndexed { i, o ->
-                PixelPanel(Modifier.fillMaxWidth().clickable { vm.pickChallenge(i) }, sprite = "ui/wood/nine_path_panel_3") {
+                PixelPanel(Modifier.fillMaxWidth().clickable { vm.pickChallenge(i) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         PixelText(o.label, style = type.bodyBold, color = Pal.Ink, modifier = Modifier.weight(1f))
                         PixelTextButton("Chọn", onClick = { vm.pickChallenge(i) })
@@ -149,7 +149,7 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
                 }
             }
         } else {
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
                     Box(Modifier.size(m.unit * 24), contentAlignment = Alignment.Center) {
                         val chest = atlas.getOrNull(if (v.claimed) "chest/chest_open" else "treasure/bigtreasurechest")
@@ -157,7 +157,7 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
                     }
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                         PixelText(picked.label, style = type.bodyBold, color = Pal.Ink)
-                        PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Gold)
+                        PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Mint)
                         PixelText(
                             when {
                                 v.claimed -> "Đã mở rương. Tháng sau trẫm ra đề mới."
@@ -182,12 +182,12 @@ private fun QuestCard(q: QuestView, vm: GiftViewModel) {
     val reward = q.quest.rewardItem?.let { Catalog[it] }
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         PixelText("NHIỆM VỤ ${q.quest.season.label.uppercase()}", style = type.caption, color = Pal.Gold)
-        PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+        PixelPanel(Modifier.fillMaxWidth()) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
                 if (reward != null) ItemIcon(reward, m.unit * 22) else app.meowney.feature.money.SpriteView("treasure/littletreasurechest", scale = m.ui)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     PixelText(q.quest.label, style = type.bodyBold, color = Pal.Ink)
-                    PixelProgress((q.value.toFloat() / q.quest.target).coerceIn(0f, 1f), color = if (q.done) Pal.Green else Pal.Gold)
+                    PixelProgress((q.value.toFloat() / q.quest.target).coerceIn(0f, 1f), color = if (q.done) Pal.Green else Pal.Mint)
                     PixelText(
                         if (q.claimed) "Đã nhận thưởng." else "${minOf(q.value, q.quest.target)}/${q.quest.target} · thưởng: ${reward?.name ?: "${app.meowney.core.game.SeasonEngine.QUEST_COINS} xu + 2 món ăn"}",
                         style = type.caption, color = Pal.InkSoft,

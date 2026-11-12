@@ -58,7 +58,7 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
         if (open.isNotEmpty()) {
             item { PixelText("PHIẾU CỦA SEN", style = type.caption, color = Pal.Gold) }
             items(open, key = { "v${it.id}" }) { v ->
-                PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+                PixelPanel(Modifier.fillMaxWidth()) {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                         Column(Modifier.weight(1f)) {
                             PixelText(v.name, style = type.bodyBold, color = Pal.Ink)
@@ -74,7 +74,7 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
             item { PixelText("Chưa có phần thưởng nào. Thử \"Trà sữa\" 300 xu, \"Xem phim\" 1.000 xu...", style = type.body, color = Pal.InkSoft) }
         }
         items(rewards, key = { "r${it.id}" }) { r ->
-            PixelPanel(Modifier.fillMaxWidth().clickable { editing = r }, sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth().clickable { editing = r }) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     Column(Modifier.weight(1f)) {
                         PixelText(r.name, style = type.bodyBold, color = Pal.Ink)

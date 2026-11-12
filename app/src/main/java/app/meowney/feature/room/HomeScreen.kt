@@ -214,7 +214,7 @@ fun HomeScreen(
                 actions.onHabitCount(h, value)
                 counting = null
             }, modifier = Modifier.fillMaxWidth()) {
-                PixelText("Lưu", style = LocalPixelType.current.title, color = Pal.Cream)
+                PixelText("Lưu", style = LocalPixelType.current.title, color = Pal.Ink)
             }
         }
     }
@@ -229,7 +229,7 @@ fun HomeScreen(
                 if (amount.value > 0) actions.onPayBill(bill, amount.value)
                 paying = null
             }, modifier = Modifier.fillMaxWidth()) {
-                PixelText("Đã trả", style = LocalPixelType.current.title, color = Pal.Cream)
+                PixelText("Đã trả", style = LocalPixelType.current.title, color = Pal.Ink)
             }
         }
     }
@@ -544,7 +544,7 @@ private fun TodayPanel(
                                 PixelText(b.name, style = type.bodyBold, maxLines = 1)
                                 PixelText(formatVnd(b.amount), style = type.caption, color = Pal.InkSoft)
                             }
-                            PixelButton(onClick = { onPayBill(b) }, padded = true) { PixelText("Đã trả", style = type.caption, color = Pal.Cream) }
+                            PixelButton(onClick = { onPayBill(b) }, padded = true) { PixelText("Đã trả", style = type.caption, color = Pal.Ink) }
                             PixelButton(onClick = { onSkipBill(b) }, look = ButtonLook.Light) { PixelText("Bỏ qua", style = type.caption) }
                         }
                     }
@@ -582,7 +582,7 @@ private fun TodayPanel(
             }
         }
         PixelButton(onClick = onAdd, modifier = Modifier.fillMaxWidth().zoomSource(addZoom)) {
-            PixelText("+ Ghi chi tiêu", style = type.title, color = Pal.Cream)
+            PixelText("+ Ghi chi tiêu", style = type.title, color = Pal.Ink)
         }
         if (state.backupDays > 0) {
             PixelButton(onClick = onSettings, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
@@ -613,7 +613,7 @@ private fun TemplateChip(t: QuickTemplate, onClick: () -> Unit, onLongClick: () 
         PixelText(
             (if (t.pinned) "* " else "") + "${t.label} ${formatVndShort(t.amount)}",
             style = type.bodyBold,
-            color = if (t.pinned) Pal.Cream else Pal.Ink,
+            color = if (t.pinned) Pal.Ink else Pal.Ink,
             maxLines = 1,
         )
     }
@@ -688,10 +688,10 @@ private fun HabitRow(h: HabitToday, actions: HomeActions, onCountEdit: (HabitTod
         when (habit.kind) {
             HabitType.CHECK -> PixelCheckbox(h.done, onCheckedChange = { actions.onHabitTap(h) })
             HabitType.COUNT -> PixelButton(onClick = { actions.onHabitTap(h) }, look = if (h.done) ButtonLook.Light else ButtonLook.Orange) {
-                PixelText("+1", style = type.caption, color = if (h.done) Pal.Ink else Pal.Cream)
+                PixelText("+1", style = type.caption, color = if (h.done) Pal.Ink else Pal.Ink)
             }
             HabitType.TIMER -> PixelButton(onClick = { actions.onTimer(h) }, look = if (h.done) ButtonLook.Light else ButtonLook.Orange) {
-                PixelText(if (h.done) "xong" else "Bắt đầu", style = type.caption, color = if (h.done) Pal.Ink else Pal.Cream)
+                PixelText(if (h.done) "xong" else "Bắt đầu", style = type.caption, color = if (h.done) Pal.Ink else Pal.Ink)
             }
             HabitType.QUIT -> PixelButton(onClick = { actions.onHabitFailed(h, !h.failed) }, look = ButtonLook.Light) {
                 PixelText(if (h.failed) "Hoàn tác" else "Lỡ rồi", style = type.caption)
@@ -724,7 +724,7 @@ private fun ChallengeToday(v: app.meowney.core.data.ChallengeView, actions: Home
                     style = type.caption, color = if (v.done && !v.claimed) Pal.Orange else Pal.InkSoft,
                 )
             }
-            app.meowney.core.ui.PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Gold, heightPx = 4)
+            app.meowney.core.ui.PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Mint, heightPx = 4)
         }
     }
 }

@@ -21,6 +21,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 import java.time.LocalDate
 import java.time.YearMonth
 
@@ -33,6 +38,19 @@ fun shortDate(d: LocalDate, today: LocalDate = LocalDate.now()): String {
 }
 
 fun hhmm(minute: Int) = "%02d:%02d".format(minute / 60, minute % 60)
+
+/** Behind a day number: Coral Reef when chosen, a Sunset Clay ring on today, else nothing. */
+@Composable
+fun DayDot(today: Boolean, selected: Boolean, modifier: Modifier = Modifier) {
+    val shape = androidx.compose.foundation.shape.RoundedCornerShape(10.dp)
+    Box(
+        modifier
+            .padding(2.dp)
+            .clip(shape)
+            .background(if (selected) Pal.Primary else androidx.compose.ui.graphics.Color.Transparent)
+            .let { if (today) it.border(1.5.dp, Pal.Accent, shape) else it },
+    )
+}
 
 /** A month grid to pick a day. [allowNone] adds "Không có ngày". */
 @Composable
@@ -61,12 +79,8 @@ fun PixelDatePicker(initial: LocalDate?, allowNone: Boolean = false, onPick: (Lo
                             if (n in 1..month.lengthOfMonth()) {
                                 val day = month.atDay(n)
                                 val selected = day == initial
-                                Canvas(Modifier.fillMaxSize().clickable { onPick(day) }) {
-                                    val u = m.ui.toFloat()
-                                    drawRect(if (day == today) Pal.Gold else Pal.WoodDark)
-                                    drawRect(if (selected) Pal.Orange else Pal.Cream, Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
-                                }
-                                PixelText("$n", style = type.body, color = if (selected) Pal.Cream else Pal.Ink)
+                                DayDot(day == today, selected, Modifier.fillMaxSize().clickable { onPick(day) })
+                                PixelText("$n", style = if (selected || day == today) type.bodyBold else type.body, color = Pal.Ink)
                             }
                         }
                     }

@@ -164,7 +164,7 @@ fun PourScreen(vm: PourViewModel, typeface: Typeface, onBack: () -> Unit, onDone
     PixelScreen("Rót xu vào lọ", onBack = onBack) {
         if (!s.loaded) return@PixelScreen
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column {
                     PixelText("Khoản thu", style = type.caption, color = Pal.InkSoft)
                     PixelText("+" + formatVnd(vm.draft.amount), style = type.display, color = Pal.Green)

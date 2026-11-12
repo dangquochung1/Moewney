@@ -51,6 +51,7 @@ import app.meowney.core.ui.Pal
 import app.meowney.core.ui.PixelChip
 import app.meowney.core.ui.PixelDialog
 import app.meowney.core.ui.PixelKeypad
+import app.meowney.core.ui.CardTone
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelScreen
 import app.meowney.core.ui.PixelText
@@ -147,7 +148,7 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
                 }
                 1 -> {
                     s.wallets.forEachIndexed { i, w ->
-                        PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel") {
+                        PixelPanel(Modifier.fillMaxWidth()) {
                             Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
                                 PixelTextField(w.name, { n -> vm.update { st -> st.copy(wallets = st.wallets.toMutableList().also { it[i] = w.copy(name = n.take(20)) }) } }, Modifier.fillMaxWidth())
                                 FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
@@ -263,7 +264,7 @@ private fun CatPicker(selected: Int, onPick: (Int) -> Unit) {
         for (color in 1..6) {
             PixelPanel(
                 Modifier.weight(1f).padding(m.unit).clickable { onPick(color) },
-                sprite = if (color == selected) "ui/wood/nine_path_panel_3" else "ui/wood/nine_path_bg",
+                tone = if (color == selected) CardTone.Selected else CardTone.Plain,
                 extraPadding = 1,
             ) {
                 Canvas(Modifier.fillMaxWidth().size(m.dp(30 * m.ui))) {

@@ -52,6 +52,7 @@ import app.meowney.core.ui.LocalSprites
 import app.meowney.core.ui.Pal
 import app.meowney.core.ui.PixelChip
 import app.meowney.core.ui.PixelDialog
+import app.meowney.core.ui.CardTone
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelScreen
 import app.meowney.core.ui.PixelText
@@ -251,7 +252,7 @@ fun GiftScreen(
             for (t in GiftTab.entries) PixelChip(t.label, selected = tab == t) { vm.tab.value = t }
         }
         message?.let {
-            PixelPanel(Modifier.fillMaxWidth().padding(bottom = m.unit * 2), sprite = "ui/wood/nine_path_panel_interior", extraPadding = 1) {
+            PixelPanel(Modifier.fillMaxWidth().padding(bottom = m.unit * 2), tone = CardTone.Lemon, extraPadding = 1) {
                 PixelText(it, style = type.body, color = Pal.Ink)
             }
         }
@@ -411,7 +412,7 @@ fun CatIcon(color: Int, box: Dp, anim: String = "sit") {
 private fun ShopCell(title: String, price: Int?, note: String?, affordable: Boolean, onClick: () -> Unit, icon: @Composable () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelPanel(Modifier.fillMaxWidth().clickable(onClick = onClick), sprite = "ui/wood/nine_path_panel_3", extraPadding = 0) {
+    PixelPanel(Modifier.fillMaxWidth().clickable(onClick = onClick), extraPadding = 0) {
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(m.unit)) {
             icon()
             PixelText(title, style = type.caption, color = Pal.Ink, align = TextAlign.Center, maxLines = 2)

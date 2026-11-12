@@ -65,7 +65,7 @@ fun DayView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarActions, extr
         extra()
         Nav(shortDate(s.selected), onPrev = { vm.shiftDays(-1) }, onNext = { vm.shiftDays(1) })
         if (d.todos.isNotEmpty()) {
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     for (t in d.todos) TodoRow(t, vm, actions, showDay = false)
                 }
@@ -222,7 +222,7 @@ fun AgendaView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarActions, e
                         shortDate(d.day).uppercase() + if (d.day == today) " · HÔM NAY" else "",
                         style = type.bodyBold, color = Pal.Gold, modifier = Modifier.clickable { vm.select(d.day); vm.setView(CalView.MONTH) },
                     )
-                    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+                    PixelPanel(Modifier.fillMaxWidth()) {
                         Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                             for (e in d.events) EventRow(e, d.day, today, actions, onEventMenu)
                             for (t in d.todos) TodoRow(t, vm, actions, showDay = false)

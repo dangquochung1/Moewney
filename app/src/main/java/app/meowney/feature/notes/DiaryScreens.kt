@@ -2,6 +2,10 @@ package app.meowney.feature.notes
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -55,6 +59,7 @@ import app.meowney.core.ui.LocalPixelType
 import app.meowney.core.ui.Pal
 import app.meowney.core.ui.PixelChip
 import app.meowney.core.ui.PixelDialog
+import app.meowney.core.ui.CardTone
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelScreen
 import app.meowney.core.ui.PixelText
@@ -92,12 +97,12 @@ fun MoodIcon(mood: Mood?, scale: Int, modifier: Modifier = Modifier, framed: Boo
 
 /** Light tint behind a mood in the diary calendar. */
 fun moodTint(m: Mood?): Color = when (m) {
-    Mood.GREAT -> Color(0xFF5CBF6A)
-    Mood.GOOD -> Color(0xFF9CC07A)
-    Mood.OK -> Color(0xFFC9B48A)
-    Mood.BAD -> Color(0xFF8FB3CC)
-    Mood.AWFUL -> Color(0xFF6F7FA8)
-    null -> Pal.Wood
+    Mood.GREAT -> Pal.GoldenDune
+    Mood.GOOD -> Pal.OceanMist
+    Mood.OK -> Pal.LemonCream
+    Mood.BAD -> Pal.MorningSky
+    Mood.AWFUL -> Pal.CoralReef
+    null -> Pal.Track
 }
 
 // ------------------------------------------------------------------ diary tab
@@ -194,32 +199,41 @@ private fun DiaryGrid(
                 for (col in 0 until 7) {
                     val day = start.plusDays(w * 7L + col)
                     val page = pages[day.toEpochDay()]
+                    val inMonth = day.month == month.month
+                    val shape = androidx.compose.foundation.shape.RoundedCornerShape(10.dp)
                     Box(
-                        Modifier.weight(1f).aspectRatio(0.9f).clickable { onSelect(day) },
+                        Modifier
+                            .weight(1f)
+                            .aspectRatio(0.9f)
+                            .padding(2.dp)
+                            .alpha(if (inMonth) 1f else 0.4f)
+                            .clip(shape)
+                            .background(if (page?.mood != null) moodTint(page.mood) else Pal.Card)
+                            .border(
+                                when (day) {
+                                    selected -> 2.dp
+                                    today -> 1.5.dp
+                                    else -> 1.dp
+                                },
+                                when (day) {
+                                    selected -> Pal.Ink
+                                    today -> Pal.Accent
+                                    else -> Pal.Line
+                                },
+                                shape,
+                            )
+                            .clickable { onSelect(day) },
                         contentAlignment = Alignment.Center,
                     ) {
-                        val inMonth = day.month == month.month
-                        Canvas(Modifier.fillMaxSize()) {
-                            val u = m.ui.toFloat()
-                            val frame = when {
-                                day == selected -> Pal.Orange
-                                day == today -> Pal.Gold
-                                else -> Pal.Night
-                            }
-                            drawRect(frame, Offset(u / 2, u / 2), Size(size.width - u, size.height - u))
-                            val fill = if (page?.mood != null) moodTint(page.mood).copy(alpha = 0.55f) else Pal.WoodDark
-                            drawRect(fill, Offset(u * 1.5f, u * 1.5f), Size(size.width - 3 * u, size.height - 3 * u))
-                            if (!inMonth) drawRect(Pal.Night.copy(alpha = 0.6f), Offset.Zero, size)
-                        }
                         PixelText(
                             "${day.dayOfMonth}", style = type.caption,
-                            color = if (inMonth) Pal.Cream else Pal.InkSoft,
-                            modifier = Modifier.align(Alignment.TopStart).padding(start = m.unit * 2, top = m.unit),
+                            color = if (inMonth) Pal.Ink else Pal.InkSoft,
+                            modifier = Modifier.align(Alignment.TopStart).padding(start = 5.dp, top = 2.dp),
                         )
                         when {
                             page?.mood != null -> MoodIcon(page.mood, scale = (m.ui - 1).coerceAtLeast(2), Modifier.padding(top = m.unit * 3))
-                            page != null && page.hasContent -> PixelText("•", style = type.title, color = Pal.Cream)
-                            day == today -> PixelText("!", style = type.title, color = Pal.Gold, modifier = Modifier.padding(top = m.unit * 3))
+                            page != null && page.hasContent -> PixelText("•", style = type.title, color = Pal.Ink)
+                            day == today -> PixelText("!", style = type.title, color = Pal.AccentText, modifier = Modifier.padding(top = m.unit * 3))
                         }
                     }
                 }
@@ -381,9 +395,9 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
                     ) {
                         MoodIcon(
                             md, scale = m.ui,
-                            Modifier.background(if (mood == md.level) Pal.Orange else Pal.WoodDark)
+                            Modifier.background(if (mood == md.level) Pal.Ink else Pal.Line)
                                 .padding(m.unit)
-                                .background(if (mood == md.level) moodTint(md) else Pal.Wood)
+                                .background(moodTint(md))
                                 .padding(horizontal = m.unit * 2, vertical = m.unit),
                         )
                         PixelText(md.label, style = type.caption, color = if (mood == md.level) Pal.Ink else Pal.InkSoft, align = TextAlign.Center, maxLines = 1)
@@ -401,7 +415,7 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
                 }
                 SpriteView("cat/$catColor/$anim", scale = m.ui)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_interior", extraPadding = 1) {
+                    PixelPanel(Modifier.fillMaxWidth(), tone = CardTone.Lemon, extraPadding = 1) {
                         PixelText(reaction ?: prompt, style = type.body, color = Pal.Ink)
                     }
                     if (reaction == null && vm.day == vm.today) {
@@ -455,7 +469,7 @@ private fun DaySummary(d: CalDay) {
         val done = d.todos.count { it.done }
         if (done > 0) add("$done việc xong")
     }
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3", extraPadding = 1) {
+    PixelPanel(Modifier.fillMaxWidth(), extraPadding = 1) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
             PixelText(parts.joinToString(" · "), style = type.caption, color = Pal.Ink)
             val events = d.events.take(3).map { it.event.title }

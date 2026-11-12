@@ -80,7 +80,7 @@ fun UiKitScreen(onBack: () -> Unit) {
             }
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     PixelText("Meowney", style = type.display)
                     PixelText("Sen ơi, hôm nay còn ${formatVnd(152_000)}!", style = type.title)
@@ -126,7 +126,7 @@ fun UiKitScreen(onBack: () -> Unit) {
             }
         }
         items(anims) { anim ->
-            PixelPanel(sprite = "ui/wood/nine_path_bg", extraPadding = 1) {
+            PixelPanel(extraPadding = 1) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Canvas(Modifier.size(cell, m.dp(30 * m.ui))) {
                         val t = clock.longValue
@@ -142,7 +142,7 @@ fun UiKitScreen(onBack: () -> Unit) {
             PixelText("Đạo cụ (pack mới)", style = type.title, color = Pal.Ink, modifier = Modifier.padding(top = m.unit * 3))
         }
         items(atlas.keys("prop/")) { key ->
-            PixelPanel(sprite = "ui/wood/nine_path_bg", extraPadding = 1) {
+            PixelPanel(extraPadding = 1) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Canvas(Modifier.size(cell, m.dp(30 * m.ui))) {
                         val s = atlas[key]

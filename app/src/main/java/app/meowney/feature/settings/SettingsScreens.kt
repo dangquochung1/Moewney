@@ -180,7 +180,7 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
 @Composable
 private fun Section(title: String, content: @Composable () -> Unit) {
     val m = LocalPixelMetrics.current
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+    PixelPanel(Modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelText(title, style = LocalPixelType.current.title, color = Pal.Ink)
             content()
@@ -216,7 +216,7 @@ fun XiaomiGuideScreen(onBack: () -> Unit) {
                 "Máy Xiaomi/Redmi/POCO hay tắt app chạy nền nên lời nhắc 21h có thể không kêu. Bật 2 mục dưới đây là được.",
                 style = type.body, color = Pal.Ink,
             )
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelText("1. Tự khởi chạy", style = type.title)
                     PixelText("Bật công tắc cạnh Meowney trong danh sách.", style = type.body)
@@ -229,7 +229,7 @@ fun XiaomiGuideScreen(onBack: () -> Unit) {
                     })
                 }
             }
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelText("2. Pin: Không giới hạn", style = type.title)
                     PixelText("Chọn 'Không giới hạn' (No restrictions) cho Meowney.", style = type.body)
@@ -267,7 +267,7 @@ fun CreditsScreen(onBack: () -> Unit) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelText("Meowney dùng asset của các tác giả sau. Cảm ơn rất nhiều!", style = type.body, color = Pal.Ink)
             for ((what, who) in CREDITS) {
-                PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+                PixelPanel(Modifier.fillMaxWidth()) {
                     Column {
                         PixelText(what, style = type.bodyBold)
                         PixelText(who, style = type.caption, color = Pal.InkSoft)

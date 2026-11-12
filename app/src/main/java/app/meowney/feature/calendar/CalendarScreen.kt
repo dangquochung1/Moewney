@@ -392,7 +392,7 @@ fun DayDetail(d: CalDay, vm: CalendarViewModel, actions: CalendarActions, onEven
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val today = LocalDate.now()
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+    PixelPanel(Modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelText(shortDate(d.day) + if (d.day == today) " · hôm nay" else "", style = type.title, modifier = Modifier.weight(1f))
@@ -482,7 +482,7 @@ fun TodoRow(t: TodoItem, vm: CalendarViewModel, actions: CalendarActions, showDa
 @Composable
 private fun TodoBox(title: String, items: List<TodoItem>, vm: CalendarViewModel, actions: CalendarActions, showDay: Boolean) {
     val m = LocalPixelMetrics.current
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+    PixelPanel(Modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelText(title, style = LocalPixelType.current.caption, color = Pal.InkSoft)
             for (t in items) TodoRow(t, vm, actions, showDay)

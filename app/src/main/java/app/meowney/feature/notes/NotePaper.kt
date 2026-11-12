@@ -28,6 +28,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
 import app.meowney.container
 import app.meowney.core.data.NoteFull
 import app.meowney.core.notes.BlockType
@@ -40,28 +41,27 @@ import kotlinx.coroutines.withContext
 import java.io.File
 import kotlin.math.max
 
-/** The six paper colours a note can have. */
+/** The six paper colours a note can have: the app palette (a stored index keeps its slot). */
 val NOTE_PAPERS = listOf(
-    Color(0xFFF6E7C8), // kem
-    Color(0xFFF7D774), // vàng
-    Color(0xFFC5E0A5), // xanh lá
-    Color(0xFFB9D4EE), // xanh dương
-    Color(0xFFF5C0CF), // hồng
-    Color(0xFFD7C4EC), // tím
+    Pal.Card, // white: the default sheet
+    Pal.GoldenDune,
+    Pal.OceanMist,
+    Pal.MorningSky,
+    Pal.CoralReef,
+    Color(0xFFF0A48F), // Sunset Clay, lightened so dark text reads on it
 )
 
 fun paper(i: Int) = NOTE_PAPERS[i.coerceIn(0, NOTE_PAPERS.lastIndex)]
 
-/** A sheet of paper: dark 1-px outline, flat fill, a darker bottom edge; [pin] adds a red pin. */
+/** A sheet of paper: rounded, flat fill, a thin border; [pin] adds a small red pin at the top. */
 fun Modifier.paperSheet(color: Color, u: Float, pin: Boolean = false): Modifier = drawBehind {
-    drawRect(Pal.WoodDark)
-    drawRect(color, Offset(u, u), Size(size.width - 2 * u, size.height - 3 * u))
-    drawRect(Color.Black.copy(alpha = 0.12f), Offset(u, size.height - 3 * u), Size(size.width - 2 * u, u))
+    val r = androidx.compose.ui.geometry.CornerRadius(12.dp.toPx())
+    drawRoundRect(color, cornerRadius = r)
+    drawRoundRect(Color.Black.copy(alpha = 0.08f), cornerRadius = r, style = androidx.compose.ui.graphics.drawscope.Stroke(1.dp.toPx()))
     if (pin) {
         val cx = size.width / 2
-        drawRect(Pal.WoodDark, Offset(cx - 3 * u, -u), Size(6 * u, 5 * u))
-        drawRect(Pal.Red, Offset(cx - 2 * u, 0f), Size(4 * u, 3 * u))
-        drawRect(Color.White.copy(alpha = 0.5f), Offset(cx - u, 0f), Size(u, u))
+        drawCircle(Pal.Red, radius = 2.5f * u, center = Offset(cx, 3 * u))
+        drawCircle(Color.White.copy(alpha = 0.6f), radius = 0.8f * u, center = Offset(cx - 0.8f * u, 2.2f * u))
     }
 }
 
@@ -142,20 +142,11 @@ fun NoteCard(n: NoteFull, modifier: Modifier = Modifier) {
     }
 }
 
-/** A 7x7 art-pixel tick box (the pixel font has no ballot box). */
+/** A small tick box for checklist lines ([px] UI art pixels wide). */
 @Composable
 fun MiniCheck(checked: Boolean, modifier: Modifier = Modifier, px: Int = 7) {
     val m = LocalPixelMetrics.current
-    Canvas(modifier.size(m.unit * px)) {
-        val u = size.width / px
-        drawRect(Pal.WoodDark)
-        drawRect(if (checked) Pal.Green else Pal.Cream, Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
-        if (checked) {
-            // a little tick
-            val pts = listOf(1 to 3, 2 to 4, 3 to 3, 4 to 2, 5 to 1)
-            for ((x, y) in pts) drawRect(Pal.Cream, Offset(x * u, (y + 0) * u), Size(u, u))
-        }
-    }
+    app.meowney.core.ui.TickBox(checked, maxOf(16.dp, m.unit * px), modifier)
 }
 
 /** One read-only checklist line: a small box and the text, struck through when done. */

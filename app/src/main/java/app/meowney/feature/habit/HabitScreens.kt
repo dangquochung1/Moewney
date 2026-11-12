@@ -1,5 +1,8 @@
 package app.meowney.feature.habit
 
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.background
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -134,7 +137,7 @@ fun HabitsScreen(vm: HabitsViewModel, onBack: () -> Unit, onNew: () -> Unit, onO
 private fun HabitCard(h: HabitEntity, today: HabitToday?, onClick: () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelPanel(Modifier.fillMaxWidth().clickable(onClick = onClick), sprite = "ui/wood/nine_path_panel_3") {
+    PixelPanel(Modifier.fillMaxWidth().clickable(onClick = onClick)) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RavenIcon(h.icon)
@@ -416,7 +419,7 @@ fun HabitDetailScreen(vm: HabitDetailViewModel, onBack: () -> Unit, onEdit: () -
     val type = LocalPixelType.current
     PixelScreen(h.name, onBack = onBack, actions = { PixelTextButton("Sửa", onClick = onEdit, look = ButtonLook.Light) }) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RavenIcon(h.icon, scale = m.ui * 2)
@@ -439,10 +442,10 @@ fun HabitDetailScreen(vm: HabitDetailViewModel, onBack: () -> Unit, onEdit: () -
             }
             MonthGrid(h, s.month, s.logs)
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-                Legend(Pal.Green, "xong")
-                Legend(Pal.Sky, "nghỉ (vé)")
-                Legend(Pal.Orange, "lỡ")
-                Legend(Pal.WoodDark, "không cần")
+                Legend(Pal.OceanMist, "xong")
+                Legend(Pal.MorningSky, "nghỉ (vé)")
+                Legend(Pal.CoralReef, "lỡ")
+                Legend(Pal.Track, "không cần")
             }
         }
     }
@@ -452,13 +455,13 @@ private fun cellColor(h: HabitEntity, log: HabitLogEntity?, day: LocalDate, toda
     val epoch = day.toEpochDay()
     if (epoch < h.createdDay || day.isAfter(today)) return null
     return when (log?.status) {
-        "DONE", "KEPT" -> Pal.Green
-        "RESTED" -> Pal.Sky
-        "MISSED", "FAILED" -> Pal.Orange
+        "DONE", "KEPT" -> Pal.OceanMist
+        "RESTED" -> Pal.MorningSky
+        "MISSED", "FAILED" -> Pal.CoralReef
         else -> when {
-            !HabitEngine.isScheduled(h.rule, day) -> Pal.WoodDark
-            h.kind == HabitType.QUIT && day == today -> Pal.Green.copy(alpha = 0.5f)
-            else -> Pal.Night
+            !HabitEngine.isScheduled(h.rule, day) -> Pal.Track
+            h.kind == HabitType.QUIT && day == today -> Pal.OceanMist.copy(alpha = 0.5f)
+            else -> Pal.Card
         }
     }
 }
@@ -484,13 +487,15 @@ private fun MonthGrid(h: HabitEntity, month: YearMonth, logs: List<HabitLogEntit
                             val day = month.atDay(n)
                             val color = cellColor(h, byDay[day.toEpochDay()], day, today)
                             if (color != null) {
-                                Canvas(Modifier.fillMaxWidth().aspectRatio(1.4f)) {
-                                    val u = m.ui.toFloat()
-                                    drawRect(if (day == today) Pal.Gold else Pal.WoodDark)
-                                    drawRect(color, androidx.compose.ui.geometry.Offset(u, u), androidx.compose.ui.geometry.Size(size.width - 2 * u, size.height - 2 * u))
-                                }
+                                val shape = androidx.compose.foundation.shape.RoundedCornerShape(8.dp)
+                                Box(
+                                    Modifier.fillMaxWidth().aspectRatio(1.4f)
+                                        .clip(shape)
+                                        .background(color)
+                                        .border(if (day == today) 1.5.dp else 1.dp, if (day == today) Pal.Accent else Pal.Line, shape),
+                                )
                             }
-                            PixelText("$n", style = type.caption, color = if (color == null) Pal.InkSoft else Pal.Cream)
+                            PixelText("$n", style = type.caption, color = if (color == null) Pal.InkSoft else Pal.Ink)
                         }
                     }
                 }

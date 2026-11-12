@@ -107,7 +107,7 @@ fun WakeIntro(full: Boolean, catColor: Int, greeting: String?, onDone: () -> Uni
                 val letters = (t / 90).toInt().coerceIn(0, TITLE.length)
                 PixelText(
                     TITLE.take(letters).padEnd(TITLE.length, ' '),
-                    style = type.display, color = Pal.Gold, align = TextAlign.Center,
+                    style = type.pixelDisplay, color = Pal.GoldenDune, align = TextAlign.Center,
                 )
             }
             if (t > 1_800 && greeting != null) {

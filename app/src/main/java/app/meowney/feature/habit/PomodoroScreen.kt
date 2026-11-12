@@ -1,5 +1,8 @@
 package app.meowney.feature.habit
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.background
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.height
@@ -169,7 +172,7 @@ fun PomodoroScreen(vm: PomodoroViewModel, onBack: () -> Unit) {
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 when {
                     !s.running -> PixelButton(onClick = vm::start) {
-                        PixelText(if (s.state == null) "Bắt đầu tập trung" else "Phiên tiếp theo", style = type.title, color = Pal.Cream)
+                        PixelText(if (s.state == null) "Bắt đầu tập trung" else "Phiên tiếp theo", style = type.title, color = Pal.Ink)
                     }
                     paused -> PixelTextButton("Tiếp tục", onClick = vm::resume)
                     s.phase == Phase.FOCUS -> PixelTextButton("Tạm dừng", onClick = vm::pause, look = ButtonLook.Light)
@@ -199,11 +202,7 @@ private fun SessionDots(s: PomodoroUi) {
     Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         for (i in 0 until s.cfg.longEvery) {
             val on = full || i < done
-            Canvas(Modifier.size(m.unit * 5)) {
-                val u = m.ui.toFloat()
-                drawRect(Pal.WoodDark)
-                drawRect(if (on) Pal.Gold else Pal.Night, androidx.compose.ui.geometry.Offset(u, u), androidx.compose.ui.geometry.Size(size.width - 2 * u, size.height - 2 * u))
-            }
+            Canvas(Modifier.size(12.dp)) { drawCircle(if (on) Pal.Accent else Pal.Track) }
         }
     }
 }

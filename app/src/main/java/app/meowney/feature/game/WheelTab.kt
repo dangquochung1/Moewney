@@ -139,7 +139,7 @@ fun WheelTab(vm: GiftViewModel) {
         if (lixi) {
             PixelTextButton("Nhận lì xì Tết", onClick = { vm.claimLixi() }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
         }
-        PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+        PixelPanel(Modifier.fillMaxWidth()) {
             Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
                 PixelText("Giải thưởng", style = type.bodyBold, color = Pal.Ink)
                 PixelText("Xu 5 / 10 / 20 / 50 · món ăn cho mèo · vé nghỉ thói quen · x2 xu ghi sổ cả ngày · rương đồ hiếm (đồ trang trí ngẫu nhiên).", style = type.caption, color = Pal.InkSoft)
