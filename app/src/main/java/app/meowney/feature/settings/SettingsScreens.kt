@@ -257,6 +257,10 @@ private val CREDITS = listOf(
     "Raven Fantasy Icons" to "clockworkraven",
     "Mèo 6 màu, nội thất nhà, tháp mèo, nhà thú cưng, đồ chơi" to "pack miễn phí - chưa rõ tác giả",
     "Âm thanh hiệu ứng" to "từ kho asset của game cũ",
+    "Tiếng mèo gừ gừ (purring cat)" to "Universfield - Pixabay",
+    "Nền trời mây và trời trăng" to "CraftPix.net - giấy phép craftpix.net/file-licenses",
+    "Trái Đất pixel" to "chưa rõ tác giả",
+    "Font Nunito" to "The Nunito Project Authors - SIL Open Font License 1.1",
 )
 
 @Composable
