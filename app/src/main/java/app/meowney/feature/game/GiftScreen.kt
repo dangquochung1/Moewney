@@ -247,7 +247,7 @@ fun GiftScreen(
             vm.message.value = null
         }
     }
-    PixelScreen("Quà", onBack = onBack, actions = { CoinTag(game.coins) }) {
+    PixelScreen("Quà", onBack = null, actions = { CoinTag(game.coins) }) {
         Row(Modifier.fillMaxWidth().horizontalScroll(rememberScrollState()).padding(bottom = m.unit * 2), horizontalArrangement = Arrangement.spacedBy(m.unit)) {
             for (t in GiftTab.entries) PixelChip(t.label, selected = tab == t) { vm.tab.value = t }
         }

@@ -117,7 +117,7 @@ fun HabitsScreen(vm: HabitsViewModel, onBack: () -> Unit, onNew: () -> Unit, onO
     val s by vm.state.collectAsState()
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelScreen("Thói quen", onBack = onBack, actions = {
+    PixelScreen("Thói quen", onBack = null, actions = {
         PixelTextButton("Pomodoro", onClick = onPomodoro, look = ButtonLook.Light)
         PixelTextButton("+", onClick = onNew)
     }) {

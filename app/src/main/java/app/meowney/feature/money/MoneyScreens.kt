@@ -115,7 +115,7 @@ fun MoneyScreen(
     val names = s.jars.associate { it.jar.id to it.jar.name }
     val days = remember(s.txns) { s.txns.groupBy { it.day }.toList() }
 
-    PixelScreen("Tiền", onBack = onBack, actions = {
+    PixelScreen("Tiền", onBack = null, actions = {
         PixelTextButton("Định kỳ", onClick = onRecurring, look = ButtonLook.Light)
         PixelTextButton("Nợ", onClick = onDebts, look = ButtonLook.Light)
         PixelTextButton("Ví", onClick = onWallets, look = ButtonLook.Light)

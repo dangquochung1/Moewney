@@ -101,3 +101,19 @@ fun ParallaxSky(set: SkySet, modifier: Modifier = Modifier, walked: () -> Float 
 
 /** Art pixels the front cloud layer slides per scene pixel the cat walks. */
 private const val WALK_SHIFT = 0.8f
+
+/**
+ * While shown, the status bar icons are light when [darkBehind] (a night sky behind them) and
+ * dark otherwise; the app's normal dark icons come back when this leaves the screen.
+ */
+@Composable
+fun StatusBarIcons(darkBehind: Boolean) {
+    val view = androidx.compose.ui.platform.LocalView.current
+    if (view.isInEditMode) return
+    androidx.compose.runtime.DisposableEffect(darkBehind) {
+        val window = (view.context as? android.app.Activity)?.window
+        val controller = window?.let { androidx.core.view.WindowCompat.getInsetsController(it, view) }
+        controller?.isAppearanceLightStatusBars = !darkBehind
+        onDispose { controller?.isAppearanceLightStatusBars = true }
+    }
+}

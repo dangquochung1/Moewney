@@ -22,14 +22,6 @@ object CatLines {
         "%s %s à? Ghi đủ là trẫm vui, tiêu lố cũng phải ghi đó.",
     )
 
-    private val toy = mapOf(
-        Toy.Money to "Hũ xu của Sen. Giai đoạn 1 mới rót tiền vào 6 lọ được.",
-        Toy.Habits to "Xong thói quen là trẫm được vờn len!",
-        Toy.Calendar to "Lịch của Sen nè.",
-        Toy.Notes to "Sổ tay của Sen đó. Trẫm không đọc trộm đâu... chắc vậy.",
-        Toy.Gift to "Quà và cửa hàng mở ở giai đoạn 6. Để dành xu đi Sen.",
-    )
-
     fun greeting(hour: Int, name: String = "trẫm"): String = when (hour) {
         in 5..10 -> "Chào buổi sáng, Sen! $name đây. Hôm nay liệu mà tiêu."
         in 11..13 -> "Trưa rồi, Sen ăn gì nhớ ghi sổ nha."
@@ -71,10 +63,6 @@ object CatLines {
         val line = fed.random(random)
         return if (line.count { it == '%' } == 2) line.format(label, amount) else line
     }
-
-    /** [toy] null = the big "+ Ghi chi tiêu" button. */
-    fun onToy(toy: Toy?): String =
-        if (toy == null) "Nút ghi chi tiêu. Giai đoạn 1 trẫm mới cho Sen bấm thật." else toy.let { this.toy.getValue(it) }
 
     fun sleepToggle(asleep: Boolean) =
         if (asleep) "Trẫm đi ngủ đây... zZ (giữ lâu lần nữa để gọi trẫm dậy)" else "Ai đánh thức trẫm đấy? Hừm."

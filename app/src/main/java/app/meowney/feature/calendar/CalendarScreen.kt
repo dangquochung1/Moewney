@@ -199,7 +199,7 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
     var list by remember { mutableStateOf<String?>(null) } // "inbox" / "overdue"
     var eventMenu by remember { mutableStateOf<EventItem?>(null) }
 
-    PixelScreen("Lịch", onBack = actions.onBack, actions = {
+    PixelScreen("Lịch", onBack = null, actions = {
         PixelTextButton("+", onClick = { adding = true })
     }) {
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalAlignment = Alignment.CenterVertically) {

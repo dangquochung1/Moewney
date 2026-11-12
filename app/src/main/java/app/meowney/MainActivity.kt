@@ -108,6 +108,13 @@ import app.meowney.core.data.Settings
 import app.meowney.core.data.todaySnapshot
 import app.meowney.core.format.formatVnd
 import app.meowney.core.ui.Zoom
+import app.meowney.core.ui.BottomBar
+import app.meowney.core.ui.MainTab
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.navigationBars
+import androidx.navigation.compose.currentBackStackEntryAsState
 import app.meowney.feature.room.WakeIntro
 import app.meowney.feature.room.wakeGreeting
 import androidx.compose.foundation.layout.Box
@@ -266,9 +273,35 @@ private suspend fun introPlan(c: AppContainer, settings: Settings, fromWidget: B
 }
 
 @androidx.compose.runtime.Composable
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHabit: Long, onOpened: () -> Unit) {
     val nav = rememberNavController()
     val back: () -> Unit = { nav.popBackStack() }
+    // one home model for the whole activity: home uses it, the bottom bar reads its badges
+    val homeVm: HomeViewModel = viewModel(factory = vmFactory { HomeViewModel(c) })
+    val homeState by homeVm.state.collectAsState()
+    val current by nav.currentBackStackEntryAsState()
+    val tab = current?.let(::mainTab)
+    Zoom.isTab = { mainTab(it) != null }
+    val keyboard = androidx.compose.foundation.layout.WindowInsets.isImeVisible
+    val showBar = tab != null && !keyboard
+    fun go(t: MainTab) {
+        if (t == MainTab.Home) {
+            nav.popBackStack<HomeRoute>(inclusive = false)
+            return
+        }
+        val route: Any = when (t) {
+            MainTab.Money -> MoneyRoute
+            MainTab.Habits -> HabitsRoute
+            MainTab.Calendar -> CalendarRoute()
+            MainTab.Notes -> NotesRoute()
+            else -> GiftRoute()
+        }
+        nav.navigate(route) {
+            popUpTo<HomeRoute>()
+            launchSingleTop = true
+        }
+    }
     LaunchedEffect(openRequest) {
         if (openRequest == OPEN_ENTRY) {
             val onboarding = nav.currentBackStackEntry?.destination?.hasRoute(OnboardingRoute::class) ?: !game.onboarded
@@ -284,8 +317,13 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             if (pending != null) nav.navigate(ReportRoute(pending.code())) { launchSingleTop = true }
         }
     }
+    Column(Modifier.fillMaxSize()) {
     NavHost(
         nav,
+        modifier = Modifier
+            .weight(1f)
+            // the bar below already keeps clear of the system navigation
+            .then(if (showBar) Modifier.consumeWindowInsets(androidx.compose.foundation.layout.WindowInsets.navigationBars) else Modifier),
         startDestination = if (game.onboarded) HomeRoute else OnboardingRoute,
         enterTransition = Zoom.enter,
         exitTransition = Zoom.exit,
@@ -299,8 +337,8 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             })
         }
         composable<HomeRoute> {
-            val vm: HomeViewModel = viewModel(factory = vmFactory { HomeViewModel(c) })
-            val state by vm.state.collectAsState()
+            val vm = homeVm
+            val state = homeState
             val event by c.events.pending.collectAsState()
             val pending by vm.pending.collectAsState()
             if (state.ready) {
@@ -535,4 +573,33 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         composable<CreditsRoute> { CreditsScreen(onBack = back) }
         composable<UiKitRoute> { UiKitScreen(onBack = back) }
     }
+    if (showBar) BottomBar(tab!!, badges(homeState), onSelect = ::go)
+    }
+}
+
+/** Which bottom-bar tab a screen is, or null for the screens under them. */
+private fun mainTab(entry: androidx.navigation.NavBackStackEntry): MainTab? {
+    val d = entry.destination
+    return when {
+        d.hasRoute(HomeRoute::class) -> MainTab.Home
+        d.hasRoute(MoneyRoute::class) -> MainTab.Money
+        d.hasRoute(HabitsRoute::class) -> MainTab.Habits
+        d.hasRoute(CalendarRoute::class) -> MainTab.Calendar
+        d.hasRoute(NotesRoute::class) -> MainTab.Notes
+        d.hasRoute(GiftRoute::class) -> MainTab.Gift
+        else -> null
+    }
+}
+
+/** Little marks on the bar: unpaid bills, habits left, things on the calendar, no diary yet, a spin waiting. */
+private fun badges(s: app.meowney.feature.room.HomeState): Map<MainTab, String> = buildMap {
+    if (!s.ready) return@buildMap
+    if (s.billsDue.isNotEmpty()) put(MainTab.Money, "!")
+    val habitsLeft = s.habits.count { !it.done }
+    if (habitsLeft > 0) put(MainTab.Habits, if (habitsLeft > 9) "9" else "$habitsLeft")
+    val now = java.time.LocalTime.now().let { it.hour * 60 + it.minute }
+    val cal = s.calendarCount(now)
+    if (cal > 0) put(MainTab.Calendar, if (cal > 9) "9" else "$cal")
+    if (!s.diaryWritten) put(MainTab.Notes, "!")
+    if (s.spinReady) put(MainTab.Gift, "•")
 }
