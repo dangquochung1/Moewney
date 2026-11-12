@@ -74,10 +74,10 @@ fun TrophyTab(vm: GiftViewModel) {
         item {
             val cups = best.values.sum()
             PixelText("Tủ cúp: ${best.size}/${AchievementEngine.all.size} thành tựu · $cups/${AchievementEngine.all.size * 3} bậc", style = type.bodyBold, color = Pal.Gold)
-            PixelText("Bậc Đồng / Bạc / Vàng thưởng 20 / 50 / 150 xu.", style = type.caption, color = Pal.Paper)
+            PixelText("Bậc Đồng / Bạc / Vàng thưởng 20 / 50 / 150 xu.", style = type.caption, color = Pal.InkSoft)
         }
         for (g in AchGroup.entries) {
-            item(key = g.name) { PixelText(g.label.uppercase(), style = type.caption, color = Pal.Paper) }
+            item(key = g.name) { PixelText(g.label.uppercase(), style = type.caption, color = Pal.InkSoft) }
             items(AchievementEngine.all.filter { it.group == g }, key = { it.id }) { a ->
                 TrophyRow(a, best[a.id] ?: 0, metrics[a.metric])
             }
@@ -124,7 +124,7 @@ fun ChallengeTab(vm: GiftViewModel) {
         item {
             PixelText(
                 "Mỗi tháng một thử thách, xong thì mở rương lớn: ${ChallengeEngine.CHEST_COINS} xu + 2 món ăn cho mèo.",
-                style = type.caption, color = Pal.Paper,
+                style = type.caption, color = Pal.InkSoft,
             )
         }
     }
@@ -139,7 +139,7 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
         PixelText("THỬ THÁCH THÁNG ${v.month.monthValue}", style = type.caption, color = Pal.Gold)
         val picked = v.picked
         if (picked == null) {
-            PixelText("Trẫm có 3 gợi ý, Sen chọn 1 nhé (chọn rồi không đổi được):", style = type.body, color = Pal.Cream)
+            PixelText("Trẫm có 3 gợi ý, Sen chọn 1 nhé (chọn rồi không đổi được):", style = type.body, color = Pal.Ink)
             v.options.forEachIndexed { i, o ->
                 PixelPanel(Modifier.fillMaxWidth().clickable { vm.pickChallenge(i) }, sprite = "ui/wood/nine_path_panel_3") {
                     Row(verticalAlignment = Alignment.CenterVertically) {

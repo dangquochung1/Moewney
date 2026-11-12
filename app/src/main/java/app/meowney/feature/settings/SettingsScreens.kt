@@ -213,7 +213,7 @@ fun XiaomiGuideScreen(onBack: () -> Unit) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
             PixelText(
                 "Máy Xiaomi/Redmi/POCO hay tắt app chạy nền nên lời nhắc 21h có thể không kêu. Bật 2 mục dưới đây là được.",
-                style = type.body, color = Pal.Cream,
+                style = type.body, color = Pal.Ink,
             )
             PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
@@ -241,7 +241,7 @@ fun XiaomiGuideScreen(onBack: () -> Unit) {
                     })
                 }
             }
-            PixelText("Không mở được thì vào Cài đặt > Ứng dụng > Meowney rồi bật thủ công.", style = type.caption, color = Pal.Paper)
+            PixelText("Không mở được thì vào Cài đặt > Ứng dụng > Meowney rồi bật thủ công.", style = type.caption, color = Pal.InkSoft)
         }
     }
 }
@@ -264,7 +264,7 @@ fun CreditsScreen(onBack: () -> Unit) {
     val type = LocalPixelType.current
     PixelScreen("Ghi công", onBack = onBack) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-            PixelText("Meowney dùng asset của các tác giả sau. Cảm ơn rất nhiều!", style = type.body, color = Pal.Cream)
+            PixelText("Meowney dùng asset của các tác giả sau. Cảm ơn rất nhiều!", style = type.body, color = Pal.Ink)
             for ((what, who) in CREDITS) {
                 PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
                     Column {

@@ -81,12 +81,12 @@ fun GoalCard(goal: GoalRow, jarName: String, modifier: Modifier = Modifier) {
     }
 }
 
-/** Create or edit a goal. [savingsJars] are the jars a goal can live in. */
+/** Create or edit a goal. [jars] are the real jars a goal can live in. */
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun GoalEditDialog(
     initial: GoalEntity?,
-    savingsJars: List<JarState>,
+    jars: List<JarState>,
     onSave: (GoalEntity) -> Unit,
     onDismiss: () -> Unit,
 ) {
@@ -94,7 +94,7 @@ fun GoalEditDialog(
     val type = LocalPixelType.current
     var name by remember { mutableStateOf(initial?.name ?: "") }
     var target by remember { mutableStateOf(AmountInput(initial?.target ?: 0)) }
-    var jarId by remember { mutableStateOf(initial?.jarId ?: savingsJars.firstOrNull { it.code == JarCode.LTSS }?.jar?.id ?: 0L) }
+    var jarId by remember { mutableStateOf(initial?.jarId ?: jars.firstOrNull { it.code == JarCode.LTSS }?.jar?.id ?: jars.firstOrNull()?.jar?.id ?: 0L) }
     var auto by remember { mutableStateOf(initial?.autoPercent ?: 50) }
     var months by remember {
         mutableStateOf(initial?.deadlineDay?.let { ((it - LocalDate.now().toEpochDay()) / 30).toInt().coerceAtLeast(0) } ?: 0)
@@ -111,7 +111,7 @@ fun GoalEditDialog(
         if (typingTarget) PixelKeypad(onKey = { target = target.press(it) })
         PixelText("Nằm trong lọ", style = type.caption, color = Pal.InkSoft)
         FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
-            for (j in savingsJars) PixelChip(j.jar.name, selected = jarId == j.jar.id) { jarId = j.jar.id }
+            for (j in jars) PixelChip(j.jar.name, selected = jarId == j.jar.id) { jarId = j.jar.id }
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelText("Tự nạp", style = type.body, modifier = Modifier.weight(1f))
@@ -148,13 +148,19 @@ fun GoalEditDialog(
 
 // ------------------------------------------------------------------ goal screen
 
-data class GoalUi(val goal: GoalRow? = null, val jars: List<JarState> = emptyList(), val free: Long = 0)
+data class GoalUi(
+    val goal: GoalRow? = null,
+    val jars: List<JarState> = emptyList(),
+    val free: Long = 0,
+    val walletName: String = "",
+)
 
 class GoalViewModel(private val c: AppContainer, private val goalId: Long) : ViewModel() {
-    val ui: StateFlow<GoalUi> = combine(c.money.goals, c.money.jarStates, c.money.goalTotalsByJar) { goals, jars, totals ->
+    val ui: StateFlow<GoalUi> = combine(c.money.goals, c.money.jarStates, c.money.goalTotalsByJar, c.money.walletStates) { goals, jars, totals, wallets ->
         val g = goals.firstOrNull { it.id == goalId }
         val jar = jars.firstOrNull { it.jar.id == g?.jarId }
-        GoalUi(g, jars, (jar?.balance ?: 0) - (totals[g?.jarId] ?: 0))
+        val wallet = wallets.firstOrNull { it.wallet.isDefault } ?: wallets.firstOrNull()
+        GoalUi(g, jars, (jar?.balance ?: 0) - (totals[g?.jarId] ?: 0), wallet?.wallet?.name ?: "ví")
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), GoalUi())
     val entries = c.money.goalEntries(goalId).stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), emptyList())
     val message = MutableStateFlow<String?>(null)
@@ -196,6 +202,7 @@ fun GoalScreen(vm: GoalViewModel, onBack: () -> Unit) {
     val type = LocalPixelType.current
     var moving by remember { mutableStateOf<Int?>(null) } // +1 fund, -1 withdraw
     var editing by remember { mutableStateOf(false) }
+    var buying by remember { mutableStateOf(false) }
     LaunchedEffect(closed) { if (closed) onBack() }
     val goal = ui.goal ?: return
     val jarName = ui.jars.firstOrNull { it.jar.id == goal.jarId }?.jar?.name ?: ""
@@ -203,11 +210,14 @@ fun GoalScreen(vm: GoalViewModel, onBack: () -> Unit) {
     PixelScreen(goal.name, onBack = onBack, actions = { PixelTextButton("Sửa", onClick = { editing = true }, look = ButtonLook.Light) }) {
         GoalCard(goal, jarName)
         message?.let { PixelText(it, style = type.bodyBold, color = Pal.Gold, modifier = Modifier.padding(top = m.unit * 2)) }
-        PixelText("Phần tự do trong $jarName: ${formatVnd(ui.free)}", style = type.caption, color = Pal.Paper, modifier = Modifier.padding(vertical = m.unit * 2))
-        Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+        PixelText("Phần tự do trong $jarName: ${formatVnd(ui.free)}", style = type.caption, color = Pal.InkSoft, modifier = Modifier.padding(vertical = m.unit * 2))
+        if (goal.saved >= goal.target) {
+            PixelTextButton("Đã mua — trừ tiền", onClick = { buying = true }, modifier = Modifier.fillMaxWidth())
+            PixelText("Ghi một khoản chi và trừ số đã dành khỏi ví cùng lọ.", style = type.caption, color = Pal.InkSoft, modifier = Modifier.padding(top = m.unit))
+        }
+        Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), modifier = Modifier.padding(top = m.unit * 2)) {
             PixelTextButton("Nạp thêm", onClick = { moving = 1 }, enabled = ui.free > 0)
             PixelTextButton("Rút", onClick = { moving = -1 }, enabled = goal.saved > 0, look = ButtonLook.Light)
-            if (goal.saved >= goal.target) PixelTextButton("Mua rồi!", onClick = vm::buy)
         }
         LazyColumn(Modifier.weight(1f).padding(top = m.unit * 2)) {
             items(entries, key = { it.id }) { e ->
@@ -219,17 +229,32 @@ fun GoalScreen(vm: GoalViewModel, onBack: () -> Unit) {
                                 "MANUAL" -> "Nạp thêm"
                                 else -> "Rút ra"
                             },
-                            style = type.body, color = Pal.Cream,
+                            style = type.body, color = Pal.Ink,
                         )
-                        PixelText(dayLabel(LocalDate.ofEpochDay(e.day)), style = type.caption, color = Pal.Paper)
+                        PixelText(dayLabel(LocalDate.ofEpochDay(e.day)), style = type.caption, color = Pal.InkSoft)
                     }
-                    PixelText((if (e.amount > 0) "+" else "") + formatVnd(e.amount), style = type.bodyBold, color = if (e.amount >= 0) Pal.Green else Pal.Cream)
+                    PixelText((if (e.amount > 0) "+" else "") + formatVnd(e.amount), style = type.bodyBold, color = if (e.amount >= 0) Pal.Green else Pal.Ink)
                 }
             }
         }
-        PixelTextButton("Bỏ mục tiêu (tiền về lại lọ)", onClick = vm::archive, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth().padding(vertical = m.unit * 2))
+        PixelTextButton("Bỏ mục tiêu — nhả tiền trong lọ", onClick = vm::archive, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth().padding(top = m.unit * 2))
+        PixelText(
+            "Tiền vẫn nằm trong lọ. Bỏ chỉ nhả phần đang giữ chỗ, không ghi chi tiêu và không trừ ví.",
+            style = type.caption, color = Pal.InkSoft, modifier = Modifier.padding(bottom = m.unit * 2),
+        )
     }
 
+    if (buying) {
+        PixelDialog(onDismiss = { buying = false }) {
+            PixelText("Đã mua ${goal.name}?", style = type.title)
+            PixelText(
+                "Trừ ${formatVnd(goal.saved)} khỏi ${ui.walletName} và lọ $jarName. Mục tiêu đóng lại.",
+                style = type.body,
+            )
+            PixelTextButton("Trừ tiền", onClick = { buying = false; vm.buy() }, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Để sau", onClick = { buying = false }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+        }
+    }
     moving?.let { dir ->
         var amount by remember(dir) { mutableStateOf(AmountInput()) }
         val max = if (dir > 0) ui.free else goal.saved
@@ -247,7 +272,7 @@ fun GoalScreen(vm: GoalViewModel, onBack: () -> Unit) {
     if (editing) {
         GoalEditDialog(
             initial = GoalEntity(goal.id, goal.name, goal.jarId, goal.target, goal.deadlineDay, goal.autoPercent, goal.createdDay, goal.achievedDay, goal.archived),
-            savingsJars = ui.jars.filter { it.code.isSavings },
+            jars = ui.jars.filter { it.code != JarCode.UNALLOC },
             onSave = { vm.save(it); editing = false },
             onDismiss = { editing = false },
         )
@@ -264,7 +289,7 @@ fun GoalsSection(goals: List<GoalRow>, jars: List<JarState>, onGoal: (Long) -> U
             PixelText("MỤC TIÊU", style = type.bodyBold, color = Pal.Gold, modifier = Modifier.weight(1f))
             PixelTextButton("+ Mục tiêu", onClick = onNew, look = ButtonLook.Light)
         }
-        if (goals.isEmpty()) PixelText("Đặt một mục tiêu để dành, vd 'Laptop 20tr'.", style = type.caption, color = Pal.Paper)
+        if (goals.isEmpty()) PixelText("Đặt một mục tiêu để dành, vd 'Laptop 20tr'.", style = type.caption, color = Pal.InkSoft)
         for (g in goals) {
             GoalCard(g, jars.firstOrNull { it.jar.id == g.jarId }?.jar?.name ?: "", Modifier.clickable { onGoal(g.id) })
         }

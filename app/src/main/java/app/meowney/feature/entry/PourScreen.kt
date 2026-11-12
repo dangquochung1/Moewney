@@ -89,7 +89,7 @@ fun PourEditor(
         for (j in jars.filter { it.code != JarCode.UNALLOC }) {
             val share = shares[j.code] ?: 0
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelText(j.name, style = type.body, color = Pal.Cream, modifier = Modifier.weight(1f), maxLines = 1)
+                PixelText(j.name, style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f), maxLines = 1)
                 PixelText(formatVndShort(share), style = type.bodyBold, color = jarColor(j.code))
                 PixelTextButton("-", onClick = {
                     onChange(shares + (j.code to (share - step).coerceAtLeast(0)))
@@ -100,8 +100,8 @@ fun PourEditor(
             }
         }
         Row {
-            PixelText("Chưa phân bổ", style = type.body, color = Pal.Paper, modifier = Modifier.weight(1f))
-            PixelText(formatVnd(unalloc), style = type.bodyBold, color = Pal.Paper)
+            PixelText("Chưa phân bổ", style = type.body, color = Pal.InkSoft, modifier = Modifier.weight(1f))
+            PixelText(formatVnd(unalloc), style = type.bodyBold, color = Pal.InkSoft)
         }
     }
 }
@@ -175,7 +175,7 @@ fun PourScreen(vm: PourViewModel, typeface: Typeface, onBack: () -> Unit, onDone
                 for (l in s.loans) {
                     PixelText(
                         "• ${s.jarNames[l.borrowerJarId]} trả ${s.jarNames[l.lenderJarId]} tới ${formatVndShort(l.amount)}",
-                        style = type.caption, color = Pal.Cream,
+                        style = type.caption, color = Pal.Ink,
                     )
                 }
             }

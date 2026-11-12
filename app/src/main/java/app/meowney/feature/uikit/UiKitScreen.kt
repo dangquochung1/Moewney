@@ -67,7 +67,7 @@ fun UiKitScreen(onBack: () -> Unit) {
         columns = GridCells.Adaptive(cell),
         modifier = Modifier
             .fillMaxSize()
-            .background(Pal.Night)
+            .background(Pal.Canvas)
             .windowInsetsPadding(WindowInsets.safeDrawing),
         contentPadding = androidx.compose.foundation.layout.PaddingValues(m.unit * 3),
         verticalArrangement = Arrangement.spacedBy(m.unit * 2),
@@ -76,7 +76,7 @@ fun UiKitScreen(onBack: () -> Unit) {
         item(span = { GridItemSpan(maxLineSpan) }) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelTextButton("< Phòng", onClick = onBack, look = ButtonLook.Light)
-                PixelText("  Xưởng UI", style = type.title, color = Pal.Cream)
+                PixelText("  Xưởng UI", style = type.title, color = Pal.Ink)
             }
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
@@ -111,7 +111,7 @@ fun UiKitScreen(onBack: () -> Unit) {
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalAlignment = Alignment.CenterVertically) {
-                PixelText("Mèo:", color = Pal.Cream)
+                PixelText("Mèo:", color = Pal.Ink)
                 (1..6).forEach { c ->
                     PixelTextButton("$c", onClick = { catColor = c }, look = if (c == catColor) ButtonLook.Orange else ButtonLook.Light)
                 }
@@ -119,7 +119,7 @@ fun UiKitScreen(onBack: () -> Unit) {
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalAlignment = Alignment.CenterVertically) {
-                PixelText("Mũ:", color = Pal.Cream)
+                PixelText("Mũ:", color = Pal.Ink)
                 listOf(null, "antlers", "santa", "santa2").forEach { h ->
                     PixelTextButton(h ?: "—", onClick = { hat = h }, look = if (h == hat) ButtonLook.Orange else ButtonLook.Light)
                 }
@@ -134,12 +134,12 @@ fun UiKitScreen(onBack: () -> Unit) {
                         drawSprite(s, s.frameAt(t), size.width / 2, size.height, scale = m.ui)
                         hat?.let { h -> atlas.getOrNull("hat/$h/$anim")?.let { hs -> drawSprite(hs, hs.frameAt(t), size.width / 2, size.height, scale = m.ui) } }
                     }
-                    PixelText(anim, style = type.caption, color = Pal.Cream, maxLines = 1)
+                    PixelText(anim, style = type.caption, color = Pal.Ink, maxLines = 1)
                 }
             }
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
-            PixelText("Đạo cụ (pack mới)", style = type.title, color = Pal.Cream, modifier = Modifier.padding(top = m.unit * 3))
+            PixelText("Đạo cụ (pack mới)", style = type.title, color = Pal.Ink, modifier = Modifier.padding(top = m.unit * 3))
         }
         items(atlas.keys("prop/")) { key ->
             PixelPanel(sprite = "ui/wood/nine_path_bg", extraPadding = 1) {
@@ -149,14 +149,14 @@ fun UiKitScreen(onBack: () -> Unit) {
                         val k = (minOf(size.width / s.width, size.height / s.height)).toInt().coerceIn(1, m.ui * 2)
                         drawSprite(s, 0, size.width / 2, size.height, scale = k)
                     }
-                    PixelText(key.removePrefix("prop/"), style = type.caption, color = Pal.Cream, maxLines = 1)
+                    PixelText(key.removePrefix("prop/"), style = type.caption, color = Pal.Ink, maxLines = 1)
                 }
             }
         }
         item(span = { GridItemSpan(maxLineSpan) }) {
             PixelText(
                 "Chạm số để đổi mèo, chọn mũ để thử đồ. Tất cả ${anims.size} animation lấy từ assets/gfx/ui/cats.",
-                style = type.caption, color = Pal.Paper, modifier = Modifier.padding(vertical = m.unit * 2),
+                style = type.caption, color = Pal.InkSoft, modifier = Modifier.padding(vertical = m.unit * 2),
             )
         }
     }

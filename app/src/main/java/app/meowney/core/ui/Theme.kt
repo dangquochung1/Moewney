@@ -22,6 +22,8 @@ import kotlin.math.roundToInt
 /** Colours picked from the wood UI theme and the room tiles. */
 object Pal {
     val Night = Color(0xFF2F2929)      // outside the room walls (tile w12)
+    val Canvas = Color(0xFFF7F3EA)     // page background, Finch cream
+    val Card = Color(0xFFFFFFFF)
     val WoodDark = Color(0xFF3B2A24)
     val Wood = Color(0xFF8A5536)
     val Orange = Color(0xFFE86A33)

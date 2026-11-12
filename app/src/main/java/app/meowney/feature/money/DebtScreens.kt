@@ -96,7 +96,7 @@ fun DebtsScreen(vm: DebtsViewModel, onBack: () -> Unit) {
                 item {
                     PixelText(
                         if (lentTab) "Chưa ai nợ Sen. Cho ai mượn tiền thì bấm + để ghi lại." else "Sen không nợ ai. Tuyệt!",
-                        style = type.body, color = Pal.Paper,
+                        style = type.body, color = Pal.InkSoft,
                     )
                 }
             }

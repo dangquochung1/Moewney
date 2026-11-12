@@ -93,7 +93,7 @@ fun NotesGate(onBack: () -> Unit, content: @Composable () -> Unit) {
             verticalArrangement = Arrangement.spacedBy(m.unit * 4, Alignment.CenterVertically),
         ) {
             SpriteView("cat/${s.catColor}/sleep1_r", scale = m.ui + 1)
-            PixelText("Sổ tay đang khoá. Trẫm canh giùm Sen rồi.", style = type.body, color = Pal.Cream, align = TextAlign.Center)
+            PixelText("Sổ tay đang khoá. Trẫm canh giùm Sen rồi.", style = type.body, color = Pal.Ink, align = TextAlign.Center)
             error?.let { PixelText(it, style = type.caption, color = Pal.Red, align = TextAlign.Center) }
             PixelTextButton("Mở khoá", onClick = ask, modifier = Modifier.fillMaxWidth())
         }

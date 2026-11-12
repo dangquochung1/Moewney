@@ -179,7 +179,7 @@ private fun CategoryGrid(categories: List<CategoryEntity>, selected: Long?, onPi
                 PixelText(
                     cat.name,
                     style = type.caption,
-                    color = if (cat.id == selected) Pal.Gold else Pal.Cream,
+                    color = if (cat.id == selected) Pal.Gold else Pal.Ink,
                     align = TextAlign.Center,
                     maxLines = 1,
                 )

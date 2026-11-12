@@ -79,7 +79,7 @@ fun DayView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarActions, extr
 private fun Nav(title: String, onPrev: () -> Unit, onNext: () -> Unit) {
     Row(Modifier.fillMaxWidth().padding(vertical = LocalPixelMetrics.current.unit), verticalAlignment = Alignment.CenterVertically) {
         PixelTextButton("<", onClick = onPrev, look = ButtonLook.Light)
-        PixelText(title, style = LocalPixelType.current.bodyBold, color = Pal.Cream, align = TextAlign.Center, modifier = Modifier.weight(1f))
+        PixelText(title, style = LocalPixelType.current.bodyBold, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
         PixelTextButton(">", onClick = onNext, look = ButtonLook.Light)
     }
 }
@@ -109,8 +109,8 @@ private fun HourGrid(
                 val cd = s.day(d)
                 Column(Modifier.weight(1f).clickable { onDay(d) }.padding(horizontal = m.unit / 2), horizontalAlignment = Alignment.CenterHorizontally) {
                     if (days.size > 1) {
-                        PixelText(WEEKDAYS_SHORT[d.dayOfWeek.value - 1], style = type.caption, color = if (d == today) Pal.Gold else Pal.Paper)
-                        PixelText("${d.dayOfMonth}", style = type.bodyBold, color = if (d == selected) Pal.Orange else if (d == today) Pal.Gold else Pal.Cream)
+                        PixelText(WEEKDAYS_SHORT[d.dayOfWeek.value - 1], style = type.caption, color = if (d == today) Pal.Gold else Pal.InkSoft)
+                        PixelText("${d.dayOfMonth}", style = type.bodyBold, color = if (d == selected) Pal.Orange else if (d == today) Pal.Gold else Pal.Ink)
                     }
                     for (e in cd.events.filter { it.occ.allDay || it.occ.multiDay || it.occ.startMinute == null }) {
                         Box(
@@ -152,7 +152,7 @@ private fun HourGrid(
                     }
                 }
                 for (hr in 0..23) {
-                    PixelText("%02d".format(hr), style = type.caption, color = Pal.Paper, modifier = Modifier.offset(y = hourH * hr).padding(start = m.unit))
+                    PixelText("%02d".format(hr), style = type.caption, color = Pal.InkSoft, modifier = Modifier.offset(y = hourH * hr).padding(start = m.unit))
                 }
                 days.forEachIndexed { col, d ->
                     val timed = s.day(d).events.filter { !it.occ.allDay && !it.occ.multiDay && it.occ.startMinute != null }
@@ -214,7 +214,7 @@ fun AgendaView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarActions, e
     val days = generateSequence(s.selected) { it.plusDays(1) }.take(61).map { s.day(it) }.filter { it.events.isNotEmpty() || it.todos.isNotEmpty() }.toList()
     LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         item { extra() }
-        if (days.isEmpty()) item { PixelText("60 ngày tới chưa có gì.", style = type.body, color = Pal.Paper) }
+        if (days.isEmpty()) item { PixelText("60 ngày tới chưa có gì.", style = type.body, color = Pal.InkSoft) }
         for (d in days) {
             item(key = d.day.toEpochDay()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {

@@ -9,6 +9,9 @@ import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -31,6 +34,7 @@ import app.meowney.core.data.JarState
 import app.meowney.core.data.WalletState
 import app.meowney.core.db.GoalEntity
 import app.meowney.core.db.GoalRow
+import app.meowney.core.db.JarEntity
 import app.meowney.core.db.JarEntryEntity
 import app.meowney.core.db.TxnRow
 import app.meowney.core.format.formatVnd
@@ -78,6 +82,10 @@ class MoneyViewModel(private val c: AppContainer) : ViewModel() {
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), MoneyState())
 
     fun saveGoal(g: GoalEntity) = viewModelScope.launch { c.money.saveGoal(g) }
+
+    fun saveJars(jars: List<JarEntity>) = viewModelScope.launch {
+        jars.forEach { c.money.updateJar(it) }
+    }
 }
 
 private const val TRANSFER_ICON = 9 // floppy with arrow: money moving between wallets
@@ -100,6 +108,7 @@ fun MoneyScreen(
 ) {
     val s by vm.state.collectAsState()
     var newGoal by remember { mutableStateOf(false) }
+    var editingJars by remember { mutableStateOf(false) }
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val names = s.jars.associate { it.jar.id to it.jar.name }
@@ -112,13 +121,19 @@ fun MoneyScreen(
         PixelTextButton("+", onClick = onAdd)
     }) {
         LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-            item { JarShelf(s.jars.filter { it.code != JarCode.UNALLOC }, typeface, onJar) }
+            item {
+                JarShelf(s.jars.filter { it.code != JarCode.UNALLOC }, typeface, onJar)
+                PixelTextButton(
+                    "Sửa các lọ", onClick = { editingJars = true }, look = ButtonLook.Light,
+                    modifier = Modifier.fillMaxWidth().padding(top = m.unit * 2),
+                )
+            }
             item {
                 val unalloc = s.jars.firstOrNull { it.code == JarCode.UNALLOC }
                 if (unalloc != null) {
                     Row(Modifier.fillMaxWidth().clickable { onJar(unalloc.jar.id) }.padding(vertical = m.unit)) {
-                        PixelText("Chưa phân bổ", style = type.body, color = Pal.Paper, modifier = Modifier.weight(1f))
-                        PixelText(formatVnd(unalloc.balance), style = type.bodyBold, color = Pal.Paper)
+                        PixelText("Chưa phân bổ", style = type.body, color = Pal.InkSoft, modifier = Modifier.weight(1f))
+                        PixelText(formatVnd(unalloc.balance), style = type.bodyBold, color = Pal.InkSoft)
                     }
                 }
                 for (l in s.loans) {
@@ -134,7 +149,7 @@ fun MoneyScreen(
             }
             item { GoalsSection(s.goals, s.jars, onGoal = onGoal, onNew = { newGoal = true }) }
             if (days.isEmpty()) {
-                item { PixelText("Chưa có giao dịch nào. Bấm + để ghi khoản đầu tiên.", style = type.body, color = Pal.Paper) }
+                item { PixelText("Chưa có giao dịch nào. Bấm + để ghi khoản đầu tiên.", style = type.body, color = Pal.InkSoft) }
             }
             for ((day, rows) in days) {
                 item(key = "d$day") {
@@ -143,7 +158,7 @@ fun MoneyScreen(
                     Row(Modifier.fillMaxWidth().padding(top = m.unit * 2), verticalAlignment = Alignment.CenterVertically) {
                         PixelText(dayLabel(LocalDate.ofEpochDay(day)).uppercase(), style = type.bodyBold, color = Pal.Gold, modifier = Modifier.weight(1f))
                         if (inc > 0) PixelText("+${formatVndShort(inc)}  ", style = type.caption, color = Pal.Green)
-                        if (exp > 0) PixelText("-${formatVndShort(exp)}", style = type.caption, color = Pal.Cream)
+                        if (exp > 0) PixelText("-${formatVndShort(exp)}", style = type.caption, color = Pal.Ink)
                     }
                 }
                 items(rows, key = { it.id }) { t -> TxnLine(t, onClick = {
@@ -157,12 +172,61 @@ fun MoneyScreen(
         }
     }
 
+    if (editingJars) {
+        JarsEditDialog(
+            jars = s.jars,
+            onSave = { vm.saveJars(it); editingJars = false },
+            onDismiss = { editingJars = false },
+        )
+    }
     if (newGoal) {
         GoalEditDialog(
             initial = null,
-            savingsJars = s.jars.filter { it.code.isSavings },
+            jars = s.jars.filter { it.code != JarCode.UNALLOC },
             onSave = { vm.saveGoal(it); newGoal = false },
             onDismiss = { newGoal = false },
+        )
+    }
+}
+
+@OptIn(ExperimentalLayoutApi::class)
+@Composable
+private fun JarsEditDialog(jars: List<JarState>, onSave: (List<JarEntity>) -> Unit, onDismiss: () -> Unit) {
+    val editable = jars.filter { it.code != JarCode.UNALLOC }
+    var names by remember { mutableStateOf(editable.associate { it.jar.id to it.jar.name }) }
+    var percents by remember { mutableStateOf(editable.associate { it.jar.id to it.jar.percent }) }
+    val sum = percents.values.sum()
+    val m = LocalPixelMetrics.current
+    val type = LocalPixelType.current
+    PixelDialog(onDismiss) {
+        PixelText("Sửa các lọ", style = type.title)
+        PixelText(
+            "Tổng: $sum%" + if (sum != 100) " (phải đúng 100%)" else "",
+            style = type.caption,
+            color = if (sum == 100) Pal.Green else Pal.Red,
+        )
+        Column(
+            Modifier.heightIn(max = m.unit * 110).verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(m.unit * 2),
+        ) {
+            for (j in editable) {
+                val pct = percents[j.jar.id] ?: 0
+                PixelTextField(names[j.jar.id] ?: "", { names = names + (j.jar.id to it.take(20)) }, Modifier.fillMaxWidth())
+                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                    PixelText(names[j.jar.id].orEmpty(), style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f), maxLines = 1)
+                    PixelTextButton("-", onClick = { percents = percents + (j.jar.id to (pct - 5).coerceAtLeast(0)) }, look = ButtonLook.Light)
+                    PixelText("$pct%", style = type.bodyBold)
+                    PixelTextButton("+", onClick = { percents = percents + (j.jar.id to (pct + 5).coerceAtMost(100)) }, look = ButtonLook.Light)
+                }
+            }
+        }
+        PixelTextButton(
+            "Lưu",
+            enabled = sum == 100 && names.values.all { it.isNotBlank() },
+            onClick = {
+                onSave(editable.map { it.jar.copy(name = names.getValue(it.jar.id).trim(), percent = percents.getValue(it.jar.id)) })
+            },
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
@@ -189,7 +253,7 @@ private fun JarShelf(jars: List<JarState>, typeface: Typeface, onJar: (Long) -> 
                     Canvas(Modifier.size(m.dp(image.width * scale), m.dp(image.height * scale))) {
                         drawImage(image, dstSize = IntSize(size.width.toInt(), size.height.toInt()), filterQuality = FilterQuality.None)
                     }
-                    PixelText(j.jar.name, style = type.caption, color = Pal.Cream, align = TextAlign.Center, maxLines = 1)
+                    PixelText(j.jar.name, style = type.caption, color = Pal.Ink, align = TextAlign.Center, maxLines = 1)
                     PixelText(formatVndShort(j.balance), style = type.bodyBold, color = if (negative) Pal.Red else jarColor(j.code))
                 }
             }
@@ -223,19 +287,19 @@ private fun TxnLine(t: TxnRow, onClick: () -> Unit) {
                 "JAR_MOVE" -> "Thói quen: ${t.note}"
                 else -> t.categoryName ?: "Khác"
             }
-            PixelText(title, style = type.body, color = Pal.Cream, maxLines = 1)
+            PixelText(title, style = type.body, color = Pal.Ink, maxLines = 1)
             val sub = listOfNotNull(
                 t.note.takeIf { it.isNotBlank() && t.type != "JAR_MOVE" },
                 "chuyển lọ, ví không đổi".takeIf { t.type == "JAR_MOVE" },
                 t.walletName.takeIf { t.type == "EXPENSE" || t.type == "INCOME" },
                 t.jarName.takeIf { t.type == "EXPENSE" },
             ).joinToString(" · ")
-            if (sub.isNotEmpty()) PixelText(sub, style = type.caption, color = Pal.Paper, maxLines = 1)
+            if (sub.isNotEmpty()) PixelText(sub, style = type.caption, color = Pal.InkSoft, maxLines = 1)
         }
         val (sign, color) = when (t.type) {
             "INCOME" -> "+" to Pal.Green
-            "EXPENSE" -> "-" to Pal.Cream
-            "ADJUST" -> (if (t.amount >= 0) "+" else "") to Pal.Paper
+            "EXPENSE" -> "-" to Pal.Ink
+            "ADJUST" -> (if (t.amount >= 0) "+" else "") to Pal.InkSoft
             else -> "" to Pal.Sky
         }
         PixelText(sign + formatVnd(t.amount), style = type.bodyBold, color = color)
@@ -285,10 +349,10 @@ fun JarDetailScreen(vm: JarDetailViewModel, onBack: () -> Unit) {
             items(entries, key = { it.id }) { e ->
                 Row(Modifier.fillMaxWidth().padding(vertical = m.unit)) {
                     Column(Modifier.weight(1f)) {
-                        PixelText(kindLabel(e), style = type.body, color = Pal.Cream)
-                        PixelText(dayLabel(LocalDate.ofEpochDay(e.day)), style = type.caption, color = Pal.Paper)
+                        PixelText(kindLabel(e), style = type.body, color = Pal.Ink)
+                        PixelText(dayLabel(LocalDate.ofEpochDay(e.day)), style = type.caption, color = Pal.InkSoft)
                     }
-                    PixelText((if (e.amount > 0) "+" else "") + formatVnd(e.amount), style = type.bodyBold, color = if (e.amount >= 0) Pal.Green else Pal.Cream)
+                    PixelText((if (e.amount > 0) "+" else "") + formatVnd(e.amount), style = type.bodyBold, color = if (e.amount >= 0) Pal.Green else Pal.Ink)
                 }
             }
         }

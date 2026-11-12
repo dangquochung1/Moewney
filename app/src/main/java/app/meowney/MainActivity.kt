@@ -299,7 +299,6 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             if (state.ready) {
                 HomeScreen(
                     corner = game.corner,
-                    pixelTypeface = game.pixelTypeface,
                     state = state,
                     catEvent = event,
                     onCatEventHandled = c.events::consume,
@@ -466,7 +465,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             GiftScreen(vm, game.corner, onBack = back, onUseVoucher = { v ->
                 nav.navigate(EntryRoute(amount = v.amount, note = v.name, categoryId = v.categoryId ?: -1))
             }) { t ->
-                PixelText("${t.label}: sắp có", color = Pal.Paper)
+                PixelText("${t.label}: sắp có", color = Pal.InkSoft)
             }
         }
         composable<LabelsRoute> {

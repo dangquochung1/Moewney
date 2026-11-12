@@ -135,7 +135,7 @@ fun DiaryTab(vm: DiaryViewModel, actions: NotesActions) {
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             PixelTextButton("<", onClick = { vm.shiftMonth(-1) }, look = ButtonLook.Light)
-            PixelText("Tháng ${month.monthValue}/${month.year}", style = type.bodyBold, color = Pal.Cream, align = TextAlign.Center, modifier = Modifier.weight(1f))
+            PixelText("Tháng ${month.monthValue}/${month.year}", style = type.bodyBold, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
             PixelTextButton(">", onClick = { vm.shiftMonth(1) }, look = ButtonLook.Light)
         }
         DiaryGrid(month, selected, pages, today, onSelect = vm::select, onSwipe = vm::shiftMonth)
@@ -150,9 +150,9 @@ fun DiaryTab(vm: DiaryViewModel, actions: NotesActions) {
         val page = pages[selected.toEpochDay()]
         when {
             page != null -> DiaryCard(page, hidden = hide, Modifier.fillMaxWidth().clickable { actions.onDiary(selected, null) })
-            selected == today -> PixelText("Hôm nay Sen chưa viết.", style = type.body, color = Pal.Paper)
-            selected.isAfter(today) -> PixelText("Chưa tới ngày này mà Sen.", style = type.body, color = Pal.Paper)
-            else -> PixelText("Hôm đó Sen không viết. Nhật ký chỉ viết trong ngày thôi.", style = type.body, color = Pal.Paper)
+            selected == today -> PixelText("Hôm nay Sen chưa viết.", style = type.body, color = Pal.InkSoft)
+            selected.isAfter(today) -> PixelText("Chưa tới ngày này mà Sen.", style = type.body, color = Pal.InkSoft)
+            else -> PixelText("Hôm đó Sen không viết. Nhật ký chỉ viết trong ngày thôi.", style = type.body, color = Pal.InkSoft)
         }
         PixelTextButton(
             if (todayPage?.hasContent == true) "Mở trang hôm nay" else "Viết hôm nay",
@@ -186,7 +186,7 @@ private fun DiaryGrid(
         },
     ) {
         Row {
-            for (d in WEEKDAYS_SHORT) PixelText(d, style = type.caption, color = Pal.Paper, align = TextAlign.Center, modifier = Modifier.weight(1f))
+            for (d in WEEKDAYS_SHORT) PixelText(d, style = type.caption, color = Pal.InkSoft, align = TextAlign.Center, modifier = Modifier.weight(1f))
         }
         val weeks = if (start.plusDays(35).month == month.month) 6 else 5
         for (w in 0 until weeks) {
@@ -218,7 +218,7 @@ private fun DiaryGrid(
                         )
                         when {
                             page?.mood != null -> MoodIcon(page.mood, scale = (m.ui - 1).coerceAtLeast(2), Modifier.padding(top = m.unit * 3))
-                            page != null && page.hasContent -> PixelText("•", style = type.title, color = Pal.Paper)
+                            page != null && page.hasContent -> PixelText("•", style = type.title, color = Pal.Cream)
                             day == today -> PixelText("!", style = type.title, color = Pal.Gold, modifier = Modifier.padding(top = m.unit * 3))
                         }
                     }
@@ -330,7 +330,7 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
     val title = if (vm.day == vm.today) "Nhật ký hôm nay" else "Nhật ký " + shortDate(vm.day)
     if (missing) {
         PixelScreen(title, onBack = onBack) {
-            PixelText("Hôm đó Sen không viết. Trẫm chỉ cho viết nhật ký trong ngày thôi, để nó thật lòng.", style = type.body, color = Pal.Paper)
+            PixelText("Hôm đó Sen không viết. Trẫm chỉ cho viết nhật ký trong ngày thôi, để nó thật lòng.", style = type.body, color = Pal.InkSoft)
         }
         return
     }
@@ -402,7 +402,7 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
                 SpriteView("cat/$catColor/$anim", scale = m.ui)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_interior", extraPadding = 1) {
-                        PixelText(reaction ?: prompt, style = type.body, color = Pal.Cream)
+                        PixelText(reaction ?: prompt, style = type.body, color = Pal.Ink)
                     }
                     if (reaction == null && vm.day == vm.today) {
                         PixelText("Câu khác ›", style = type.caption, color = Pal.Wood, modifier = Modifier.clickable {
@@ -483,7 +483,7 @@ fun NoteSearchScreen(vm: NoteSearchViewModel, onBack: () -> Unit, onNote: (Long)
     val type = LocalPixelType.current
     PixelScreen("Tìm trong sổ tay", onBack = onBack) {
         PixelTextField(q, { vm.query.value = it.take(60) }, Modifier.fillMaxWidth(), placeholder = "vd: da lat, qua me (không cần dấu)")
-        if (q.isNotBlank() && results.isEmpty()) PixelText("Không thấy gì cả.", style = type.body, color = Pal.Paper, modifier = Modifier.padding(top = m.unit * 2))
+        if (q.isNotBlank() && results.isEmpty()) PixelText("Không thấy gì cả.", style = type.body, color = Pal.InkSoft, modifier = Modifier.padding(top = m.unit * 2))
         LazyColumn(
             verticalArrangement = Arrangement.spacedBy(m.unit * 3),
             contentPadding = androidx.compose.foundation.layout.PaddingValues(top = m.unit * 3, bottom = m.unit * 4),
