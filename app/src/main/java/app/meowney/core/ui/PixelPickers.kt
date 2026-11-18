@@ -34,6 +34,15 @@ fun shortDate(d: LocalDate, today: LocalDate = LocalDate.now()): String {
 
 fun hhmm(minute: Int) = "%02d:%02d".format(minute / 60, minute % 60)
 
+/** The rounded square behind a day number: gold when picked, a gold tint for today. */
+@Composable
+fun DayDot(today: Boolean, selected: Boolean, modifier: Modifier = Modifier) {
+    Canvas(modifier) {
+        val r = androidx.compose.ui.geometry.CornerRadius(size.height * 0.3f)
+        drawRoundRect(if (selected) Pal.Gold else if (today) Pal.GoldTint else Pal.Card, Offset.Zero, size, r)
+    }
+}
+
 /** A month grid to pick a day. [allowNone] adds "Không có ngày". */
 @Composable
 fun PixelDatePicker(initial: LocalDate?, allowNone: Boolean = false, onPick: (LocalDate?) -> Unit, onDismiss: () -> Unit) {
@@ -61,10 +70,7 @@ fun PixelDatePicker(initial: LocalDate?, allowNone: Boolean = false, onPick: (Lo
                             if (n in 1..month.lengthOfMonth()) {
                                 val day = month.atDay(n)
                                 val selected = day == initial
-                                Canvas(Modifier.fillMaxSize().clickable { onPick(day) }) {
-                                    val r = androidx.compose.ui.geometry.CornerRadius(size.height * 0.3f)
-                                    drawRoundRect(if (selected) Pal.Gold else if (day == today) Pal.GoldTint else Pal.Card, Offset.Zero, size, r)
-                                }
+                                DayDot(day == today, selected, Modifier.fillMaxSize().clickable { onPick(day) })
                                 PixelText("$n", style = if (selected || day == today) type.bodyBold else type.body, color = Pal.Ink)
                             }
                         }

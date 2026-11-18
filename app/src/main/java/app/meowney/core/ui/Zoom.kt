@@ -27,6 +27,11 @@ import androidx.navigation.NavBackStackEntry
 object Zoom {
     private const val MS = 320
 
+    /** Tells the main tabs (home and the five parts) apart: moving between them just fades. */
+    var isTab: (NavBackStackEntry) -> Boolean = { false }
+
+    private fun tabSwitch(from: NavBackStackEntry, to: NavBackStackEntry) = isTab(from) && isTab(to)
+
     /** Set right before navigating; picked up by the next screen that enters. */
     private var pending: TransformOrigin? = null
     private val origins = HashMap<String, TransformOrigin?>()
@@ -47,7 +52,9 @@ object Zoom {
     /** Enter: zoom from the marked spot if there is one, else slide in from the right. */
     val enter: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
         val o = originOf(targetState)
-        if (o != null) {
+        if (tabSwitch(initialState, targetState)) {
+            fadeIn(tween(TAB_MS))
+        } else if (o != null) {
             scaleIn(tween(MS, easing = FastOutSlowInEasing), initialScale = 0.05f, transformOrigin = o) + fadeIn(tween(MS / 2))
         } else {
             slideInHorizontally(tween(MS)) { it / 5 } + fadeIn(tween(MS))
@@ -56,15 +63,23 @@ object Zoom {
 
     val popExit: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
         val o = origins[initialState.id]
-        if (o != null) {
+        if (tabSwitch(initialState, targetState)) {
+            fadeOut(tween(TAB_MS))
+        } else if (o != null) {
             scaleOut(tween(MS, easing = FastOutSlowInEasing), targetScale = 0.05f, transformOrigin = o) + fadeOut(tween(MS, delayMillis = MS / 2))
         } else {
             slideOutHorizontally(tween(MS)) { it / 5 } + fadeOut(tween(MS))
         }
     }
 
-    val exit: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = { fadeOut(tween(MS)) }
-    val popEnter: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = { fadeIn(tween(MS)) }
+    val exit: AnimatedContentTransitionScope<NavBackStackEntry>.() -> ExitTransition = {
+        fadeOut(tween(if (tabSwitch(initialState, targetState)) TAB_MS else MS))
+    }
+    val popEnter: AnimatedContentTransitionScope<NavBackStackEntry>.() -> EnterTransition = {
+        fadeIn(tween(if (tabSwitch(initialState, targetState)) TAB_MS else MS))
+    }
+
+    private const val TAB_MS = 180
 }
 
 /** Remembers where this element is on screen; call [ZoomSource.mark] in its onClick. */

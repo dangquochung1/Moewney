@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Meowney</string>
-    <string name="widget_small_desc">Nhìn vào phòng mèo; chạm để ghi chi tiêu</string>
-    <string name="widget_wide_desc">Phòng mèo và 3 nút ghi nhanh</string>
+    <string name="widget_small_desc">Mèo trên hành tinh; chạm để ghi chi tiêu</string>
+    <string name="widget_wide_desc">Mèo trên hành tinh và 3 nút ghi nhanh</string>
 </resources>

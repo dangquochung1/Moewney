@@ -49,12 +49,12 @@ class AppContainer(val context: Context) {
     val events = AppEvents()
     val sfx: Sfx by lazy { Sfx(context) }
     val music: app.meowney.core.sound.Music by lazy { app.meowney.core.sound.Music(context) }
+    val purr: app.meowney.core.sound.Purr by lazy { app.meowney.core.sound.Purr(context) }
 
     // Art shared by the app and the home-screen widgets (which may run without the activity).
-    val room: app.meowney.feature.room.RoomAssets by lazy { app.meowney.feature.room.RoomAssets.load(context.assets) }
-    val roomWide: app.meowney.feature.room.RoomAssets by lazy { app.meowney.feature.room.RoomAssets.load(context.assets, "room/widget.json") }
     val sprites: SpriteAtlas by lazy { SpriteAtlas.load(context.assets) }
     val icons: ImageBitmap by lazy { SpriteAtlas.loadBitmap(context.assets, "icons/raven16.png") }
+    val skies: app.meowney.core.ui.SkyLibrary by lazy { app.meowney.core.ui.SkyLibrary(context.assets) }
     val typeface: Typeface by lazy { ResourcesCompat.getFont(context, R.font.meowney_pixel_regular)!! }
 }
 

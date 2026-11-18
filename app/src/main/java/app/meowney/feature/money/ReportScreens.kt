@@ -43,6 +43,7 @@ import app.meowney.core.ui.LocalPixelMetrics
 import app.meowney.core.ui.LocalPixelType
 import app.meowney.core.ui.LocalSprites
 import app.meowney.core.ui.Pal
+import app.meowney.core.ui.CardTone
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelProgress
 import app.meowney.core.ui.PixelScreen
@@ -172,7 +173,7 @@ private fun GradeCard(r: MonthReport, catColor: Int) {
     val type = LocalPixelType.current
     val score = r.data.score
     val d = r.data
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+    PixelPanel(Modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 SpriteView("cat/$catColor/${if (score.grade == "S" || score.grade == "A") "meow_sit" else "sit"}", scale = m.ui * 2)
@@ -229,7 +230,7 @@ private fun ChestRow(r: MonthReport, justClaimed: Int, onOpen: () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val coins = r.kept?.coins ?: 0
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_interior") {
+    PixelPanel(Modifier.fillMaxWidth(), tone = CardTone.Lemon) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             when {
                 justClaimed > 0 -> SpriteView("chest/chest_open", scale = m.ui * 3, once = true)
@@ -376,7 +377,8 @@ fun SpriteView(name: String, scale: Int, frame: Int = -1, once: Boolean = false)
     val sprite = sprites.getOrNull(name) ?: return
     val m = LocalPixelMetrics.current
     var f by remember(name, frame, once) { mutableIntStateOf(if (frame >= 0) frame else 0) }
-    if (frame < 0 && sprite.frames > 1) {
+    // fps 0 = a sheet of poses (sit, lie...): show the first, never cycle through them
+    if (frame < 0 && sprite.frames > 1 && sprite.entry.fps > 0) {
         LaunchedEffect(name, once) {
             while (true) {
                 delay(1000L / sprite.entry.fps.coerceAtLeast(1))

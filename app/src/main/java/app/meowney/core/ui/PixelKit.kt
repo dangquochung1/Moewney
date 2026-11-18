@@ -38,6 +38,8 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.drawOutline
+import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
@@ -55,6 +57,9 @@ object Soft {
     val Field = RoundedCornerShape(12.dp)
     val Pill = RoundedCornerShape(50)
 }
+
+/** Corner radius of cards (the same as [Soft.Card]). */
+val CardRadius = 20.dp
 
 /** A surface lifted off the page by a faint shadow. */
 fun Modifier.softSurface(fill: Color, shape: Shape = Soft.Card, elevation: Dp = 2.dp): Modifier =
@@ -85,9 +90,18 @@ fun PixelText(
 
 // ------------------------------------------------------------------ panels
 
+/** How a card is filled. [Selected] is a picked cat or option and also gets a gold rim. */
+enum class CardTone(val fill: Color, val border: Color? = null) {
+    Plain(Pal.Card),
+    Faded(Pal.Well),
+    Sky(Pal.SkyTint),
+    Lemon(Pal.GoldTint),
+    Selected(Pal.GoldTint, Pal.Gold),
+}
+
 /**
- * A white rounded card. [sprite] is kept from the pixel-frame days and only picks the dimmed
- * fill for "disabled" panels; [extraPadding] 2 is a normal card, 1 a tighter one.
+ * A white rounded card. [tone] picks the fill; [sprite] is kept from the pixel-frame days and
+ * a "disabled" sprite means [CardTone.Faded]. [extraPadding] 2 is a normal card, 1 a tighter one.
  */
 @Composable
 fun PixelPanel(
@@ -95,14 +109,17 @@ fun PixelPanel(
     sprite: String = "ui/wood/nine_path_panel",
     extraPadding: Int = 2,
     contentAlignment: Alignment = Alignment.TopStart,
+    tone: CardTone = CardTone.Plain,
     content: @Composable BoxScope.() -> Unit,
 ) {
     val m = LocalPixelMetrics.current
-    val fill = if ("disabled" in sprite) Pal.Well else Pal.Card
+    val look = if (tone == CardTone.Plain && "disabled" in sprite) CardTone.Faded else tone
     val tight = extraPadding < 2
+    val shape = if (tight) Soft.Small else Soft.Card
     Box(
         modifier = modifier
-            .softSurface(fill, if (tight) Soft.Small else Soft.Card)
+            .softSurface(look.fill, shape)
+            .then(if (look.border != null) Modifier.border(1.5.dp, look.border, shape) else Modifier)
             .padding(m.unit * (if (tight) 5 else 7)),
         contentAlignment = contentAlignment,
         content = content,
@@ -121,6 +138,7 @@ fun PixelButton(
     enabled: Boolean = true,
     look: ButtonLook = ButtonLook.Primary,
     padded: Boolean = true,
+    shape: Shape = Soft.Small,
     content: @Composable RowScope.() -> Unit,
 ) {
     val m = LocalPixelMetrics.current
@@ -132,18 +150,17 @@ fun PixelButton(
         primary -> if (pressed) Pal.GoldPressed else Pal.Gold
         else -> if (pressed) Pal.Well else Pal.Card
     }
-    val radius = 14.dp
     Row(
         modifier = modifier
             .defaultMinSize(minHeight = m.unit * 13)
             .drawBehind {
-                val r = CornerRadius(radius.toPx())
+                val outline = shape.createOutline(size, layoutDirection, this)
                 // a darker lip under the gold button; it disappears while pressed
-                if (primary && enabled && !pressed) drawRoundRect(Pal.GoldLip, Offset(0f, 2.dp.toPx()), size, r)
-                drawRoundRect(fill, Offset.Zero, size, r)
+                if (primary && enabled && !pressed) translate(top = 2.dp.toPx()) { drawOutline(outline, Pal.GoldLip) }
+                drawOutline(outline, fill)
             }
-            .then(if (!primary && enabled) Modifier.border(1.dp, Pal.Line, Soft.Small) else Modifier)
-            .clip(Soft.Small)
+            .then(if (!primary && enabled) Modifier.border(1.dp, Pal.Line, shape) else Modifier)
+            .clip(shape)
             .clickable(
                 interactionSource = source,
                 indication = null,
@@ -163,8 +180,8 @@ fun PixelButton(
 
 /** Labels that are really icons: steppers and "add" read better as a glyph than as a pixel letter. */
 private fun glyph(text: String): ImageVector? = when (text) {
-    "<" -> Icons.AutoMirrored.Filled.KeyboardArrowLeft
-    ">" -> Icons.AutoMirrored.Filled.KeyboardArrowRight
+    "<", "‹" -> Icons.AutoMirrored.Filled.KeyboardArrowLeft
+    ">", "›" -> Icons.AutoMirrored.Filled.KeyboardArrowRight
     "+" -> Icons.Filled.Add
     else -> null
 }
@@ -218,24 +235,30 @@ fun PixelCheckbox(
     label: String? = null,
 ) {
     val m = LocalPixelMetrics.current
-    val shape = RoundedCornerShape(8.dp)
     Row(
         modifier = modifier.clickable(
             interactionSource = remember { MutableInteractionSource() }, indication = null, role = Role.Checkbox,
         ) { onCheckedChange(!checked) },
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Box(
-            Modifier
-                .size(m.unit * 14)
-                .then(if (checked) Modifier.background(Pal.Green, shape) else Modifier.background(Pal.Card, shape).border(2.dp, Pal.Line, shape)),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (checked) Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(m.unit * 10), tint = Pal.Card)
-        }
+        TickBox(checked, m.unit * 14)
         if (label != null) {
             PixelText(label, Modifier.padding(start = m.unit * 4))
         }
+    }
+}
+
+/** The box of [PixelCheckbox] on its own: green with a white tick, or white with a border. */
+@Composable
+fun TickBox(checked: Boolean, size: Dp, modifier: Modifier = Modifier) {
+    val shape = RoundedCornerShape(size * 0.3f)
+    Box(
+        modifier
+            .size(size)
+            .then(if (checked) Modifier.background(Pal.Green, shape) else Modifier.background(Pal.Card, shape).border(2.dp, Pal.Line, shape)),
+        contentAlignment = Alignment.Center,
+    ) {
+        if (checked) Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(size * 0.7f), tint = Pal.Card)
     }
 }
 

@@ -172,6 +172,12 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
         // the game: first cat of the collection, the month's challenge, trophies earned so far
         viewModelScope.launch {
             c.game.ensureStarter()
+            // 1.1: the round room is gone; its things turn back into coins once
+            val refund = runCatching { c.game.retireRoomItems() }.getOrDefault(0)
+            if (refund > 0) {
+                delay(4_500)
+                c.events.post(CatEvent.Coins(refund, CatLines.roomRefund(refund)))
+            }
             var first = true
             c.money.coins.debounce(1_500).collect {
                 val day = LocalDate.now()

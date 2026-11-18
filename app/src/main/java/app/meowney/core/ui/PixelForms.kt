@@ -84,33 +84,46 @@ fun IconChip(index: Int, modifier: Modifier = Modifier, tint: Color = Pal.GreenT
     }
 }
 
-/** Full-screen page: cream background, round back button + title row, then [content]. */
+/** The round "back" button at the top left of a page. */
+@Composable
+fun BackButton(onClick: () -> Unit, modifier: Modifier = Modifier) {
+    RoundIconButton(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", onClick, modifier)
+}
+
+/**
+ * Full-screen page: cream background (or [backdrop], drawn behind everything), round back
+ * button + title row, then [content].
+ */
 @Composable
 fun PixelScreen(
     title: String,
     onBack: (() -> Unit)?,
     modifier: Modifier = Modifier,
+    titleColor: Color = Pal.Ink,
+    backdrop: (@Composable () -> Unit)? = null,
     actions: @Composable RowScope.() -> Unit = {},
     content: @Composable ColumnScope.() -> Unit,
 ) {
     val m = LocalPixelMetrics.current
-    Column(
-        modifier
-            .fillMaxSize()
-            .background(Pal.Canvas)
-            .windowInsetsPadding(WindowInsets.safeDrawing)
-            .padding(horizontal = m.unit * 6),
-    ) {
-        Row(
-            Modifier.fillMaxWidth().padding(vertical = m.unit * 4),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.spacedBy(m.unit * 3),
+    Box(modifier.fillMaxSize().background(Pal.Canvas)) {
+        backdrop?.invoke()
+        Column(
+            Modifier
+                .fillMaxSize()
+                .windowInsetsPadding(WindowInsets.safeDrawing)
+                .padding(horizontal = m.unit * 6),
         ) {
-            if (onBack != null) RoundIconButton(Icons.AutoMirrored.Filled.ArrowBack, "Quay lại", onBack)
-            PixelText(title, style = LocalPixelType.current.title, color = Pal.Ink, modifier = Modifier.weight(1f), maxLines = 1)
-            actions()
+            Row(
+                Modifier.fillMaxWidth().padding(vertical = m.unit * 4),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(m.unit * 3),
+            ) {
+                if (onBack != null) BackButton(onBack)
+                PixelText(title, style = LocalPixelType.current.title, color = titleColor, modifier = Modifier.weight(1f), maxLines = 1)
+                actions()
+            }
+            content()
         }
-        content()
     }
 }
 
@@ -156,6 +169,12 @@ fun SegmentedTabs(options: List<String>, selected: Int, modifier: Modifier = Mod
             }
         }
     }
+}
+
+/** [SegmentedTabs] over any list of items, for tabs that are an enum rather than an index. */
+@Composable
+fun <T> PixelTabs(items: List<T>, selected: T, label: (T) -> String, modifier: Modifier = Modifier, onSelect: (T) -> Unit) {
+    SegmentedTabs(items.map(label), items.indexOf(selected), modifier.fillMaxWidth()) { onSelect(items[it]) }
 }
 
 /** The amount keypad: digits, 000, k (×1000), tr (×1.000.000), back, clear. */

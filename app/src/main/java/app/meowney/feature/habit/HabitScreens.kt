@@ -1,5 +1,8 @@
 package app.meowney.feature.habit
 
+import androidx.compose.ui.draw.clip
+import androidx.compose.foundation.background
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -114,7 +117,7 @@ fun HabitsScreen(vm: HabitsViewModel, onBack: () -> Unit, onNew: () -> Unit, onO
     val s by vm.state.collectAsState()
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelScreen("Thói quen", onBack = onBack, actions = {
+    PixelScreen("Thói quen", onBack = null, actions = {
         PixelTextButton("Pomodoro", onClick = onPomodoro, look = ButtonLook.Plain)
         PixelTextButton("+", onClick = onNew)
     }) {
@@ -134,7 +137,7 @@ fun HabitsScreen(vm: HabitsViewModel, onBack: () -> Unit, onNew: () -> Unit, onO
 private fun HabitCard(h: HabitEntity, today: HabitToday?, onClick: () -> Unit) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelPanel(Modifier.fillMaxWidth().clickable(onClick = onClick), sprite = "ui/wood/nine_path_panel_3") {
+    PixelPanel(Modifier.fillMaxWidth().clickable(onClick = onClick)) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 RavenIcon(h.icon)
@@ -416,7 +419,7 @@ fun HabitDetailScreen(vm: HabitDetailViewModel, onBack: () -> Unit, onEdit: () -
     val type = LocalPixelType.current
     PixelScreen(h.name, onBack = onBack, actions = { PixelTextButton("Sửa", onClick = onEdit, look = ButtonLook.Plain) }) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         RavenIcon(h.icon, scale = m.ui * 2)

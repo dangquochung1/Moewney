@@ -61,6 +61,14 @@ object Pal {
     val Cream = Color(0xFFF6E7C8)
     val Paper = Color(0xFFEAD7B0)
 
+    // Role names the 1.1 screens use, pointing at the colours above.
+    val Primary = Gold                 // main buttons
+    val Selected = Gold                // a chosen chip, tab or day
+    val Mint = Green                   // ticks, progress
+    val Accent = Gold                  // emphasis as a fill: today, badges
+    val AccentText = GoldDeep          // emphasis in text
+    val Track = Line                   // the empty part of bars, faded cells
+
     /** Chart series. A category keeps its slot from month to month; the last one is "Khác". */
     val Series = listOf(
         Color(0xFF4CAF50), Color(0xFF6FA8DC), Color(0xFFF2C14E), Color(0xFFF08DB3),
@@ -79,15 +87,15 @@ object Pal {
 }
 
 /**
- * Integer scales that keep pixel art sharp.
+ * Sizes that keep pixel art sharp.
  *
- * - [room]: screen pixels per art pixel in the cat room (room art is 176 px wide).
- * - [ui]: screen pixels per art pixel for UI chrome *and* per font pixel of body text,
- *   so panels, buttons and letters share one pixel grid.
+ * - [room]: screen pixels per art pixel for full-screen art.
+ * - [ui]: screen pixels per art pixel for sprites shown in the layout (icons, cats, chests);
+ *   [unit] (one such pixel in dp) is also the spacing step of the layout.
  */
 @Immutable
 data class PixelMetrics(val room: Int, val ui: Int, private val density: Float, private val fontScale: Float) {
-    /** Font size whose 9-pixel em is exactly [pxPerFontPixel] screen pixels per font pixel. */
+    /** Font size whose 9-pixel em is exactly [pxPerFontPixel] screen pixels per font pixel (the pixel font). */
     fun fontSize(pxPerFontPixel: Int): TextUnit = (9f * pxPerFontPixel / (density * fontScale)).sp
 
     /** Converts screen pixels to dp for layout. */
@@ -102,13 +110,13 @@ data class PixelMetrics(val room: Int, val ui: Int, private val density: Float, 
 
         fun from(widthPx: Int, heightPx: Int, density: Density): PixelMetrics {
             val room = minOf(widthPx / ROOM_WIDTH, heightPx / ROOM_HEIGHT).coerceAtLeast(1)
-            // Body text near 14sp, rounded to whole screen pixels per font pixel.
             val ui = (14f * density.density * density.fontScale / 9f).roundToInt().coerceAtLeast(2)
             return PixelMetrics(room, ui, density.density, density.fontScale)
         }
     }
 }
 
+/** Text styles: Nunito for everything read or tapped, the pixel font only to decorate. */
 @Immutable
 data class PixelType(
     val caption: TextStyle,
@@ -116,6 +124,16 @@ data class PixelType(
     val bodyBold: TextStyle,
     val title: TextStyle,
     val display: TextStyle,
+    /** Decoration in the pixel font: "TUẦN NÀY.", the MEOWNEY intro. */
+    val pixelTitle: TextStyle,
+    val pixelDisplay: TextStyle,
+)
+
+val AppFont = FontFamily(
+    Font(R.font.nunito_regular, FontWeight.Normal),
+    Font(R.font.nunito_semibold, FontWeight.SemiBold),
+    Font(R.font.nunito_bold, FontWeight.Bold),
+    Font(R.font.nunito_extrabold, FontWeight.ExtraBold),
 )
 
 val PixelFont = FontFamily(
@@ -139,15 +157,17 @@ fun MeowneyTheme(sprites: SpriteAtlas, content: @Composable () -> Unit) {
         )
     }
     val type = remember(metrics) {
-        val u = metrics.ui
-        fun style(px: Int, weight: FontWeight = FontWeight.Normal) =
-            TextStyle(fontFamily = PixelFont, fontWeight = weight, fontSize = metrics.fontSize(px), color = Pal.Ink)
+        fun text(size: Int, weight: FontWeight, line: Int = size + 6) =
+            TextStyle(fontFamily = AppFont, fontWeight = weight, fontSize = size.sp, lineHeight = line.sp, color = Pal.Ink)
+        fun pixel(px: Int) = TextStyle(fontFamily = PixelFont, fontWeight = FontWeight.Bold, fontSize = metrics.fontSize(px), color = Pal.Ink)
         PixelType(
-            caption = style(u - 1),
-            body = style(u),
-            bodyBold = style(u, FontWeight.Bold),
-            title = style(u + 1, FontWeight.Bold),
-            display = style(u * 2, FontWeight.Bold),
+            caption = text(12, FontWeight.SemiBold, 16),
+            body = text(14, FontWeight.Normal),
+            bodyBold = text(14, FontWeight.Bold),
+            title = text(17, FontWeight.ExtraBold, 22),
+            display = text(28, FontWeight.ExtraBold, 34),
+            pixelTitle = pixel(metrics.ui * 2),
+            pixelDisplay = pixel(metrics.ui * 3),
         )
     }
     CompositionLocalProvider(

@@ -37,6 +37,7 @@ import app.meowney.core.ui.Pal
 import app.meowney.core.ui.PixelChip
 import app.meowney.core.ui.PixelDialog
 import app.meowney.core.ui.PixelKeypad
+import app.meowney.core.ui.CardTone
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelProgress
 import app.meowney.core.ui.PixelScreen
@@ -147,7 +148,7 @@ private fun DebtCard(d: DebtRow, modifier: Modifier) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val overdue = d.settledDay == null && d.dueDay != null && d.dueDay < LocalDate.now().toEpochDay()
-    PixelPanel(modifier.fillMaxWidth(), sprite = if (d.settledDay != null) "ui/wood/nine_path_panel_disabled" else "ui/wood/nine_path_panel_3") {
+    PixelPanel(modifier.fillMaxWidth(), tone = if (d.settledDay != null) CardTone.Faded else CardTone.Plain) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelText(d.person, style = type.bodyBold, modifier = Modifier.weight(1f), maxLines = 1)

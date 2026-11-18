@@ -18,7 +18,6 @@ import androidx.compose.ui.graphics.drawscope.CanvasDrawScope
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.clipPath
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
-import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Density
@@ -30,18 +29,22 @@ import app.meowney.core.data.TodaySnapshot
 import app.meowney.core.sprite.SpriteAtlas
 import app.meowney.core.sprite.drawSprite
 import app.meowney.core.ui.Pal
-import app.meowney.feature.room.RoomAssets
-import app.meowney.feature.room.RoomPaint
+import app.meowney.core.ui.SkyLibrary
+import app.meowney.feature.room.CatClock
+import app.meowney.feature.room.PlanetScene
 import app.meowney.feature.room.SeasonOverlay
 import kotlin.math.ceil
+import kotlin.math.max
+import kotlin.math.roundToInt
 
 /**
- * Widget pictures. The widget is a window into the cat's room, drawn with the room's own
- * tiles and sprites and what the wardrobe put there; the cat sleeps at night and shows how
- * the day is going. No money is shown.
+ * Widget pictures. The widget shows the cat on its little planet under the home screen's sky,
+ * wearing the hat picked in the shop; the cat naps at the app's hours and shows how the day is going.
+ * No money is shown.
  */
 object WidgetArt {
-    private val NIGHT = Color(0x7A10143A)
+    /** Season effects are drawn as one still frame. */
+    private const val STILL = 4_000L
 
     /** Draws into a fresh bitmap of [w] x [h] pixels. */
     fun paint(w: Int, h: Int, block: DrawScope.() -> Unit): Bitmap {
@@ -61,7 +64,8 @@ object WidgetArt {
         drawIntoCanvas { it.nativeCanvas.drawText(s, x, baseline, p) }
     }
 
-    fun night(hour: Int) = hour >= 22 || hour < 6
+    /** The cat naps at the same hours as in the app. */
+    fun asleep(hour: Int) = CatClock.sleepHour(hour)
 
     private fun pose(scene: CatScene) = when (scene) {
         CatScene.CALM -> "sit"
@@ -91,91 +95,62 @@ object WidgetArt {
     }
 
     /**
-     * The room at scene resolution: tiles, what the wardrobe put there, the cat, the weather.
-     * [extraRows] more rows of stone wall go on top, for a frame taller than the room.
+     * The cat on its planet at scene resolution ([p] says where things go): the season behind,
+     * the planet (no turning), the cat in the pose of the day or asleep, the season in front.
      */
-    private fun sceneBitmap(atlas: SpriteAtlas, room: RoomAssets, s: TodaySnapshot, hour: Int, extraRows: Int): ImageBitmap {
-        val w = room.widthPx
-        val tile = room.file.tile
-        val extra = extraRows * tile
-        val h = room.heightPx + extra
-        val out = ImageBitmap(w, h)
-        val night = night(hour)
+    private fun sceneBitmap(atlas: SpriteAtlas, skies: SkyLibrary, s: TodaySnapshot, p: PlanetScene, hour: Int): ImageBitmap {
+        val out = ImageBitmap(p.width, p.height)
         val look = s.look
-        val walls = room.baked(look.wall, look.floor)
-        CanvasDrawScope().draw(Density(1f), LayoutDirection.Ltr, Canvas(out), Size(w.toFloat(), h.toFloat())) {
-            // the first row of the room is plain stone (the window is drawn separately), so it repeats
-            for (r in 0 until extraRows) {
-                drawImage(walls, srcOffset = IntOffset.Zero, srcSize = IntSize(w, tile), dstOffset = IntOffset(0, r * tile), dstSize = IntSize(w, tile))
+        val w = p.width.toFloat()
+        val h = p.height.toFloat()
+        CanvasDrawScope().draw(Density(1f), LayoutDirection.Ltr, Canvas(out), Size(w, h)) {
+            with(SeasonOverlay) { behind(look.season, STILL, w, h) }
+            val planet = skies.planet(if (CatClock.isNight(hour)) "moon" else "earth")
+            val left = (p.cx - planet.width / 2f).roundToInt()
+            val top = (p.cy - planet.height / 2f).roundToInt()
+            drawImage(planet, dstOffset = IntOffset(left, top), dstSize = IntSize(planet.width, planet.height), filterQuality = FilterQuality.None)
+            drawOval(Color(0x33000000), Offset(p.feetX - 8f, p.feetY - 2f), Size(16f, 3f))
+            val asleep = s.onboarded && asleep(hour)
+            val anim = if (asleep) "sleep1_r" else pose(s.scene)
+            val cat = atlas.getOrNull("cat/${s.catColor}/$anim") ?: atlas["cat/${s.catColor}/sit"]
+            drawSprite(cat, 0, p.feetX, p.feetY)
+            look.hat?.let { hat -> atlas.getOrNull("hat/$hat/$anim")?.let { drawSprite(it, 0, p.feetX, p.feetY) } }
+            when {
+                asleep -> zzz(p.feetX + 10f, p.feetY - 22f)
+                s.scene == CatScene.ANGRY -> bang(p.feetX - 20f, p.feetY - 27f)
             }
-            translate(top = extra.toFloat()) { roomLayer(atlas, room, s, night, walls, Size(w.toFloat(), h.toFloat()), extra.toFloat()) }
-            // the season's weather, repeated across a room wider than the corner it was made for
-            var x = 0f
-            while (x < w) {
-                translate(left = x, top = (h - 64).toFloat()) { with(SeasonOverlay) { season(look.season, 4_000L + x.toLong() * 37, atlas) } }
-                x += 64f
-            }
+            with(SeasonOverlay) { front(look.season, STILL, w, h, atlas) }
         }
         return out
     }
 
-    private fun DrawScope.roomLayer(atlas: SpriteAtlas, room: RoomAssets, s: TodaySnapshot, night: Boolean, walls: ImageBitmap, full: Size, extra: Float) {
-        val look = s.look
-        val h = room.heightPx
-        drawImage(walls)
-        // the window's animation has a lit frame (0 ms) and a dark one (950 ms); on a taller wall
-        // it moves up to the middle of the stone
-        val tile = room.file.tile
-        translate(top = -((extra / tile).toInt() / 2 * tile).toFloat()) { room.drawAnimatedTiles(this, if (night) 950 else 0) }
-        val (hx, hy) = room.spot("home")
-        look.rug?.let { with(RoomPaint) { rug(it, cx = hx, cy = hy - 1f, rx = 18, ry = if (h < 64) 3 else 5) } }
-        fun prop(sprite: String?, spot: String) {
-            val art = sprite?.let(atlas::getOrNull) ?: return
-            val (x, y) = room.spot(spot)
-            drawSprite(art, 0, x, y)
-        }
-        val wide = "post" in room.spots
-        val asleep = s.onboarded && night
-        if (wide || asleep) prop(look.bed, "bed")
-        prop(if (s.scene == CatScene.SAD) "prop/emptybowl" else look.bowl, "bowl")
-        prop(look.toy, "yarn")
-        if (wide) {
-            prop(look.decor ?: "decor/pot", "decor")
-            prop("prop/scratchingpost", "post")
-        }
-        if (asleep) {
-            val (bx, by) = room.spot("bed_cat")
-            val cat = atlas.getOrNull("cat/${s.catColor}/sleep1_r") ?: atlas["cat/${s.catColor}/sit"]
-            drawSprite(cat, 0, bx, by)
-            drawRect(NIGHT, Offset(0f, -extra), full)
-            zzz(bx + 12f, by - 28f)
-        } else {
-            val anim = pose(s.scene)
-            val cat = atlas.getOrNull("cat/${s.catColor}/$anim") ?: atlas["cat/${s.catColor}/sit"]
-            drawSprite(cat, 0, hx, hy)
-            look.hat?.let { hat -> atlas.getOrNull("hat/$hat/$anim")?.let { drawSprite(it, 0, hx, hy) } }
-            if (s.scene == CatScene.ANGRY) bang(hx - 20f, hy - 27f)
-            if (night) drawRect(NIGHT, Offset(0f, -extra), full)
-        }
-    }
-
     /**
-     * The room filling [w] x [h] with rounded corners: as wide as the frame, scaled by a whole
-     * number so the pixels stay sharp. A taller frame gets more wall on top; a flatter one
-     * loses some wall. [plus] adds the round "ghi" button in the corner.
+     * The cat on its planet under the sky (day or night by the hour), filling [w] x [h] with
+     * rounded corners. The sky covers the frame at a whole-number scale, sitting on the bottom
+     * edge like on the home screen; the planet and the cat are laid out by [PlanetScene].
+     * [plus] adds the round "ghi" button in the corner.
      */
-    fun scene(atlas: SpriteAtlas, room: RoomAssets, s: TodaySnapshot, w: Int, h: Int, hour: Int, radius: Float, plus: Boolean = false): Bitmap {
-        val scale = ceil(w.toFloat() / room.widthPx).toInt().coerceAtLeast(1)
-        val missing = h - room.heightPx * scale
-        val extraRows = if (missing > 0) ceil(missing.toFloat() / (room.file.tile * scale)).toInt() else 0
-        val art = sceneBitmap(atlas, room, s, hour, extraRows)
+    fun scene(atlas: SpriteAtlas, skies: SkyLibrary, s: TodaySnapshot, w: Int, h: Int, hour: Int, radius: Float, plus: Boolean = false): Bitmap {
+        val p = PlanetScene.of(w.coerceAtLeast(1), h.coerceAtLeast(1))
+        val art = sceneBitmap(atlas, skies, s, p, hour)
+        val sky = skies.sky(if (CatClock.isNight(hour)) SkyLibrary.HOME_NIGHT else SkyLibrary.HOME_DAY)
         return paint(w, h) {
-            val dw = art.width * scale
-            val dh = art.height * scale
             val clip = Path().apply { addRoundRect(RoundRect(Rect(0f, 0f, w.toFloat(), h.toFloat()), CornerRadius(radius))) }
             clipPath(clip) {
-                // keep the floor: crop from the top when the picture is taller than the frame
-                drawImage(art, dstOffset = IntOffset((w - dw) / 2, h - dh), dstSize = IntSize(dw, dh), filterQuality = FilterQuality.None)
+                sky.layers.firstOrNull()?.let { back ->
+                    val k = ceil(max(h.toFloat() / back.height, w.toFloat() / back.width)).toInt().coerceAtLeast(1)
+                    val dw = back.width * k
+                    val dh = back.height * k
+                    for (layer in sky.layers) {
+                        drawImage(layer, dstOffset = IntOffset((w - dw) / 2, h - dh), dstSize = IntSize(dw, dh), filterQuality = FilterQuality.None)
+                    }
+                }
+                drawImage(
+                    art,
+                    dstOffset = IntOffset(p.offsetX, p.offsetY),
+                    dstSize = IntSize(p.width * p.scale, p.height * p.scale),
+                    filterQuality = FilterQuality.None,
+                )
             }
             if (plus) {
                 val r = minOf(w, h) * 0.11f

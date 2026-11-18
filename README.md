@@ -6,6 +6,7 @@
 ![Jetpack Compose](https://img.shields.io/badge/Compose_BOM-2025.12.01-4285F4?style=for-the-badge&logo=jetpackcompose&logoColor=white)
 ![Room](https://img.shields.io/badge/Room-2.8.4-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Android](https://img.shields.io/badge/Android-8.0%2B_(API_26)-3DDC84?style=for-the-badge&logo=android&logoColor=white)
+![Version](https://img.shields.io/badge/Phiên_bản-1.1.0-4CAF50?style=for-the-badge)
 ![Offline](https://img.shields.io/badge/Dữ_liệu-chỉ_trên_máy-F2C14E?style=for-the-badge)
 
 **Sổ tiền theo quy tắc 6 chiếc lọ, thói quen, lịch và sổ tay, có một con mèo pixel sống cùng.**
@@ -21,6 +22,7 @@
 ## Mục lục
 
 - [Giới thiệu](#giới-thiệu)
+- [Có gì mới ở 1.1](#có-gì-mới-ở-11)
 - [Tính năng](#tính-năng)
 - [Sáu chiếc lọ chạy thế nào](#sáu-chiếc-lọ-chạy-thế-nào)
 - [Kiến trúc](#kiến-trúc)
@@ -40,6 +42,20 @@
 Meowney là app Android cá nhân, viết bằng Kotlin và Jetpack Compose. Mỗi đồng tiền vào được chia vào các lọ theo tỉ lệ đặt sẵn; mỗi khoản chi lấy ra từ đúng lọ của nó. Bên cạnh tiền, app có thói quen, lịch, sổ tay và nhật ký, gom về một màn chính có con mèo pixel. Mèo vui khi bạn ghi sổ, lo khi có lọ bị âm, giận khi việc quá hạn, và nhắn tin cho bạn qua thông báo.
 
 Không có tài khoản, không có máy chủ: dữ liệu nằm trong máy, sao lưu bằng một file `.zip` do bạn tự cất.
+
+---
+
+## Có gì mới ở 1.1
+
+| Thay đổi | Mô tả |
+|---|---|
+| Mèo trên hành tinh | Phòng tròn được thay bằng một hành tinh nhỏ giữa bầu trời nhiều lớp trôi chậm, trời ngày và trời đêm đổi theo giờ |
+| Mèo lười, biết gừ gừ | Ngủ theo giờ (8–12h và 21–4h), đi vài bước rồi nằm chỗ khác; vuốt ve thì ngáp, liếm lông và gừ gừ |
+| Thanh điều hướng 6 mục | Mèo · Tiền · Thói quen · Lịch · Sổ tay · Quà, luôn ở dưới màn hình |
+| Trang chủ mới | Hành tinh ở trên, các thẻ trong ngày ở dưới: hoá đơn, nhật ký, thói quen, lịch, ghi chú ghim, đã tiêu hôm nay |
+| Lịch Ngày / Tuần / Tháng | Nhớ chế độ xem lần trước; Tuần có mục tiêu tuần |
+| Quà còn 4 tab | Vòng quay · Cửa hàng (gộp Tủ đồ) · Tự thưởng · Thành tích (gộp thử thách tháng) |
+| Chữ Nunito | Chữ đọc và bấm dùng Nunito, font pixel chỉ để trang trí |
 
 ---
 
@@ -72,25 +88,25 @@ Không có tài khoản, không có máy chủ: dữ liệu nằm trong máy, sa
 |---|---|
 | Thói quen | Bốn kiểu: tích, đếm, hẹn giờ, bỏ thói quen xấu; độ bền, vé nghỉ, nhắc giờ có nút Xong / +1 |
 | Pomodoro | Hẹn giờ tập trung chạy cả khi tắt màn hình |
-| Lịch | Sự kiện lặp lại, việc cần làm có bước con, nhãn, sinh nhật; xem tháng, tuần, ngày, sắp tới |
+| Lịch | Sự kiện lặp lại, việc cần làm có bước con, nhãn, sinh nhật; xem Ngày, Tuần (có mục tiêu tuần), Tháng |
 | Sổ tay | Ghi chú có checklist, ảnh, thẻ; ghim lên màn chính; thùng rác 30 ngày |
 | Nhật ký | Một trang mỗi ngày, tâm trạng 5 mức, câu hỏi gợi ý; thống kê tâm trạng; khoá bằng vân tay |
 
 ### Mèo và phần thưởng
 | Tính năng | Mô tả |
 |---|---|
-| Mèo | 6 màu lông, đặt tên; vuốt để vuốt ve, chạm để nói chuyện, giữ để mở tủ đồ |
+| Mèo | 6 màu lông, đặt tên; sống trên một hành tinh nhỏ, ngủ theo giờ; vuốt để vuốt ve (mèo gừ gừ), chạm để nói chuyện |
 | Xu | Nhận khi ghi sổ, xong thói quen, viết nhật ký, giữ chuỗi ngày |
-| Quà | Vòng quay mỗi ngày, cửa hàng, tủ đồ (tường, sàn, thảm, giường, mũ…), thưởng thật do bạn tự đặt, tủ cúp, thử thách tháng |
+| Quà | 4 tab: vòng quay mỗi ngày; cửa hàng gộp tủ đồ (mèo, đồ ăn, mũ, đồ chơi…); thưởng thật do bạn tự đặt; thành tích gồm tủ cúp và thử thách tháng |
 | Mùa | Tết, Halloween, Noel, mùa thu: đồ trang trí, nhạc và thời tiết riêng |
 
 ### Widget
 | Widget | Mô tả |
 |---|---|
-| Nhỏ 2×2 | Cửa sổ nhìn vào phòng mèo, chạm để ghi chi |
-| Ghi nhanh 4×2 | Phòng mèo và 3 nút chi hay dùng, bấm là ghi luôn không cần mở app |
+| Nhỏ 2×2 | Mèo trên hành tinh, chạm để ghi chi |
+| Ghi nhanh 4×2 | Mèo trên hành tinh và 3 nút chi hay dùng, bấm là ghi luôn không cần mở app |
 
-Cảnh phòng dựng từ chính tile và sprite của app, có đồ bạn đã mua trong Tủ đồ. Mèo ngủ từ 22h đến 6h, vui khi đã ghi sổ, lo khi có lọ âm, giận khi có việc quá hạn, buồn khi bạn hai ngày không mở app. Widget không hiện tiền. Thêm widget từ **Cài đặt → Widget** hoặc giữ tay lên màn hình chính.
+Cảnh vẽ từ chính bầu trời, hành tinh và sprite mèo của app (trời ngày hoặc đêm theo giờ), mèo đội mũ bạn đã chọn trong Cửa hàng. Mèo ngủ cùng giờ với trong app (8–12h và 21–4h), vui khi đã ghi sổ, lo khi có lọ âm, giận khi có việc quá hạn, buồn khi bạn hai ngày không mở app. Widget không hiện tiền. Thêm widget từ **Cài đặt → Widget** hoặc giữ tay lên màn hình chính.
 
 ### Thông báo từ mèo
 Mọi thông báo đến như tin nhắn, có mặt mèo theo đúng cảm xúc. Từng loại bật/tắt được trong **Cài đặt → Thông báo của mèo**, có nút **Gửi thử**.
@@ -154,7 +170,7 @@ Các quy tắc này nằm trong [`MoneyEngine`](app/src/main/java/app/meowney/co
 └───────┬───────────────────────────────┬──────────────────────┘
         │                               │
 ┌───────▼──────────┐   ┌────────────────▼─────────────────────┐
-│ Room (SQLite) v6 │   │ Engine thuần Kotlin: MoneyEngine,     │
+│ Room (SQLite) v7 │   │ Engine thuần Kotlin: MoneyEngine,     │
 │ DataStore        │   │ HabitEngine, CalendarEngine,          │
 │ (cài đặt)        │   │ AnalyticsEngine, NudgeEngine, …       │
 └──────────────────┘   └───────────────────────────────────────┘
@@ -187,23 +203,23 @@ app/src/main/java/app/meowney/
 ├── MainActivity.kt          # Activity duy nhất, NavHost, mở màn theo yêu cầu từ widget và thông báo
 ├── MeowneyApp.kt            # AppContainer: dựng repository, giữ widget đồng bộ với sổ
 ├── core/
-│   ├── db/                  # Entity, DAO, MeowneyDb (Room v6, migration 1→6)
+│   ├── db/                  # Entity, DAO, MeowneyDb (Room v7, migration 1→7)
 │   ├── data/                # Repository, Reports, Analytics, SettingsStore, TodaySnapshot
 │   ├── money/               # MoneyEngine, PlanEngines, AnalyticsEngine, AmountInput
 │   ├── habit/  calendar/    # HabitEngine, CalendarEngine
 │   ├── notes/  game/        # sổ tay, nhật ký, xu, mùa, thử thách
 │   ├── notify/              # CatNotifier, NudgeEngine, các bộ nhắc
-│   ├── ui/                  # Theme (bảng màu Pal), PixelKit, PixelForms, PixelPickers
+│   ├── ui/                  # Theme (bảng màu Pal, Nunito), PixelKit, PixelForms, PixelPickers, BottomBar, ParallaxSky
 │   ├── sprite/  sound/      # atlas sprite, nhạc, hiệu ứng
 │   └── backup/              # sao lưu .zip, xuất CSV
 ├── feature/
-│   ├── room/                # màn chính, con mèo, phòng mèo, lời thoại
+│   ├── room/                # màn chính, con mèo, hành tinh (PlanetStage), lời thoại
 │   ├── entry/               # ghi sổ, rót thu nhập, mượn lọ
 │   ├── money/               # tiền, lọ, ví, mục tiêu, nợ, định kỳ, tổng kết, phân tích
 │   ├── habit/  calendar/  notes/  game/  settings/  onboarding/  uikit/
-└── widget/                  # MeowneyWidgets (Glance), WidgetArt (vẽ phòng mèo)
+└── widget/                  # MeowneyWidgets (Glance), WidgetArt (vẽ mèo trên hành tinh)
 
-app/src/main/assets/         # sprite atlas, phòng mèo (corner.json, widget.json), nhạc, âm thanh
+app/src/main/assets/         # sprite atlas, nền trời bg/, hành tinh planet/, nhạc, âm thanh
 app/schemas/                 # lược đồ Room từng phiên bản (dùng cho test migration)
 tools/                       # script Python dựng asset
 docs/screenshots/            # ảnh trong README
@@ -213,13 +229,13 @@ docs/screenshots/            # ảnh trong README
 
 ## Dữ liệu
 
-Room, phiên bản 6. Số tiền là `Long` (đồng), ngày là epoch day, nên tính toán và so sánh không bị sai do làm tròn hay định dạng chuỗi.
+Room, phiên bản 7. Số tiền là `Long` (đồng), ngày là epoch day, nên tính toán và so sánh không bị sai do làm tròn hay định dạng chuỗi.
 
 | Nhóm | Bảng |
 |---|---|
 | Tiền | `wallet`, `jar`, `category`, `txn`, `jar_entry`, `quick_template`, `goal`, `goal_entry`, `debt`, `recurring`, `month_report` |
 | Thói quen | `habit`, `habit_log`, `focus_session` |
-| Lịch | `event`, `todo`, `todo_step`, `cal_label` |
+| Lịch | `event`, `todo`, `todo_step`, `cal_label`, `week_goal` |
 | Sổ tay | `note`, `note_block`, `note_tag`, `note_tag_ref` |
 | Mèo và quà | `coin_entry`, `owned_item`, `equip`, `pet`, `game_log`, `achievement`, `challenge`, `voucher`, `real_reward` |
 
@@ -256,7 +272,7 @@ rồi chạy `gradlew.bat assembleRelease`. Không có file này thì bản rele
 
 ## Kiểm thử
 
-115 unit test chạy trên JVM (Robolectric cho phần cần Android):
+131 unit test chạy trên JVM (Robolectric cho phần cần Android):
 
 ```bat
 gradlew.bat testDebugUnitTest
@@ -266,9 +282,9 @@ gradlew.bat testDebugUnitTest
 |---|---|
 | Quy tắc tiền | `MoneyEngineTest`, `PlanEnginesTest`, `AnalyticsEngineTest` |
 | Repository trên Room thật | `MoneyRepositoryTest`, `ReportsTest`, `HabitRepositoryTest`, `CalendarRepositoryTest`, `NoteRepositoryTest`, `GameRepositoryTest` |
-| Migration 1→6 | `MigrationTest` |
-| Lời mèo, thông báo, widget | `CatLinesTest`, `NudgeEngineTest`, `CatSceneTest` |
-| Khác | lịch, thói quen, nhật ký, định dạng tiền, sao lưu ảnh, hình học sân khấu mèo |
+| Migration 1→7 | `MigrationTest` |
+| Mèo, thông báo, widget | `CatLinesTest`, `CatBrainTest`, `PlanetSceneTest`, `NudgeEngineTest`, `CatSceneTest` |
+| Khác | lịch (cả chế độ Ngày/Tuần), thói quen, nhật ký, định dạng tiền, sao lưu ảnh |
 
 ---
 
@@ -279,11 +295,11 @@ gradlew.bat testDebugUnitTest
 | Script | Làm gì |
 |---|---|
 | `tools/patch_font.py` | Pixeloid + 32 chữ Việt còn thiếu → `res/font/meowney_pixel_*.ttf` |
-| `tools/pack_assets.py` | Sprite chọn lọc → `app/src/main/assets/sprites/` (atlas + `sprites.json`) |
-| `tools/build_room.py` | Góc mèo (`corner.json`) và phòng ngang cho widget (`widget.json`); `--widget-previews` vẽ ảnh xem trước widget |
+| `tools/pack_assets.py` | Sprite chọn lọc → `app/src/main/assets/sprites/` (atlas + `sprites.json`), âm thanh, nền trời nhiều lớp `bg/`, hành tinh `planet/` (Trái Đất phóng Scale3x) |
+| `tools/make_nunito.py` | Nunito (biến thiên) → 4 độ đậm tĩnh `res/font/nunito_*.ttf` |
 | `tools/make_icon.py` | Icon mèo ôm xu (`--sheet x.png` xem phương án, `--pick N` chọn; đang dùng 5) |
 
-Chạy lại `pack_assets.py` trước `build_room.py` và `make_icon.py` (hai script sau đọc atlas).
+Chạy lại `pack_assets.py` trước `make_icon.py` (script sau đọc atlas).
 
 ---
 
@@ -292,7 +308,11 @@ Chạy lại `pack_assets.py` trước `build_room.py` và `make_icon.py` (hai s
 | Asset | Tác giả, giấy phép |
 |---|---|
 | Font Pixeloid (bản thêm chữ Việt: Meowney Pixel) | GGBotNet, SIL Open Font License 1.1 |
-| Ninja Adventure (tile phòng, nhiều sprite) | Pixel-boy & AAA, CC0 |
+| Font Nunito | The Nunito Project Authors, SIL Open Font License 1.1 |
+| Nền trời mây và trời trăng | CraftPix.net, giấy phép craftpix.net/file-licenses |
+| Trái Đất pixel | chưa rõ tác giả |
+| Tiếng mèo gừ gừ (purring cat) | Universfield, Pixabay |
+| Ninja Adventure (nhiều sprite) | Pixel-boy & AAA, CC0 |
 | Cozy Cat Pixel Art Pack (ổ, bát, len, thùng) | FOTOPIXY, dùng tự do, không bán lại asset |
 | Sunnyside World | Daniel Diggle |
 | Raven Fantasy Icons | clockworkraven |
