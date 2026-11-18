@@ -203,10 +203,10 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
         PixelTextButton("+", onClick = { adding = true })
     }) {
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalAlignment = Alignment.CenterVertically) {
-            PixelTextButton(s.view.label, onClick = { pickingView = true }, look = ButtonLook.Light)
+            PixelTextButton(s.view.label, onClick = { pickingView = true }, look = ButtonLook.Plain)
             PixelTextButton(
                 if (s.filter.isEmpty()) "Nhãn" else "Nhãn ${s.filter.size}",
-                onClick = { pickingLabels = true }, look = ButtonLook.Light,
+                onClick = { pickingLabels = true }, look = ButtonLook.Plain,
             )
             if (s.inbox.isNotEmpty()) PixelChip("Chưa xếp (${s.inbox.size})", selected = list == "inbox") { list = if (list == "inbox") null else "inbox" }
             if (s.overdue.isNotEmpty()) PixelChip("Quá hạn (${s.overdue.size})", selected = list == "overdue") { list = if (list == "overdue") null else "overdue" }
@@ -251,7 +251,7 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
                     }
                 }
             }
-            PixelTextButton("Sửa nhãn", onClick = { pickingLabels = false; actions.onLabels() }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Sửa nhãn", onClick = { pickingLabels = false; actions.onLabels() }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         }
     }
     if (adding) {
@@ -260,7 +260,7 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelTextButton("Sự kiện", onClick = { adding = false; actions.onNewEvent(s.selected, null) })
                 PixelTextButton("Việc", onClick = { adding = false; actions.onNewTodo(s.selected) })
-                PixelTextButton("Việc chưa xếp", onClick = { adding = false; actions.onNewTodo(null) }, look = ButtonLook.Light)
+                PixelTextButton("Việc chưa xếp", onClick = { adding = false; actions.onNewTodo(null) }, look = ButtonLook.Plain)
             }
         }
     }
@@ -270,8 +270,8 @@ fun CalendarScreen(vm: CalendarViewModel, actions: CalendarActions) {
             PixelText(occLabel(e, e.occ.start), style = type.caption, color = Pal.InkSoft)
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelTextButton("Sửa", onClick = { eventMenu = null; actions.onEvent(e.event.id) })
-                if (e.event.rep != EventRepeat.NONE) PixelTextButton("Xoá lần này", onClick = { eventMenu = null; vm.skip(e) }, look = ButtonLook.Light)
-                if (e.event.cost > 0) PixelTextButton("Ghi chi", onClick = { eventMenu = null; actions.onSpend(e) }, look = ButtonLook.Light)
+                if (e.event.rep != EventRepeat.NONE) PixelTextButton("Xoá lần này", onClick = { eventMenu = null; vm.skip(e) }, look = ButtonLook.Plain)
+                if (e.event.cost > 0) PixelTextButton("Ghi chi", onClick = { eventMenu = null; actions.onSpend(e) }, look = ButtonLook.Plain)
             }
         }
     }
@@ -287,9 +287,9 @@ private fun MonthView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarAct
         item { extra() }
         item {
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                PixelTextButton("<", onClick = { vm.shiftMonth(-1) }, look = ButtonLook.Light)
+                PixelTextButton("<", onClick = { vm.shiftMonth(-1) }, look = ButtonLook.Plain)
                 PixelText("Tháng ${s.month.monthValue}/${s.month.year}", style = type.title, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
-                PixelTextButton(">", onClick = { vm.shiftMonth(1) }, look = ButtonLook.Light)
+                PixelTextButton(">", onClick = { vm.shiftMonth(1) }, look = ButtonLook.Plain)
             }
         }
         item { MonthGrid(s, vm) }
@@ -344,8 +344,11 @@ private fun DayCell(d: CalDay, inMonth: Boolean, today: Boolean, selected: Boole
     Box(modifier.aspectRatio(0.82f)) {
         Canvas(Modifier.fillMaxSize()) {
             val u = m.ui.toFloat()
-            drawRect(if (selected) Pal.Orange else if (today) Pal.Gold else Pal.WoodDark)
-            drawRect(if (inMonth) Pal.Cream else Pal.Paper.copy(alpha = 0.55f), Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
+            val r = androidx.compose.ui.geometry.CornerRadius(u * 3)
+            val inset = u / 2
+            val cell = Size(size.width - 2 * inset, size.height - 2 * inset)
+            drawRoundRect(if (today) Pal.GoldTint else if (inMonth) Pal.Card else Pal.Well, Offset(inset, inset), cell, r)
+            if (selected) drawRoundRect(Pal.Gold, Offset(inset, inset), cell, r, style = androidx.compose.ui.graphics.drawscope.Stroke(u))
             // multi-day bands under the number, edge to edge so they join the next cell
             for ((e, slot) in bands) {
                 if (slot > 1) continue
@@ -359,16 +362,16 @@ private fun DayCell(d: CalDay, inMonth: Boolean, today: Boolean, selected: Boole
                 drawRect(Color(c), Offset(u * 3 + i * u * 4, size.height * 0.58f), Size(u * 3, u * 3))
             }
             // every habit done that day
-            if (d.habitsAllDone) drawRect(Pal.Green, Offset(u, size.height - 3 * u), Size(size.width - 2 * u, 2 * u))
+            if (d.habitsAllDone) drawRoundRect(Pal.Green, Offset(u * 2, size.height - 3 * u), Size(size.width - 4 * u, 1.5f * u), androidx.compose.ui.geometry.CornerRadius(u))
         }
         PixelText(
             "${d.day.dayOfMonth}", style = type.caption,
-            color = if (inMonth) Pal.Ink else Pal.InkSoft,
+            color = if (inMonth) Pal.Ink else Pal.InkFaint,
             modifier = Modifier.padding(start = m.unit * 2, top = m.unit),
         )
         if (d.spent > 0) {
             PixelText(
-                formatVndShort(d.spent), style = type.caption, color = if (d.overLimit) Pal.Red else Pal.InkSoft,
+                formatVndShort(d.spent), style = type.caption, color = Pal.InkSoft,
                 maxLines = 1, modifier = Modifier.align(Alignment.BottomStart).padding(start = m.unit * 2, bottom = m.unit * 3),
             )
         }
@@ -396,15 +399,15 @@ fun DayDetail(d: CalDay, vm: CalendarViewModel, actions: CalendarActions, onEven
         Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelText(shortDate(d.day) + if (d.day == today) " · hôm nay" else "", style = type.title, modifier = Modifier.weight(1f))
-                PixelTextButton("+ Sự kiện", onClick = { actions.onNewEvent(d.day, null) }, look = ButtonLook.Light)
+                PixelTextButton("+ Sự kiện", onClick = { actions.onNewEvent(d.day, null) }, look = ButtonLook.Plain)
                 Spacer(Modifier.width(m.unit))
-                PixelTextButton("+ Việc", onClick = { actions.onNewTodo(d.day) }, look = ButtonLook.Light)
+                PixelTextButton("+ Việc", onClick = { actions.onNewTodo(d.day) }, look = ButtonLook.Plain)
             }
             if (d.events.isEmpty() && d.todos.isEmpty()) PixelText("Không có gì. Trẫm cho Sen rảnh.", style = type.caption, color = Pal.InkSoft)
             for (e in d.events) EventRow(e, d.day, today, actions, onEventMenu)
             for (t in d.todos) TodoRow(t, vm, actions, showDay = false)
             val bits = listOfNotNull(
-                if (d.spent > 0 || d.earned > 0) "Chi ${formatVndShort(d.spent)}" + (if (d.earned > 0) " · Thu ${formatVndShort(d.earned)}" else "") + (if (d.overLimit) " (vượt hạn mức)" else "") else null,
+                if (d.spent > 0 || d.earned > 0) "Chi ${formatVndShort(d.spent)}" + (if (d.earned > 0) " · Thu ${formatVndShort(d.earned)}" else "") else null,
                 if (d.habitsDone > 0) "Thói quen: xong ${d.habitsDone}" + if (d.habitsAllDone) " (hết)" else "" else null,
             )
             if (bits.isNotEmpty()) {

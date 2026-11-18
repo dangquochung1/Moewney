@@ -1,8 +1,5 @@
 package app.meowney.core.money
 
-import java.time.LocalDate
-import java.time.temporal.ChronoUnit
-
 /** The 6 jars of the JARS method plus the virtual "not yet allocated" jar. */
 enum class JarCode(val isSavings: Boolean, val spending: Boolean) {
     NEC(false, true),      // Thiết yếu
@@ -31,15 +28,6 @@ data class LoanRow(val jarId: Long, val peerJarId: Long, val kind: EntryKind, va
 /** Where the missing money for an expense comes from. */
 data class BorrowPlan(val sources: List<Pair<Long, Long>>, val uncovered: Long) {
     val total get() = sources.sumOf { it.second }
-}
-
-/** The pay period "hôm nay còn" spreads money over; [end] is inclusive. */
-data class Period(val start: LocalDate, val end: LocalDate) {
-    fun daysLeft(today: LocalDate): Long = (ChronoUnit.DAYS.between(today, end) + 1).coerceAtLeast(1)
-}
-
-data class Allowance(val base: Long, val spentToday: Long) {
-    val left get() = base - spentToday
 }
 
 /**
@@ -161,31 +149,4 @@ object MoneyEngine {
         EntryDraft(from, -amount, EntryKind.MOVE, to),
         EntryDraft(to, amount, EntryKind.MOVE, from),
     )
-
-    /**
-     * The pay period containing [today]. [payday] 0 = calendar month; 1..28 = the period ends
-     * the day before that day of the month.
-     */
-    fun period(today: LocalDate, payday: Int): Period {
-        if (payday !in 1..28) {
-            return Period(today.withDayOfMonth(1), today.withDayOfMonth(today.lengthOfMonth()))
-        }
-        val thisMonthPay = today.withDayOfMonth(payday)
-        return if (today >= thisMonthPay) {
-            Period(thisMonthPay, thisMonthPay.plusMonths(1).minusDays(1))
-        } else {
-            Period(thisMonthPay.minusMonths(1), thisMonthPay.minusDays(1))
-        }
-    }
-
-    /**
-     * "Hôm nay còn được tiêu": what the spending jars held at the start of today (their
-     * balance now plus what was spent today), spread over the days left in the period.
-     * Money not spent today is still in the jars, so it rolls into tomorrow by itself.
-     */
-    fun allowance(today: LocalDate, period: Period, spendingBalanceNow: Long, spentToday: Long, reserved: Long = 0): Allowance {
-        val pool = spendingBalanceNow + spentToday - reserved
-        val base = (pool / period.daysLeft(today)).coerceAtLeast(0)
-        return Allowance(base, spentToday)
-    }
 }

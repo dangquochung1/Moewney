@@ -43,9 +43,9 @@ fun PixelDatePicker(initial: LocalDate?, allowNone: Boolean = false, onPick: (Lo
     var month by remember { mutableStateOf(YearMonth.from(initial ?: today)) }
     PixelDialog(onDismiss) {
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            PixelTextButton("<", onClick = { month = month.minusMonths(1) }, look = ButtonLook.Light)
+            PixelTextButton("<", onClick = { month = month.minusMonths(1) }, look = ButtonLook.Plain)
             PixelText("Tháng ${month.monthValue}/${month.year}", style = type.title, align = TextAlign.Center, modifier = Modifier.weight(1f))
-            PixelTextButton(">", onClick = { month = month.plusMonths(1) }, look = ButtonLook.Light)
+            PixelTextButton(">", onClick = { month = month.plusMonths(1) }, look = ButtonLook.Plain)
         }
         Row {
             for (d in WEEKDAYS_SHORT) PixelText(d, style = type.caption, color = Pal.InkSoft, align = TextAlign.Center, modifier = Modifier.weight(1f))
@@ -62,11 +62,10 @@ fun PixelDatePicker(initial: LocalDate?, allowNone: Boolean = false, onPick: (Lo
                                 val day = month.atDay(n)
                                 val selected = day == initial
                                 Canvas(Modifier.fillMaxSize().clickable { onPick(day) }) {
-                                    val u = m.ui.toFloat()
-                                    drawRect(if (day == today) Pal.Gold else Pal.WoodDark)
-                                    drawRect(if (selected) Pal.Orange else Pal.Cream, Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
+                                    val r = androidx.compose.ui.geometry.CornerRadius(size.height * 0.3f)
+                                    drawRoundRect(if (selected) Pal.Gold else if (day == today) Pal.GoldTint else Pal.Card, Offset.Zero, size, r)
                                 }
-                                PixelText("$n", style = type.body, color = if (selected) Pal.Cream else Pal.Ink)
+                                PixelText("$n", style = if (selected || day == today) type.bodyBold else type.body, color = Pal.Ink)
                             }
                         }
                     }
@@ -74,9 +73,9 @@ fun PixelDatePicker(initial: LocalDate?, allowNone: Boolean = false, onPick: (Lo
             }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-            PixelTextButton("Hôm nay", onClick = { onPick(today) }, look = ButtonLook.Light)
-            PixelTextButton("Mai", onClick = { onPick(today.plusDays(1)) }, look = ButtonLook.Light)
-            if (allowNone) PixelTextButton("Không có ngày", onClick = { onPick(null) }, look = ButtonLook.Light)
+            PixelTextButton("Hôm nay", onClick = { onPick(today) }, look = ButtonLook.Plain)
+            PixelTextButton("Mai", onClick = { onPick(today.plusDays(1)) }, look = ButtonLook.Plain)
+            if (allowNone) PixelTextButton("Không có ngày", onClick = { onPick(null) }, look = ButtonLook.Plain)
         }
     }
 }
@@ -97,12 +96,12 @@ fun PixelTimePicker(initial: Int?, allowNone: Boolean = false, onPick: (Int?) ->
         PixelText("Phút", style = type.caption, color = Pal.InkSoft)
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalAlignment = Alignment.CenterVertically) {
             for (mm in listOf(0, 15, 30, 45)) PixelChip("%02d".format(mm), selected = minute % 60 == mm) { minute = minute / 60 * 60 + mm }
-            PixelTextButton("-5", onClick = { minute = (minute - 5 + 1440) % 1440 }, look = ButtonLook.Light)
-            PixelTextButton("+5", onClick = { minute = (minute + 5) % 1440 }, look = ButtonLook.Light)
+            PixelTextButton("-5", onClick = { minute = (minute - 5 + 1440) % 1440 }, look = ButtonLook.Plain)
+            PixelTextButton("+5", onClick = { minute = (minute + 5) % 1440 }, look = ButtonLook.Plain)
         }
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelTextButton("Chọn", onClick = { onPick(minute) })
-            if (allowNone) PixelTextButton("Không giờ", onClick = { onPick(null) }, look = ButtonLook.Light)
+            if (allowNone) PixelTextButton("Không giờ", onClick = { onPick(null) }, look = ButtonLook.Plain)
         }
     }
 }

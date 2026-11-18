@@ -78,9 +78,9 @@ fun DayView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarActions, extr
 @Composable
 private fun Nav(title: String, onPrev: () -> Unit, onNext: () -> Unit) {
     Row(Modifier.fillMaxWidth().padding(vertical = LocalPixelMetrics.current.unit), verticalAlignment = Alignment.CenterVertically) {
-        PixelTextButton("<", onClick = onPrev, look = ButtonLook.Light)
+        PixelTextButton("<", onClick = onPrev, look = ButtonLook.Plain)
         PixelText(title, style = LocalPixelType.current.bodyBold, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
-        PixelTextButton(">", onClick = onNext, look = ButtonLook.Light)
+        PixelTextButton(">", onClick = onNext, look = ButtonLook.Plain)
     }
 }
 
@@ -109,8 +109,8 @@ private fun HourGrid(
                 val cd = s.day(d)
                 Column(Modifier.weight(1f).clickable { onDay(d) }.padding(horizontal = m.unit / 2), horizontalAlignment = Alignment.CenterHorizontally) {
                     if (days.size > 1) {
-                        PixelText(WEEKDAYS_SHORT[d.dayOfWeek.value - 1], style = type.caption, color = if (d == today) Pal.Gold else Pal.InkSoft)
-                        PixelText("${d.dayOfMonth}", style = type.bodyBold, color = if (d == selected) Pal.Orange else if (d == today) Pal.Gold else Pal.Ink)
+                        PixelText(WEEKDAYS_SHORT[d.dayOfWeek.value - 1], style = type.caption, color = if (d == today) Pal.GoldDeep else Pal.InkSoft)
+                        PixelText("${d.dayOfMonth}", style = type.bodyBold, color = if (d == selected) Pal.GoldDeep else if (d == today) Pal.GoldDeep else Pal.Ink)
                     }
                     for (e in cd.events.filter { it.occ.allDay || it.occ.multiDay || it.occ.startMinute == null }) {
                         Box(
@@ -220,7 +220,7 @@ fun AgendaView(s: CalendarUi, vm: CalendarViewModel, actions: CalendarActions, e
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     PixelText(
                         shortDate(d.day).uppercase() + if (d.day == today) " · HÔM NAY" else "",
-                        style = type.bodyBold, color = Pal.Gold, modifier = Modifier.clickable { vm.select(d.day); vm.setView(CalView.MONTH) },
+                        style = type.bodyBold, color = Pal.GoldDeep, modifier = Modifier.clickable { vm.select(d.day); vm.setView(CalView.MONTH) },
                     )
                     PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
                         Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {

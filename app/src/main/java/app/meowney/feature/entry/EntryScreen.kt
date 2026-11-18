@@ -1,6 +1,10 @@
 package app.meowney.feature.entry
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import app.meowney.core.ui.IconChip
+import app.meowney.core.ui.SegmentedTabs
+import app.meowney.core.ui.Soft
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -64,30 +68,21 @@ fun EntryScreen(vm: EntryViewModel, onBack: () -> Unit, onDone: () -> Unit, onPo
         else -> "Ghi sổ"
     }
     PixelScreen(title, onBack = onBack, actions = {
-        if (s.editing != null) PixelTextButton("Xoá", onClick = vm::delete, look = ButtonLook.Light)
+        if (s.editing != null) PixelTextButton("Xoá", onClick = vm::delete, look = ButtonLook.Plain)
     }) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-            Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                for (mode in EntryMode.entries) {
-                    if (s.editing != null && mode != s.mode) continue
-                    PixelChip(
-                        when (mode) {
-                            EntryMode.EXPENSE -> "Chi"
-                            EntryMode.INCOME -> "Thu"
-                            EntryMode.TRANSFER -> "Chuyển"
-                        },
-                        selected = s.mode == mode,
-                    ) { vm.mode(mode) }
-                }
+            // a transaction being edited keeps its kind
+            if (s.editing == null) {
+                SegmentedTabs(listOf("Chi", "Thu", "Chuyển"), s.mode.ordinal) { vm.mode(EntryMode.entries[it]) }
             }
             PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
                 PixelText(
                     (if (s.mode == EntryMode.INCOME) "+" else if (s.mode == EntryMode.EXPENSE) "-" else "") + formatVnd(s.amount.value),
                     style = type.display,
                     color = when (s.mode) {
-                        EntryMode.INCOME -> Pal.Green
+                        EntryMode.INCOME -> Pal.GreenDeep
                         EntryMode.EXPENSE -> Pal.Ink
-                        EntryMode.TRANSFER -> Pal.Sky
+                        EntryMode.TRANSFER -> Pal.SkyDeep
                     },
                     align = TextAlign.End,
                     modifier = Modifier.fillMaxWidth(),
@@ -100,8 +95,15 @@ fun EntryScreen(vm: EntryViewModel, onBack: () -> Unit, onDone: () -> Unit, onPo
                 PixelChip(dayLabel(s.date)) { picker = Picker.Date }
                 PixelChip(if (s.note.isBlank()) "+ ghi chú" else s.note) { picker = Picker.Note }
             }
-            s.message?.let { PixelText(it, style = type.body, color = Pal.Gold) }
+            s.message?.let { PixelText(it, style = type.body, color = Pal.GoldDeep) }
             if (s.mode != EntryMode.TRANSFER) {
+                if (s.editing == null) {
+                    PixelText(
+                        if (s.mode == EntryMode.INCOME) "Gõ số tiền rồi chạm một nguồn thu để rót vào lọ." else "Gõ số tiền rồi chạm một danh mục để lưu ngay.",
+                        style = type.caption, color = Pal.GoldDeep,
+                        modifier = Modifier.fillMaxWidth().background(Pal.GoldTint, Soft.Field).padding(horizontal = m.unit * 5, vertical = m.unit * 3),
+                    )
+                }
                 CategoryGrid(s.visibleCategories, s.categoryId.takeIf { s.editing != null }, onPick = vm::category)
             }
         }
@@ -124,22 +126,22 @@ fun EntryScreen(vm: EntryViewModel, onBack: () -> Unit, onDone: () -> Unit, onPo
                 PixelTextButton(w.name, onClick = {
                     if (picker == Picker.Wallet) vm.wallet(w.id) else vm.toWallet(w.id)
                     picker = null
-                }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+                }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
             }
         }
         Picker.Jar -> PixelDialog(onDismiss = { picker = null }) {
             PixelText("Trả từ lọ nào?", style = type.title)
-            PixelTextButton("Theo danh mục", onClick = { vm.jar(null); picker = null }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Theo danh mục", onClick = { vm.jar(null); picker = null }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
             for (j in s.jars) {
-                PixelTextButton(j.name, onClick = { vm.jar(j.id); picker = null }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+                PixelTextButton(j.name, onClick = { vm.jar(j.id); picker = null }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
             }
         }
         Picker.Date -> PixelDialog(onDismiss = { picker = null }) {
             PixelText("Ngày nào?", style = type.title)
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelTextButton("<", onClick = { vm.date(s.date.minusDays(1)) }, look = ButtonLook.Light)
+                PixelTextButton("<", onClick = { vm.date(s.date.minusDays(1)) }, look = ButtonLook.Plain)
                 PixelText(dayLabel(s.date), style = type.bodyBold, modifier = Modifier.width(m.unit * 50), align = TextAlign.Center)
-                PixelTextButton(">", onClick = { if (s.date < LocalDate.now()) vm.date(s.date.plusDays(1)) }, look = ButtonLook.Light)
+                PixelTextButton(">", onClick = { if (s.date < LocalDate.now()) vm.date(s.date.plusDays(1)) }, look = ButtonLook.Plain)
             }
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelChip("Hôm nay") { vm.date(LocalDate.now()); picker = null }
@@ -175,11 +177,11 @@ private fun CategoryGrid(categories: List<CategoryEntity>, selected: Long?, onPi
                     .padding(vertical = m.unit),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                RavenIcon(cat.icon, scale = m.ui)
+                IconChip(cat.icon, tint = if (cat.id == selected) Pal.Gold else Pal.GreenTint)
                 PixelText(
                     cat.name,
                     style = type.caption,
-                    color = if (cat.id == selected) Pal.Gold else Pal.Ink,
+                    color = if (cat.id == selected) Pal.GoldDeep else Pal.Ink,
                     align = TextAlign.Center,
                     maxLines = 1,
                 )

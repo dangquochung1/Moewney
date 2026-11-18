@@ -11,9 +11,9 @@ class NotesCoreTest {
     }
 
     @Test fun promptsPutTheDayFirstAndStayStable() {
-        val ctx = PromptContext(overspent = true, spent = 500_000, allHabitsDone = true)
+        val ctx = PromptContext(spent = 0, allHabitsDone = true)
         val first = DiaryPrompts.pick(ctx, 20_400)
-        assertThat(first).contains("mạnh tay")
+        assertThat(first).contains("chưa tiêu")
         assertThat(DiaryPrompts.pick(ctx, 20_400, 1)).contains("thói quen")
         assertThat(DiaryPrompts.pick(ctx, 20_400, 5)).isEqualTo(DiaryPrompts.pick(ctx, 20_400, 5))
         val all = DiaryPrompts.list(ctx, 20_400)

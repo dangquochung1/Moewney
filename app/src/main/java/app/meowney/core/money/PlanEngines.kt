@@ -71,7 +71,7 @@ data class MonthNumbers(
     val saved: Long,
     /** What the jar percentages planned for savings from this month's income. */
     val plannedSaving: Long,
-    /** Days with a recorded allowance... */
+    /** Rule 1 only: days with a recorded daily allowance... */
     val statDays: Int,
     /** ...of which spending stayed within it. */
     val daysWithin: Int,
@@ -82,10 +82,11 @@ data class MonthNumbers(
 data class MonthScore(
     val logging: Float,
     val saving: Float,
-    val limit: Float,
+    /** "Giữ trong hạn mức": only on cards kept under rule 1; null since the daily allowance is gone. */
+    val limit: Float?,
     val noDebt: Float,
 ) {
-    val total get() = (logging + saving + limit + noDebt) / 4f
+    val total get() = if (limit == null) (logging + saving + noDebt) / 3f else (logging + saving + limit + noDebt) / 4f
     val grade get() = when {
         total >= 0.9f -> "S"
         total >= 0.75f -> "A"
@@ -100,12 +101,18 @@ data class MonthScore(
     }
 }
 
-/** The monthly report card. Every criterion is 0..1; nothing to do counts as done. */
+/**
+ * The monthly report card. Every criterion is 0..1; nothing to do counts as done.
+ * Rule 1 (cards kept before the daily allowance was removed) also scores the days within
+ * that allowance; rule 2 scores logging, saving and jar debt only.
+ */
 object ReportEngine {
-    fun score(n: MonthNumbers): MonthScore = MonthScore(
+    const val RULE = 2
+
+    fun score(n: MonthNumbers, rule: Int = RULE): MonthScore = MonthScore(
         logging = ratio(n.loggedDays.toLong(), n.daysInMonth.toLong()),
         saving = if (n.plannedSaving <= 0) 1f else ratio(n.saved, n.plannedSaving),
-        limit = if (n.statDays == 0) 1f else ratio(n.daysWithin.toLong(), n.statDays.toLong()),
+        limit = if (rule >= 2) null else if (n.statDays == 0) 1f else ratio(n.daysWithin.toLong(), n.statDays.toLong()),
         noDebt = when {
             n.hasNegativeJar -> 0f
             n.hasJarLoans -> 0.5f

@@ -88,8 +88,8 @@ fun NotesScreen(vm: NotesViewModel, diary: DiaryViewModel, actions: NotesActions
         "Sổ tay",
         onBack = actions.onBack,
         actions = {
-            PixelTextButton("Tìm", onClick = actions.onSearch, look = ButtonLook.Light)
-            PixelTextButton("⋯", onClick = { menu = true }, look = ButtonLook.Light)
+            PixelTextButton("Tìm", onClick = actions.onSearch, look = ButtonLook.Plain)
+            PixelTextButton("⋯", onClick = { menu = true }, look = ButtonLook.Plain)
         },
     ) {
         Row(Modifier.fillMaxWidth().padding(bottom = m.unit * 2), horizontalArrangement = Arrangement.spacedBy(m.unit)) {
@@ -109,7 +109,7 @@ fun NotesScreen(vm: NotesViewModel, diary: DiaryViewModel, actions: NotesActions
                 "Lưu trữ" to { actions.onBin(true) },
                 "Thùng rác" to { actions.onBin(false) },
             )) {
-                PixelTextButton(label, onClick = { menu = false; go() }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+                PixelTextButton(label, onClick = { menu = false; go() }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
             }
         }
     }
@@ -174,8 +174,8 @@ private fun TagManageDialog(vm: NotesViewModel, onDismiss: () -> Unit) {
                 } else {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit)) {
                         PixelText("#${t.name}", style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f), maxLines = 1)
-                        PixelTextButton("Sửa", onClick = { editing = t; name = t.name }, look = ButtonLook.Light)
-                        PixelTextButton("Xoá", onClick = { vm.deleteTag(t) }, look = ButtonLook.Light)
+                        PixelTextButton("Sửa", onClick = { editing = t; name = t.name }, look = ButtonLook.Plain)
+                        PixelTextButton("Xoá", onClick = { vm.deleteTag(t) }, look = ButtonLook.Plain)
                     }
                 }
             }
@@ -209,7 +209,7 @@ fun NoteBinScreen(vm: NoteBinViewModel, onBack: () -> Unit, onOpen: (Long) -> Un
     PixelScreen(
         if (vm.archive) "Lưu trữ" else "Thùng rác",
         onBack = onBack,
-        actions = { if (!vm.archive && !list.isNullOrEmpty()) PixelTextButton("Dọn hết", onClick = { confirmAll = true }, look = ButtonLook.Light) },
+        actions = { if (!vm.archive && !list.isNullOrEmpty()) PixelTextButton("Dọn hết", onClick = { confirmAll = true }, look = ButtonLook.Plain) },
     ) {
         if (list?.isEmpty() == true) {
             PixelText(
@@ -229,7 +229,7 @@ fun NoteBinScreen(vm: NoteBinViewModel, onBack: () -> Unit, onOpen: (Long) -> Un
                         } else {
                             PixelText("sửa ${updated(n)}", style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f))
                         }
-                        PixelTextButton(if (vm.archive) "Bỏ lưu trữ" else "Khôi phục", onClick = { vm.restore(n) }, look = ButtonLook.Light)
+                        PixelTextButton(if (vm.archive) "Bỏ lưu trữ" else "Khôi phục", onClick = { vm.restore(n) }, look = ButtonLook.Plain)
                         if (!vm.archive) PixelTextButton("Xoá hẳn", onClick = { confirm = n })
                     }
                 }
@@ -240,7 +240,7 @@ fun NoteBinScreen(vm: NoteBinViewModel, onBack: () -> Unit, onOpen: (Long) -> Un
         PixelDialog(onDismiss = { confirm = null }) {
             PixelText("Xoá hẳn? Không lấy lại được đâu.", style = type.bodyBold, color = Pal.Ink)
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelTextButton("Thôi", onClick = { confirm = null }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+                PixelTextButton("Thôi", onClick = { confirm = null }, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
                 PixelTextButton("Xoá hẳn", onClick = { vm.deleteForever(n); confirm = null }, modifier = Modifier.weight(1f))
             }
         }
@@ -249,7 +249,7 @@ fun NoteBinScreen(vm: NoteBinViewModel, onBack: () -> Unit, onOpen: (Long) -> Un
         PixelDialog(onDismiss = { confirmAll = false }) {
             PixelText("Dọn sạch thùng rác (${list?.size ?: 0} mục, kèm ảnh)?", style = type.bodyBold, color = Pal.Ink)
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelTextButton("Thôi", onClick = { confirmAll = false }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+                PixelTextButton("Thôi", onClick = { confirmAll = false }, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
                 PixelTextButton("Dọn hết", onClick = { vm.emptyBin(); confirmAll = false }, modifier = Modifier.weight(1f))
             }
         }

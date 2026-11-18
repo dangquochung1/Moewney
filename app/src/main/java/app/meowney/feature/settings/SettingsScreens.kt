@@ -33,7 +33,10 @@ import app.meowney.AppContainer
 import app.meowney.core.backup.BackupManager
 import app.meowney.core.backup.CsvExporter
 import app.meowney.core.data.Settings
+import app.meowney.core.notify.CatNotifier
+import app.meowney.core.notify.CatTone
 import app.meowney.core.notify.EveningReminder
+import app.meowney.core.notify.Nudge
 import app.meowney.core.ui.ButtonLook
 import app.meowney.container
 import app.meowney.core.ui.LocalPixelMetrics
@@ -64,6 +67,25 @@ class SettingsViewModel(private val c: AppContainer, private val context: Contex
         app.meowney.core.notify.CalendarReminder.schedule(context)
     }
 
+    fun toggleTone(tone: CatTone) = update { s ->
+        s.copy(mutedTones = if (tone.name in s.mutedTones) s.mutedTones - tone.name else s.mutedTones + tone.name)
+    }
+
+    /** One example of every kind that is switched on, to see how they look. */
+    fun sampleNotifications() = viewModelScope.launch {
+        for (tone in CatTone.entries) {
+            CatNotifier.show(context, 40_000 + tone.ordinal, Nudge(tone, sampleText(tone)))
+        }
+    }
+
+    /** Asks the launcher to put a widget on the home screen; null when the launcher shows its own dialog. */
+    suspend fun pinWidget(wide: Boolean): String? {
+        val manager = androidx.glance.appwidget.GlanceAppWidgetManager(context)
+        val ok = if (wide) manager.requestPinGlanceAppWidget(app.meowney.widget.MeowneyWideWidgetReceiver::class.java)
+        else manager.requestPinGlanceAppWidget(app.meowney.widget.MeowneySmallWidgetReceiver::class.java)
+        return if (ok) null else "Máy này không cho thêm từ app. Giữ tay lên màn hình chính, chọn Tiện ích (Widgets), tìm Meowney."
+    }
+
     suspend fun export(uri: Uri): String = runCatching {
         backup.export(uri)
         c.settings.markBackup(LocalDate.now().toEpochDay())
@@ -79,6 +101,26 @@ class SettingsViewModel(private val c: AppContainer, private val context: Contex
         CsvExporter.write(context, uri, c.money.exportRows())
         "Xuất CSV xong."
     }.getOrElse { "Xuất CSV lỗi: ${it.message}" }
+}
+
+private fun toneLabel(tone: CatTone) = when (tone) {
+    CatTone.REMIND -> "Nhắc việc"
+    CatTone.ANGRY -> "Tức giận"
+    CatTone.WORRIED -> "Lo lắng"
+    CatTone.SAD -> "Buồn"
+    CatTone.HAPPY -> "Vui"
+    CatTone.MORNING -> "Buổi sáng"
+    CatTone.HABIT -> "Thói quen"
+}
+
+private fun sampleText(tone: CatTone) = when (tone) {
+    CatTone.REMIND -> "Việc \"Nộp bài\" lúc 14:00, còn 15 phút nữa."
+    CatTone.ANGRY -> "Còn 3 việc chưa làm: \"Mua sách\", \"Gửi mail\", \"Giặt đồ\". \"Mua sách\" đã quá hạn."
+    CatTone.WORRIED -> "Tiền điện 350k đến hạn hôm nay."
+    CatTone.SAD -> "Hai hôm rồi Sen chưa ghé trẫm. Vào ghi vài dòng nha."
+    CatTone.HAPPY -> "Hôm nay Sen xong hết 5 việc và 3 thói quen. Giỏi lắm!"
+    CatTone.MORNING -> "Hôm nay có 3 việc: Nộp bài (14:00), Mua sách, Sinh nhật Lan."
+    CatTone.HABIT -> "Đến giờ \"Đọc sách\" rồi Sen ơi. Xong thì bấm Xong nha."
 }
 
 private fun isXiaomi() = Build.MANUFACTURER.lowercase() in setOf("xiaomi", "redmi", "poco")
@@ -105,7 +147,7 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
 
     PixelScreen("Cài đặt", onBack = onBack) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-            message?.let { PixelText(it, style = type.bodyBold, color = Pal.Gold) }
+            message?.let { PixelText(it, style = type.bodyBold, color = Pal.GoldDeep) }
 
             Section("Mèo") {
                 PixelTextField(s.catName, { n -> vm.update { it.copy(catName = n.take(16)) } }, Modifier.fillMaxWidth())
@@ -114,18 +156,25 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
                 PixelText("Dữ liệu chỉ nằm trên máy này. Sao lưu định kỳ rồi cất file lên Drive/Zalo.", style = type.caption, color = Pal.InkSoft)
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelTextButton("Sao lưu", onClick = { exportLauncher.launch(BackupManager.fileName("meowney", "zip")) })
-                    PixelTextButton("Khôi phục", onClick = { restoreLauncher.launch(arrayOf("application/zip", "application/octet-stream", "*/*")) }, look = ButtonLook.Light)
-                    PixelTextButton("Xuất CSV", onClick = { csvLauncher.launch(BackupManager.fileName("meowney", "csv")) }, look = ButtonLook.Light)
+                    PixelTextButton("Khôi phục", onClick = { restoreLauncher.launch(arrayOf("application/zip", "application/octet-stream", "*/*")) }, look = ButtonLook.Plain)
+                    PixelTextButton("Xuất CSV", onClick = { csvLauncher.launch(BackupManager.fileName("meowney", "csv")) }, look = ButtonLook.Plain)
                 }
             }
             Section("Nhắc ghi sổ") {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelChip(if (s.reminderOn) "Đang bật" else "Đang tắt", selected = s.reminderOn) { vm.update { it.copy(reminderOn = !it.reminderOn) } }
-                    PixelTextButton("-", onClick = { vm.update { it.copy(reminderMinute = (it.reminderMinute - 15).mod(24 * 60)) } }, look = ButtonLook.Light)
+                    PixelTextButton("-", onClick = { vm.update { it.copy(reminderMinute = (it.reminderMinute - 15).mod(24 * 60)) } }, look = ButtonLook.Plain)
                     PixelText("%02d:%02d".format(s.reminderMinute / 60, s.reminderMinute % 60), style = type.title, color = Pal.Ink)
-                    PixelTextButton("+", onClick = { vm.update { it.copy(reminderMinute = (it.reminderMinute + 15).mod(24 * 60)) } }, look = ButtonLook.Light)
+                    PixelTextButton("+", onClick = { vm.update { it.copy(reminderMinute = (it.reminderMinute + 15).mod(24 * 60)) } }, look = ButtonLook.Plain)
                 }
-                PixelText("Chỉ nhắc khi hôm nay chưa ghi khoản nào.", style = type.caption, color = Pal.InkSoft)
+                PixelText("Giờ này mèo xem hôm nay còn việc, thói quen nào chưa xong và Sen đã ghi sổ chưa.", style = type.caption, color = Pal.InkSoft)
+            }
+            Section("Thông báo của mèo") {
+                PixelText("Chạm để tắt hoặc bật từng loại.", style = type.caption, color = Pal.InkSoft)
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                    for (tone in CatTone.entries) PixelChip(toneLabel(tone), selected = tone.name !in s.mutedTones) { vm.toggleTone(tone) }
+                }
+                PixelTextButton("Gửi thử", onClick = vm::sampleNotifications, look = ButtonLook.Plain)
             }
             Section("Nhắc lịch") {
                 PixelChip(if (s.calendarRemindOn) "Đang bật" else "Đang tắt", selected = s.calendarRemindOn) {
@@ -136,14 +185,6 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
             Section("Sổ tay") {
                 NotesPrivacy(s.notesLock, s.diaryHidePreview, vm)
             }
-            Section("Ngày lương") {
-                Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                    PixelChip("Cuối tháng", selected = s.payday == 0) { vm.update { it.copy(payday = 0) } }
-                    PixelTextButton("-", onClick = { vm.update { it.copy(payday = if (it.payday <= 2) 0 else it.payday - 1) } }, look = ButtonLook.Light)
-                    PixelText(if (s.payday == 0) "--" else "ngày ${s.payday}", style = type.bodyBold, color = Pal.Ink)
-                    PixelTextButton("+", onClick = { vm.update { it.copy(payday = if (it.payday == 0) 2 else (it.payday + 1).coerceAtMost(28)) } }, look = ButtonLook.Light)
-                }
-            }
             Section("Âm thanh") {
                 Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelChip(if (s.soundOn) "Hiệu ứng: bật" else "Hiệu ứng: tắt", selected = s.soundOn) { vm.update { it.copy(soundOn = !it.soundOn) } }
@@ -151,11 +192,18 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
                 }
                 PixelText("Nhạc chỉ phát ở màn chính, đổi bài theo mùa.", style = type.caption, color = Pal.InkSoft)
             }
+            Section("Widget") {
+                PixelText("Đặt phòng mèo ra màn hình chính. Bản ghi nhanh có thêm 3 nút chi tiêu hay dùng.", style = type.caption, color = Pal.InkSoft)
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                    PixelTextButton("Widget nhỏ 2×2", onClick = { scope.launch { message = vm.pinWidget(false) } }, look = ButtonLook.Plain)
+                    PixelTextButton("Widget ghi nhanh 4×2", onClick = { scope.launch { message = vm.pinWidget(true) } }, look = ButtonLook.Plain)
+                }
+            }
             Section("Khác") {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                    PixelTextButton(if (isXiaomi()) "Hướng dẫn Xiaomi" else "Giữ nhắc nhở chạy", onClick = onXiaomi, look = ButtonLook.Light)
-                    PixelTextButton("Ghi công", onClick = onCredits, look = ButtonLook.Light)
-                    PixelTextButton("Xưởng UI", onClick = onUiKit, look = ButtonLook.Light)
+                    PixelTextButton(if (isXiaomi()) "Hướng dẫn Xiaomi" else "Giữ nhắc nhở chạy", onClick = onXiaomi, look = ButtonLook.Plain)
+                    PixelTextButton("Ghi công", onClick = onCredits, look = ButtonLook.Plain)
+                    PixelTextButton("Xưởng UI", onClick = onUiKit, look = ButtonLook.Plain)
                 }
             }
         }
@@ -170,7 +218,7 @@ fun SettingsScreen(vm: SettingsViewModel, onBack: () -> Unit, onXiaomi: () -> Un
                     confirmRestore = null
                     scope.launch { message = vm.restore(uri) }
                 })
-                PixelTextButton("Huỷ", onClick = { confirmRestore = null }, look = ButtonLook.Light)
+                PixelTextButton("Huỷ", onClick = { confirmRestore = null }, look = ButtonLook.Plain)
             }
         }
     }

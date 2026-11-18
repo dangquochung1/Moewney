@@ -31,6 +31,7 @@ class AppContainer(val context: Context) {
     val db: MeowneyDb by lazy { MeowneyDb.open(context) }
     val money: MoneyRepository by lazy { MoneyRepository(db) }
     val reports: Reports by lazy { Reports(db) }
+    val analytics: app.meowney.core.data.Analytics by lazy { app.meowney.core.data.Analytics(db) }
     val habits: HabitRepository by lazy { HabitRepository(db, money) }
     val calendar: CalendarRepository by lazy { CalendarRepository(db) }
     val noteImages: NoteImages by lazy { NoteImages(context) }
@@ -50,6 +51,8 @@ class AppContainer(val context: Context) {
     val music: app.meowney.core.sound.Music by lazy { app.meowney.core.sound.Music(context) }
 
     // Art shared by the app and the home-screen widgets (which may run without the activity).
+    val room: app.meowney.feature.room.RoomAssets by lazy { app.meowney.feature.room.RoomAssets.load(context.assets) }
+    val roomWide: app.meowney.feature.room.RoomAssets by lazy { app.meowney.feature.room.RoomAssets.load(context.assets, "room/widget.json") }
     val sprites: SpriteAtlas by lazy { SpriteAtlas.load(context.assets) }
     val icons: ImageBitmap by lazy { SpriteAtlas.loadBitmap(context.assets, "icons/raven16.png") }
     val typeface: Typeface by lazy { ResourcesCompat.getFont(context, R.font.meowney_pixel_regular)!! }
@@ -68,7 +71,7 @@ class MeowneyApp : Application() {
         container = AppContainer(this)
         appScope.launch {
             val m = container.money
-            combine(m.jarStates, m.recurring, m.templates, container.settings.flow) { a, b, c, d -> listOf(a, b, c, d) }
+            combine(m.jarStates, container.calendar.todos, m.templates, container.settings.flow, container.game.state) { a, b, c, d, e -> listOf(a, b, c, d, e) }
                 .drop(1) // the first value is what the widget already shows
                 .debounce(800)
                 .collect { runCatching { updateWidgets(this@MeowneyApp) } }

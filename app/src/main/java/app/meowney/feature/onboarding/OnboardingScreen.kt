@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.runtime.Composable
@@ -75,7 +76,6 @@ data class OnboardingState(
     val defaultWallet: Int = 0,
     val percents: Map<JarCode, Int> = DefaultData.jars.associate { it.code to it.percent },
     val names: Map<JarCode, String> = DefaultData.jars.associate { it.code to it.name },
-    val payday: Int = 0,
     val shares: Map<JarCode, Long> = emptyMap(),
 ) {
     val total get() = wallets.sumOf { it.balance }
@@ -92,7 +92,7 @@ class OnboardingViewModel(private val c: AppContainer) : ViewModel() {
     fun next() = _state.update { s ->
         val step = s.step + 1
         // entering the pour step: split the total by the chosen percentages
-        if (step == 4) {
+        if (step == 3) {
             val infos = JarCode.entries.map { JarInfo(it.ordinal.toLong(), it, s.percents[it] ?: 0) }
             val split = MoneyEngine.split(s.total, infos).mapKeys { JarCode.entries[it.key.toInt()] }
             s.copy(step = step, shares = split)
@@ -111,7 +111,7 @@ class OnboardingViewModel(private val c: AppContainer) : ViewModel() {
             val name = s.names[JarCode.valueOf(j.code)]
             if (name != null && name.isNotBlank() && name != j.name) c.money.updateJar(j.copy(name = name.trim()))
         }
-        c.settings.update { it.copy(onboarded = true, catName = s.catName.ifBlank { "Mít" }, catColor = s.catColor, payday = s.payday) }
+        c.settings.update { it.copy(onboarded = true, catName = s.catName.ifBlank { "Mít" }, catColor = s.catColor) }
         c.sfx.play(Sfx.Sound.Success)
         c.events.post(CatEvent.Coins(20, "Chào Sen! Từ nay ${s.catName} giữ 6 lọ tiền cho Sen. Quà ra mắt +20 xu."))
         finished.emit(Unit)
@@ -122,7 +122,6 @@ private val CAT_LINES = listOf(
     "Meo! Sen chọn trẫm đi. Rồi đặt cho trẫm một cái tên thật kêu.",
     "Sen đang có bao nhiêu tiền, để ở đâu? Khai thật với trẫm.",
     "Quy tắc 6 chiếc lọ: mỗi đồng vào đều chia lọ. Sen chỉnh % nếu muốn.",
-    "Sen nhận lương ngày nào? Trẫm dùng nó để tính mỗi ngày được tiêu bao nhiêu.",
     "Giờ rót tiền đang có vào 6 lọ. Xong là bắt đầu!",
 )
 
@@ -136,7 +135,7 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
     val notifications = rememberLauncherForActivityResult(ActivityResultContracts.RequestPermission()) { vm.finish() }
     LaunchedEffect(vm) { vm.finished.collect { onFinished() } }
 
-    PixelScreen("Làm quen (${s.step + 1}/5)", onBack = if (s.step > 0) vm::back else null) {
+    PixelScreen("Làm quen (${s.step + 1}/4)", onBack = if (s.step > 0) vm::back else null) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
             SpeechBubble(CAT_LINES[s.step])
             when (s.step) {
@@ -158,7 +157,7 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
                                     }
                                 }
                                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                                    PixelTextButton(formatVnd(w.balance), onClick = { editWallet = i }, look = ButtonLook.Light)
+                                    PixelTextButton(formatVnd(w.balance), onClick = { editWallet = i }, look = ButtonLook.Plain)
                                     PixelChip("Mặc định", selected = s.defaultWallet == i) { vm.update { it.copy(defaultWallet = i) } }
                                 }
                             }
@@ -166,41 +165,27 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
                     }
                     PixelTextButton("+ Thêm ví", onClick = {
                         vm.update { it.copy(wallets = it.wallets + WalletDraft("Ví ${it.wallets.size + 1}", "EWALLET", 0)) }
-                    }, look = ButtonLook.Light)
-                    PixelText("Tổng: ${formatVnd(s.total)}", style = type.title, color = Pal.Gold)
+                    }, look = ButtonLook.Plain)
+                    PixelText("Tổng: ${formatVnd(s.total)}", style = type.title, color = Pal.GoldDeep)
                 }
                 2 -> {
                     for (code in JarCode.entries.filter { it != JarCode.UNALLOC }) {
                         val pct = s.percents[code] ?: 0
                         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                             PixelTextField(s.names[code] ?: "", { n -> vm.update { it.copy(names = it.names + (code to n.take(20))) } }, Modifier.weight(1f))
-                            PixelTextButton("-", onClick = { vm.update { it.copy(percents = it.percents + (code to (pct - 5).coerceAtLeast(0))) } }, look = ButtonLook.Light)
-                            PixelText("$pct%", style = type.bodyBold, color = Pal.Ink, modifier = Modifier.size(m.unit * 30, m.unit * 10), align = TextAlign.Center, maxLines = 1)
-                            PixelTextButton("+", onClick = { vm.update { it.copy(percents = it.percents + (code to (pct + 5).coerceAtMost(100))) } }, look = ButtonLook.Light)
+                            PixelTextButton("-", onClick = { vm.update { it.copy(percents = it.percents + (code to (pct - 5).coerceAtLeast(0))) } }, look = ButtonLook.Plain)
+                            PixelText("$pct%", style = type.bodyBold, color = Pal.Ink, modifier = Modifier.width(m.unit * 30), align = TextAlign.Center, maxLines = 1)
+                            PixelTextButton("+", onClick = { vm.update { it.copy(percents = it.percents + (code to (pct + 5).coerceAtMost(100))) } }, look = ButtonLook.Plain)
                         }
                     }
                     PixelText(
                         "Tổng: ${s.percentSum}%" + if (s.percentSum != 100) " (phải đúng 100%)" else "",
                         style = type.title,
-                        color = if (s.percentSum == 100) Pal.Green else Pal.Red,
+                        color = if (s.percentSum == 100) Pal.GreenDeep else Pal.Red,
                     )
                 }
                 3 -> {
-                    PixelChip("Cuối tháng", selected = s.payday == 0) { vm.update { it.copy(payday = 0) } }
-                    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                        PixelText("Ngày cố định:", style = type.body, color = Pal.Ink)
-                        PixelTextButton("-", onClick = { vm.update { it.copy(payday = if (it.payday <= 2) 0 else it.payday - 1) } }, look = ButtonLook.Light)
-                        PixelText(if (s.payday == 0) "--" else "ngày ${s.payday}", style = type.bodyBold, color = Pal.Gold)
-                        PixelTextButton("+", onClick = { vm.update { it.copy(payday = if (it.payday == 0) 2 else (it.payday + 1).coerceAtMost(28)) } }, look = ButtonLook.Light)
-                    }
-                    PixelText(
-                        if (s.payday == 0) "Mỗi kỳ là 1 tháng dương lịch. Lương không cố định thì cứ để Cuối tháng."
-                        else "Mỗi kỳ chạy từ ngày ${s.payday} tới hết ngày ${s.payday - 1} tháng sau.",
-                        style = type.caption, color = Pal.InkSoft,
-                    )
-                }
-                4 -> {
-                    PixelText("Rót ${formatVnd(s.total)} vào lọ", style = type.title, color = Pal.Gold)
+                    PixelText("Rót ${formatVnd(s.total)} vào lọ", style = type.title, color = Pal.GoldDeep)
                     PourEditor(
                         amount = s.total,
                         jars = JarCode.entries.map { PourJar(it, s.names[it] ?: it.name) },
@@ -217,9 +202,9 @@ fun OnboardingScreen(vm: OnboardingViewModel, typeface: Typeface, onFinished: ()
             else -> true
         }
         PixelTextButton(
-            if (s.step == 4) "Bắt đầu!" else "Tiếp",
+            if (s.step == 3) "Bắt đầu!" else "Tiếp",
             onClick = {
-                if (s.step < 4) {
+                if (s.step < 3) {
                     vm.next()
                 } else if (Build.VERSION.SDK_INT >= 33) {
                     notifications.launch(Manifest.permission.POST_NOTIFICATIONS)

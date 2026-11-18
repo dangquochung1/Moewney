@@ -146,7 +146,7 @@ class IntroPlan(val full: Boolean, val catColor: Int, val greeting: String?)
 @Serializable data class GoalRoute(val id: Long)
 @Serializable object DebtsRoute
 @Serializable object RecurringRoute
-@Serializable data class ReportRoute(val yyyymm: Int = -1)
+@Serializable data class ReportRoute(val yyyymm: Int = -1, val tab: Int = 0)
 @Serializable object HabitsRoute
 @Serializable data class HabitRoute(val id: Long)
 @Serializable data class HabitEditRoute(val id: Long = -1)
@@ -178,6 +178,7 @@ class MainActivity : FragmentActivity() {
     override fun onStart() {
         super.onStart()
         container.notesLock.onAppShown()
+        lifecycleScope.launch { container.settings.markOpen(LocalDate.now().toEpochDay()) }
     }
 
     override fun onStop() {
@@ -207,15 +208,12 @@ class MainActivity : FragmentActivity() {
                 val settings = c.settings.now()
                 c.sfx.enabled = settings.soundOn
                 c.music.enabled = settings.musicOn
-                EveningReminder.createChannel(this@MainActivity)
+                app.meowney.core.notify.CatNotifier.createChannels(this@MainActivity)
                 EveningReminder.schedule(this@MainActivity, settings.reminderMinute, settings.reminderOn)
-                MorningReminder.createChannel(this@MainActivity)
                 MorningReminder.schedule(this@MainActivity)
-                HabitReminder.createChannel(this@MainActivity)
                 HabitReminder.schedule(this@MainActivity)
                 HabitReminder.scheduleClose(this@MainActivity)
                 PomodoroTimer.createChannels(this@MainActivity)
-                CalendarReminder.createChannel(this@MainActivity)
                 c.calendar.ensureLabels()
                 runCatching { c.notes.purge() }
                 CalendarReminder.schedule(this@MainActivity)
@@ -253,8 +251,7 @@ private suspend fun introPlan(c: AppContainer, settings: Settings, fromWidget: B
     val today = LocalDate.now().toEpochDay()
     val full = !fromWidget && settings.lastIntroDay != today
     if (full) c.settings.markIntro(today)
-    val left = if (full) runCatching { todaySnapshot(c).left }.getOrNull() else null
-    val greeting = wakeGreeting(LocalTime.now().hour, settings.catName, left, ::formatVnd)
+    val greeting = wakeGreeting(LocalTime.now().hour, settings.catName)
     return IntroPlan(full, settings.catColor, greeting)
 }
 
@@ -268,6 +265,12 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             if (!onboarding) nav.navigate(EntryRoute()) { launchSingleTop = true }
         }
         if (openRequest == OPEN_POMODORO && game.onboarded) nav.navigate(PomodoroRoute(openHabit)) { launchSingleTop = true }
+        // a message from the cat opens the screen it is about
+        if (game.onboarded) when (openRequest) {
+            app.meowney.widget.OPEN_CALENDAR -> nav.navigate(CalendarRoute()) { launchSingleTop = true }
+            app.meowney.widget.OPEN_HABITS -> nav.navigate(HabitsRoute) { launchSingleTop = true }
+            app.meowney.widget.OPEN_MONEY -> nav.navigate(MoneyRoute) { launchSingleTop = true }
+        }
         if (openRequest != null) onOpened()
     }
     // first open of a new month: the cat hands over last month's report card
@@ -488,10 +491,12 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             HabitEditScreen(vm, onBack = back, onDone = { nav.popBackStack() })
         }
         composable<ReportRoute> { entry ->
-            val month = entry.toRoute<ReportRoute>().yyyymm
+            val route = entry.toRoute<ReportRoute>()
+            val month = route.yyyymm
             val vm: ReportViewModel = viewModel(factory = vmFactory { ReportViewModel(c, month) })
+            val analytics: app.meowney.feature.money.AnalyticsViewModel = viewModel(factory = vmFactory { app.meowney.feature.money.AnalyticsViewModel(c) })
             val settings by c.settings.flow.collectAsState(initial = null)
-            ReportScreen(vm, catColor = settings?.catColor ?: 0, onBack = back)
+            ReportScreen(vm, analytics, catColor = settings?.catColor ?: 0, onBack = back, startTab = route.tab)
         }
         composable<RecurringRoute> {
             val vm: RecurringViewModel = viewModel(factory = vmFactory { RecurringViewModel(c) })

@@ -2,7 +2,6 @@ package app.meowney.core.data
 
 import androidx.room.withTransaction
 import app.meowney.core.db.CoinEntryEntity
-import app.meowney.core.db.DayStatEntity
 import app.meowney.core.db.MeowneyDb
 import app.meowney.core.db.MonthReportEntity
 import app.meowney.core.game.RewardRules
@@ -46,9 +45,11 @@ data class ReportData(
     val byDay: List<Long>,
     /** Diary moods of the month; null when nothing was written (and on cards kept before GĐ5). */
     val mood: MoodSummary? = null,
+    /** Scoring rule the card was made under; cards kept before the daily allowance was removed are rule 1. */
+    val rule: Int = 1,
 ) {
     val numbers get() = MonthNumbers(days, loggedDays, saved, planned, statDays, daysWithin, hasJarLoans, hasNegativeJar)
-    val score: MonthScore get() = ReportEngine.score(numbers)
+    val score: MonthScore get() = ReportEngine.score(numbers, rule)
 }
 
 /** A card to show: a kept one ([kept] != null) or this month's running preview. */
@@ -65,10 +66,6 @@ class Reports(private val db: MeowneyDb) {
     private val plans = db.plans()
     private val money = db.money()
     private val json = Json { ignoreUnknownKeys = true }
-
-    /** Remembers what "hôm nay còn" was today (the limit the report checks spending against). */
-    suspend fun recordDay(day: LocalDate, allowanceBase: Long, spent: Long, logged: Boolean) =
-        plans.upsertDayStat(DayStatEntity(day.toEpochDay(), allowanceBase, spent, logged))
 
     /** Months that have data, newest first (this month included). */
     suspend fun months(today: LocalDate): List<YearMonth> {
@@ -127,14 +124,10 @@ class Reports(private val db: MeowneyDb) {
         if (from > to) return null
 
         val jars = money.jarsNow()
-        val spendIds = jars.filter { it.code == JarCode.NEC.name || it.code == JarCode.PLAY.name }.map { it.id }
         val savingIds = jars.filter { JarCode.valueOf(it.code).isSavings }.map { it.id }
         val savingPercent = jars.filter { it.id in savingIds }.sumOf { it.percent }
 
         val logged = dao.loggedDays(from, to).toSet() + dao.coinDays(RewardRules.R_NO_SPEND, from, to)
-        val spentInLimit = dao.spentByDayInJars(spendIds, from, to).associate { it.day to it.total }
-        val stats = plans.dayStats(from, to)
-        val within = stats.count { (spentInLimit[it.day] ?: 0L) <= it.allowanceBase.coerceAtLeast(0) }
 
         val income = dao.total("INCOME", from, to)
         val balances = dao.jarBalancesAt(to)
@@ -163,14 +156,15 @@ class Reports(private val db: MeowneyDb) {
             planned = income * savingPercent / 100,
             days = (to - from + 1).toInt(),
             loggedDays = logged.size,
-            statDays = stats.size,
-            daysWithin = within,
+            statDays = 0,
+            daysWithin = 0,
             hasJarLoans = loans.isNotEmpty(),
             hasNegativeJar = balances.any { it.total < 0 },
             byJar = byJar,
             byCategory = byCategory,
             byDay = byDay,
             mood = mood,
+            rule = ReportEngine.RULE,
         )
     }
 

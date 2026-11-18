@@ -1,9 +1,12 @@
 package app.meowney.core.ui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Row
@@ -11,27 +14,51 @@ import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.FilterQuality
+import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.unit.IntOffset
-import androidx.compose.ui.unit.IntSize
-import app.meowney.core.sprite.drawNinePatch
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+
+// ------------------------------------------------------------------ shapes
+
+/** The soft look: rounded corners and a light shadow instead of outlines. */
+object Soft {
+    val Card = RoundedCornerShape(20.dp)
+    val Small = RoundedCornerShape(14.dp)
+    val Field = RoundedCornerShape(12.dp)
+    val Pill = RoundedCornerShape(50)
+}
+
+/** A surface lifted off the page by a faint shadow. */
+fun Modifier.softSurface(fill: Color, shape: Shape = Soft.Card, elevation: Dp = 2.dp): Modifier =
+    shadow(elevation, shape, clip = false, ambientColor = Pal.Shadow, spotColor = Pal.Shadow).background(fill, shape)
 
 // ------------------------------------------------------------------ text
 
@@ -58,7 +85,10 @@ fun PixelText(
 
 // ------------------------------------------------------------------ panels
 
-/** A white card with a 1 px ink border. [sprite] only picks a dim fill for disabled panels. */
+/**
+ * A white rounded card. [sprite] is kept from the pixel-frame days and only picks the dimmed
+ * fill for "disabled" panels; [extraPadding] 2 is a normal card, 1 a tighter one.
+ */
 @Composable
 fun PixelPanel(
     modifier: Modifier = Modifier,
@@ -68,16 +98,12 @@ fun PixelPanel(
     content: @Composable BoxScope.() -> Unit,
 ) {
     val m = LocalPixelMetrics.current
-    val fill = if ("disabled" in sprite) Color(0xFFF3E6D4) else Pal.Card
-    val border = m.ui
+    val fill = if ("disabled" in sprite) Pal.Well else Pal.Card
+    val tight = extraPadding < 2
     Box(
         modifier = modifier
-            .drawBehind {
-                val b = border.toFloat()
-                drawRect(Pal.Ink)
-                drawRect(fill, Offset(b, b), Size((size.width - 2 * b).coerceAtLeast(0f), (size.height - 2 * b).coerceAtLeast(0f)))
-            }
-            .padding(m.dp(border + extraPadding * m.ui)),
+            .softSurface(fill, if (tight) Soft.Small else Soft.Card)
+            .padding(m.unit * (if (tight) 5 else 7)),
         contentAlignment = contentAlignment,
         content = content,
     )
@@ -85,37 +111,39 @@ fun PixelPanel(
 
 // ------------------------------------------------------------------ buttons
 
-enum class ButtonLook(val normal: String, val pressed: String, val disabled: String) {
-    Orange("ui/wood/button_normal", "ui/wood/button_pressed", "ui/wood/button_disabled"),
-    Light("ui/wood/button_hover", "ui/wood/button_pressed", "ui/wood/button_disabled"),
-    Tab("ui/wood/tab_box", "ui/wood/tab_box_selected", "ui/wood/tab_box"),
-}
+/** [Primary] = the gold call to action; [Plain] = white with a hairline; [Tab] = a quiet tab. */
+enum class ButtonLook { Primary, Plain, Tab }
 
 @Composable
 fun PixelButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    look: ButtonLook = ButtonLook.Orange,
+    look: ButtonLook = ButtonLook.Primary,
     padded: Boolean = true,
     content: @Composable RowScope.() -> Unit,
 ) {
-    val atlas = LocalSprites.current
     val m = LocalPixelMetrics.current
     val source = remember { MutableInteractionSource() }
     val pressed by source.collectIsPressedAsState()
-    val art = atlas[
-        when {
-            !enabled -> look.disabled
-            pressed -> look.pressed
-            else -> look.normal
-        },
-    ]
-    // Pressed buttons sink one art pixel, like the wood theme in the old game.
-    val sink = if (pressed && enabled) m.dp(m.ui) else m.dp(0)
+    val primary = look == ButtonLook.Primary
+    val fill = when {
+        !enabled -> Pal.Well
+        primary -> if (pressed) Pal.GoldPressed else Pal.Gold
+        else -> if (pressed) Pal.Well else Pal.Card
+    }
+    val radius = 14.dp
     Row(
         modifier = modifier
-            .defaultMinSize(minHeight = m.dp(m.ui * 12))
+            .defaultMinSize(minHeight = m.unit * 13)
+            .drawBehind {
+                val r = CornerRadius(radius.toPx())
+                // a darker lip under the gold button; it disappears while pressed
+                if (primary && enabled && !pressed) drawRoundRect(Pal.GoldLip, Offset(0f, 2.dp.toPx()), size, r)
+                drawRoundRect(fill, Offset.Zero, size, r)
+            }
+            .then(if (!primary && enabled) Modifier.border(1.dp, Pal.Line, Soft.Small) else Modifier)
+            .clip(Soft.Small)
             .clickable(
                 interactionSource = source,
                 indication = null,
@@ -123,18 +151,22 @@ fun PixelButton(
                 role = Role.Button,
                 onClick = onClick,
             )
-            .drawBehind {
-                drawNinePatch(art, IntOffset.Zero, IntSize(size.width.toInt(), size.height.toInt()), m.ui)
-            }
             .padding(
-                horizontal = if (padded) m.dp(m.ui * 5) else m.dp(0),
-                vertical = if (padded) m.dp(m.ui * 2) else m.dp(0),
-            )
-            .offset(y = sink),
+                horizontal = if (padded) m.unit * 6 else m.unit * 0,
+                vertical = if (padded) m.unit * 3 else m.unit * 0,
+            ),
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = androidx.compose.foundation.layout.Arrangement.Center,
+        horizontalArrangement = Arrangement.Center,
         content = content,
     )
+}
+
+/** Labels that are really icons: steppers and "add" read better as a glyph than as a pixel letter. */
+private fun glyph(text: String): ImageVector? = when (text) {
+    "<" -> Icons.AutoMirrored.Filled.KeyboardArrowLeft
+    ">" -> Icons.AutoMirrored.Filled.KeyboardArrowRight
+    "+" -> Icons.Filled.Add
+    else -> null
 }
 
 @Composable
@@ -143,16 +175,36 @@ fun PixelTextButton(
     onClick: () -> Unit,
     modifier: Modifier = Modifier,
     enabled: Boolean = true,
-    look: ButtonLook = ButtonLook.Orange,
+    look: ButtonLook = ButtonLook.Primary,
 ) {
-    PixelButton(onClick, modifier, enabled, look) {
-        PixelText(
-            text,
-            style = LocalPixelType.current.bodyBold,
-            color = if (look == ButtonLook.Orange) Pal.Cream else Pal.Ink,
-            align = TextAlign.Center,
-            maxLines = 1,
-        )
+    val m = LocalPixelMetrics.current
+    val ink = if (!enabled) Pal.InkFaint else if (look == ButtonLook.Primary) Pal.OnPrimary else Pal.Ink
+    val icon = glyph(text)
+    PixelButton(onClick, modifier, enabled, look, padded = icon == null) {
+        if (icon != null) {
+            Icon(icon, contentDescription = text, modifier = Modifier.padding(m.unit * 3).size(m.unit * 8), tint = ink)
+        } else {
+            PixelText(text, style = LocalPixelType.current.bodyBold, color = ink, align = TextAlign.Center, maxLines = 1)
+        }
+    }
+}
+
+/** A round icon button: back, add, settings. */
+@Composable
+fun RoundIconButton(icon: ImageVector, description: String, onClick: () -> Unit, modifier: Modifier = Modifier, primary: Boolean = false) {
+    val m = LocalPixelMetrics.current
+    val source = remember { MutableInteractionSource() }
+    val pressed by source.collectIsPressedAsState()
+    val fill = if (primary) (if (pressed) Pal.GoldPressed else Pal.Gold) else (if (pressed) Pal.Well else Pal.Card)
+    Box(
+        modifier
+            .size(m.unit * 22)
+            .softSurface(fill, CircleShape)
+            .clip(CircleShape)
+            .clickable(interactionSource = source, indication = null, role = Role.Button, onClick = onClick),
+        contentAlignment = Alignment.Center,
+    ) {
+        Icon(icon, contentDescription = description, modifier = Modifier.size(m.unit * 11), tint = Pal.Ink)
     }
 }
 
@@ -165,29 +217,31 @@ fun PixelCheckbox(
     modifier: Modifier = Modifier,
     label: String? = null,
 ) {
-    val atlas = LocalSprites.current
     val m = LocalPixelMetrics.current
-    val art = atlas[if (checked) "ui/wood/checked" else "ui/wood/unchecked"]
+    val shape = RoundedCornerShape(8.dp)
     Row(
-        modifier = modifier.clickable(role = Role.Checkbox) { onCheckedChange(!checked) },
+        modifier = modifier.clickable(
+            interactionSource = remember { MutableInteractionSource() }, indication = null, role = Role.Checkbox,
+        ) { onCheckedChange(!checked) },
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Canvas(Modifier.size(m.dp(art.width * m.ui), m.dp(art.height * m.ui))) {
-            drawImage(
-                art.page, art.srcOffset(0), art.srcSize,
-                dstSize = IntSize(size.width.toInt(), size.height.toInt()),
-                filterQuality = FilterQuality.None,
-            )
+        Box(
+            Modifier
+                .size(m.unit * 14)
+                .then(if (checked) Modifier.background(Pal.Green, shape) else Modifier.background(Pal.Card, shape).border(2.dp, Pal.Line, shape)),
+            contentAlignment = Alignment.Center,
+        ) {
+            if (checked) Icon(Icons.Filled.Check, contentDescription = null, modifier = Modifier.size(m.unit * 10), tint = Pal.Card)
         }
         if (label != null) {
-            PixelText(label, Modifier.padding(start = m.dp(m.ui * 3)))
+            PixelText(label, Modifier.padding(start = m.unit * 4))
         }
     }
 }
 
 // ------------------------------------------------------------------ progress
 
-/** A flat pixel bar: dark trough, coloured fill, 1-art-pixel highlight on top. */
+/** A rounded bar: pale track, coloured fill. [heightPx] is in UI art pixels, as before. */
 @Composable
 fun PixelProgress(
     fraction: Float,
@@ -197,16 +251,11 @@ fun PixelProgress(
 ) {
     val m = LocalPixelMetrics.current
     Canvas(modifier.fillMaxWidth().height(m.dp(heightPx * m.ui))) {
-        val u = m.ui.toFloat()
-        drawRect(Pal.Ink)
-        drawRect(Pal.Paper, Offset(u, u), Size(size.width - 2 * u, size.height - 2 * u))
-        val inner = size.width - 2 * u
-        // snap the fill to whole art pixels
-        val fillPx = (inner * fraction.coerceIn(0f, 1f) / u).toInt() * u
-        if (fillPx > 0) {
-            drawRect(color, Offset(u, u), Size(fillPx, size.height - 2 * u))
-            drawRect(Color.White.copy(alpha = 0.35f), Offset(u, u), Size(fillPx, u))
-        }
+        val r = CornerRadius(size.height / 2f)
+        drawRoundRect(Pal.Line, Offset.Zero, size, r)
+        val w = size.width * fraction.coerceIn(0f, 1f)
+        // a sliver of progress still shows as a dot rather than nothing
+        if (w > 0f) drawRoundRect(color, Offset.Zero, Size(w.coerceAtLeast(size.height), size.height), r)
     }
 }
 
@@ -214,7 +263,7 @@ fun PixelProgress(
 
 @Composable
 fun SpeechBubble(text: String, modifier: Modifier = Modifier) {
-    PixelPanel(modifier = modifier, sprite = "ui/wood/nine_path_panel_interior", extraPadding = 1) {
+    PixelPanel(modifier = modifier, extraPadding = 1) {
         PixelText(text, style = LocalPixelType.current.body, color = Pal.Ink)
     }
 }

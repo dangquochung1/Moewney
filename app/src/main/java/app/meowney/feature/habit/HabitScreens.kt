@@ -115,7 +115,7 @@ fun HabitsScreen(vm: HabitsViewModel, onBack: () -> Unit, onNew: () -> Unit, onO
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     PixelScreen("Thói quen", onBack = onBack, actions = {
-        PixelTextButton("Pomodoro", onClick = onPomodoro, look = ButtonLook.Light)
+        PixelTextButton("Pomodoro", onClick = onPomodoro, look = ButtonLook.Plain)
         PixelTextButton("+", onClick = onNew)
     }) {
         if (s.habits.isEmpty()) {
@@ -154,7 +154,7 @@ private fun HabitCard(h: HabitEntity, today: HabitToday?, onClick: () -> Unit) {
                     h.kind == HabitType.COUNT || h.kind == HabitType.TIMER -> "${today.value}/${h.target}"
                     else -> "chưa"
                 }
-                PixelText(status, style = type.caption, color = if (today?.done == true) Pal.Green else Pal.InkSoft)
+                PixelText(status, style = type.caption, color = if (today?.done == true) Pal.GreenDeep else Pal.InkSoft)
             }
             PixelProgress(h.strength / 100f, color = Pal.Green, heightPx = 4)
             PixelText(
@@ -302,9 +302,9 @@ fun HabitEditScreen(vm: HabitEditViewModel, onBack: () -> Unit, onDone: () -> Un
                     if (remind == null) remind = defaultReminder(part)
                 }
                 if (remind != null) {
-                    PixelTextButton("-1h", onClick = { remind = ((remind!! - 60) + 1440) % 1440 }, look = ButtonLook.Light)
-                    PixelTextButton("+1h", onClick = { remind = (remind!! + 60) % 1440 }, look = ButtonLook.Light)
-                    PixelTextButton("+15p", onClick = { remind = (remind!! + 15) % 1440 }, look = ButtonLook.Light)
+                    PixelTextButton("-1h", onClick = { remind = ((remind!! - 60) + 1440) % 1440 }, look = ButtonLook.Plain)
+                    PixelTextButton("+1h", onClick = { remind = (remind!! + 60) % 1440 }, look = ButtonLook.Plain)
+                    PixelTextButton("+15p", onClick = { remind = (remind!! + 15) % 1440 }, look = ButtonLook.Plain)
                 }
             }
             Label("Độ khó (xu mỗi lần xong)")
@@ -325,7 +325,7 @@ fun HabitEditScreen(vm: HabitEditViewModel, onBack: () -> Unit, onDone: () -> Un
                 )
                 PixelTextButton(
                     if (amount.value == 0L) "Bao nhiêu?" else formatVnd(amount.value),
-                    onClick = { typingAmount = !typingAmount }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth(),
+                    onClick = { typingAmount = !typingAmount }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth(),
                 )
                 if (typingAmount) PixelKeypad(onKey = { amount = amount.press(it) })
                 Label("Lấy từ lọ")
@@ -358,7 +358,7 @@ fun HabitEditScreen(vm: HabitEditViewModel, onBack: () -> Unit, onDone: () -> Un
                         ),
                     )
                 })
-                if (init != null) PixelTextButton("Lưu trữ", onClick = vm::archive, look = ButtonLook.Light)
+                if (init != null) PixelTextButton("Lưu trữ", onClick = vm::archive, look = ButtonLook.Plain)
             }
             Spacer(Modifier.height(m.unit * 4))
         }
@@ -373,7 +373,7 @@ private fun defaultReminder(part: PartOfDay) = when (part) {
 }
 
 @Composable
-private fun Label(text: String) = PixelText(text.uppercase(), style = LocalPixelType.current.caption, color = Pal.Gold)
+private fun Label(text: String) = PixelText(text.uppercase(), style = LocalPixelType.current.caption, color = Pal.GoldDeep)
 
 @Composable
 private fun Hint(text: String) = PixelText(text, style = LocalPixelType.current.caption, color = Pal.InkSoft)
@@ -384,9 +384,9 @@ private fun Stepper(label: String, value: String, onMinus: () -> Unit, onPlus: (
     val type = LocalPixelType.current
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         PixelText(label, style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f))
-        PixelTextButton("-", onClick = onMinus, look = ButtonLook.Light)
+        PixelTextButton("-", onClick = onMinus, look = ButtonLook.Plain)
         PixelText(value, style = type.bodyBold, color = Pal.Ink, align = TextAlign.Center)
-        PixelTextButton("+", onClick = onPlus, look = ButtonLook.Light)
+        PixelTextButton("+", onClick = onPlus, look = ButtonLook.Plain)
     }
 }
 
@@ -414,7 +414,7 @@ fun HabitDetailScreen(vm: HabitDetailViewModel, onBack: () -> Unit, onEdit: () -
     val h = s.habit ?: return
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelScreen(h.name, onBack = onBack, actions = { PixelTextButton("Sửa", onClick = onEdit, look = ButtonLook.Light) }) {
+    PixelScreen(h.name, onBack = onBack, actions = { PixelTextButton("Sửa", onClick = onEdit, look = ButtonLook.Plain) }) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
             PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
@@ -433,16 +433,16 @@ fun HabitDetailScreen(vm: HabitDetailViewModel, onBack: () -> Unit, onEdit: () -
                 }
             }
             Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-                PixelTextButton("<", onClick = { vm.shift(-1) }, look = ButtonLook.Light)
+                PixelTextButton("<", onClick = { vm.shift(-1) }, look = ButtonLook.Plain)
                 PixelText("Tháng ${s.month.monthValue}/${s.month.year}", style = type.bodyBold, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
-                PixelTextButton(">", onClick = { vm.shift(1) }, enabled = s.month.isBefore(YearMonth.now()), look = ButtonLook.Light)
+                PixelTextButton(">", onClick = { vm.shift(1) }, enabled = s.month.isBefore(YearMonth.now()), look = ButtonLook.Plain)
             }
             MonthGrid(h, s.month, s.logs)
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
                 Legend(Pal.Green, "xong")
                 Legend(Pal.Sky, "nghỉ (vé)")
-                Legend(Pal.Orange, "lỡ")
-                Legend(Pal.WoodDark, "không cần")
+                Legend(Pal.Red, "lỡ")
+                Legend(Pal.Line, "không cần")
             }
         }
     }
@@ -454,11 +454,11 @@ private fun cellColor(h: HabitEntity, log: HabitLogEntity?, day: LocalDate, toda
     return when (log?.status) {
         "DONE", "KEPT" -> Pal.Green
         "RESTED" -> Pal.Sky
-        "MISSED", "FAILED" -> Pal.Orange
+        "MISSED", "FAILED" -> Pal.Red
         else -> when {
-            !HabitEngine.isScheduled(h.rule, day) -> Pal.WoodDark
+            !HabitEngine.isScheduled(h.rule, day) -> Pal.Line
             h.kind == HabitType.QUIT && day == today -> Pal.Green.copy(alpha = 0.5f)
-            else -> Pal.Night
+            else -> Pal.Well
         }
     }
 }
@@ -486,11 +486,12 @@ private fun MonthGrid(h: HabitEntity, month: YearMonth, logs: List<HabitLogEntit
                             if (color != null) {
                                 Canvas(Modifier.fillMaxWidth().aspectRatio(1.4f)) {
                                     val u = m.ui.toFloat()
-                                    drawRect(if (day == today) Pal.Gold else Pal.WoodDark)
-                                    drawRect(color, androidx.compose.ui.geometry.Offset(u, u), androidx.compose.ui.geometry.Size(size.width - 2 * u, size.height - 2 * u))
+                                    val r = androidx.compose.ui.geometry.CornerRadius(u * 3)
+                                    drawRoundRect(color, cornerRadius = r)
+                                    if (day == today) drawRoundRect(Pal.Gold, cornerRadius = r, style = androidx.compose.ui.graphics.drawscope.Stroke(u))
                                 }
                             }
-                            PixelText("$n", style = type.caption, color = if (color == null) Pal.InkSoft else Pal.Cream)
+                            PixelText("$n", style = type.caption, color = if (color == Pal.Green || color == Pal.Sky || color == Pal.Red) Pal.Card else if (color == null) Pal.InkFaint else Pal.Ink)
                         }
                     }
                 }

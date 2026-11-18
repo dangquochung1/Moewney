@@ -90,13 +90,13 @@ fun PourEditor(
             val share = shares[j.code] ?: 0
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelText(j.name, style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f), maxLines = 1)
-                PixelText(formatVndShort(share), style = type.bodyBold, color = jarColor(j.code))
+                PixelText(formatVndShort(share), style = type.bodyBold, color = Pal.Ink)
                 PixelTextButton("-", onClick = {
                     onChange(shares + (j.code to (share - step).coerceAtLeast(0)))
-                }, look = ButtonLook.Light, enabled = share > 0)
+                }, look = ButtonLook.Plain, enabled = share > 0)
                 PixelTextButton("+", onClick = {
                     onChange(shares + (j.code to share + minOf(step, unalloc)))
-                }, look = ButtonLook.Light, enabled = unalloc > 0)
+                }, look = ButtonLook.Plain, enabled = unalloc > 0)
             }
         }
         Row {
@@ -167,11 +167,11 @@ fun PourScreen(vm: PourViewModel, typeface: Typeface, onBack: () -> Unit, onDone
             PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
                 Column {
                     PixelText("Khoản thu", style = type.caption, color = Pal.InkSoft)
-                    PixelText("+" + formatVnd(vm.draft.amount), style = type.display, color = Pal.Green)
+                    PixelText("+" + formatVnd(vm.draft.amount), style = type.display, color = Pal.GreenDeep)
                 }
             }
             if (s.loans.isNotEmpty()) {
-                PixelText("Trả nợ giữa các lọ trước:", style = type.bodyBold, color = Pal.Gold)
+                PixelText("Trả nợ giữa các lọ trước:", style = type.bodyBold, color = Pal.GoldDeep)
                 for (l in s.loans) {
                     PixelText(
                         "• ${s.jarNames[l.borrowerJarId]} trả ${s.jarNames[l.lenderJarId]} tới ${formatVndShort(l.amount)}",

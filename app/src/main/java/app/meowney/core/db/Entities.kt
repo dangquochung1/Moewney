@@ -174,7 +174,7 @@ data class RecurringEntity(
     val active: Boolean = true,
 )
 
-/** What "hôm nay còn" was each day, for the monthly report. */
+/** The daily allowance of each day. No longer written; the table stays so old databases open unchanged. */
 @Entity(tableName = "day_stat")
 data class DayStatEntity(
     @PrimaryKey val day: Long,

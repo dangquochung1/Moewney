@@ -33,8 +33,6 @@ data class CalDay(
     val todos: List<TodoItem> = emptyList(),
     val spent: Long = 0,
     val earned: Long = 0,
-    /** Day-to-day spending went over that day's "hôm nay còn". */
-    val overLimit: Boolean = false,
     val habitsDone: Int = 0,
     val habitsAllDone: Boolean = false,
 )
@@ -81,12 +79,11 @@ class CalendarRepository(private val db: MeowneyDb) {
             evs to tds
         }
         val money = combine(
-            dao.totalsByDay("EXPENSE", f, t), dao.totalsByDay("INCOME", f, t), dao.dayStats(f, t),
+            dao.totalsByDay("EXPENSE", f, t), dao.totalsByDay("INCOME", f, t),
             dao.habitsAllDoneDays(f, t), dao.habitsDoneByDay(f, t),
-        ) { spent, earned, stats, allDone, habits ->
+        ) { spent, earned, allDone, habits ->
             DayExtras(
                 spent.associate { it.day to it.total }, earned.associate { it.day to it.total },
-                stats.filter { it.spent > it.allowanceBase.coerceAtLeast(0) }.map { it.day }.toSet(),
                 allDone.toSet(), habits.associate { it.day to it.total.toInt() },
             )
         }
@@ -99,7 +96,6 @@ class CalendarRepository(private val db: MeowneyDb) {
                     todos = tds.filter { it.todo.dueDay == e }.sortedWith(compareBy<TodoItem> { it.done }.thenByDescending { it.todo.starred }.thenBy { it.todo.dueMinute ?: Int.MAX_VALUE }),
                     spent = x.spent[e] ?: 0,
                     earned = x.earned[e] ?: 0,
-                    overLimit = e in x.over,
                     habitsDone = x.habits[e] ?: 0,
                     habitsAllDone = e in x.allDone,
                 )
@@ -107,7 +103,7 @@ class CalendarRepository(private val db: MeowneyDb) {
         }
     }
 
-    private data class DayExtras(val spent: Map<Long, Long>, val earned: Map<Long, Long>, val over: Set<Long>, val allDone: Set<Long>, val habits: Map<Long, Int>)
+    private data class DayExtras(val spent: Map<Long, Long>, val earned: Map<Long, Long>, val allDone: Set<Long>, val habits: Map<Long, Int>)
 
     /** To-dos without a day, and unfinished ones whose day has passed. */
     fun inboxAndOverdue(today: LocalDate): Flow<Pair<List<TodoItem>, List<TodoItem>>> =

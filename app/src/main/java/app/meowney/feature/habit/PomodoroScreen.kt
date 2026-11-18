@@ -147,7 +147,7 @@ fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit
                 val scale = stageScale(constraints.maxWidth, (constraints.maxWidth * 1.6f).toInt(), corner.circle.diameter, heightShare = 0.36f, widthShare = 0.6f)
                 CatStage(corner, cat, scale, onCatTap = { cat.poke() }, onCatLongPress = {})
             }
-            PixelText(PomodoroTimer.phaseLabel(s.phase) + if (paused) " · tạm dừng" else "", style = type.title, color = Pal.Gold)
+            PixelText(PomodoroTimer.phaseLabel(s.phase) + if (paused) " · tạm dừng" else "", style = type.title, color = Pal.GoldDeep)
             val left = (s.remainingMs + 999) / 1000
             PixelText(
                 "%02d:%02d".format(left / 60, left % 60),
@@ -169,20 +169,20 @@ fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 when {
                     !s.running -> PixelButton(onClick = vm::start) {
-                        PixelText(if (s.state == null) "Bắt đầu tập trung" else "Phiên tiếp theo", style = type.title, color = Pal.Cream)
+                        PixelText(if (s.state == null) "Bắt đầu tập trung" else "Phiên tiếp theo", style = type.title, color = Pal.OnPrimary)
                     }
                     paused -> PixelTextButton("Tiếp tục", onClick = vm::resume)
-                    s.phase == Phase.FOCUS -> PixelTextButton("Tạm dừng", onClick = vm::pause, look = ButtonLook.Light)
-                    else -> PixelTextButton("Bỏ qua nghỉ", onClick = vm::skipBreak, look = ButtonLook.Light)
+                    s.phase == Phase.FOCUS -> PixelTextButton("Tạm dừng", onClick = vm::pause, look = ButtonLook.Plain)
+                    else -> PixelTextButton("Bỏ qua nghỉ", onClick = vm::skipBreak, look = ButtonLook.Plain)
                 }
-                if (s.state != null) PixelTextButton("Dừng", onClick = vm::stop, look = ButtonLook.Light)
+                if (s.state != null) PixelTextButton("Dừng", onClick = vm::stop, look = ButtonLook.Plain)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelText(
                     "Tập trung ${s.cfg.focus}p · nghỉ ${s.cfg.shortBreak}p · nghỉ dài ${s.cfg.longBreak}p sau ${s.cfg.longEvery} phiên",
                     style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f),
                 )
-                if (!s.running) PixelTextButton("Chỉnh", onClick = { editing = true }, look = ButtonLook.Light)
+                if (!s.running) PixelTextButton("Chỉnh", onClick = { editing = true }, look = ButtonLook.Plain)
             }
             PixelText("Thoát app vẫn chạy: trẫm đếm trên thanh thông báo, hết giờ có chuông.", style = type.caption, color = Pal.InkSoft)
         }
@@ -220,7 +220,7 @@ private fun ConfigDialog(initial: PomodoroConfig, onSave: (PomodoroConfig) -> Un
         Row2("Nghỉ dài sau", "${cfg.longEvery} phiên", { cfg = cfg.copy(longEvery = (cfg.longEvery - 1).coerceAtLeast(2)) }, { cfg = cfg.copy(longEvery = (cfg.longEvery + 1).coerceAtMost(8)) })
         Row(horizontalArrangement = Arrangement.spacedBy(LocalPixelMetrics.current.unit * 2)) {
             PixelTextButton("Lưu", onClick = { onSave(cfg) })
-            PixelTextButton("45/10", onClick = { cfg = PomodoroConfig() }, look = ButtonLook.Light)
+            PixelTextButton("45/10", onClick = { cfg = PomodoroConfig() }, look = ButtonLook.Plain)
         }
     }
 }
@@ -231,8 +231,8 @@ private fun Row2(label: String, value: String, onMinus: () -> Unit, onPlus: () -
     val type = LocalPixelType.current
     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         PixelText(label, style = type.body, modifier = Modifier.weight(1f))
-        PixelTextButton("-", onClick = onMinus, look = ButtonLook.Light)
+        PixelTextButton("-", onClick = onMinus, look = ButtonLook.Plain)
         PixelText(value, style = type.bodyBold)
-        PixelTextButton("+", onClick = onPlus, look = ButtonLook.Light)
+        PixelTextButton("+", onClick = onPlus, look = ButtonLook.Plain)
     }
 }

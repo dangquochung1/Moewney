@@ -94,7 +94,7 @@ private fun LabelChips(labels: List<CalLabelEntity>, selected: Long?, onPick: (L
 }
 
 @Composable
-private fun Label(text: String) = PixelText(text.uppercase(), style = LocalPixelType.current.caption, color = Pal.Gold)
+private fun Label(text: String) = PixelText(text.uppercase(), style = LocalPixelType.current.caption, color = Pal.GoldDeep)
 
 // ------------------------------------------------------------------ event
 
@@ -181,13 +181,13 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelText("Từ", style = type.body, color = Pal.Ink, maxLines = 1, modifier = Modifier.width(m.unit * 22))
-                PixelTextButton(shortDate(startDay), onClick = { picking = "startDay" }, look = ButtonLook.Light)
-                if (!allDay) PixelTextButton(hhmm(startMinute), onClick = { picking = "startMinute" }, look = ButtonLook.Light)
+                PixelTextButton(shortDate(startDay), onClick = { picking = "startDay" }, look = ButtonLook.Plain)
+                if (!allDay) PixelTextButton(hhmm(startMinute), onClick = { picking = "startMinute" }, look = ButtonLook.Plain)
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelText("Đến", style = type.body, color = Pal.Ink, maxLines = 1, modifier = Modifier.width(m.unit * 22))
-                PixelTextButton(shortDate(endDay), onClick = { picking = "endDay" }, look = ButtonLook.Light)
-                if (!allDay) PixelTextButton(hhmm(endMinute), onClick = { picking = "endMinute" }, look = ButtonLook.Light)
+                PixelTextButton(shortDate(endDay), onClick = { picking = "endDay" }, look = ButtonLook.Plain)
+                if (!allDay) PixelTextButton(hhmm(endMinute), onClick = { picking = "endMinute" }, look = ButtonLook.Plain)
             }
             Label("Lặp lại")
             FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
@@ -196,7 +196,7 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
             if (repeat != EventRepeat.NONE) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelText("Đến ngày", style = type.body, color = Pal.Ink)
-                    PixelTextButton(until?.let { shortDate(it) } ?: "Mãi mãi", onClick = { picking = "until" }, look = ButtonLook.Light)
+                    PixelTextButton(until?.let { shortDate(it) } ?: "Mãi mãi", onClick = { picking = "until" }, look = ButtonLook.Plain)
                 }
             }
             Label("Nhắc")
@@ -225,7 +225,7 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
             Label("Dự chi")
             PixelTextButton(
                 if (cost.value == 0L) "Không tốn tiền" else formatVnd(cost.value),
-                onClick = { typingCost = !typingCost }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth(),
+                onClick = { typingCost = !typingCost }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth(),
             )
             if (typingCost) PixelKeypad(onKey = { cost = cost.press(it) })
             if (cost.value > 0) {
@@ -250,7 +250,7 @@ fun EventEditScreen(vm: EventEditViewModel, presetDay: LocalDate, presetMinute: 
                         ),
                     )
                 })
-                if (init != null) PixelTextButton(if (init.rep == EventRepeat.NONE) "Xoá" else "Xoá cả chuỗi", onClick = vm::delete, look = ButtonLook.Light)
+                if (init != null) PixelTextButton(if (init.rep == EventRepeat.NONE) "Xoá" else "Xoá cả chuỗi", onClick = vm::delete, look = ButtonLook.Plain)
             }
             Spacer(Modifier.height(m.unit * 4))
         }
@@ -344,8 +344,8 @@ fun TodoEditScreen(vm: TodoEditViewModel, presetDay: LocalDate?, onBack: () -> U
             }
             Label("Hạn")
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelTextButton(due?.let { shortDate(it) } ?: "Chưa xếp lịch", onClick = { picking = "due" }, look = ButtonLook.Light)
-                if (due != null) PixelTextButton(dueMinute?.let { hhmm(it) } ?: "Không giờ", onClick = { picking = "time" }, look = ButtonLook.Light)
+                PixelTextButton(due?.let { shortDate(it) } ?: "Chưa xếp lịch", onClick = { picking = "due" }, look = ButtonLook.Plain)
+                if (due != null) PixelTextButton(dueMinute?.let { hhmm(it) } ?: "Không giờ", onClick = { picking = "time" }, look = ButtonLook.Plain)
             }
             if (due != null) {
                 Label("Lặp lại")
@@ -377,7 +377,7 @@ fun TodoEditScreen(vm: TodoEditViewModel, presetDay: LocalDate?, onBack: () -> U
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelCheckbox(step.done, onCheckedChange = { steps[i] = step.copy(done = it) })
                     PixelText(step.text, style = type.body, color = Pal.Ink, modifier = Modifier.weight(1f))
-                    PixelTextButton("x", onClick = { steps.removeAt(i) }, look = ButtonLook.Light)
+                    PixelTextButton("x", onClick = { steps.removeAt(i) }, look = ButtonLook.Plain)
                 }
             }
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
@@ -385,7 +385,7 @@ fun TodoEditScreen(vm: TodoEditViewModel, presetDay: LocalDate?, onBack: () -> U
                 PixelTextButton("Thêm", enabled = newStep.isNotBlank(), onClick = {
                     steps.add(TodoStepEntity(todoId = 0, text = newStep.trim()))
                     newStep = ""
-                }, look = ButtonLook.Light)
+                }, look = ButtonLook.Plain)
             }
             Label("Ghi chú")
             PixelTextField(note, { note = it.take(300) }, Modifier.fillMaxWidth(), placeholder = "Ghi chú")
@@ -401,7 +401,7 @@ fun TodoEditScreen(vm: TodoEditViewModel, presetDay: LocalDate?, onBack: () -> U
                         steps.toList(),
                     )
                 })
-                if (init != null) PixelTextButton("Xoá", onClick = vm::delete, look = ButtonLook.Light)
+                if (init != null) PixelTextButton("Xoá", onClick = vm::delete, look = ButtonLook.Plain)
             }
             Spacer(Modifier.height(m.unit * 4))
         }
@@ -464,7 +464,7 @@ fun LabelsScreen(vm: LabelsViewModel, onBack: () -> Unit) {
                 if (l.id != 0L && l.kind != "BIRTHDAY") PixelTextButton("Xoá", onClick = {
                     vm.delete(l)
                     editing = null
-                }, look = ButtonLook.Light)
+                }, look = ButtonLook.Plain)
             }
         }
     }

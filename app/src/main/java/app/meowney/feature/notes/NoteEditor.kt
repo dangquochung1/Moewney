@@ -265,13 +265,13 @@ private fun PhotoBlock(b: EditBlock, state: EditorState, onPhoto: (String) -> Un
     var asking by remember { mutableStateOf(false) }
     Box(Modifier.fillMaxWidth()) {
         NotePhoto(b.image!!, Modifier.clickable { onPhoto(b.image) })
-        PixelTextButton("×", onClick = { asking = true }, look = ButtonLook.Light, modifier = Modifier.align(Alignment.TopEnd).padding(m.unit))
+        PixelTextButton("×", onClick = { asking = true }, look = ButtonLook.Plain, modifier = Modifier.align(Alignment.TopEnd).padding(m.unit))
     }
     if (asking) {
         PixelDialog(onDismiss = { asking = false }) {
             PixelText("Bỏ ảnh này khỏi trang?", style = LocalPixelType.current.bodyBold, color = Pal.Ink)
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelTextButton("Giữ", onClick = { asking = false }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+                PixelTextButton("Giữ", onClick = { asking = false }, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
                 PixelTextButton("Bỏ ảnh", onClick = { asking = false; state.remove(b) }, modifier = Modifier.weight(1f))
             }
         }
@@ -288,9 +288,9 @@ fun Modifier.tapToType(state: EditorState): Modifier =
 fun EditorToolbar(state: EditorState, onAddPhoto: () -> Unit, modifier: Modifier = Modifier) {
     val m = LocalPixelMetrics.current
     Row(modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(m.unit)) {
-        PixelTextButton("+ Chữ", onClick = { state.add(BlockType.TEXT) }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
-        PixelTextButton("+ Danh sách", onClick = { state.add(BlockType.CHECK) }, look = ButtonLook.Light, modifier = Modifier.weight(1.4f))
-        PixelTextButton("+ Ảnh", onClick = onAddPhoto, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+        PixelTextButton("+ Chữ", onClick = { state.add(BlockType.TEXT) }, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
+        PixelTextButton("+ Danh sách", onClick = { state.add(BlockType.CHECK) }, look = ButtonLook.Plain, modifier = Modifier.weight(1.4f))
+        PixelTextButton("+ Ảnh", onClick = onAddPhoto, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
     }
 }
 
@@ -376,7 +376,7 @@ private fun PhotoStyleDialog(uri: Uri, onDismiss: () -> Unit, onAdded: (String) 
                         ) {
                             Box(
                                 Modifier.fillMaxWidth().aspectRatio(1f)
-                                    .border(m.unit, if (style == st) Pal.Orange else Pal.WoodDark),
+                                    .border(m.unit, if (style == st) Pal.Gold else Pal.Line),
                             ) {
                                 previews[st]?.let {
                                     Image(
@@ -386,7 +386,7 @@ private fun PhotoStyleDialog(uri: Uri, onDismiss: () -> Unit, onAdded: (String) 
                                     )
                                 }
                             }
-                            PixelText(st.label, style = if (style == st) type.bodyBold else type.body, color = if (style == st) Pal.Orange else Pal.Ink, align = TextAlign.Center)
+                            PixelText(st.label, style = if (style == st) type.bodyBold else type.body, color = if (style == st) Pal.GoldDeep else Pal.Ink, align = TextAlign.Center)
                         }
                     }
                 }
@@ -398,7 +398,7 @@ private fun PhotoStyleDialog(uri: Uri, onDismiss: () -> Unit, onAdded: (String) 
             }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-            PixelTextButton("Huỷ", onClick = onDismiss, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+            PixelTextButton("Huỷ", onClick = onDismiss, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
             PixelTextButton(if (busy) "..." else "Thêm", enabled = !busy && r?.isSuccess == true, modifier = Modifier.weight(1f), onClick = {
                 busy = true
                 scope.launch {
@@ -446,7 +446,7 @@ fun TagDialog(all: List<NoteTagEntity>, selected: List<String>, onDone: (List<St
                 val t = NoteText.cleanTag(new)
                 if (t.isNotBlank() && !isOn(t)) chosen.add(t)
                 new = ""
-            }, look = ButtonLook.Light)
+            }, look = ButtonLook.Plain)
         }
         PixelTextButton("Xong", onClick = ::finish, modifier = Modifier.fillMaxWidth())
     }

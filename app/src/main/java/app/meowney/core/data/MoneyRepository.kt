@@ -90,7 +90,6 @@ class MoneyRepository(private val db: MeowneyDb) {
 
     fun spentOn(day: LocalDate, jarIds: List<Long>) = dao.spentOn(day.toEpochDay(), jarIds)
     fun countOn(day: LocalDate) = dao.countOn(day.toEpochDay())
-    fun allocatedSince(day: LocalDate, jarIds: List<Long>) = dao.allocatedSince(day.toEpochDay(), jarIds)
     fun noSpendClaims(day: LocalDate) = dao.countCoinsOn(day.toEpochDay(), RewardRules.R_NO_SPEND)
     fun entriesOfJar(jarId: Long) = dao.entriesOfJar(jarId)
     fun frequentExpenses(since: LocalDate, limit: Int) = dao.frequentExpenses(since.toEpochDay(), limit)

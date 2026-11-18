@@ -54,11 +54,9 @@ class ReportsTest {
         for (d in 1..10) {
             val day = last.atDay(d)
             spend(day, 100_000)
-            reports.recordDay(day, 300_000, 100_000, true)
         }
         val day11 = last.atDay(11)
-        spend(day11, 500_000, "Mua sắm") // over the 300k limit
-        reports.recordDay(day11, 300_000, 500_000, true)
+        spend(day11, 500_000, "Mua sắm")
         repo.addIncome(TxnDraft(10_000_000, cash(), date = last.atDay(2)), MoneyEngine.allocateIncome(10_000_000, repo.jarInfos(), emptyList()))
 
         val d = reports.compute(last, today)!!
@@ -66,8 +64,8 @@ class ReportsTest {
         assertThat(d.loggedDays).isEqualTo(11)
         assertThat(d.planned).isEqualTo(2_000_000) // 20% of the income goes to the 2 savings jars
         assertThat(d.saved).isEqualTo(2_000_000)
-        assertThat(d.statDays).isEqualTo(11)
-        assertThat(d.daysWithin).isEqualTo(10)
+        assertThat(d.rule).isEqualTo(2)
+        assertThat(d.score.limit).isNull() // no daily allowance any more
         assertThat(d.hasJarLoans).isFalse()
         assertThat(d.byDay[10]).isEqualTo(500_000)
         assertThat(d.byCategory.first().label).isEqualTo("Ăn uống") // 1tr beats 500k

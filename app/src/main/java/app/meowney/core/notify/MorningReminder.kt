@@ -1,36 +1,29 @@
 package app.meowney.core.notify
 
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
 import android.content.Context
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import app.meowney.MainActivity
-import app.meowney.R
 import app.meowney.container
 import app.meowney.core.format.formatVndShort
+import app.meowney.core.money.JarCode
+import app.meowney.core.ui.hhmm
+import app.meowney.widget.OPEN_CALENDAR
+import app.meowney.widget.OPEN_MONEY
 import kotlinx.coroutines.flow.first
 import java.time.Duration
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.concurrent.TimeUnit
 
-/** 08:00 every day: recurring bills and debts that are due today or overdue. */
+/**
+ * 08:00 every day, up to three messages from the cat: the day's agenda, money worries
+ * (bills and debts due, jars below zero), and missing Sen after two days away.
+ */
 object MorningReminder {
     private const val WORK = "morning_reminder"
-    private const val CHANNEL = "due"
-    private const val NOTIFICATION_ID = 8
     const val MINUTE = 8 * 60
 
     fun schedule(context: Context) {
@@ -44,63 +37,53 @@ object MorningReminder {
         )
     }
 
-    fun createChannel(context: Context) {
-        val channel = NotificationChannel(CHANNEL, "Đến hạn trả", NotificationManager.IMPORTANCE_DEFAULT)
-        channel.description = "Khoản định kỳ và khoản nợ đến hạn"
-        context.getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
-    }
-
-    /** The lines of the morning message, or empty when nothing is due. */
-    suspend fun dueLines(context: Context, today: LocalDate = LocalDate.now()): List<String> {
+    /** What the morning knows about [today]. */
+    suspend fun inputs(context: Context, today: LocalDate = LocalDate.now()): MorningInputs {
         val c = context.container
-        val bills = c.money.recurringNow().filter { it.nextDueDay <= today.toEpochDay() }
+        val settings = c.settings.now()
+        val bills = c.money.recurringNow().filter { it.active && it.nextDueDay <= today.toEpochDay() }
         val debts = c.money.debtsDue(today)
-        val calendar = if (c.settings.now().calendarRemindOn) {
+        val agenda = if (settings.calendarRemindOn) {
             val day = c.calendar.days(today, today).first()[today]
             val labels = c.calendar.labels.first().associateBy { it.id }
             val events = day?.events.orEmpty().filter { it.event.remind && (it.occ.allDay || it.occ.multiDay) }
-                .map { e -> if (labels[e.event.labelId]?.kind == "BIRTHDAY") "${e.event.title} hôm nay!" else e.event.title }
+                .map { e -> if (labels[e.event.labelId]?.kind == "BIRTHDAY") "${e.event.title} hôm nay" else e.event.title }
             val todos = day?.todos.orEmpty().filter { !it.done && it.todo.remind }
-                .map { t -> "Việc: ${t.todo.title}" + (t.todo.dueMinute?.let { " (${app.meowney.core.ui.hhmm(it)})" } ?: "") }
+                .map { t -> t.todo.title + (t.todo.dueMinute?.let { " (${hhmm(it)})" } ?: "") }
             events + todos
         } else {
             emptyList()
         }
-        return bills.map { "${it.name} ${formatVndShort(it.amount)}" } +
-            debts.map { if (it.direction == "LENT") "${it.person} trả Sen ${formatVndShort(it.left)}" else "Trả ${it.person} ${formatVndShort(it.left)}" } +
-            calendar
+        return MorningInputs(
+            agenda = agenda,
+            due = bills.map { "${it.name} ${formatVndShort(it.amount)}" } +
+                debts.map { if (it.direction == "LENT") "${it.person} trả Sen ${formatVndShort(it.left)}" else "Trả ${it.person} ${formatVndShort(it.left)}" },
+            negativeJars = c.money.jarStates.first().filter { it.code != JarCode.UNALLOC && it.balance < 0 }.map { it.jar.name },
+            daysAway = settings.lastOpenDay?.let { (today.toEpochDay() - it).toInt() } ?: 0,
+        )
     }
 
-    private fun notify(context: Context, lines: List<String>) {
-        if (Build.VERSION.SDK_INT >= 33 &&
-            ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED
-        ) {
-            return
-        }
-        val open = PendingIntent.getActivity(
-            context, 1, Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP),
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-        )
-        val title = "Sen ơi, hôm nay có ${lines.size} việc"
-        val text = lines.joinToString(" · ")
-        val n = NotificationCompat.Builder(context, CHANNEL)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(title)
-            .setContentText(text)
-            .setStyle(NotificationCompat.BigTextStyle().bigText(lines.joinToString("\n")))
-            .setContentIntent(open)
-            .setAutoCancel(true)
-            .build()
-        NotificationManagerCompat.from(context).notify(NOTIFICATION_ID, n)
+    private fun idFor(tone: CatTone) = when (tone) {
+        CatTone.MORNING -> 8
+        CatTone.WORRIED -> 9
+        else -> 10
     }
 
     class Worker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {
         override suspend fun doWork(): Result {
-            if (applicationContext.container.settings.now().onboarded) {
-                val lines = dueLines(applicationContext)
-                if (lines.isNotEmpty()) notify(applicationContext, lines)
+            val ctx = applicationContext
+            if (ctx.container.settings.now().onboarded) {
+                for (n in NudgeEngine.morning(inputs(ctx))) {
+                    val id = idFor(n.tone)
+                    val open = when (n.tone) {
+                        CatTone.MORNING -> OPEN_CALENDAR
+                        CatTone.WORRIED -> OPEN_MONEY
+                        else -> null
+                    }
+                    CatNotifier.show(ctx, id, n, CatNotifier.openIntent(ctx, id, open))
+                }
             }
-            schedule(applicationContext)
+            schedule(ctx)
             return Result.success()
         }
     }

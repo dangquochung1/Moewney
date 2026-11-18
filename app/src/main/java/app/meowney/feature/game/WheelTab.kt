@@ -137,7 +137,7 @@ fun WheelTab(vm: GiftViewModel) {
             }
         })
         if (lixi) {
-            PixelTextButton("Nhận lì xì Tết", onClick = { vm.claimLixi() }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Nhận lì xì Tết", onClick = { vm.claimLixi() }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         }
         PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
             Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
@@ -149,7 +149,7 @@ fun WheelTab(vm: GiftViewModel) {
     }
     result?.let { r ->
         PixelDialog(onDismiss = { result = null }) {
-            PixelText(r.prize.label.uppercase(), style = type.title, color = Pal.Orange)
+            PixelText(r.prize.label.uppercase(), style = type.title, color = Pal.GoldDeep)
             PixelText(r.text(), style = type.body, color = Pal.Ink)
             PixelTextButton("Tuyệt!", onClick = { result = null }, modifier = Modifier.fillMaxWidth())
         }

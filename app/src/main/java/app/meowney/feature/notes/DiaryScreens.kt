@@ -134,9 +134,9 @@ fun DiaryTab(vm: DiaryViewModel, actions: NotesActions) {
 
     Column(Modifier.fillMaxSize().verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            PixelTextButton("<", onClick = { vm.shiftMonth(-1) }, look = ButtonLook.Light)
+            PixelTextButton("<", onClick = { vm.shiftMonth(-1) }, look = ButtonLook.Plain)
             PixelText("Tháng ${month.monthValue}/${month.year}", style = type.bodyBold, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
-            PixelTextButton(">", onClick = { vm.shiftMonth(1) }, look = ButtonLook.Light)
+            PixelTextButton(">", onClick = { vm.shiftMonth(1) }, look = ButtonLook.Plain)
         }
         DiaryGrid(month, selected, pages, today, onSelect = vm::select, onSwipe = vm::shiftMonth)
         PixelText(
@@ -145,7 +145,7 @@ fun DiaryTab(vm: DiaryViewModel, actions: NotesActions) {
                 streak == 1 -> "Chuỗi bắt đầu rồi. Mai viết tiếp nhé."
                 else -> "Chưa có chuỗi. Viết hôm nay để bắt đầu."
             },
-            style = type.caption, color = Pal.Gold,
+            style = type.caption, color = Pal.GoldDeep,
         )
         val page = pages[selected.toEpochDay()]
         when {
@@ -201,25 +201,26 @@ private fun DiaryGrid(
                         val inMonth = day.month == month.month
                         Canvas(Modifier.fillMaxSize()) {
                             val u = m.ui.toFloat()
-                            val frame = when {
-                                day == selected -> Pal.Orange
-                                day == today -> Pal.Gold
-                                else -> Pal.Night
+                            val r = androidx.compose.ui.geometry.CornerRadius(u * 3)
+                            val cell = Size(size.width - u, size.height - u)
+                            val fill = when {
+                                page?.mood != null -> moodTint(page.mood).copy(alpha = 0.35f)
+                                day == today -> Pal.GoldTint
+                                inMonth -> Pal.Card
+                                else -> Pal.Well
                             }
-                            drawRect(frame, Offset(u / 2, u / 2), Size(size.width - u, size.height - u))
-                            val fill = if (page?.mood != null) moodTint(page.mood).copy(alpha = 0.55f) else Pal.WoodDark
-                            drawRect(fill, Offset(u * 1.5f, u * 1.5f), Size(size.width - 3 * u, size.height - 3 * u))
-                            if (!inMonth) drawRect(Pal.Night.copy(alpha = 0.6f), Offset.Zero, size)
+                            drawRoundRect(fill, Offset(u / 2, u / 2), cell, r)
+                            if (day == selected) drawRoundRect(Pal.Gold, Offset(u / 2, u / 2), cell, r, style = androidx.compose.ui.graphics.drawscope.Stroke(u))
                         }
                         PixelText(
                             "${day.dayOfMonth}", style = type.caption,
-                            color = if (inMonth) Pal.Cream else Pal.InkSoft,
+                            color = if (inMonth) Pal.Ink else Pal.InkFaint,
                             modifier = Modifier.align(Alignment.TopStart).padding(start = m.unit * 2, top = m.unit),
                         )
                         when {
                             page?.mood != null -> MoodIcon(page.mood, scale = (m.ui - 1).coerceAtLeast(2), Modifier.padding(top = m.unit * 3))
-                            page != null && page.hasContent -> PixelText("•", style = type.title, color = Pal.Cream)
-                            day == today -> PixelText("!", style = type.title, color = Pal.Gold, modifier = Modifier.padding(top = m.unit * 3))
+                            page != null && page.hasContent -> PixelText("•", style = type.title, color = Pal.GreenDeep)
+                            day == today -> PixelText("!", style = type.title, color = Pal.GoldDeep, modifier = Modifier.padding(top = m.unit * 3))
                         }
                     }
                 }
@@ -287,7 +288,6 @@ class DiaryPageViewModel(c: AppContainer, val day: LocalDate, private val preset
         val d = c.calendar.days(today, today).first()[today]
         val moods = c.notes.moods.first()
         return PromptContext(
-            overspent = d?.overLimit == true,
             spent = d?.spent ?: 0,
             allHabitsDone = d?.habitsAllDone == true,
             birthday = d?.events?.firstOrNull { it.label?.kind == "BIRTHDAY" }?.event?.title,
@@ -360,7 +360,7 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
             .collect { vm.changed(it) }
     }
 
-    PixelScreen(title, onBack = onBack, actions = { PixelTextButton("⋯", onClick = { menu = true }, look = ButtonLook.Light) }) {
+    PixelScreen(title, onBack = onBack, actions = { PixelTextButton("⋯", onClick = { menu = true }, look = ButtonLook.Plain) }) {
         Column(
             Modifier.weight(1f).fillMaxWidth()
                 .paperSheet(Pal.Cream, m.ui.toFloat())
@@ -414,7 +414,7 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
                     }
                 }
             }
-            reward?.let { PixelText(CatLines.diaryCoins(it.coins, it.streak, it.bonus), style = type.bodyBold, color = Pal.Orange) }
+            reward?.let { PixelText(CatLines.diaryCoins(it.coins, it.streak, it.bonus), style = type.bodyBold, color = Pal.GoldDeep) }
             FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 for (t in tags) PixelChip("#$t", selected = true) { tagging = true }
                 PixelChip(if (tags.isEmpty()) "+ Tag" else "+") { tagging = true }
@@ -437,7 +437,7 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
         PixelDialog(onDismiss = { menu = false }) {
             PixelText("Xoá trang nhật ký này? Nó nằm trong thùng rác 30 ngày.", style = type.body, color = Pal.Ink)
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelTextButton("Thôi", onClick = { menu = false }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+                PixelTextButton("Thôi", onClick = { menu = false }, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
                 PixelTextButton("Xoá", onClick = { menu = false; vm.trash() }, modifier = Modifier.weight(1f))
             }
         }

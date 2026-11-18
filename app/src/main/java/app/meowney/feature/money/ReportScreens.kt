@@ -121,19 +121,26 @@ private fun catLine(score: MonthScore, final: Boolean): String = if (!final) {
 }
 
 @Composable
-fun ReportScreen(vm: ReportViewModel, catColor: Int, onBack: () -> Unit) {
+fun ReportScreen(vm: ReportViewModel, analytics: AnalyticsViewModel, catColor: Int, onBack: () -> Unit, startTab: Int = 0) {
     val s by vm.state.collectAsState()
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
+    var tab by androidx.compose.runtime.saveable.rememberSaveable { mutableIntStateOf(startTab) }
     PixelScreen("Tổng kết", onBack = onBack) {
+        app.meowney.core.ui.SegmentedTabs(listOf("Phiếu điểm", "Phân tích"), tab) { tab = it }
+        Spacer(Modifier.height(m.unit * 4))
+        if (tab == 1) {
+            AnalyticsTab(analytics, Modifier.weight(1f))
+            return@PixelScreen
+        }
         Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            PixelTextButton("<", onClick = { vm.go(1) }, enabled = s.index < s.months.lastIndex, look = ButtonLook.Light)
+            PixelTextButton("<", onClick = { vm.go(1) }, enabled = s.index < s.months.lastIndex, look = ButtonLook.Plain)
             val month = s.months.getOrNull(s.index)
             PixelText(
                 month?.let { "Tháng ${it.monthValue}/${it.year}" + if (s.report?.final == false) " (tạm tính)" else "" } ?: "",
                 style = type.bodyBold, color = Pal.Ink, modifier = Modifier.weight(1f).padding(horizontal = m.unit * 2),
             )
-            PixelTextButton(">", onClick = { vm.go(-1) }, enabled = s.index > 0, look = ButtonLook.Light)
+            PixelTextButton(">", onClick = { vm.go(-1) }, enabled = s.index > 0, look = ButtonLook.Plain)
         }
         Spacer(Modifier.height(m.unit * 2))
         val r = s.report
@@ -151,7 +158,7 @@ fun ReportScreen(vm: ReportViewModel, catColor: Int, onBack: () -> Unit) {
                 }
             }
             if (r.data.byCategory.isNotEmpty()) item {
-                ChartPanel("Chi nhiều nhất") { HBars(r.data.byCategory) { Pal.Orange } }
+                ChartPanel("Chi nhiều nhất") { HBars(r.data.byCategory) { Pal.Gold } }
             }
             item { ChartPanel("Chi theo ngày") { DayChart(r.data) } }
             r.data.mood?.let { mood -> item { ChartPanel("Tâm trạng") { MoodRow(mood) } } }
@@ -182,7 +189,9 @@ private fun GradeCard(r: MonthReport, catColor: Int) {
                 "Để dành được", score.saving,
                 if (d.planned > 0) "${formatVndShort(d.saved)} / ${formatVndShort(d.planned)} dự tính" else "chưa có khoản thu nào",
             )
-            Criterion("Giữ trong hạn mức", score.limit, if (d.statDays > 0) "${d.daysWithin}/${d.statDays} ngày không vượt" else "chưa có ngày nào")
+            score.limit?.let { limit ->
+                Criterion("Giữ trong hạn mức", limit, if (d.statDays > 0) "${d.daysWithin}/${d.statDays} ngày không vượt" else "chưa có ngày nào")
+            }
             Criterion(
                 "Không nợ lọ", score.noDebt,
                 when {
@@ -196,10 +205,10 @@ private fun GradeCard(r: MonthReport, catColor: Int) {
 }
 
 private fun gradeColor(g: String) = when (g) {
-    "S" -> Pal.Gold
-    "A" -> Pal.Green
-    "B" -> Pal.Sky
-    else -> Pal.Orange
+    "S" -> Pal.GoldDeep
+    "A" -> Pal.GreenDeep
+    "B" -> Pal.SkyDeep
+    else -> Pal.InkSoft
 }
 
 @Composable
@@ -210,7 +219,7 @@ private fun Criterion(label: String, value: Float, detail: String) {
             PixelText(label, style = type.bodyBold, modifier = Modifier.weight(1f))
             PixelText("${(value * 100).toInt()}%", style = type.bodyBold)
         }
-        PixelProgress(value, color = if (value >= 0.75f) Pal.Green else if (value >= 0.5f) Pal.Gold else Pal.Orange)
+        PixelProgress(value, color = if (value >= 0.75f) Pal.Green else if (value >= 0.5f) Pal.Gold else Pal.Red)
         PixelText(detail, style = type.caption, color = Pal.InkSoft)
     }
 }
@@ -230,7 +239,7 @@ private fun ChestRow(r: MonthReport, justClaimed: Int, onOpen: () -> Unit) {
             Spacer(Modifier.width(m.unit * 3))
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                 if (r.claimed) {
-                    PixelText(if (justClaimed > 0) "+$justClaimed xu!" else "Đã nhận $coins xu", style = type.title, color = Pal.Gold)
+                    PixelText(if (justClaimed > 0) "+$justClaimed xu!" else "Đã nhận $coins xu", style = type.title, color = Pal.GoldDeep)
                     PixelText("Xu để dành mua đồ cho Hoàng thượng.", style = type.caption, color = Pal.InkSoft)
                 } else {
                     PixelText("Rương thưởng hạng ${r.data.score.grade}", style = type.bodyBold, color = Pal.Ink)
@@ -247,9 +256,9 @@ private fun Totals(d: ReportData) {
     val type = LocalPixelType.current
     Row(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         for ((label, value, color) in listOf(
-            Triple("Thu", d.income, Pal.Green),
+            Triple("Thu", d.income, Pal.GreenDeep),
             Triple("Chi", d.expense, Pal.Ink),
-            Triple("Để dành", d.saved, Pal.Gold),
+            Triple("Để dành", d.saved, Pal.GoldDeep),
         )) {
             Column(Modifier.weight(1f)) {
                 PixelText(label, style = type.caption, color = Pal.InkSoft)
@@ -263,7 +272,7 @@ private fun Totals(d: ReportData) {
 private fun ChartPanel(title: String, content: @Composable () -> Unit) {
     val m = LocalPixelMetrics.current
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-        PixelText(title.uppercase(), style = LocalPixelType.current.bodyBold, color = Pal.Gold)
+        PixelText(title.uppercase(), style = LocalPixelType.current.bodyBold, color = Pal.GoldDeep)
         content()
     }
 }
@@ -336,12 +345,12 @@ private fun DayChart(d: ReportData) {
             val col = ((size.width / u).toInt() / n).coerceAtLeast(2) // art pixels per day incl. gap
             val left = ((size.width / u).toInt() - col * n) / 2 * u
             val floor = size.height - u
-            drawRect(Pal.WoodDark, Offset(0f, floor), Size(size.width, u))
+            drawRect(Pal.Line, Offset(0f, floor), Size(size.width, u))
             d.byDay.forEachIndexed { i, v ->
                 val x = left + i * col * u
                 if (v > 0) {
                     val h = ((v.toFloat() / max) * 38).toInt().coerceAtLeast(1) * u
-                    drawRect(if (i == peak) Pal.Orange else Pal.Sky, Offset(x, floor - h), Size((col - 1) * u, h))
+                    drawRect(if (i == peak) Pal.Gold else Pal.Sky, Offset(x, floor - h), Size((col - 1) * u, h))
                 } else if (i in start..today) {
                     drawRect(Pal.Green, Offset(x, floor - u), Size((col - 1) * u, u)) // a no-spend day
                 }
@@ -350,7 +359,7 @@ private fun DayChart(d: ReportData) {
         Row {
             PixelText("1", style = type.caption, color = Pal.InkSoft, modifier = Modifier.weight(1f))
             if (d.byDay.getOrNull(peak) ?: 0 > 0) {
-                PixelText("nhiều nhất: ngày ${peak + 1} · ${formatVndShort(d.byDay[peak])}", style = type.caption, color = Pal.Orange)
+                PixelText("nhiều nhất: ngày ${peak + 1} · ${formatVndShort(d.byDay[peak])}", style = type.caption, color = Pal.GoldDeep)
             }
             PixelText("  ${d.byDay.size}", style = type.caption, color = Pal.InkSoft)
         }

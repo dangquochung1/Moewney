@@ -4,7 +4,6 @@ import kotlin.random.Random
 
 /** What the cat knows about the day when it picks a question for the diary page. */
 data class PromptContext(
-    val overspent: Boolean = false,
     val spent: Long = 0,
     val allHabitsDone: Boolean = false,
     val birthday: String? = null,
@@ -57,8 +56,7 @@ object DiaryPrompts {
         if (ctx.yesterdayMood != null && ctx.yesterdayMood <= 2) {
             add("Hôm qua Sen hơi buồn. Hôm nay đỡ hơn chưa?")
         }
-        if (ctx.overspent) add("Hôm nay Sen tiêu hơi mạnh tay đấy. Mua gì vui không?")
-        else if (ctx.spent == 0L) add("Hôm nay Sen chưa tiêu đồng nào. Ngày tiết kiệm có vui không?")
+        if (ctx.spent == 0L) add("Hôm nay Sen chưa tiêu đồng nào. Ngày tiết kiệm có vui không?")
         if (ctx.allHabitsDone) add("Xong hết thói quen rồi! Sen thấy trong người thế nào?")
         ctx.firstEvent?.let { add("Hôm nay có \"$it\". Mọi chuyện ra sao rồi?") }
         if (ctx.todosDone >= 3) add("Sen làm xong ${ctx.todosDone} việc hôm nay. Việc nào khó nhất?")
