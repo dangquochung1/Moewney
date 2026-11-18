@@ -25,7 +25,7 @@ import kotlin.math.roundToInt
  * own colours.
  */
 object Pal {
-    val LemonCream = Color(0xFFFFF6D6)
+    val LemonCream = Color(0xFFD6E4FA)
     val CoralReef = Color(0xFFFFB5A7)
     val OceanMist = Color(0xFFB7DCD6)
     val MorningSky = Color(0xFFD6E4FA)
