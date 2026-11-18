@@ -89,7 +89,7 @@ fun DebtsScreen(vm: DebtsViewModel, onBack: () -> Unit) {
         }
         PixelText(
             "Còn ${formatVnd(open.sumOf { it.left })} · ${open.size} người",
-            style = type.title, color = Pal.Gold, modifier = Modifier.padding(vertical = m.unit * 2),
+            style = type.title, color = Pal.GoldDeep, modifier = Modifier.padding(vertical = m.unit * 2),
         )
         LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             if (shown.isEmpty()) {
@@ -121,9 +121,9 @@ fun DebtsScreen(vm: DebtsViewModel, onBack: () -> Unit) {
                     paying = null
                 }, modifier = Modifier.fillMaxWidth())
             } else {
-                PixelText("Đã trả xong.", style = type.body, color = Pal.Green)
+                PixelText("Đã trả xong.", style = type.body, color = Pal.GreenDeep)
             }
-            PixelTextButton("Xoá khoản này", onClick = { vm.delete(d); paying = null }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Xoá khoản này", onClick = { vm.delete(d); paying = null }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         }
     }
 
@@ -151,7 +151,7 @@ private fun DebtCard(d: DebtRow, modifier: Modifier) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelText(d.person, style = type.bodyBold, modifier = Modifier.weight(1f), maxLines = 1)
-                PixelText(if (d.settledDay != null) "xong" else "còn ${formatVndShort(d.left)}", style = type.bodyBold, color = if (d.settledDay != null) Pal.Green else Pal.Ink)
+                PixelText(if (d.settledDay != null) "xong" else "còn ${formatVndShort(d.left)}", style = type.bodyBold, color = if (d.settledDay != null) Pal.GreenDeep else Pal.Ink)
             }
             PixelProgress(fraction = d.paid.toFloat() / d.principal.coerceAtLeast(1), color = Pal.Sky)
             val bits = listOfNotNull(
@@ -202,9 +202,9 @@ private fun NewDebtDialog(
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelText("Hạn trả", style = type.body, modifier = Modifier.weight(1f))
-            PixelTextButton("-", onClick = { dueWeeks = (dueWeeks - 1).coerceAtLeast(0) }, look = ButtonLook.Light)
+            PixelTextButton("-", onClick = { dueWeeks = (dueWeeks - 1).coerceAtLeast(0) }, look = ButtonLook.Plain)
             PixelText(if (dueWeeks == 0) "không" else "$dueWeeks tuần", style = type.bodyBold)
-            PixelTextButton("+", onClick = { dueWeeks = (dueWeeks + 1).coerceAtMost(104) }, look = ButtonLook.Light)
+            PixelTextButton("+", onClick = { dueWeeks = (dueWeeks + 1).coerceAtMost(104) }, look = ButtonLook.Plain)
         }
         PixelTextField(note, { note = it.take(40) }, Modifier.fillMaxWidth(), placeholder = "Ghi chú")
         PixelTextButton("Lưu", enabled = person.isNotBlank() && amount.value > 0 && wallet != 0L && jar != 0L, onClick = {

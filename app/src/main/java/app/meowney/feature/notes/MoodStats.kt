@@ -67,9 +67,9 @@ fun MoodStatsScreen(vm: MoodStatsViewModel, onBack: () -> Unit) {
     PixelScreen("Tâm trạng", onBack = onBack) {
         Column(Modifier.weight(1f).verticalScroll(rememberScrollState()), verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                PixelTextButton("<", onClick = { vm.shift(-1) }, look = ButtonLook.Light)
+                PixelTextButton("<", onClick = { vm.shift(-1) }, look = ButtonLook.Plain)
                 PixelText("Tháng ${month.monthValue}/${month.year}", style = type.bodyBold, color = Pal.Ink, align = TextAlign.Center, modifier = Modifier.weight(1f))
-                PixelTextButton(">", onClick = { vm.shift(1) }, look = ButtonLook.Light)
+                PixelTextButton(">", onClick = { vm.shift(1) }, look = ButtonLook.Plain)
             }
             val (s, days) = data ?: return@Column
             PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
@@ -117,7 +117,7 @@ private fun insight(s: MoodMonth): String? = when {
     s.habitsGood != null && s.habitsBad != null && s.habitsGood >= s.habitsBad + 20 ->
         "Ngày làm đủ thói quen thì Sen vui hơn hẳn. Trẫm nói rồi mà."
     s.spentGood != null && s.spentBad != null && s.spentGood > s.spentBad * 13 / 10 ->
-        "Ngày vui Sen chịu chi hơn. Vui là được, nhưng nhớ hạn mức nhé."
+        "Ngày vui Sen chịu chi hơn. Vui là được, miễn đừng quá tay nhé."
     else -> null
 }
 

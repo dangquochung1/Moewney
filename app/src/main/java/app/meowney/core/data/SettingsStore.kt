@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.longPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import app.meowney.core.habit.Phase
 import app.meowney.core.habit.PomodoroConfig
@@ -19,7 +20,7 @@ data class Settings(
     val onboarded: Boolean = false,
     val catName: String = "Mít",
     val catColor: Int = 5,
-    /** 0 = calendar month, 1..28 = payday of the month. */
+    /** Unused since the daily allowance was removed; kept so old backups still restore. */
     val payday: Int = 0,
     val reminderOn: Boolean = true,
     /** Minutes after midnight, default 21:00. */
@@ -37,6 +38,10 @@ data class Settings(
     val lastBackupDay: Long? = null,
     val lastBackupNudgeDay: Long? = null,
     val lastIntroDay: Long? = null,
+    /** Kinds of cat message ([app.meowney.core.notify.CatTone] names) Sen turned off. */
+    val mutedTones: Set<String> = emptySet(),
+    /** The last day the app was opened, for "đang buồn" after two days away. */
+    val lastOpenDay: Long? = null,
 )
 
 val Context.settingsDataStore by preferencesDataStore(name = "settings")
@@ -57,6 +62,8 @@ class SettingsStore(private val context: Context) {
         val lastBackupDay = longPreferencesKey("last_backup_day")
         val lastBackupNudgeDay = longPreferencesKey("last_backup_nudge_day")
         val lastIntroDay = longPreferencesKey("last_intro_day")
+        val mutedTones = stringSetPreferencesKey("muted_tones")
+        val lastOpenDay = longPreferencesKey("last_open_day")
         val pomoFocus = intPreferencesKey("pomo_focus")
         val pomoShort = intPreferencesKey("pomo_short")
         val pomoLong = intPreferencesKey("pomo_long")
@@ -86,6 +93,7 @@ class SettingsStore(private val context: Context) {
             prefs[K.calendarRemindOn] = s.calendarRemindOn
             prefs[K.notesLock] = s.notesLock
             prefs[K.diaryHidePreview] = s.diaryHidePreview
+            prefs[K.mutedTones] = s.mutedTones
         }
     }
 
@@ -137,6 +145,10 @@ class SettingsStore(private val context: Context) {
         }
     }
 
+    suspend fun markOpen(day: Long) {
+        context.settingsDataStore.edit { it[K.lastOpenDay] = day }
+    }
+
     suspend fun markIntro(day: Long) {
         context.settingsDataStore.edit { it[K.lastIntroDay] = day }
     }
@@ -156,5 +168,7 @@ class SettingsStore(private val context: Context) {
         lastBackupDay = this[K.lastBackupDay],
         lastBackupNudgeDay = this[K.lastBackupNudgeDay],
         lastIntroDay = this[K.lastIntroDay],
+        mutedTones = this[K.mutedTones] ?: emptySet(),
+        lastOpenDay = this[K.lastOpenDay],
     )
 }

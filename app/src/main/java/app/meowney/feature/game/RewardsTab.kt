@@ -56,7 +56,7 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
             )
         }
         if (open.isNotEmpty()) {
-            item { PixelText("PHIẾU CỦA SEN", style = type.caption, color = Pal.Gold) }
+            item { PixelText("PHIẾU CỦA SEN", style = type.caption, color = Pal.GoldDeep) }
             items(open, key = { "v${it.id}" }) { v ->
                 PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
                     Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
@@ -69,7 +69,7 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
                 }
             }
         }
-        item { PixelText("PHẦN THƯỞNG", style = type.caption, color = Pal.Gold) }
+        item { PixelText("PHẦN THƯỞNG", style = type.caption, color = Pal.GoldDeep) }
         if (rewards.isEmpty()) {
             item { PixelText("Chưa có phần thưởng nào. Thử \"Trà sữa\" 300 xu, \"Xem phim\" 1.000 xu...", style = type.body, color = Pal.InkSoft) }
         }
@@ -85,7 +85,7 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
             }
         }
         item {
-            PixelTextButton("+ Thêm phần thưởng", onClick = { editing = RealRewardEntity(name = "", coins = 300) }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("+ Thêm phần thưởng", onClick = { editing = RealRewardEntity(name = "", coins = 300) }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         }
         if (used.isNotEmpty()) {
             item { PixelText("ĐÃ DÙNG", style = type.caption, color = Pal.InkSoft) }
@@ -103,7 +103,7 @@ fun RewardsTab(vm: GiftViewModel, onUse: (VoucherEntity) -> Unit) {
             PixelText("Đổi ${r.coins} xu lấy \"${r.name}\"?", style = type.bodyBold, color = Pal.Ink)
             PixelText("Phiếu nằm trong mục Phiếu của Sen, dùng lúc nào cũng được.", style = type.caption, color = Pal.InkSoft)
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelTextButton("Thôi", onClick = { confirm = null }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+                PixelTextButton("Thôi", onClick = { confirm = null }, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
                 PixelTextButton("Đổi", onClick = { vm.redeem(r); confirm = null }, modifier = Modifier.weight(1f))
             }
         }
@@ -140,7 +140,7 @@ private fun RewardEditDialog(vm: GiftViewModel, r: RealRewardEntity, onDismiss: 
             }
         }
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-            if (r.id != 0L) PixelTextButton("Xoá", onClick = { vm.archiveReward(r); onDismiss() }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+            if (r.id != 0L) PixelTextButton("Xoá", onClick = { vm.archiveReward(r); onDismiss() }, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
             PixelTextButton("Lưu", enabled = name.isNotBlank() && (coins.toIntOrNull() ?: 0) > 0, modifier = Modifier.weight(1f), onClick = {
                 vm.saveReward(r.copy(name = name.trim(), coins = coins.toInt(), amount = (amount.toLongOrNull() ?: 0) * 1000, categoryId = category))
                 onDismiss()

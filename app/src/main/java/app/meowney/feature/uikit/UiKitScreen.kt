@@ -75,7 +75,7 @@ fun UiKitScreen(onBack: () -> Unit) {
     ) {
         item(span = { GridItemSpan(maxLineSpan) }) {
             Row(verticalAlignment = Alignment.CenterVertically) {
-                PixelTextButton("< Phòng", onClick = onBack, look = ButtonLook.Light)
+                PixelTextButton("< Phòng", onClick = onBack, look = ButtonLook.Plain)
                 PixelText("  Xưởng UI", style = type.title, color = Pal.Ink)
             }
         }
@@ -96,7 +96,7 @@ fun UiKitScreen(onBack: () -> Unit) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                         PixelTextButton("Ghi chi", onClick = {})
-                        PixelTextButton("Huỷ", onClick = {}, look = ButtonLook.Light)
+                        PixelTextButton("Huỷ", onClick = {}, look = ButtonLook.Plain)
                         PixelTextButton("Khoá", onClick = {}, enabled = false)
                     }
                     PixelCheckbox(checked, { checked = it }, label = "Hôm nay Sen không tiêu gì")
@@ -113,7 +113,7 @@ fun UiKitScreen(onBack: () -> Unit) {
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalAlignment = Alignment.CenterVertically) {
                 PixelText("Mèo:", color = Pal.Ink)
                 (1..6).forEach { c ->
-                    PixelTextButton("$c", onClick = { catColor = c }, look = if (c == catColor) ButtonLook.Orange else ButtonLook.Light)
+                    PixelTextButton("$c", onClick = { catColor = c }, look = if (c == catColor) ButtonLook.Primary else ButtonLook.Plain)
                 }
             }
         }
@@ -121,7 +121,7 @@ fun UiKitScreen(onBack: () -> Unit) {
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalAlignment = Alignment.CenterVertically) {
                 PixelText("Mũ:", color = Pal.Ink)
                 listOf(null, "antlers", "santa", "santa2").forEach { h ->
-                    PixelTextButton(h ?: "—", onClick = { hat = h }, look = if (h == hat) ButtonLook.Orange else ButtonLook.Light)
+                    PixelTextButton(h ?: "—", onClick = { hat = h }, look = if (h == hat) ButtonLook.Primary else ButtonLook.Plain)
                 }
             }
         }

@@ -143,12 +143,6 @@ interface PlanDao {
 
     // ------------------------------------------------------------------ stats & reports
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun upsertDayStat(s: DayStatEntity)
-
-    @Query("SELECT * FROM day_stat WHERE day BETWEEN :from AND :to ORDER BY day")
-    suspend fun dayStats(from: Long, to: Long): List<DayStatEntity>
-
     @Query("SELECT * FROM month_report WHERE yyyymm = :yyyymm")
     suspend fun report(yyyymm: Int): MonthReportEntity?
 

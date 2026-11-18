@@ -6,7 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.outlined.CheckCircle
+import androidx.compose.foundation.border
 import androidx.compose.material.icons.outlined.DateRange
 import androidx.compose.material3.Icon
 import androidx.compose.ui.draw.clip
@@ -198,15 +201,15 @@ fun HomeScreen(
         PixelDialog(onDismiss = { counting = null }) {
             PixelText(h.habit.name, style = LocalPixelType.current.title)
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelButton(onClick = { value = (value - 1).coerceAtLeast(0) }, look = ButtonLook.Light) { PixelText("-", style = LocalPixelType.current.title) }
+                PixelButton(onClick = { value = (value - 1).coerceAtLeast(0) }, look = ButtonLook.Plain) { PixelText("-", style = LocalPixelType.current.title) }
                 PixelText("$value / ${h.habit.target} ${h.habit.unit}", style = LocalPixelType.current.title, modifier = Modifier.weight(1f), align = TextAlign.Center)
-                PixelButton(onClick = { value += 1 }, look = ButtonLook.Light) { PixelText("+", style = LocalPixelType.current.title) }
+                PixelButton(onClick = { value += 1 }, look = ButtonLook.Plain) { PixelText("+", style = LocalPixelType.current.title) }
             }
             PixelButton(onClick = {
                 actions.onHabitCount(h, value)
                 counting = null
             }, modifier = Modifier.fillMaxWidth()) {
-                PixelText("Lưu", style = LocalPixelType.current.title, color = Pal.Cream)
+                PixelText("Lưu", style = LocalPixelType.current.title, color = Pal.OnPrimary)
             }
         }
     }
@@ -221,7 +224,7 @@ fun HomeScreen(
                 if (amount.value > 0) actions.onPayBill(bill, amount.value)
                 paying = null
             }, modifier = Modifier.fillMaxWidth()) {
-                PixelText("Đã trả", style = LocalPixelType.current.title, color = Pal.Cream)
+                PixelText("Đã trả", style = LocalPixelType.current.title, color = Pal.OnPrimary)
             }
         }
     }
@@ -260,7 +263,7 @@ fun HomeScreen(
     ) {
         val maxWidth = constraints.maxWidth
         val scale = stageScale(maxWidth, constraints.maxHeight, corner.circle.diameter)
-        Column(Modifier.fillMaxSize().padding(horizontal = m.unit * 2)) {
+        Column(Modifier.fillMaxSize().padding(horizontal = m.unit * 6)) {
             Hud(state.coins, zoomSettings, actions.onSettings, actions.onShop)
             Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
                 CatStage(
@@ -370,16 +373,15 @@ private fun Hud(coins: Long, zoom: ZoomSource, onSettings: () -> Unit, onCoins: 
             )
         }
         Spacer(Modifier.weight(1f))
-        PixelButton(
+        app.meowney.core.ui.RoundIconButton(
+            androidx.compose.material.icons.Icons.Filled.Settings, "Cài đặt",
             onClick = {
                 zoom.mark()
                 onSettings()
             },
-            look = ButtonLook.Light, padded = false, modifier = Modifier.size(m.unit * 14).zoomSource(zoom),
-        ) {
-            RavenIcon(1, scale = m.ui - 1)
-        }
-        Spacer(Modifier.size(m.unit * 2))
+            modifier = Modifier.zoomSource(zoom),
+        )
+        Spacer(Modifier.size(m.unit * 3))
         PixelPanel(Modifier.clickable(onClick = onCoins)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 CoinIcon(atlas)
@@ -410,13 +412,6 @@ private fun CoinIcon(atlas: SpriteAtlas) {
 
 // ------------------------------------------------------------------ channels
 
-private val NavPastel = mapOf(
-    Toy.Money to Color(0xFFD7EBF8),
-    Toy.Habits to Color(0xFFD9F3DF),
-    Toy.Calendar to Color(0xFFFDE7C2),
-    Toy.Notes to Color(0xFFF8D6E4),
-    Toy.Gift to Color(0xFFE7D6F6),
-)
 
 @Composable
 private fun NavRow(
@@ -432,8 +427,8 @@ private fun NavRow(
 ) {
     val m = LocalPixelMetrics.current
     Row(
-        Modifier.fillMaxWidth().padding(vertical = m.unit * 2),
-        horizontalArrangement = Arrangement.SpaceEvenly,
+        Modifier.fillMaxWidth().padding(vertical = m.unit * 4),
+        horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.Top,
     ) {
         for (toy in Toy.entries) {
@@ -471,14 +466,14 @@ private fun NavButton(toy: Toy, badge: String?, modifier: Modifier = Modifier, o
         Box(contentAlignment = Alignment.Center) {
             Box(
                 Modifier
-                    .size(m.unit * 16)
+                    .size(m.unit * 30)
                     .clip(CircleShape)
-                    .background(NavPastel.getValue(toy))
+                    .background(Pal.GreenTint)
                     .offset(y = if (pressed) m.unit else m.dp(0)),
                 contentAlignment = Alignment.Center,
             ) {
-                val tint = Pal.Ink.copy(alpha = if (pressed) 0.7f else 1f)
-                val iconSize = Modifier.size(m.unit * 8)
+                val tint = Pal.GreenDeep.copy(alpha = if (pressed) 0.7f else 1f)
+                val iconSize = Modifier.size(m.unit * 15)
                 when (toy) {
                     Toy.Money -> Icon(painterResource(R.drawable.ic_nav_wallet), null, iconSize, tint)
                     Toy.Habits -> Icon(Icons.Outlined.CheckCircle, null, iconSize, tint)
@@ -489,14 +484,14 @@ private fun NavButton(toy: Toy, badge: String?, modifier: Modifier = Modifier, o
             }
             if (badge != null) {
                 Box(
-                    Modifier.align(Alignment.TopEnd).offset(x = m.unit, y = -m.unit).size(m.unit * 6).background(Pal.Red),
+                    Modifier.align(Alignment.TopEnd).offset(x = m.unit, y = -m.unit).size(m.unit * 7).background(Pal.Red, CircleShape),
                     contentAlignment = Alignment.Center,
                 ) {
                     PixelText(badge, style = type.caption, color = Pal.Card, align = TextAlign.Center, maxLines = 1)
                 }
             }
         }
-        PixelText(toy.label, style = type.caption, color = if (pressed) Pal.Orange else Pal.Ink, align = TextAlign.Center)
+        PixelText(toy.label, style = type.caption, color = if (pressed) Pal.GoldDeep else Pal.Ink, align = TextAlign.Center)
     }
 }
 
@@ -521,8 +516,8 @@ private fun TodayPanel(
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     Column(
-        modifier.fillMaxWidth().verticalScroll(rememberScrollState()),
-        verticalArrangement = Arrangement.spacedBy(m.unit * 2),
+        modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(bottom = m.unit * 2),
+        verticalArrangement = Arrangement.spacedBy(m.unit * 4),
     ) {
         if (state.billsDue.isNotEmpty()) {
             PixelPanel(Modifier.fillMaxWidth()) {
@@ -534,8 +529,8 @@ private fun TodayPanel(
                                 PixelText(b.name, style = type.bodyBold, maxLines = 1)
                                 PixelText(formatVnd(b.amount), style = type.caption, color = Pal.InkSoft)
                             }
-                            PixelButton(onClick = { onPayBill(b) }, padded = true) { PixelText("Đã trả", style = type.caption, color = Pal.Cream) }
-                            PixelButton(onClick = { onSkipBill(b) }, look = ButtonLook.Light) { PixelText("Bỏ qua", style = type.caption) }
+                            PixelButton(onClick = { onPayBill(b) }, padded = true) { PixelText("Đã trả", style = type.caption, color = Pal.OnPrimary) }
+                            PixelButton(onClick = { onSkipBill(b) }, look = ButtonLook.Plain) { PixelText("Bỏ qua", style = type.caption) }
                         }
                     }
                 }
@@ -572,15 +567,17 @@ private fun TodayPanel(
             }
         }
         PixelButton(onClick = onAdd, modifier = Modifier.fillMaxWidth().zoomSource(addZoom)) {
-            PixelText("+ Ghi chi tiêu", style = type.title, color = Pal.Cream)
+            Icon(Icons.Filled.Add, null, Modifier.size(m.unit * 10), Pal.OnPrimary)
+            Spacer(Modifier.size(m.unit * 2))
+            PixelText("Ghi chi tiêu", style = type.title, color = Pal.OnPrimary)
         }
         if (state.backupDays > 0) {
-            PixelButton(onClick = onSettings, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
+            PixelButton(onClick = onSettings, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Plain) {
                 PixelText("Sao lưu dữ liệu (${state.backupDays} ngày chưa lưu)", style = type.bodyBold, color = Pal.Ink)
             }
         }
         if (state.canClaimNoSpend) {
-            PixelButton(onClick = onNoSpend, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Light) {
+            PixelButton(onClick = onNoSpend, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Plain) {
                 PixelText("Hôm nay Sen không tiêu gì", style = type.bodyBold, color = Pal.Ink)
             }
         }
@@ -591,26 +588,23 @@ private fun TodayPanel(
 @Composable
 private fun TemplateChip(t: QuickTemplate, onClick: () -> Unit, onLongClick: () -> Unit) {
     val type = LocalPixelType.current
-    val atlas = LocalSprites.current
     val m = LocalPixelMetrics.current
-    val art = atlas[if (t.pinned) "ui/wood/button_normal" else "ui/wood/button_hover"]
+    val pill = app.meowney.core.ui.Soft.Pill
     Box(
         Modifier
+            .background(if (t.pinned) Pal.Gold else Pal.Card, pill)
+            .then(if (t.pinned) Modifier else Modifier.border(androidx.compose.ui.unit.Dp(1f), Pal.Line, pill))
+            .clip(pill)
             .combinedClickable(onClick = onClick, onLongClick = onLongClick, role = Role.Button)
-            .drawNine(art, m.ui)
-            .padding(horizontal = m.unit * 4, vertical = m.unit * 2),
+            .padding(horizontal = m.unit * 6, vertical = m.unit * 3),
     ) {
         PixelText(
-            (if (t.pinned) "* " else "") + "${t.label} ${formatVndShort(t.amount)}",
-            style = type.bodyBold,
-            color = if (t.pinned) Pal.Cream else Pal.Ink,
+            "${t.label} ${formatVndShort(t.amount)}",
+            style = if (t.pinned) type.bodyBold else type.body,
+            color = if (t.pinned) Pal.OnPrimary else Pal.Ink,
             maxLines = 1,
         )
     }
-}
-
-private fun Modifier.drawNine(sprite: Sprite, scale: Int) = drawBehind {
-    drawNinePatch(sprite, IntOffset.Zero, IntSize(size.width.toInt(), size.height.toInt()), scale)
 }
 
 // ------------------------------------------------------------------ habits
@@ -630,11 +624,11 @@ private fun HabitsToday(items: List<HabitToday>, actions: HomeActions, onCountEd
         for (part in order) {
             val group = open.filter { it.habit.part == part }
             if (group.isEmpty()) continue
-            PixelText("- ${part.label} -", style = type.caption, color = Pal.Wood)
+            PixelText(part.label, style = type.caption, color = Pal.InkSoft)
             for (h in group) HabitRow(h, actions, onCountEdit)
         }
         if (finished.isNotEmpty()) {
-            PixelText("- Đã xong -", style = type.caption, color = Pal.Wood)
+            PixelText("Đã xong", style = type.caption, color = Pal.InkSoft)
             for (h in finished) HabitRow(h, actions, onCountEdit)
         }
     }
@@ -677,13 +671,13 @@ private fun HabitRow(h: HabitToday, actions: HomeActions, onCountEdit: (HabitTod
         }
         when (habit.kind) {
             HabitType.CHECK -> PixelCheckbox(h.done, onCheckedChange = { actions.onHabitTap(h) })
-            HabitType.COUNT -> PixelButton(onClick = { actions.onHabitTap(h) }, look = if (h.done) ButtonLook.Light else ButtonLook.Orange) {
-                PixelText("+1", style = type.caption, color = if (h.done) Pal.Ink else Pal.Cream)
+            HabitType.COUNT -> PixelButton(onClick = { actions.onHabitTap(h) }, look = if (h.done) ButtonLook.Plain else ButtonLook.Primary) {
+                PixelText("+1", style = type.caption, color = if (h.done) Pal.Ink else Pal.OnPrimary)
             }
-            HabitType.TIMER -> PixelButton(onClick = { actions.onTimer(h) }, look = if (h.done) ButtonLook.Light else ButtonLook.Orange) {
-                PixelText(if (h.done) "xong" else "Bắt đầu", style = type.caption, color = if (h.done) Pal.Ink else Pal.Cream)
+            HabitType.TIMER -> PixelButton(onClick = { actions.onTimer(h) }, look = if (h.done) ButtonLook.Plain else ButtonLook.Primary) {
+                PixelText(if (h.done) "xong" else "Bắt đầu", style = type.caption, color = if (h.done) Pal.Ink else Pal.OnPrimary)
             }
-            HabitType.QUIT -> PixelButton(onClick = { actions.onHabitFailed(h, !h.failed) }, look = ButtonLook.Light) {
+            HabitType.QUIT -> PixelButton(onClick = { actions.onHabitFailed(h, !h.failed) }, look = ButtonLook.Plain) {
                 PixelText(if (h.failed) "Hoàn tác" else "Lỡ rồi", style = type.caption)
             }
         }
@@ -700,7 +694,7 @@ private fun ChallengeToday(v: app.meowney.core.data.ChallengeView, actions: Home
         PixelText("THỬ THÁCH THÁNG", style = type.caption, color = Pal.InkSoft)
         val p = v.picked
         if (p == null) {
-            PixelText("Chọn thử thách tháng này >", style = type.bodyBold, color = Pal.Orange)
+            PixelText("Chọn thử thách tháng này >", style = type.bodyBold, color = Pal.GoldDeep)
         } else {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelText(p.label, style = type.bodyBold, modifier = Modifier.weight(1f), maxLines = 1)
@@ -711,7 +705,7 @@ private fun ChallengeToday(v: app.meowney.core.data.ChallengeView, actions: Home
                         app.meowney.core.game.ChallengeEngine.settledAtMonthEnd(p.kind) -> if (v.value >= p.target) "đang giữ" else "lỡ rồi"
                         else -> "${v.value}/${p.target}"
                     },
-                    style = type.caption, color = if (v.done && !v.claimed) Pal.Orange else Pal.InkSoft,
+                    style = type.caption, color = if (v.done && !v.claimed) Pal.GoldDeep else Pal.InkSoft,
                 )
             }
             app.meowney.core.ui.PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Gold, heightPx = 4)

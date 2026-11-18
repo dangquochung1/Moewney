@@ -66,7 +66,7 @@ fun GoalCard(goal: GoalRow, jarName: String, modifier: Modifier = Modifier) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelText(goal.name, style = type.bodyBold, modifier = Modifier.weight(1f), maxLines = 1)
-                PixelText("$pct%", style = type.bodyBold, color = if (pct >= 100) Pal.Green else Pal.Ink)
+                PixelText("$pct%", style = type.bodyBold, color = if (pct >= 100) Pal.GreenDeep else Pal.Ink)
             }
             PixelProgress(fraction = goal.saved.toFloat() / goal.target.coerceAtLeast(1), color = Pal.Green)
             val left = (goal.target - goal.saved).coerceAtLeast(0)
@@ -106,7 +106,7 @@ fun GoalEditDialog(
         PixelTextField(name, { name = it.take(24) }, Modifier.fillMaxWidth(), placeholder = "vd: Laptop")
         PixelTextButton(
             if (target.value == 0L) "Cần bao nhiêu?" else "Cần ${formatVnd(target.value)}",
-            onClick = { typingTarget = !typingTarget }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth(),
+            onClick = { typingTarget = !typingTarget }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth(),
         )
         if (typingTarget) PixelKeypad(onKey = { target = target.press(it) })
         PixelText("Nằm trong lọ", style = type.caption, color = Pal.InkSoft)
@@ -115,16 +115,16 @@ fun GoalEditDialog(
         }
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelText("Tự nạp", style = type.body, modifier = Modifier.weight(1f))
-            PixelTextButton("-", onClick = { auto = (auto - 10).coerceAtLeast(0) }, look = ButtonLook.Light)
+            PixelTextButton("-", onClick = { auto = (auto - 10).coerceAtLeast(0) }, look = ButtonLook.Plain)
             PixelText("$auto%", style = type.bodyBold)
-            PixelTextButton("+", onClick = { auto = (auto + 10).coerceAtMost(100) }, look = ButtonLook.Light)
+            PixelTextButton("+", onClick = { auto = (auto + 10).coerceAtMost(100) }, look = ButtonLook.Plain)
         }
         PixelText("= $auto% phần tiền lọ nhận được mỗi khoản thu", style = type.caption, color = Pal.InkSoft)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelText("Hạn", style = type.body, modifier = Modifier.weight(1f))
-            PixelTextButton("-", onClick = { months = (months - 1).coerceAtLeast(0) }, look = ButtonLook.Light)
+            PixelTextButton("-", onClick = { months = (months - 1).coerceAtLeast(0) }, look = ButtonLook.Plain)
             PixelText(if (months == 0) "không" else "$months tháng", style = type.bodyBold)
-            PixelTextButton("+", onClick = { months = (months + 1).coerceAtMost(120) }, look = ButtonLook.Light)
+            PixelTextButton("+", onClick = { months = (months + 1).coerceAtMost(120) }, look = ButtonLook.Plain)
         }
         PixelTextButton(
             "Lưu",
@@ -207,9 +207,9 @@ fun GoalScreen(vm: GoalViewModel, onBack: () -> Unit) {
     val goal = ui.goal ?: return
     val jarName = ui.jars.firstOrNull { it.jar.id == goal.jarId }?.jar?.name ?: ""
 
-    PixelScreen(goal.name, onBack = onBack, actions = { PixelTextButton("Sửa", onClick = { editing = true }, look = ButtonLook.Light) }) {
+    PixelScreen(goal.name, onBack = onBack, actions = { PixelTextButton("Sửa", onClick = { editing = true }, look = ButtonLook.Plain) }) {
         GoalCard(goal, jarName)
-        message?.let { PixelText(it, style = type.bodyBold, color = Pal.Gold, modifier = Modifier.padding(top = m.unit * 2)) }
+        message?.let { PixelText(it, style = type.bodyBold, color = Pal.GoldDeep, modifier = Modifier.padding(top = m.unit * 2)) }
         PixelText("Phần tự do trong $jarName: ${formatVnd(ui.free)}", style = type.caption, color = Pal.InkSoft, modifier = Modifier.padding(vertical = m.unit * 2))
         if (goal.saved >= goal.target) {
             PixelTextButton("Đã mua — trừ tiền", onClick = { buying = true }, modifier = Modifier.fillMaxWidth())
@@ -217,7 +217,7 @@ fun GoalScreen(vm: GoalViewModel, onBack: () -> Unit) {
         }
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), modifier = Modifier.padding(top = m.unit * 2)) {
             PixelTextButton("Nạp thêm", onClick = { moving = 1 }, enabled = ui.free > 0)
-            PixelTextButton("Rút", onClick = { moving = -1 }, enabled = goal.saved > 0, look = ButtonLook.Light)
+            PixelTextButton("Rút", onClick = { moving = -1 }, enabled = goal.saved > 0, look = ButtonLook.Plain)
         }
         LazyColumn(Modifier.weight(1f).padding(top = m.unit * 2)) {
             items(entries, key = { it.id }) { e ->
@@ -233,11 +233,11 @@ fun GoalScreen(vm: GoalViewModel, onBack: () -> Unit) {
                         )
                         PixelText(dayLabel(LocalDate.ofEpochDay(e.day)), style = type.caption, color = Pal.InkSoft)
                     }
-                    PixelText((if (e.amount > 0) "+" else "") + formatVnd(e.amount), style = type.bodyBold, color = if (e.amount >= 0) Pal.Green else Pal.Ink)
+                    PixelText((if (e.amount > 0) "+" else "") + formatVnd(e.amount), style = type.bodyBold, color = if (e.amount >= 0) Pal.GreenDeep else Pal.Ink)
                 }
             }
         }
-        PixelTextButton("Bỏ mục tiêu — nhả tiền trong lọ", onClick = vm::archive, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth().padding(top = m.unit * 2))
+        PixelTextButton("Bỏ mục tiêu — nhả tiền trong lọ", onClick = vm::archive, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth().padding(top = m.unit * 2))
         PixelText(
             "Tiền vẫn nằm trong lọ. Bỏ chỉ nhả phần đang giữ chỗ, không ghi chi tiêu và không trừ ví.",
             style = type.caption, color = Pal.InkSoft, modifier = Modifier.padding(bottom = m.unit * 2),
@@ -252,7 +252,7 @@ fun GoalScreen(vm: GoalViewModel, onBack: () -> Unit) {
                 style = type.body,
             )
             PixelTextButton("Trừ tiền", onClick = { buying = false; vm.buy() }, modifier = Modifier.fillMaxWidth())
-            PixelTextButton("Để sau", onClick = { buying = false }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Để sau", onClick = { buying = false }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         }
     }
     moving?.let { dir ->
@@ -286,8 +286,8 @@ fun GoalsSection(goals: List<GoalRow>, jars: List<JarState>, onGoal: (Long) -> U
     val type = LocalPixelType.current
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
-            PixelText("MỤC TIÊU", style = type.bodyBold, color = Pal.Gold, modifier = Modifier.weight(1f))
-            PixelTextButton("+ Mục tiêu", onClick = onNew, look = ButtonLook.Light)
+            PixelText("MỤC TIÊU", style = type.bodyBold, color = Pal.GoldDeep, modifier = Modifier.weight(1f))
+            PixelTextButton("+ Mục tiêu", onClick = onNew, look = ButtonLook.Plain)
         }
         if (goals.isEmpty()) PixelText("Đặt một mục tiêu để dành, vd 'Laptop 20tr'.", style = type.caption, color = Pal.InkSoft)
         for (g in goals) {

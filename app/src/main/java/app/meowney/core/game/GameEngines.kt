@@ -176,7 +176,6 @@ object ChallengeEngine {
         val n = inputs.daysInMonth
         val money = listOf(
             ChallengeSpec(LOG_DAYS, n - 5, "Ghi sổ ${n - 5} ngày"),
-            ChallengeSpec(WITHIN_DAYS, 20, "Giữ trong hạn mức 20 ngày"),
             ChallengeSpec(NO_SPEND_DAYS, 3, "3 ngày không tiêu đồng nào"),
             ChallengeSpec(NO_LOANS, 1, "Cả tháng không mượn lọ"),
             ChallengeSpec(SAVE_PLAN, 100, "Để dành đủ như dự tính"),

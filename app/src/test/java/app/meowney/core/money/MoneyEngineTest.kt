@@ -90,51 +90,6 @@ class MoneyEngineTest {
         assertThat(entries.filter { it.jarId == 5L }.sumOf { it.amount }).isEqualTo(-10_000)
     }
 
-    // ------------------------------------------------------------------ period & allowance
-
-    @Test fun calendarMonthPeriod() {
-        val p = MoneyEngine.period(LocalDate.of(2026, 11, 9), payday = 0)
-        assertThat(p).isEqualTo(Period(LocalDate.of(2026, 11, 1), LocalDate.of(2026, 11, 30)))
-        assertThat(p.daysLeft(LocalDate.of(2026, 11, 9))).isEqualTo(22)
-    }
-
-    @Test fun paydayTenthPeriod() {
-        assertThat(MoneyEngine.period(LocalDate.of(2026, 11, 9), payday = 10))
-            .isEqualTo(Period(LocalDate.of(2026, 10, 10), LocalDate.of(2026, 11, 9)))
-        assertThat(MoneyEngine.period(LocalDate.of(2026, 11, 10), payday = 10))
-            .isEqualTo(Period(LocalDate.of(2026, 11, 10), LocalDate.of(2026, 12, 9)))
-        assertThat(MoneyEngine.period(LocalDate.of(2026, 12, 31), payday = 10).end).isEqualTo(LocalDate.of(2027, 1, 9))
-    }
-
-    @Test fun allowanceSpreadsStartOfDayMoneyAndCanGoNegative() {
-        val today = LocalDate.of(2026, 11, 21)
-        val period = MoneyEngine.period(today, 0) // 10 days left
-        val a = MoneyEngine.allowance(today, period, spendingBalanceNow = 1_450_000, spentToday = 50_000)
-        assertThat(a.base).isEqualTo(150_000)
-        assertThat(a.left).isEqualTo(100_000)
-        val over = MoneyEngine.allowance(today, period, spendingBalanceNow = 1_300_000, spentToday = 200_000)
-        assertThat(over.left).isEqualTo(-50_000)
-    }
-
-    @Test fun billsDueThisPeriodAreSetAsideFirst() {
-        val today = LocalDate.of(2026, 11, 21)
-        val period = MoneyEngine.period(today, 0) // 10 days left
-        val plain = MoneyEngine.allowance(today, period, 4_000_000, 0)
-        val withRent = MoneyEngine.allowance(today, period, 4_000_000, 0, reserved = 3_000_000)
-        assertThat(plain.base).isEqualTo(400_000)
-        assertThat(withRent.base).isEqualTo(100_000)
-        // more bills than money: nothing to spend, never a negative base
-        assertThat(MoneyEngine.allowance(today, period, 1_000_000, 0, reserved = 3_000_000).base).isEqualTo(0)
-    }
-
-    @Test fun moneyNotSpentRollsIntoTomorrow() {
-        val period = MoneyEngine.period(LocalDate.of(2026, 11, 21), 0)
-        val day1 = MoneyEngine.allowance(LocalDate.of(2026, 11, 21), period, 1_000_000, 0)
-        // spend nothing; tomorrow the same pool is spread over one day fewer
-        val day2 = MoneyEngine.allowance(LocalDate.of(2026, 11, 22), period, 1_000_000, 0)
-        assertThat(day2.base).isGreaterThan(day1.base)
-    }
-
     // ------------------------------------------------------------------ invariant
 
     /** A tiny in-memory ledger driven only through MoneyEngine. */

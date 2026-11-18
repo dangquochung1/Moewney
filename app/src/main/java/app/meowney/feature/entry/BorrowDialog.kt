@@ -50,7 +50,7 @@ fun BorrowDialog(
                     useSavings = true
                     askSavings = false
                 })
-                PixelTextButton("Thôi", onClick = { askSavings = false }, look = ButtonLook.Light)
+                PixelTextButton("Thôi", onClick = { askSavings = false }, look = ButtonLook.Plain)
             }
             return@PixelDialog
         }
@@ -72,11 +72,11 @@ fun BorrowDialog(
             }
         }
         if (!useSavings && pending.savingsPlan != null) {
-            PixelTextButton("Dùng cả lọ tiết kiệm", onClick = { askSavings = true }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Dùng cả lọ tiết kiệm", onClick = { askSavings = true }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         }
         Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelTextButton("Đồng ý", onClick = { onConfirm(plan) })
-            PixelTextButton("Huỷ", onClick = onDismiss, look = ButtonLook.Light)
+            PixelTextButton("Huỷ", onClick = onDismiss, look = ButtonLook.Plain)
         }
     }
 }

@@ -50,14 +50,25 @@ class PlanEnginesTest {
     private fun numbers(logged: Int = 30, saved: Long = 2_000_000, within: Int = 30, loans: Boolean = false, negative: Boolean = false) =
         MonthNumbers(30, logged, saved, 2_000_000, 30, within, loans, negative)
 
-    @Test fun reportGrades() {
+    @Test fun reportGradesWithoutTheDailyLimit() {
         assertThat(ReportEngine.score(numbers()).grade).isEqualTo("S")
-        assertThat(ReportEngine.score(numbers(logged = 24, within = 24)).grade).isEqualTo("S") // (.8 + 1 + .8 + 1) / 4 = .9
-        assertThat(ReportEngine.score(numbers(logged = 21, within = 24)).grade).isEqualTo("A") // (.7 + 1 + .8 + 1) / 4 = .875
-        assertThat(ReportEngine.score(numbers(logged = 15, within = 20, loans = true)).grade).isEqualTo("B")
-        assertThat(ReportEngine.score(numbers(logged = 3, saved = 0, within = 5, negative = true)).grade).isEqualTo("C")
-        assertThat(ReportEngine.score(numbers(logged = 3, saved = 0, within = 5, negative = true)).coins).isEqualTo(50)
-        // nothing planned / no stats counts as done, so a new user is not punished
+        assertThat(ReportEngine.score(numbers()).limit).isNull()
+        // days over an old daily limit no longer count: (.8 + 1 + 1) / 3 = .93
+        assertThat(ReportEngine.score(numbers(logged = 24, within = 0)).grade).isEqualTo("S")
+        assertThat(ReportEngine.score(numbers(logged = 21)).grade).isEqualTo("S") // (.7 + 1 + 1) / 3 = .9
+        assertThat(ReportEngine.score(numbers(logged = 15, loans = true)).grade).isEqualTo("B") // (.5 + 1 + .5) / 3 = .67
+        assertThat(ReportEngine.score(numbers(logged = 3, saved = 0, negative = true)).grade).isEqualTo("C")
+        assertThat(ReportEngine.score(numbers(logged = 3, saved = 0, negative = true)).coins).isEqualTo(50)
+        // nothing planned counts as done, so a new user is not punished
         assertThat(ReportEngine.score(MonthNumbers(30, 30, 0, 0, 0, 0, false, false)).grade).isEqualTo("S")
+    }
+
+    @Test fun cardsKeptUnderTheOldRuleKeepTheirGrade() {
+        assertThat(ReportEngine.score(numbers(), rule = 1).grade).isEqualTo("S")
+        assertThat(ReportEngine.score(numbers(logged = 24, within = 24), rule = 1).grade).isEqualTo("S") // (.8 + 1 + .8 + 1) / 4 = .9
+        assertThat(ReportEngine.score(numbers(logged = 21, within = 24), rule = 1).grade).isEqualTo("A") // (.7 + 1 + .8 + 1) / 4 = .875
+        assertThat(ReportEngine.score(numbers(logged = 15, within = 20, loans = true), rule = 1).grade).isEqualTo("B")
+        assertThat(ReportEngine.score(numbers(logged = 3, saved = 0, within = 5, negative = true), rule = 1).grade).isEqualTo("C")
+        assertThat(ReportEngine.score(numbers(logged = 24, within = 24), rule = 1).limit).isEqualTo(0.8f)
     }
 }

@@ -125,12 +125,12 @@ fun WakeIntro(full: Boolean, catColor: Int, greeting: String?, onDone: () -> Uni
 }
 
 /** What the cat says when it wakes up. */
-fun wakeGreeting(hour: Int, catName: String, left: Long?, leftText: (Long) -> String): String {
+fun wakeGreeting(hour: Int, catName: String): String {
     val hello = when (hour) {
         in 5..10 -> "Chào buổi sáng Sen!"
         in 11..13 -> "Trưa rồi Sen ơi!"
         in 14..17 -> "Chiều rồi đó Sen!"
         else -> "Sen về rồi à!"
     }
-    return if (left == null) "$hello $catName dậy rồi nè." else "$hello Hôm nay còn ${leftText(left)}."
+    return "$hello $catName dậy rồi nè."
 }

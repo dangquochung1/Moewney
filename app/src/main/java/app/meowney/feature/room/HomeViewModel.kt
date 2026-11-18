@@ -44,9 +44,7 @@ data class HomeState(
     val catName: String = "Mít",
     val catColor: Int = 5,
     val coins: Long = 0,
-    val leftToday: Long = 0,
     val spentToday: Long = 0,
-    val jarLevel: Float = 0f,
     val mood: Mood = Mood.Calm,
     val hasLoans: Boolean = false,
     val canClaimNoSpend: Boolean = false,
@@ -54,8 +52,6 @@ data class HomeState(
     val jarNames: Map<Long, String> = emptyMap(),
     /** Recurring bills due today or overdue. */
     val billsDue: List<RecurringEntity> = emptyList(),
-    /** Money set aside for bills due before the period ends. */
-    val reserved: Long = 0,
     /** Days since the last backup when it is 7 or more, else 0. */
     val backupDays: Int = 0,
     /** The cat already reminded about the backup today. */
@@ -92,7 +88,7 @@ data class HomeState(
 val HomeState.habitLevel: Float?
     get() = if (habits.isEmpty()) null else habits.count { it.done }.toFloat() / habits.size
 
-private data class DayNumbers(val spent: Long, val count: Int, val noSpendClaims: Int, val allocated: Long)
+private data class DayNumbers(val spent: Long, val count: Int, val noSpendClaims: Int)
 
 @OptIn(ExperimentalCoroutinesApi::class, kotlinx.coroutines.FlowPreview::class)
 class HomeViewModel(private val c: AppContainer) : ViewModel() {
@@ -113,7 +109,6 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
     val state: StateFlow<HomeState> = combine(today, c.settings.flow, money.jarStates) { d, s, jars -> Triple(d, s, jars) }
         .flatMapLatest { (day, settings, jars) ->
             val spendIds = jars.filter { it.code == JarCode.NEC || it.code == JarCode.PLAY }.map { it.jar.id }
-            val period = MoneyEngine.period(day, settings.payday)
             // never backed up: count from the first entry
             val backupSince = settings.lastBackupDay ?: c.db.reports().firstDay() ?: day.toEpochDay()
             val backupDays = (day.toEpochDay() - backupSince).toInt().takeIf { it >= 7 } ?: 0
@@ -121,8 +116,7 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                 money.spentOn(day, spendIds),
                 money.countOn(day),
                 money.noSpendClaims(day),
-                money.allocatedSince(period.start, spendIds),
-            ) { spent, count, claims, allocated -> DayNumbers(spent, count, claims, allocated) }
+            ) { spent, count, claims -> DayNumbers(spent, count, claims) }
             val templates = combine(money.templates, money.frequentExpenses(day.minusDays(60), 8), money.categories) { pinned, frequent, cats ->
                 val names = cats.associate { it.id to it.name }
                 val list = pinned.map { QuickTemplate(it.id, it.label, it.amount, it.categoryId, true) }.toMutableList()
@@ -136,8 +130,7 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
             }
             val moneyState = combine(dayNumbers, templates, money.coins, money.loans, money.recurring) { n, t, coins, loans, bills ->
                 val active = bills.filter { it.active }
-                val reserved = active.filter { it.jarId in spendIds && it.nextDueDay <= period.end.toEpochDay() }.sumOf { it.amount }
-                build(day, settings.catName, settings.catColor, period, jars, spendIds, n, t, coins, loans.isNotEmpty(), reserved)
+                build(settings.catName, settings.catColor, jars, n, t, coins, loans.isNotEmpty())
                     .copy(
                         billsDue = active.filter { it.nextDueDay <= day.toEpochDay() },
                         backupDays = backupDays,
@@ -203,44 +196,29 @@ class HomeViewModel(private val c: AppContainer) : ViewModel() {
                 first = false
             }
         }
-        // remember today's limit for the monthly report card
-        viewModelScope.launch {
-            state.collect { s ->
-                if (s.ready) c.reports.recordDay(LocalDate.now(), s.leftToday + s.spentToday, s.spentToday, s.spentToday > 0)
-            }
-        }
     }
 
     private fun build(
-        day: LocalDate,
         catName: String,
         catColor: Int,
-        period: app.meowney.core.money.Period,
         jars: List<JarState>,
-        spendIds: List<Long>,
         n: DayNumbers,
         templates: List<QuickTemplate>,
         coins: Long,
         hasLoans: Boolean,
-        reserved: Long,
     ): HomeState {
-        val spendingBalance = jars.filter { it.jar.id in spendIds }.sumOf { it.balance }
-        val allowance = MoneyEngine.allowance(day, period, spendingBalance, n.spent, reserved)
-        val full = maxOf(n.allocated, spendingBalance, 1)
+        val negative = jars.any { it.code != JarCode.UNALLOC && it.balance < 0 }
         return HomeState(
             ready = true,
             catName = catName,
             catColor = catColor,
             coins = coins,
-            leftToday = allowance.left,
             spentToday = n.spent,
-            jarLevel = (spendingBalance.toFloat() / full).coerceIn(0f, 1f),
-            mood = MoodEngine.mood(allowance.left, hasLoans, n.count > 0),
+            mood = MoodEngine.mood(negative, hasLoans, n.count > 0),
             hasLoans = hasLoans,
             canClaimNoSpend = n.spent == 0L && n.noSpendClaims == 0,
             templates = templates,
             jarNames = jars.associate { it.jar.id to it.jar.name },
-            reserved = reserved,
         )
     }
 

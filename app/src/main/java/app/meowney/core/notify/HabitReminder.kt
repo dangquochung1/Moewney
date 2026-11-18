@@ -1,17 +1,10 @@
 package app.meowney.core.notify
 
-import android.Manifest
-import android.app.NotificationChannel
-import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
-import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
-import androidx.core.content.ContextCompat
 import androidx.work.CoroutineWorker
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
@@ -19,13 +12,13 @@ import androidx.work.WorkManager
 import androidx.work.WorkerParameters
 import androidx.work.workDataOf
 import app.meowney.MainActivity
-import app.meowney.R
 import app.meowney.container
 import app.meowney.core.data.HabitToday
 import app.meowney.core.data.kind
 import app.meowney.core.habit.HabitType
 import app.meowney.widget.EXTRA_HABIT
 import app.meowney.widget.EXTRA_OPEN
+import app.meowney.widget.OPEN_HABITS
 import app.meowney.widget.OPEN_POMODORO
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -43,19 +36,12 @@ import java.util.concurrent.TimeUnit
 object HabitReminder {
     private const val WORK = "habit_reminder"
     private const val CLOSE_WORK = "habit_close"
-    private const val CHANNEL = "habits"
     private const val KEY_MINUTE = "minute"
     const val ACTION_DONE = "app.meowney.HABIT_DONE"
     const val ACTION_PLUS = "app.meowney.HABIT_PLUS"
     const val EXTRA_ID = "habit_id"
 
     fun notificationId(habitId: Long) = 1_000 + habitId.toInt()
-
-    fun createChannel(context: Context) {
-        val channel = NotificationChannel(CHANNEL, "Nhắc thói quen", NotificationManager.IMPORTANCE_DEFAULT)
-        channel.description = "Giờ nhắc riêng của từng thói quen"
-        context.getSystemService(NotificationManager::class.java).createNotificationChannel(channel)
-    }
 
     /** Waits for the next reminder minute of any active habit (today or later). */
     suspend fun schedule(context: Context) {
@@ -93,54 +79,40 @@ object HabitReminder {
         )
     }
 
-    private fun allowed(context: Context) = Build.VERSION.SDK_INT < 33 ||
-        ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED
-
-    fun notify(context: Context, h: HabitToday) {
-        if (!allowed(context)) return
+    suspend fun notify(context: Context, h: HabitToday) {
         val habit = h.habit
         val id = notificationId(habit.id)
-        val open = PendingIntent.getActivity(
-            context, id,
-            Intent(context, MainActivity::class.java).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP),
-            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-        )
         val text = when (habit.kind) {
-            HabitType.CHECK -> "Đến giờ rồi Sen ơi. Xong thì bấm Xong nha."
-            HabitType.COUNT -> "Mới ${h.value}/${habit.target} ${habit.unit}. Thêm một nha!".replace("  ", " ")
-            HabitType.TIMER -> "${habit.target} phút thôi, trẫm canh giờ cho."
-            HabitType.QUIT -> "Nhớ giữ nha Sen, trẫm tin Sen."
+            HabitType.CHECK -> "Đến giờ \"${habit.name}\" rồi Sen ơi. Xong thì bấm Xong nha."
+            HabitType.COUNT -> "\"${habit.name}\": mới ${h.value}/${habit.target} ${habit.unit}. Thêm một nha!".replace("  ", " ")
+            HabitType.TIMER -> "\"${habit.name}\": ${habit.target} phút thôi, trẫm canh giờ cho."
+            HabitType.QUIT -> "Nhớ giữ \"${habit.name}\" nha Sen, trẫm tin Sen."
         }
-        val b = NotificationCompat.Builder(context, CHANNEL)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
-            .setContentTitle(habit.name)
-            .setContentText(text)
-            .setContentIntent(open)
-            .setAutoCancel(true)
-        fun action(label: String, actionName: String) {
-            val pi = PendingIntent.getBroadcast(
-                context, id * 10 + actionName.length,
-                Intent(context, ActionReceiver::class.java).setAction(actionName).putExtra(EXTRA_ID, habit.id),
-                PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-            )
-            b.addAction(0, label, pi)
-        }
-        when (habit.kind) {
-            HabitType.CHECK -> action("Xong", ACTION_DONE)
-            HabitType.COUNT -> action("+1", ACTION_PLUS)
-            HabitType.TIMER -> b.addAction(
-                0, "Bắt đầu",
-                PendingIntent.getActivity(
-                    context, id * 10 + 7,
-                    Intent(context, MainActivity::class.java)
-                        .putExtra(EXTRA_OPEN, OPEN_POMODORO).putExtra(EXTRA_HABIT, habit.id)
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP),
+        CatNotifier.show(context, id, Nudge(CatTone.HABIT, text), CatNotifier.openIntent(context, id, OPEN_HABITS)) {
+            fun action(label: String, actionName: String) {
+                val pi = PendingIntent.getBroadcast(
+                    context, id * 10 + actionName.length,
+                    Intent(context, ActionReceiver::class.java).setAction(actionName).putExtra(EXTRA_ID, habit.id),
                     PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-                ),
-            )
-            HabitType.QUIT -> Unit
+                )
+                addAction(0, label, pi)
+            }
+            when (habit.kind) {
+                HabitType.CHECK -> action("Xong", ACTION_DONE)
+                HabitType.COUNT -> action("+1", ACTION_PLUS)
+                HabitType.TIMER -> addAction(
+                    0, "Bắt đầu",
+                    PendingIntent.getActivity(
+                        context, id * 10 + 7,
+                        Intent(context, MainActivity::class.java)
+                            .putExtra(EXTRA_OPEN, OPEN_POMODORO).putExtra(EXTRA_HABIT, habit.id)
+                            .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP),
+                        PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
+                    ),
+                )
+                HabitType.QUIT -> Unit
+            }
         }
-        NotificationManagerCompat.from(context).notify(id, b.build())
     }
 
     class Worker(context: Context, params: WorkerParameters) : CoroutineWorker(context, params) {

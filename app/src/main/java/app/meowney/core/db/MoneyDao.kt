@@ -187,10 +187,6 @@ interface MoneyDao {
     @Query("SELECT COUNT(*) FROM txn WHERE day = :day AND type IN ('EXPENSE', 'INCOME', 'TRANSFER')")
     suspend fun countOnNow(day: Long): Int
 
-    /** Allocated into a jar since a day (incomes, opening, repayments) - the "full" level of the coin jar. */
-    @Query("SELECT COALESCE(SUM(amount), 0) FROM jar_entry WHERE day >= :since AND amount > 0 AND kind IN ('ALLOC', 'OPENING') AND jarId IN (:jarIds)")
-    fun allocatedSince(since: Long, jarIds: List<Long>): Flow<Long>
-
     @Query("SELECT * FROM jar_entry WHERE jarId = :jarId ORDER BY day DESC, id DESC LIMIT 200")
     fun entriesOfJar(jarId: Long): Flow<List<JarEntryEntity>>
 

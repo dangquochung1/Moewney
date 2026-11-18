@@ -197,7 +197,7 @@ object PomodoroTimer {
             return
         }
         val b = NotificationCompat.Builder(context, CHANNEL_RUN)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_stat_cat)
             .setContentTitle("Pomodoro · ${phaseLabel(s.phase)}")
             .setContentIntent(openIntent(context, s.habitId))
             .setOngoing(true)
@@ -219,7 +219,7 @@ object PomodoroTimer {
     private fun bell(context: Context, text: String) {
         if (!allowed(context)) return
         val n = NotificationCompat.Builder(context, CHANNEL_BELL)
-            .setSmallIcon(R.drawable.ic_launcher_foreground)
+            .setSmallIcon(R.drawable.ic_stat_cat)
             .setContentTitle("Meowney · Pomodoro")
             .setContentText(text)
             .setContentIntent(openIntent(context, null))

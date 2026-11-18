@@ -73,7 +73,7 @@ fun TrophyTab(vm: GiftViewModel) {
     LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         item {
             val cups = best.values.sum()
-            PixelText("Tủ cúp: ${best.size}/${AchievementEngine.all.size} thành tựu · $cups/${AchievementEngine.all.size * 3} bậc", style = type.bodyBold, color = Pal.Gold)
+            PixelText("Tủ cúp: ${best.size}/${AchievementEngine.all.size} thành tựu · $cups/${AchievementEngine.all.size * 3} bậc", style = type.bodyBold, color = Pal.GoldDeep)
             PixelText("Bậc Đồng / Bạc / Vàng thưởng 20 / 50 / 150 xu.", style = type.caption, color = Pal.InkSoft)
         }
         for (g in AchGroup.entries) {
@@ -95,14 +95,14 @@ private fun TrophyRow(a: Achievement, tier: Int, value: Long?) {
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                 Row {
                     PixelText(a.name, style = type.bodyBold, color = if (tier > 0) Pal.Ink else Pal.InkSoft, modifier = Modifier.weight(1f), maxLines = 1)
-                    if (tier > 0) PixelText(AchievementEngine.TIER_NAMES[tier - 1], style = type.caption, color = if (tier == 1) BRONZE else if (tier == 2) Pal.InkSoft else Pal.Orange)
+                    if (tier > 0) PixelText(AchievementEngine.TIER_NAMES[tier - 1], style = type.caption, color = if (tier == 1) BRONZE else if (tier == 2) Pal.InkSoft else Pal.GoldDeep)
                 }
                 val next = a.tiers.getOrNull(tier)
                 if (next != null) {
                     PixelText(a.text.format(next) + (value?.let { " · $it/$next" } ?: ""), style = type.caption, color = Pal.InkSoft, maxLines = 2)
                     PixelProgress(((value ?: 0).toFloat() / next).coerceIn(0f, 1f), heightPx = 4, color = Pal.Gold)
                 } else {
-                    PixelText(a.text.format(a.tiers.last()) + " · đủ cả 3 bậc!", style = type.caption, color = Pal.Green)
+                    PixelText(a.text.format(a.tiers.last()) + " · đủ cả 3 bậc!", style = type.caption, color = Pal.GreenDeep)
                 }
             }
         }
@@ -136,7 +136,7 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
     val type = LocalPixelType.current
     val atlas = LocalSprites.current
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-        PixelText("THỬ THÁCH THÁNG ${v.month.monthValue}", style = type.caption, color = Pal.Gold)
+        PixelText("THỬ THÁCH THÁNG ${v.month.monthValue}", style = type.caption, color = Pal.GoldDeep)
         val picked = v.picked
         if (picked == null) {
             PixelText("Trẫm có 3 gợi ý, Sen chọn 1 nhé (chọn rồi không đổi được):", style = type.body, color = Pal.Ink)
@@ -181,7 +181,7 @@ private fun QuestCard(q: QuestView, vm: GiftViewModel) {
     val type = LocalPixelType.current
     val reward = Catalog[q.quest.rewardItem]
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-        PixelText("NHIỆM VỤ ${q.quest.season.label.uppercase()}", style = type.caption, color = Pal.Gold)
+        PixelText("NHIỆM VỤ ${q.quest.season.label.uppercase()}", style = type.caption, color = Pal.GoldDeep)
         PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
                 reward?.let { ItemIcon(it, m.unit * 22) }
@@ -195,6 +195,6 @@ private fun QuestCard(q: QuestView, vm: GiftViewModel) {
                 }
             }
         }
-        if (q.done && !q.claimed) PixelTextButton("Nhận ${reward?.name}", onClick = { vm.claimQuest() }, look = ButtonLook.Orange, modifier = Modifier.fillMaxWidth())
+        if (q.done && !q.claimed) PixelTextButton("Nhận ${reward?.name}", onClick = { vm.claimQuest() }, look = ButtonLook.Primary, modifier = Modifier.fillMaxWidth())
     }
 }

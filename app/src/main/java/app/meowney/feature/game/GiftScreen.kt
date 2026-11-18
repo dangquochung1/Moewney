@@ -451,7 +451,7 @@ private fun ShopCell(title: String, price: Int?, note: String?, affordable: Bool
             icon()
             PixelText(title, style = type.caption, color = Pal.Ink, align = TextAlign.Center, maxLines = 2)
             when {
-                note != null && price == null -> PixelText(note, style = type.caption, color = Pal.Green, align = TextAlign.Center)
+                note != null && price == null -> PixelText(note, style = type.caption, color = Pal.GreenDeep, align = TextAlign.Center)
                 price != null -> PixelText(
                     "$price xu" + (note?.let { " · $it" } ?: ""), style = type.bodyBold,
                     color = if (affordable) Pal.Ink else Pal.Red, align = TextAlign.Center, maxLines = 1,
@@ -476,12 +476,12 @@ private fun BuyDialog(item: Item, coins: Long, catColor: Int, onDismiss: () -> U
         }
         if (coins < item.price) {
             PixelText("Còn thiếu ${item.price - coins} xu. Ghi sổ, làm thói quen để kiếm thêm nhé.", style = type.caption, color = Pal.Red)
-            PixelTextButton("Để sau", onClick = onDismiss, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Để sau", onClick = onDismiss, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         } else if (item.slot == Slot.FOOD) {
             PixelTextButton("Mua", onClick = { onBuy(false) }, modifier = Modifier.fillMaxWidth())
         } else {
             Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                PixelTextButton("Mua", onClick = { onBuy(false) }, look = ButtonLook.Light, modifier = Modifier.weight(1f))
+                PixelTextButton("Mua", onClick = { onBuy(false) }, look = ButtonLook.Plain, modifier = Modifier.weight(1f))
                 PixelTextButton("Mua + dùng", onClick = { onBuy(true) }, modifier = Modifier.weight(1.3f))
             }
         }
@@ -505,7 +505,7 @@ private fun AdoptDialog(color: Int, price: Int, coins: Long, onDismiss: () -> Un
         PixelTextField(name, { name = it.take(16) }, Modifier.fillMaxWidth(), placeholder = "Đặt tên (vd: Su, Bơ, Mochi)")
         if (coins < price) {
             PixelText("Còn thiếu ${price - coins} xu.", style = type.caption, color = Pal.Red)
-            PixelTextButton("Để sau", onClick = onDismiss, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+            PixelTextButton("Để sau", onClick = onDismiss, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         } else {
             PixelTextButton("Nhận nuôi", onClick = { onAdopt(name.trim()) }, modifier = Modifier.fillMaxWidth())
         }
@@ -536,7 +536,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
                     val pet = game.pets.firstOrNull { it.color == cat.first }
                     PixelText(cat.second, style = type.title, color = Pal.Ink)
                     pet?.let { PixelText("${it.affection} tim", style = type.bodyBold, color = Pal.Red) }
-                    PixelTextButton("Đổi tên", onClick = { renaming = true }, look = ButtonLook.Light)
+                    PixelTextButton("Đổi tên", onClick = { renaming = true }, look = ButtonLook.Plain)
                 }
             }
         }
@@ -546,7 +546,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
                 FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit * 2), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     for (p in game.pets) {
                         Column(
-                            Modifier.border(m.unit, if (p.color == cat.first) Pal.Orange else Pal.WoodDark).clickable { vm.show(p.color) }.padding(m.unit),
+                            Modifier.border(m.unit, if (p.color == cat.first) Pal.Gold else Pal.Line).clickable { vm.show(p.color) }.padding(m.unit),
                             horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             CatIcon(p.color, m.unit * 20)
@@ -554,7 +554,7 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
                         }
                     }
                     if (game.pets.size < 6) {
-                        PixelTextButton("+ Nuôi thêm", onClick = { vm.section.value = ShopSection.CATS; vm.tab.value = GiftTab.SHOP }, look = ButtonLook.Light)
+                        PixelTextButton("+ Nuôi thêm", onClick = { vm.section.value = ShopSection.CATS; vm.tab.value = GiftTab.SHOP }, look = ButtonLook.Plain)
                     }
                 }
             }
@@ -582,11 +582,11 @@ private fun WardrobeTab(vm: GiftViewModel, corner: RoomAssets) {
                         for (o in options) {
                             val on = game.equipped(slot) == o.id
                             Column(
-                                Modifier.width(m.unit * 28).border(m.unit, if (on) Pal.Orange else Pal.WoodDark).clickable { vm.equip(slot, o.id) }.padding(m.unit),
+                                Modifier.width(m.unit * 28).border(m.unit, if (on) Pal.Gold else Pal.Line).clickable { vm.equip(slot, o.id) }.padding(m.unit),
                                 horizontalAlignment = Alignment.CenterHorizontally,
                             ) {
                                 ItemIcon(o, m.unit * 18, cat.first)
-                                PixelText(o.name, style = type.caption, color = if (on) Pal.Gold else Pal.Ink, align = TextAlign.Center, maxLines = 2)
+                                PixelText(o.name, style = type.caption, color = if (on) Pal.GoldDeep else Pal.Ink, align = TextAlign.Center, maxLines = 2)
                             }
                         }
                         if (options.size <= 1) {

@@ -81,7 +81,7 @@ fun RecurringScreen(vm: RecurringViewModel, onBack: () -> Unit) {
     PixelScreen("Khoản định kỳ", onBack = onBack, actions = { PixelTextButton("+", onClick = { adding = true }) }) {
         PixelText(
             "Mỗi tháng: ${formatVnd(ui.bills.filter { it.active && it.rule == Repeat.MONTHLY.name }.sumOf { it.amount })}",
-            style = type.title, color = Pal.Gold,
+            style = type.title, color = Pal.GoldDeep,
         )
         PixelText("Trẫm nhắc vào sáng ngày đến hạn. Tiền vẫn nằm trong lọ cho đến khi Sen bấm đã trả.", style = type.caption, color = Pal.InkSoft)
         LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
@@ -138,7 +138,7 @@ private fun RecurringDialog(
     PixelDialog(onDismiss) {
         PixelText(if (initial == null) "Khoản định kỳ mới" else "Sửa khoản định kỳ", style = type.title)
         PixelTextField(name, { name = it.take(24) }, Modifier.fillMaxWidth(), placeholder = "vd: Tiền nhà")
-        PixelTextButton(if (amount.value == 0L) "Bao nhiêu?" else formatVnd(amount.value), onClick = { typing = !typing }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+        PixelTextButton(if (amount.value == 0L) "Bao nhiêu?" else formatVnd(amount.value), onClick = { typing = !typing }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         if (typing) PixelKeypad(onKey = { amount = amount.press(it) })
         FlowRow(horizontalArrangement = Arrangement.spacedBy(m.unit), verticalArrangement = Arrangement.spacedBy(m.unit)) {
             for (cat in categories) PixelChip(cat.name, selected = category == cat.id) { category = cat.id }
@@ -154,19 +154,19 @@ private fun RecurringDialog(
         val maxDay = if (repeat == Repeat.WEEKLY) 7 else 31
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             PixelText(if (repeat == Repeat.WEEKLY) "Thứ" else "Ngày", style = type.body, modifier = Modifier.weight(1f))
-            PixelTextButton("-", onClick = { day = if (day <= 1) maxDay else day - 1 }, look = ButtonLook.Light)
+            PixelTextButton("-", onClick = { day = if (day <= 1) maxDay else day - 1 }, look = ButtonLook.Plain)
             PixelText(
                 if (repeat == Repeat.WEEKLY) listOf("", "T2", "T3", "T4", "T5", "T6", "T7", "CN")[day.coerceIn(1, 7)] else "$day",
                 style = type.bodyBold, align = TextAlign.Center,
             )
-            PixelTextButton("+", onClick = { day = if (day >= maxDay) 1 else day + 1 }, look = ButtonLook.Light)
+            PixelTextButton("+", onClick = { day = if (day >= maxDay) 1 else day + 1 }, look = ButtonLook.Plain)
         }
         if (repeat == Repeat.YEARLY) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                 PixelText("Tháng", style = type.body, modifier = Modifier.weight(1f))
-                PixelTextButton("-", onClick = { month = if (month <= 1) 12 else month - 1 }, look = ButtonLook.Light)
+                PixelTextButton("-", onClick = { month = if (month <= 1) 12 else month - 1 }, look = ButtonLook.Plain)
                 PixelText("$month", style = type.bodyBold)
-                PixelTextButton("+", onClick = { month = if (month >= 12) 1 else month + 1 }, look = ButtonLook.Light)
+                PixelTextButton("+", onClick = { month = if (month >= 12) 1 else month + 1 }, look = ButtonLook.Plain)
             }
         }
         val firstDue = RecurrenceEngine.onOrAfter(repeat, day, month, today)
@@ -183,7 +183,7 @@ private fun RecurringDialog(
                     ),
                 )
             })
-            if (onDelete != null) PixelTextButton("Xoá", onClick = onDelete, look = ButtonLook.Light)
+            if (onDelete != null) PixelTextButton("Xoá", onClick = onDelete, look = ButtonLook.Plain)
         }
     }
 }

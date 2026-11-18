@@ -300,7 +300,10 @@ class GameRepository(
 
     /** This month's suggestions, made the first time they are asked for. */
     suspend fun ensureChallenge(month: YearMonth): ChallengeEntity {
-        dao.challenge(code(month))?.let { return it }
+        val kept = dao.challenge(code(month))
+        // "Giữ trong hạn mức" went away with the daily allowance: an unfinished month is suggested again
+        val stale = kept != null && kept.doneDay == null && options(kept).any { it.kind == ChallengeEngine.WITHIN_DAYS }
+        if (kept != null && !stale) return kept
         val inputs = ChallengeInputs(
             daysInMonth = month.lengthOfMonth(),
             habits = habits.habitsNow().map { it.id to it.name },
@@ -308,7 +311,12 @@ class GameRepository(
             usesTodos = dao.todosDone() > 0,
             usesFocus = dao.focusMinutes() > 0,
         )
-        val c = ChallengeEntity(code(month), json.encodeToString(specs, ChallengeEngine.suggest(inputs, month)))
+        val fresh = json.encodeToString(specs, ChallengeEngine.suggest(inputs, month))
+        if (kept != null) {
+            dao.updateChallenge(kept.copy(options = fresh, picked = null))
+            return dao.challenge(code(month)) ?: kept
+        }
+        val c = ChallengeEntity(code(month), fresh)
         dao.insertChallenge(c)
         return dao.challenge(code(month)) ?: c
     }
@@ -330,7 +338,6 @@ class GameRepository(
             ChallengeEngine.TODOS -> dao.todosDoneBetween(from, to)
             ChallengeEngine.FOCUS_MIN -> dao.focusMinutesBetween(from, to)
             ChallengeEngine.HABIT_DAYS -> dao.habitDoneBetween(spec.ref, from, to)
-            ChallengeEngine.WITHIN_DAYS -> reports.compute(month, minOf(today, month.atEndOfMonth()))?.daysWithin ?: 0
             ChallengeEngine.NO_LOANS -> if (reports.compute(month, minOf(today, month.atEndOfMonth()))?.hasJarLoans == false) 1 else 0
             ChallengeEngine.SAVE_PLAN -> reports.compute(month, minOf(today, month.atEndOfMonth()))?.let { d ->
                 if (d.planned <= 0) 0 else (d.saved * 100 / d.planned).toInt()

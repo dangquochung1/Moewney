@@ -148,9 +148,6 @@ interface CalendarDao {
     @Query("SELECT day, SUM(amount) AS total FROM txn WHERE type = :type AND day BETWEEN :from AND :to GROUP BY day")
     fun totalsByDay(type: String, from: Long, to: Long): Flow<List<DaySum>>
 
-    @Query("SELECT * FROM day_stat WHERE day BETWEEN :from AND :to")
-    fun dayStats(from: Long, to: Long): Flow<List<DayStatEntity>>
-
     /** Days where every habit was done (the all-done bonus was paid). */
     @Query("SELECT DISTINCT day FROM coin_entry WHERE reason = 'habits_all' AND day BETWEEN :from AND :to")
     fun habitsAllDoneDays(from: Long, to: Long): Flow<List<Long>>

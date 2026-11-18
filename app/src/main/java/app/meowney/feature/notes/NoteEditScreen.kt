@@ -182,7 +182,7 @@ fun NoteEditScreen(vm: NoteEditViewModel, onBack: () -> Unit) {
         onBack = onBack,
         actions = {
             PixelChip(if (pinned) "Đã ghim" else "Ghim", selected = pinned) { pinned = !pinned }
-            PixelTextButton("⋯", onClick = { menu = true }, look = ButtonLook.Light)
+            PixelTextButton("⋯", onClick = { menu = true }, look = ButtonLook.Plain)
         },
     ) {
         Column(
@@ -227,7 +227,7 @@ fun NoteEditScreen(vm: NoteEditViewModel, onBack: () -> Unit) {
                 PixelTextButton(if (p.note.archived) "Bỏ lưu trữ" else "Lưu trữ", onClick = {
                     menu = false
                     vm.setArchived(!p.note.archived)
-                }, look = ButtonLook.Light, modifier = Modifier.fillMaxWidth())
+                }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
                 PixelTextButton("Xoá (vào thùng rác)", onClick = {
                     menu = false
                     vm.trash()
@@ -245,7 +245,7 @@ fun PaperPicker(selected: Int, onPick: (Int) -> Unit) {
         NOTE_PAPERS.forEachIndexed { i, col ->
             Canvas(
                 Modifier.size(m.unit * 14)
-                    .border(m.unit, if (i == selected) Pal.Orange else Pal.WoodDark)
+                    .border(m.unit, if (i == selected) Pal.Gold else Pal.Line)
                     .clickable { onPick(i) },
             ) {
                 val inset = m.ui * 2f
