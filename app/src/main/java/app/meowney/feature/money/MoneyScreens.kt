@@ -55,6 +55,7 @@ import app.meowney.core.ui.Pal
 import app.meowney.core.ui.PixelChip
 import app.meowney.core.ui.PixelDialog
 import app.meowney.core.ui.PixelKeypad
+import app.meowney.core.ui.CardTone
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelScreen
 import app.meowney.core.ui.PixelText
@@ -154,7 +155,7 @@ fun MoneyScreen(
     var query by remember { mutableStateOf("") }
     val days = remember(s.txns, filter, query) { filterTxns(s.txns, filter, query).groupBy { it.day }.toList() }
 
-    PixelScreen("Tiền", onBack = onBack, actions = {
+    PixelScreen("Tiền", onBack = null, actions = {
         RoundIconButton(Icons.Filled.Add, "Ghi sổ", onAdd, primary = true)
     }) {
         LazyColumn(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit * 4), contentPadding = PaddingValues(bottom = m.unit * 6)) {
@@ -292,7 +293,7 @@ private fun JarShelf(jars: List<JarState>, typeface: Typeface, onJar: (Long) -> 
     val type = LocalPixelType.current
     val top = maxOf(jars.maxOfOrNull { it.balance } ?: 1, 1)
     val scale = (m.ui - 1).coerceAtLeast(2)
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_bg") {
+    PixelPanel(Modifier.fillMaxWidth()) {
         FlowRow(Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceEvenly, maxItemsInEachRow = 3) {
             for (j in jars) {
                 val level = ((j.balance.toFloat() / top) * 16).toInt().coerceIn(0, 16) / 16f
@@ -392,7 +393,7 @@ fun JarDetailScreen(vm: JarDetailViewModel, onBack: () -> Unit) {
     var moving by remember { mutableStateOf(false) }
 
     PixelScreen(jar.jar.name, onBack = onBack) {
-        PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+        PixelPanel(Modifier.fillMaxWidth()) {
             Column {
                 PixelText(formatVnd(jar.balance), style = type.display, color = if (jar.balance < 0) Pal.Red else Pal.Ink)
                 if (jar.code != JarCode.UNALLOC) PixelText("Nhận ${jar.jar.percent}% mỗi khoản thu", style = type.caption, color = Pal.InkSoft)
@@ -464,7 +465,7 @@ fun WalletsScreen(vm: WalletsViewModel, onBack: () -> Unit) {
             items(wallets, key = { it.wallet.id }) { w ->
                 PixelPanel(
                     Modifier.fillMaxWidth().clickable { editing = w },
-                    sprite = if (w.wallet.archived) "ui/wood/nine_path_panel_disabled" else "ui/wood/nine_path_panel",
+                    tone = if (w.wallet.archived) CardTone.Faded else CardTone.Plain,
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Column(Modifier.weight(1f)) {

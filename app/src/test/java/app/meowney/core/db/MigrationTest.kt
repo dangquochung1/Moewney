@@ -118,4 +118,18 @@ class MigrationTest {
         db.execSQL("INSERT INTO owned_item (itemId, qty, acquiredDay) VALUES ('bowl_blue', 1, 20401)")
         db.close()
     }
+
+    @Test fun v6DataSurvivesMigrationTo7() {
+        helper.createDatabase(6).apply {
+            execSQL("INSERT INTO pet (color, name, affection, adoptedDay) VALUES (5, 'Mít', 3, 20401)")
+            close()
+        }
+        val db = helper.runMigrationsAndValidate(7)
+        db.prepare("SELECT affection FROM pet WHERE color = 5").use {
+            it.step()
+            assertThat(it.getLong(0)).isEqualTo(3)
+        }
+        db.execSQL("INSERT INTO week_goal (weekStart, goal) VALUES (20401, 'Ngủ trước 23h')")
+        db.close()
+    }
 }

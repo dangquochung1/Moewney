@@ -86,7 +86,7 @@ fun NotesScreen(vm: NotesViewModel, diary: DiaryViewModel, actions: NotesActions
 
     PixelScreen(
         "Sổ tay",
-        onBack = actions.onBack,
+        onBack = null,
         actions = {
             PixelTextButton("Tìm", onClick = actions.onSearch, look = ButtonLook.Plain)
             PixelTextButton("⋯", onClick = { menu = true }, look = ButtonLook.Plain)

@@ -1,8 +1,12 @@
 package app.meowney.feature.habit
 
+import androidx.compose.foundation.border
+import androidx.compose.foundation.background
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.height
+import androidx.compose.ui.draw.clip
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -44,9 +48,7 @@ import app.meowney.core.ui.PixelScreen
 import app.meowney.core.ui.PixelText
 import app.meowney.core.ui.PixelTextButton
 import app.meowney.feature.room.Cat
-import app.meowney.feature.room.CatStage
-import app.meowney.feature.room.RoomAssets
-import app.meowney.feature.room.stageScale
+import app.meowney.feature.room.PlanetStage
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -119,12 +121,12 @@ class PomodoroViewModel(private val c: AppContainer, habitId: Long) : ViewModel(
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit) {
+fun PomodoroScreen(vm: PomodoroViewModel, onBack: () -> Unit) {
     val s by vm.state.collectAsState()
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     var editing by remember { mutableStateOf(false) }
-    val cat = remember(s.catColor) { Cat(s.catColor, corner.circle, corner.spots) }
+    val cat = remember(s.catColor) { Cat(s.catColor) }
     val paused = s.state?.pausedAt != null
     // focus: the cat curls up asleep; break: it plays with the yarn
     LaunchedEffect(s.phase, paused) {
@@ -143,10 +145,11 @@ fun PomodoroScreen(vm: PomodoroViewModel, corner: RoomAssets, onBack: () -> Unit
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(m.unit * 2),
         ) {
-            BoxWithConstraints(Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                val scale = stageScale(constraints.maxWidth, (constraints.maxWidth * 1.6f).toInt(), corner.circle.diameter, heightShare = 0.36f, widthShare = 0.6f)
-                CatStage(corner, cat, scale, onCatTap = { cat.poke() }, onCatLongPress = {})
-            }
+            PlanetStage(
+                cat,
+                Modifier.fillMaxWidth().height(m.unit * 90).clip(androidx.compose.foundation.shape.RoundedCornerShape(m.unit * 4)),
+                onCatTap = { cat.poke() },
+            )
             PixelText(PomodoroTimer.phaseLabel(s.phase) + if (paused) " · tạm dừng" else "", style = type.title, color = Pal.GoldDeep)
             val left = (s.remainingMs + 999) / 1000
             PixelText(
@@ -199,11 +202,7 @@ private fun SessionDots(s: PomodoroUi) {
     Row(horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         for (i in 0 until s.cfg.longEvery) {
             val on = full || i < done
-            Canvas(Modifier.size(m.unit * 5)) {
-                val u = m.ui.toFloat()
-                drawRect(Pal.WoodDark)
-                drawRect(if (on) Pal.Gold else Pal.Night, androidx.compose.ui.geometry.Offset(u, u), androidx.compose.ui.geometry.Size(size.width - 2 * u, size.height - 2 * u))
-            }
+            Canvas(Modifier.size(12.dp)) { drawCircle(if (on) Pal.Accent else Pal.Track) }
         }
     }
 }

@@ -72,7 +72,7 @@ fun MoodStatsScreen(vm: MoodStatsViewModel, onBack: () -> Unit) {
                 PixelTextButton(">", onClick = { vm.shift(1) }, look = ButtonLook.Plain)
             }
             val (s, days) = data ?: return@Column
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelText("Sen viết ${s.written}/${s.days} ngày", style = type.bodyBold, color = Pal.Ink)
                     MoodLine(month, days)
@@ -88,7 +88,7 @@ fun MoodStatsScreen(vm: MoodStatsViewModel, onBack: () -> Unit) {
                     }
                 }
             }
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
                     PixelText("Ngày vui và ngày buồn", style = type.bodyBold, color = Pal.Ink)
                     Compare("Ngày vui", s.spentGood, s.habitsGood)

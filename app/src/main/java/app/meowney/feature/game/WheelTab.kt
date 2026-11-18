@@ -66,7 +66,7 @@ private fun Prize.icon(): Pair<String?, String?> = when (this) {
 }
 
 fun SpinOutcome.text(): String = when {
-    itemId != null -> "Trúng ${Catalog[itemId]?.name ?: itemId}!" + if (Catalog[itemId]?.slot == app.meowney.core.game.Slot.FOOD) " Cho mèo ăn ở Tủ đồ nhé." else " Vào Tủ đồ để dùng."
+    itemId != null -> "Trúng ${Catalog[itemId]?.name ?: itemId}!" + if (Catalog[itemId]?.slot == app.meowney.core.game.Slot.FOOD) " Cho mèo ăn ở mục Đồ ăn của Cửa hàng nhé." else " Vào Cửa hàng bấm Dùng là xong."
     ticketHabit != null -> "Trúng vé nghỉ cho \"$ticketHabit\". Lỡ một hôm cũng không mất chuỗi."
     boost -> "Hôm nay ghi sổ được gấp đôi xu!"
     coins > 0 -> "+$coins xu!"
@@ -139,7 +139,7 @@ fun WheelTab(vm: GiftViewModel) {
         if (lixi) {
             PixelTextButton("Nhận lì xì Tết", onClick = { vm.claimLixi() }, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         }
-        PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+        PixelPanel(Modifier.fillMaxWidth()) {
             Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
                 PixelText("Giải thưởng", style = type.bodyBold, color = Pal.Ink)
                 PixelText("Xu 5 / 10 / 20 / 50 · món ăn cho mèo · vé nghỉ thói quen · x2 xu ghi sổ cả ngày · rương đồ hiếm (đồ trang trí ngẫu nhiên).", style = type.caption, color = Pal.InkSoft)

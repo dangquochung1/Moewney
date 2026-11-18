@@ -399,19 +399,43 @@ class GameRepository(
         return QuestView(q, value, dao.countData(K_QUEST, SeasonEngine.questKey(q, today)) > 0)
     }
 
-    /** Gives the season quest's item (or coins if already owned). Returns the item id, "" for coins, null if not done. */
-    suspend fun claimQuest(today: LocalDate = LocalDate.now()): String? {
-        val v = questView(today) ?: return null
-        if (!v.done || v.claimed) return null
+    /**
+     * Gives the season quest's reward: its item if Sen does not own it yet, else coins and two
+     * treats. Returns the item id, "" for coins, null if not done.
+     */
+    suspend fun claimQuest(today: LocalDate = LocalDate.now()): String? = db.withTransaction {
+        val v = questView(today) ?: return@withTransaction null
+        if (!v.done || v.claimed) return@withTransaction null
         val day = today.toEpochDay()
         dao.log(GameLogEntity(day = day, kind = K_QUEST, data = SeasonEngine.questKey(v.quest, today), at = clock()))
-        return if (dao.ownedItem(v.quest.rewardItem) == null) {
-            grant(v.quest.rewardItem, day)
-            v.quest.rewardItem
+        val item = v.quest.rewardItem
+        if (item != null && dao.ownedItem(item) == null) {
+            grant(item, day)
+            item
         } else {
-            earn(100, R_QUEST, day)
+            earn(SeasonEngine.QUEST_COINS, R_QUEST, day)
+            repeat(2) { grant(Catalog.treats.random(random).id, day) }
             ""
         }
+    }
+
+    // ------------------------------------------------------------------ the round room is gone
+
+    /**
+     * Turns what Sen owned for the old round room (walls, floors, rugs, frames, corner things,
+     * towers) back into coins at their shop price, once. Returns the coins (0 when there was
+     * nothing, or it was done before).
+     */
+    suspend fun retireRoomItems(today: LocalDate = LocalDate.now()): Int = db.withTransaction {
+        if (dao.countAll(K_RETIRE) > 0) return@withTransaction 0
+        val day = today.toEpochDay()
+        val owned = dao.ownedNow().mapNotNull { o -> Catalog.retiredItem(o.itemId)?.let { o to it } }
+        val coins = owned.sumOf { (_, item) -> item.price }
+        owned.forEach { (o, _) -> dao.deleteOwned(o.itemId) }
+        Catalog.retiredSlots.forEach { dao.clearEquip(it.name) }
+        earn(coins, R_REFUND, day)
+        dao.log(GameLogEntity(day = day, kind = K_RETIRE, data = "$coins", at = clock()))
+        coins
     }
 
     fun season(today: LocalDate = LocalDate.now()): Season? = SeasonEngine.seasonOn(today)
@@ -423,6 +447,7 @@ class GameRepository(
         const val K_QUEST = "QUEST"
         const val K_BOOST = "BOOST"
         const val K_BUY = "BUY"
+        const val K_RETIRE = "RETIRE_ROOM"
 
         const val R_SHOP = "shop"
         const val R_ADOPT = "adopt"
@@ -433,6 +458,7 @@ class GameRepository(
         const val R_LIXI = "lixi"
         const val R_QUEST = "season_quest"
         const val R_BOOST = "boost"
+        const val R_REFUND = "room_refund"
 
         /** How long a treat keeps the cat extra happy. */
         const val HAPPY_MS = 6 * 3_600_000L

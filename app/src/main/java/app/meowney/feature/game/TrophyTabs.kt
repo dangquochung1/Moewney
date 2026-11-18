@@ -1,6 +1,8 @@
 package app.meowney.feature.game
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -63,33 +65,10 @@ fun Cup(tier: Int, box: Dp) {
 }
 
 @Composable
-fun TrophyTab(vm: GiftViewModel) {
-    val have by vm.trophies.collectAsState()
-    val metrics by vm.metrics.collectAsState()
-    val m = LocalPixelMetrics.current
-    val type = LocalPixelType.current
-    LaunchedEffect(Unit) { vm.loadMetrics() }
-    val best = have.groupBy { it.id }.mapValues { (_, l) -> l.maxOf { it.tier } }
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-        item {
-            val cups = best.values.sum()
-            PixelText("Tủ cúp: ${best.size}/${AchievementEngine.all.size} thành tựu · $cups/${AchievementEngine.all.size * 3} bậc", style = type.bodyBold, color = Pal.GoldDeep)
-            PixelText("Bậc Đồng / Bạc / Vàng thưởng 20 / 50 / 150 xu.", style = type.caption, color = Pal.InkSoft)
-        }
-        for (g in AchGroup.entries) {
-            item(key = g.name) { PixelText(g.label.uppercase(), style = type.caption, color = Pal.InkSoft) }
-            items(AchievementEngine.all.filter { it.group == g }, key = { it.id }) { a ->
-                TrophyRow(a, best[a.id] ?: 0, metrics[a.metric])
-            }
-        }
-    }
-}
-
-@Composable
 private fun TrophyRow(a: Achievement, tier: Int, value: Long?) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3", extraPadding = 1) {
+    PixelPanel(Modifier.fillMaxWidth(), extraPadding = 1) {
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
             Cup(tier, m.unit * 16)
             Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
@@ -100,7 +79,7 @@ private fun TrophyRow(a: Achievement, tier: Int, value: Long?) {
                 val next = a.tiers.getOrNull(tier)
                 if (next != null) {
                     PixelText(a.text.format(next) + (value?.let { " · $it/$next" } ?: ""), style = type.caption, color = Pal.InkSoft, maxLines = 2)
-                    PixelProgress(((value ?: 0).toFloat() / next).coerceIn(0f, 1f), heightPx = 4, color = Pal.Gold)
+                    PixelProgress(((value ?: 0).toFloat() / next).coerceIn(0f, 1f), heightPx = 4, color = Pal.Mint)
                 } else {
                     PixelText(a.text.format(a.tiers.last()) + " · đủ cả 3 bậc!", style = type.caption, color = Pal.GreenDeep)
                 }
@@ -109,26 +88,48 @@ private fun TrophyRow(a: Achievement, tier: Int, value: Long?) {
     }
 }
 
-// ------------------------------------------------------------------ monthly challenge + season quest
+// ------------------------------------------------------------------ achievements tab
 
+/** "Thành tích": what to aim for this month on top, the trophy shelf below. */
 @Composable
-fun ChallengeTab(vm: GiftViewModel) {
+fun AchievementsTab(vm: GiftViewModel) {
     val view by vm.challenge.collectAsState()
     val quest by vm.quest.collectAsState()
-    val m = LocalPixelMetrics.current
+    val have by vm.trophies.collectAsState()
+    val metrics by vm.metrics.collectAsState()
     val type = LocalPixelType.current
-    LaunchedEffect(Unit) { vm.loadChallenge() }
-    LazyColumn(verticalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-        view?.let { v -> item { ChallengeCard(v, vm) } }
-        quest?.let { q -> item { QuestCard(q, vm) } }
-        item {
-            PixelText(
-                "Mỗi tháng một thử thách, xong thì mở rương lớn: ${ChallengeEngine.CHEST_COINS} xu + 2 món ăn cho mèo.",
-                style = type.caption, color = Pal.InkSoft,
-            )
+    LaunchedEffect(Unit) {
+        vm.loadChallenge()
+        vm.loadMetrics()
+    }
+    val best = have.groupBy { it.id }.mapValues { (_, l) -> l.maxOf { it.tier } }
+    LazyColumn(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+        // one item that is always first: the list keeps its place by key, so cards arriving
+        // later must not be inserted above what is on screen
+        item(key = "month") {
+            Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
+                view?.let { ChallengeCard(it, vm) }
+                quest?.let { QuestCard(it, vm) }
+                PixelText("Mỗi tháng một thử thách, xong thì mở rương: ${ChallengeEngine.CHEST_COINS} xu + 2 món ăn cho mèo.", style = type.caption, color = Pal.InkSoft)
+            }
+        }
+        item(key = "shelf") {
+            Column(Modifier.padding(top = 8.dp)) {
+                val cups = best.values.sum()
+                PixelText("TỦ CÚP · ${best.size}/${AchievementEngine.all.size} · $cups/${AchievementEngine.all.size * 3} bậc", style = type.caption, color = Pal.AccentText)
+                PixelText("Bậc Đồng / Bạc / Vàng thưởng 20 / 50 / 150 xu.", style = type.caption, color = Pal.InkSoft)
+            }
+        }
+        for (g in AchGroup.entries) {
+            item(key = g.name) { PixelText(g.label.uppercase(), style = type.caption, color = Pal.InkSoft) }
+            items(AchievementEngine.all.filter { it.group == g }, key = { it.id }) { a ->
+                TrophyRow(a, best[a.id] ?: 0, metrics[a.metric])
+            }
         }
     }
 }
+
+// ------------------------------------------------------------------ monthly challenge + season quest
 
 @Composable
 private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
@@ -141,7 +142,7 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
         if (picked == null) {
             PixelText("Trẫm có 3 gợi ý, Sen chọn 1 nhé (chọn rồi không đổi được):", style = type.body, color = Pal.Ink)
             v.options.forEachIndexed { i, o ->
-                PixelPanel(Modifier.fillMaxWidth().clickable { vm.pickChallenge(i) }, sprite = "ui/wood/nine_path_panel_3") {
+                PixelPanel(Modifier.fillMaxWidth().clickable { vm.pickChallenge(i) }) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         PixelText(o.label, style = type.bodyBold, color = Pal.Ink, modifier = Modifier.weight(1f))
                         PixelTextButton("Chọn", onClick = { vm.pickChallenge(i) })
@@ -149,7 +150,7 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
                 }
             }
         } else {
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
                     Box(Modifier.size(m.unit * 24), contentAlignment = Alignment.Center) {
                         val chest = atlas.getOrNull(if (v.claimed) "chest/chest_open" else "treasure/bigtreasurechest")
@@ -157,7 +158,7 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
                     }
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                         PixelText(picked.label, style = type.bodyBold, color = Pal.Ink)
-                        PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Gold)
+                        PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Mint)
                         PixelText(
                             when {
                                 v.claimed -> "Đã mở rương. Tháng sau trẫm ra đề mới."
@@ -179,22 +180,22 @@ private fun ChallengeCard(v: ChallengeView, vm: GiftViewModel) {
 private fun QuestCard(q: QuestView, vm: GiftViewModel) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
-    val reward = Catalog[q.quest.rewardItem]
+    val reward = q.quest.rewardItem?.let { Catalog[it] }
     Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
         PixelText("NHIỆM VỤ ${q.quest.season.label.uppercase()}", style = type.caption, color = Pal.GoldDeep)
-        PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+        PixelPanel(Modifier.fillMaxWidth()) {
             Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 3)) {
-                reward?.let { ItemIcon(it, m.unit * 22) }
+                if (reward != null) ItemIcon(reward, m.unit * 22) else app.meowney.feature.money.SpriteView("treasure/littletreasurechest", scale = m.ui)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
                     PixelText(q.quest.label, style = type.bodyBold, color = Pal.Ink)
-                    PixelProgress((q.value.toFloat() / q.quest.target).coerceIn(0f, 1f), color = if (q.done) Pal.Green else Pal.Gold)
+                    PixelProgress((q.value.toFloat() / q.quest.target).coerceIn(0f, 1f), color = if (q.done) Pal.Green else Pal.Mint)
                     PixelText(
-                        if (q.claimed) "Đã nhận ${reward?.name}." else "${minOf(q.value, q.quest.target)}/${q.quest.target} · thưởng: ${reward?.name}",
+                        if (q.claimed) "Đã nhận thưởng." else "${minOf(q.value, q.quest.target)}/${q.quest.target} · thưởng: ${reward?.name ?: "${app.meowney.core.game.SeasonEngine.QUEST_COINS} xu + 2 món ăn"}",
                         style = type.caption, color = Pal.InkSoft,
                     )
                 }
             }
         }
-        if (q.done && !q.claimed) PixelTextButton("Nhận ${reward?.name}", onClick = { vm.claimQuest() }, look = ButtonLook.Primary, modifier = Modifier.fillMaxWidth())
+        if (q.done && !q.claimed) PixelTextButton("Nhận thưởng", onClick = { vm.claimQuest() }, look = ButtonLook.Primary, modifier = Modifier.fillMaxWidth())
     }
 }

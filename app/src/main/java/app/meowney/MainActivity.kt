@@ -98,7 +98,6 @@ import app.meowney.feature.onboarding.OnboardingViewModel
 import app.meowney.feature.room.HomeActions
 import app.meowney.feature.room.HomeScreen
 import app.meowney.feature.room.HomeViewModel
-import app.meowney.feature.room.RoomAssets
 import app.meowney.feature.settings.CreditsScreen
 import app.meowney.feature.settings.SettingsScreen
 import app.meowney.feature.settings.SettingsViewModel
@@ -109,6 +108,13 @@ import app.meowney.core.data.Settings
 import app.meowney.core.data.todaySnapshot
 import app.meowney.core.format.formatVnd
 import app.meowney.core.ui.Zoom
+import app.meowney.core.ui.BottomBar
+import app.meowney.core.ui.MainTab
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.consumeWindowInsets
+import androidx.compose.foundation.layout.isImeVisible
+import androidx.compose.foundation.layout.navigationBars
+import androidx.navigation.compose.currentBackStackEntryAsState
 import app.meowney.feature.room.WakeIntro
 import app.meowney.feature.room.wakeGreeting
 import androidx.compose.foundation.layout.Box
@@ -126,7 +132,6 @@ import java.time.LocalDate
 /** Everything the screens need from assets/, loaded once. */
 class GameAssets(
     val sprites: SpriteAtlas,
-    val corner: RoomAssets,
     val icons: ImageBitmap,
     val pixelTypeface: Typeface,
     val onboarded: Boolean,
@@ -207,6 +212,7 @@ class MainActivity : FragmentActivity() {
             loaded = withContext(Dispatchers.IO) {
                 val settings = c.settings.now()
                 c.sfx.enabled = settings.soundOn
+                c.purr.enabled = settings.soundOn
                 c.music.enabled = settings.musicOn
                 app.meowney.core.notify.CatNotifier.createChannels(this@MainActivity)
                 EveningReminder.schedule(this@MainActivity, settings.reminderMinute, settings.reminderOn)
@@ -218,9 +224,15 @@ class MainActivity : FragmentActivity() {
                 runCatching { c.notes.purge() }
                 CalendarReminder.schedule(this@MainActivity)
                 PomodoroTimer.catchUp(this@MainActivity)
+                // the home sky and planets, so the first frame has them
+                with(c.skies) {
+                    sky(app.meowney.core.ui.SkyLibrary.HOME_DAY)
+                    sky(app.meowney.core.ui.SkyLibrary.HOME_NIGHT)
+                    planet("earth")
+                    planet("moon")
+                }
                 GameAssets(
                     sprites = c.sprites,
-                    corner = RoomAssets.load(assets),
                     icons = c.icons,
                     pixelTypeface = c.typeface,
                     onboarded = settings.onboarded,
@@ -249,16 +261,44 @@ class MainActivity : FragmentActivity() {
 private suspend fun introPlan(c: AppContainer, settings: Settings, fromWidget: Boolean): IntroPlan? {
     if (!settings.onboarded) return null
     val today = LocalDate.now().toEpochDay()
-    val full = !fromWidget && settings.lastIntroDay != today
+    // in the cat's nap hours Sen finds it asleep, so the wake-up scene waits for a later open
+    val napping = app.meowney.feature.room.CatClock.sleepHour(LocalTime.now().hour)
+    val full = !fromWidget && !napping && settings.lastIntroDay != today
     if (full) c.settings.markIntro(today)
     val greeting = wakeGreeting(LocalTime.now().hour, settings.catName)
     return IntroPlan(full, settings.catColor, greeting)
 }
 
 @androidx.compose.runtime.Composable
+@OptIn(androidx.compose.foundation.layout.ExperimentalLayoutApi::class)
 private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHabit: Long, onOpened: () -> Unit) {
     val nav = rememberNavController()
     val back: () -> Unit = { nav.popBackStack() }
+    // one home model for the whole activity: home uses it, the bottom bar reads its badges
+    val homeVm: HomeViewModel = viewModel(factory = vmFactory { HomeViewModel(c) })
+    val homeState by homeVm.state.collectAsState()
+    val current by nav.currentBackStackEntryAsState()
+    val tab = current?.let(::mainTab)
+    Zoom.isTab = { mainTab(it) != null }
+    val keyboard = androidx.compose.foundation.layout.WindowInsets.isImeVisible
+    val showBar = tab != null && !keyboard
+    fun go(t: MainTab) {
+        if (t == MainTab.Home) {
+            nav.popBackStack<HomeRoute>(inclusive = false)
+            return
+        }
+        val route: Any = when (t) {
+            MainTab.Money -> MoneyRoute
+            MainTab.Habits -> HabitsRoute
+            MainTab.Calendar -> CalendarRoute()
+            MainTab.Notes -> NotesRoute()
+            else -> GiftRoute()
+        }
+        nav.navigate(route) {
+            popUpTo<HomeRoute>()
+            launchSingleTop = true
+        }
+    }
     LaunchedEffect(openRequest) {
         if (openRequest == OPEN_ENTRY) {
             val onboarding = nav.currentBackStackEntry?.destination?.hasRoute(OnboardingRoute::class) ?: !game.onboarded
@@ -280,8 +320,13 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             if (pending != null) nav.navigate(ReportRoute(pending.code())) { launchSingleTop = true }
         }
     }
+    Column(Modifier.fillMaxSize()) {
     NavHost(
         nav,
+        modifier = Modifier
+            .weight(1f)
+            // the bar below already keeps clear of the system navigation
+            .then(if (showBar) Modifier.consumeWindowInsets(androidx.compose.foundation.layout.WindowInsets.navigationBars) else Modifier),
         startDestination = if (game.onboarded) HomeRoute else OnboardingRoute,
         enterTransition = Zoom.enter,
         exitTransition = Zoom.exit,
@@ -295,13 +340,12 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             })
         }
         composable<HomeRoute> {
-            val vm: HomeViewModel = viewModel(factory = vmFactory { HomeViewModel(c) })
-            val state by vm.state.collectAsState()
+            val vm = homeVm
+            val state = homeState
             val event by c.events.pending.collectAsState()
             val pending by vm.pending.collectAsState()
             if (state.ready) {
                 HomeScreen(
-                    corner = game.corner,
                     state = state,
                     catEvent = event,
                     onCatEventHandled = c.events::consume,
@@ -326,9 +370,9 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                         onNote = { nav.navigate(NoteEditRoute(it)) },
                         onCheck = { vm.toggleCheck(it) },
                         onGift = { nav.navigate(GiftRoute()) },
-                        onShop = { nav.navigate(GiftRoute("SHOP")) },
-                        onWardrobe = { nav.navigate(GiftRoute("WARDROBE")) },
-                        onChallenge = { nav.navigate(GiftRoute("CHALLENGE")) },
+                        onShop = { nav.navigate(GiftRoute("SHOP")) { popUpTo<HomeRoute>(); launchSingleTop = true } },
+                        onWardrobe = { nav.navigate(GiftRoute("SHOP")) { popUpTo<HomeRoute>(); launchSingleTop = true } },
+                        onChallenge = { nav.navigate(GiftRoute("TROPHY")) { popUpTo<HomeRoute>(); launchSingleTop = true } },
                         onTodo = vm::todoToggle,
                     ),
                 )
@@ -385,8 +429,15 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         }
         composable<CalendarRoute> { entry ->
             val day = entry.toRoute<CalendarRoute>().day
+            // open on the view used last time (Day the first time)
+            val settings by c.settings.flow.collectAsState(initial = null)
+            val startView = settings?.calendarView ?: return@composable
             val vm: CalendarViewModel = viewModel(factory = vmFactory {
-                CalendarViewModel(c, if (day == Long.MIN_VALUE) LocalDate.now() else LocalDate.ofEpochDay(day))
+                CalendarViewModel(
+                    c,
+                    if (day == Long.MIN_VALUE) LocalDate.now() else LocalDate.ofEpochDay(day),
+                    runCatching { app.meowney.feature.calendar.CalView.valueOf(startView) }.getOrDefault(app.meowney.feature.calendar.CalView.DAY),
+                )
             })
             CalendarScreen(
                 vm,
@@ -399,6 +450,12 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
                     onLabels = { nav.navigate(LabelsRoute) },
                     onSpend = { e -> nav.navigate(EntryRoute(amount = e.event.cost, note = e.event.title, categoryId = e.event.costCategoryId ?: -1)) },
                     onMoney = { nav.navigate(MoneyRoute) },
+                    onHabits = {
+                        nav.navigate(HabitsRoute) {
+                            popUpTo<HomeRoute>()
+                            launchSingleTop = true
+                        }
+                    },
                 ),
             )
         }
@@ -463,9 +520,9 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
             NotesGate(back) { NoteBinScreen(vm, onBack = back, onOpen = { nav.navigate(NoteEditRoute(it)) }) }
         }
         composable<GiftRoute> { entry ->
-            val tab = runCatching { GiftTab.valueOf(entry.toRoute<GiftRoute>().tab) }.getOrDefault(GiftTab.WHEEL)
+            val tab = GiftTab.of(entry.toRoute<GiftRoute>().tab)
             val vm: GiftViewModel = viewModel(factory = vmFactory { GiftViewModel(c, tab) })
-            GiftScreen(vm, game.corner, onBack = back, onUseVoucher = { v ->
+            GiftScreen(vm, onBack = back, onUseVoucher = { v ->
                 nav.navigate(EntryRoute(amount = v.amount, note = v.name, categoryId = v.categoryId ?: -1))
             }) { t ->
                 PixelText("${t.label}: sắp có", color = Pal.InkSoft)
@@ -478,7 +535,7 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         composable<PomodoroRoute> { entry ->
             val habitId = entry.toRoute<PomodoroRoute>().habitId
             val vm: PomodoroViewModel = viewModel(factory = vmFactory { PomodoroViewModel(c, habitId) })
-            PomodoroScreen(vm, game.corner, onBack = back)
+            PomodoroScreen(vm, onBack = back)
         }
         composable<HabitRoute> { entry ->
             val id = entry.toRoute<HabitRoute>().id
@@ -534,4 +591,33 @@ private fun App(game: GameAssets, c: AppContainer, openRequest: String?, openHab
         composable<CreditsRoute> { CreditsScreen(onBack = back) }
         composable<UiKitRoute> { UiKitScreen(onBack = back) }
     }
+    if (showBar) BottomBar(tab!!, badges(homeState), onSelect = ::go)
+    }
+}
+
+/** Which bottom-bar tab a screen is, or null for the screens under them. */
+private fun mainTab(entry: androidx.navigation.NavBackStackEntry): MainTab? {
+    val d = entry.destination
+    return when {
+        d.hasRoute(HomeRoute::class) -> MainTab.Home
+        d.hasRoute(MoneyRoute::class) -> MainTab.Money
+        d.hasRoute(HabitsRoute::class) -> MainTab.Habits
+        d.hasRoute(CalendarRoute::class) -> MainTab.Calendar
+        d.hasRoute(NotesRoute::class) -> MainTab.Notes
+        d.hasRoute(GiftRoute::class) -> MainTab.Gift
+        else -> null
+    }
+}
+
+/** Little marks on the bar: unpaid bills, habits left, things on the calendar, no diary yet, a spin waiting. */
+private fun badges(s: app.meowney.feature.room.HomeState): Map<MainTab, String> = buildMap {
+    if (!s.ready) return@buildMap
+    if (s.billsDue.isNotEmpty()) put(MainTab.Money, "!")
+    val habitsLeft = s.habits.count { !it.done }
+    if (habitsLeft > 0) put(MainTab.Habits, if (habitsLeft > 9) "9" else "$habitsLeft")
+    val now = java.time.LocalTime.now().let { it.hour * 60 + it.minute }
+    val cal = s.calendarCount(now)
+    if (cal > 0) put(MainTab.Calendar, if (cal > 9) "9" else "$cal")
+    if (!s.diaryWritten) put(MainTab.Notes, "!")
+    if (s.spinReady) put(MainTab.Gift, "•")
 }

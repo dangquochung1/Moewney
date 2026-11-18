@@ -62,7 +62,7 @@ fun GoalCard(goal: GoalRow, jarName: String, modifier: Modifier = Modifier) {
     val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val pct = if (goal.target > 0) (goal.saved * 100 / goal.target).toInt() else 0
-    PixelPanel(modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+    PixelPanel(modifier.fillMaxWidth()) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 PixelText(goal.name, style = type.bodyBold, modifier = Modifier.weight(1f), maxLines = 1)

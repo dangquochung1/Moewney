@@ -2,6 +2,10 @@ package app.meowney.feature.notes
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.unit.dp
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectHorizontalDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -55,6 +59,7 @@ import app.meowney.core.ui.LocalPixelType
 import app.meowney.core.ui.Pal
 import app.meowney.core.ui.PixelChip
 import app.meowney.core.ui.PixelDialog
+import app.meowney.core.ui.CardTone
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelScreen
 import app.meowney.core.ui.PixelText
@@ -97,7 +102,7 @@ fun moodTint(m: Mood?): Color = when (m) {
     Mood.OK -> Color(0xFFC9B48A)
     Mood.BAD -> Color(0xFF8FB3CC)
     Mood.AWFUL -> Color(0xFF6F7FA8)
-    null -> Pal.Wood
+    null -> Pal.Line
 }
 
 // ------------------------------------------------------------------ diary tab
@@ -381,9 +386,9 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
                     ) {
                         MoodIcon(
                             md, scale = m.ui,
-                            Modifier.background(if (mood == md.level) Pal.Orange else Pal.WoodDark)
+                            Modifier.background(if (mood == md.level) Pal.Ink else Pal.Line)
                                 .padding(m.unit)
-                                .background(if (mood == md.level) moodTint(md) else Pal.Wood)
+                                .background(moodTint(md))
                                 .padding(horizontal = m.unit * 2, vertical = m.unit),
                         )
                         PixelText(md.label, style = type.caption, color = if (mood == md.level) Pal.Ink else Pal.InkSoft, align = TextAlign.Center, maxLines = 1)
@@ -401,7 +406,7 @@ fun DiaryPageScreen(vm: DiaryPageViewModel, onBack: () -> Unit) {
                 }
                 SpriteView("cat/$catColor/$anim", scale = m.ui)
                 Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(m.unit)) {
-                    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_interior", extraPadding = 1) {
+                    PixelPanel(Modifier.fillMaxWidth(), tone = CardTone.Lemon, extraPadding = 1) {
                         PixelText(reaction ?: prompt, style = type.body, color = Pal.Ink)
                     }
                     if (reaction == null && vm.day == vm.today) {
@@ -455,7 +460,7 @@ private fun DaySummary(d: CalDay) {
         val done = d.todos.count { it.done }
         if (done > 0) add("$done việc xong")
     }
-    PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3", extraPadding = 1) {
+    PixelPanel(Modifier.fillMaxWidth(), extraPadding = 1) {
         Column(verticalArrangement = Arrangement.spacedBy(m.unit)) {
             PixelText(parts.joinToString(" · "), style = type.caption, color = Pal.Ink)
             val events = d.events.take(3).map { it.event.title }

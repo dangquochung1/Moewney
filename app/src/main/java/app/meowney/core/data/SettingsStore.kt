@@ -42,6 +42,8 @@ data class Settings(
     val mutedTones: Set<String> = emptySet(),
     /** The last day the app was opened, for "đang buồn" after two days away. */
     val lastOpenDay: Long? = null,
+    /** The calendar view used last: DAY, WEEK or MONTH (Day the first time). */
+    val calendarView: String = "DAY",
 )
 
 val Context.settingsDataStore by preferencesDataStore(name = "settings")
@@ -64,6 +66,7 @@ class SettingsStore(private val context: Context) {
         val lastIntroDay = longPreferencesKey("last_intro_day")
         val mutedTones = stringSetPreferencesKey("muted_tones")
         val lastOpenDay = longPreferencesKey("last_open_day")
+        val calendarView = stringPreferencesKey("calendar_view")
         val pomoFocus = intPreferencesKey("pomo_focus")
         val pomoShort = intPreferencesKey("pomo_short")
         val pomoLong = intPreferencesKey("pomo_long")
@@ -149,6 +152,10 @@ class SettingsStore(private val context: Context) {
         context.settingsDataStore.edit { it[K.lastOpenDay] = day }
     }
 
+    suspend fun setCalendarView(view: String) {
+        context.settingsDataStore.edit { it[K.calendarView] = view }
+    }
+
     suspend fun markIntro(day: Long) {
         context.settingsDataStore.edit { it[K.lastIntroDay] = day }
     }
@@ -170,5 +177,6 @@ class SettingsStore(private val context: Context) {
         lastIntroDay = this[K.lastIntroDay],
         mutedTones = this[K.mutedTones] ?: emptySet(),
         lastOpenDay = this[K.lastOpenDay],
+        calendarView = this[K.calendarView] ?: "DAY",
     )
 }

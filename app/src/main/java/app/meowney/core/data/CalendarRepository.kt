@@ -12,6 +12,7 @@ import app.meowney.core.db.TodoEntity
 import app.meowney.core.db.TodoStepEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
 import java.time.LocalDate
 
 /** An event occurrence with what it needs to be drawn. */
@@ -115,6 +116,17 @@ class CalendarRepository(private val db: MeowneyDb) {
             open.filter { it.dueDay == null }.map(::item) to
                 open.filter { it.dueDay != null && it.dueDay < today.toEpochDay() }.sortedBy { it.dueDay }.map(::item)
         }
+
+    // ------------------------------------------------------------------ week goal
+
+    /** The goal written for the week starting on Monday [weekStart] ("" when none). */
+    fun weekGoal(weekStart: LocalDate): Flow<String> = dao.weekGoal(weekStart.toEpochDay()).map { it.orEmpty() }
+
+    suspend fun setWeekGoal(weekStart: LocalDate, goal: String) {
+        val text = goal.take(120)
+        if (text.isBlank()) dao.deleteWeekGoal(weekStart.toEpochDay())
+        else dao.putWeekGoal(app.meowney.core.db.WeekGoalEntity(weekStart.toEpochDay(), text))
+    }
 
     // ------------------------------------------------------------------ labels
 

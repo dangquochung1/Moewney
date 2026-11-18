@@ -1,6 +1,11 @@
 package app.meowney.feature.room
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.outlined.Settings
+import androidx.compose.foundation.layout.statusBars
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.border
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -84,6 +89,7 @@ import app.meowney.core.ui.PixelButton
 import app.meowney.core.ui.PixelCheckbox
 import app.meowney.core.ui.PixelPanel
 import app.meowney.core.ui.PixelText
+import app.meowney.core.ui.PixelTextButton
 import app.meowney.core.ui.RavenIcon
 import app.meowney.core.ui.SpeechBubble
 import app.meowney.core.ui.ZoomSource
@@ -126,31 +132,38 @@ class HomeActions(
 
 @Composable
 fun HomeScreen(
-    corner: RoomAssets,
     state: HomeState,
     catEvent: CatEvent?,
     onCatEventHandled: () -> Unit,
     actions: HomeActions,
 ) {
     val m = LocalPixelMetrics.current
-    val cat = remember(state.catColor) { Cat(state.catColor, corner.circle, corner.spots) }
+    val cat = remember(state.catColor) { Cat(state.catColor) }
     var bubble by remember {
+        val hour = LocalDateTime.now().hour
         mutableStateOf<String?>(
-            app.meowney.core.game.SeasonEngine.seasonOn(java.time.LocalDate.now())?.let { CatLines.season(it) }
-                ?: CatLines.greeting(LocalDateTime.now().hour, state.catName),
+            if (CatClock.sleepHour(hour)) {
+                CatLines.sleepyGreeting(state.catName)
+            } else {
+                app.meowney.core.game.SeasonEngine.seasonOn(java.time.LocalDate.now())?.let { CatLines.season(it) }
+                    ?: CatLines.greeting(hour, state.catName)
+            },
         )
     }
     // background music while home is on screen (paused when another screen or app is in front)
     val meowneyApp = androidx.compose.ui.platform.LocalContext.current.applicationContext as app.meowney.MeowneyApp
     val music = meowneyApp.container.music
-    val sfx = meowneyApp.container.sfx
+    val purr = meowneyApp.container.purr
     val lifecycle = androidx.lifecycle.compose.LocalLifecycleOwner.current.lifecycle
     val track = app.meowney.core.game.SeasonEngine.music(state.look.season, java.time.LocalDate.now())
     androidx.compose.runtime.DisposableEffect(lifecycle, track) {
         val obs = androidx.lifecycle.LifecycleEventObserver { _, e ->
             when (e) {
                 androidx.lifecycle.Lifecycle.Event.ON_RESUME -> music.play(track)
-                androidx.lifecycle.Lifecycle.Event.ON_PAUSE -> music.pause()
+                androidx.lifecycle.Lifecycle.Event.ON_PAUSE -> {
+                    music.pause()
+                    purr.stop()
+                }
                 else -> Unit
             }
         }
@@ -159,6 +172,7 @@ fun HomeScreen(
         onDispose {
             lifecycle.removeObserver(obs)
             music.pause()
+            purr.stop()
         }
     }
     LaunchedEffect(bubble) {
@@ -189,11 +203,6 @@ fun HomeScreen(
         }
     }
     val zoomSettings = rememberZoomSource()
-    val zoomMoney = rememberZoomSource()
-    val zoomHabits = rememberZoomSource()
-    val zoomCalendar = rememberZoomSource()
-    val zoomNotes = rememberZoomSource()
-    val zoomGift = rememberZoomSource()
     val zoomAdd = rememberZoomSource()
     var counting by remember { mutableStateOf<HabitToday?>(null) }
     counting?.let { h ->
@@ -255,138 +264,112 @@ fun HomeScreen(
         onCatEventHandled()
     }
 
-    BoxWithConstraints(
-        Modifier
-            .fillMaxSize()
-            .background(Pal.Canvas)
-            .windowInsetsPadding(WindowInsets.safeDrawing),
-    ) {
-        val maxWidth = constraints.maxWidth
-        val scale = stageScale(maxWidth, constraints.maxHeight, corner.circle.diameter)
-        Column(Modifier.fillMaxSize().padding(horizontal = m.unit * 6)) {
-            Hud(state.coins, zoomSettings, actions.onSettings, actions.onShop)
-            Box(Modifier.fillMaxWidth(), contentAlignment = Alignment.TopCenter) {
-                CatStage(
-                    corner = corner,
-                    cat = cat,
-                    scale = scale,
-                    onCatTap = {
-                        cat.poke()
-                        bubble = if (state.hasLoans) CatLines.worriedLoans() else CatLines.onTap()
-                    },
-                    onCatLongPress = actions.onWardrobe,
-                    look = state.look,
-                    plain = true,
-                    onPet = { sfx.play(Sfx.Sound.Click, 0.45f) },
-                )
-                bubble?.let {
-                    SpeechBubble(
-                        it,
-                        Modifier
-                            .align(Alignment.TopCenter)
-                            .padding(top = m.unit * 2)
-                            .widthIn(max = m.dp(maxWidth * 85 / 100)),
-                    )
+    // the cat's sky takes the top 57% of the screen, up under the status bar
+    val window = androidx.compose.ui.platform.LocalWindowInfo.current.containerSize
+    val stageHeight = m.dp((window.height * STAGE_SHARE).toInt())
+    val night by rememberNight()
+    app.meowney.core.ui.StatusBarIcons(darkBehind = night)
+    Box(Modifier.fillMaxSize().background(Pal.Canvas)) {
+        PlanetStage(
+            cat = cat,
+            modifier = Modifier.fillMaxWidth().height(stageHeight),
+            look = state.look,
+            onCatTap = {
+                bubble = when {
+                    !cat.poke() -> CatLines.sleepy()
+                    state.hasLoans -> CatLines.worriedLoans()
+                    else -> CatLines.onTap()
                 }
-            }
-            NavRow(
-                calendarCount = state.calendarCount(LocalDateTime.now().let { it.hour * 60 + it.minute }),
-                diaryDone = state.diaryWritten,
-                giftBadge = state.spinReady,
-                moneyZoom = zoomMoney,
-                habitsZoom = zoomHabits,
-                calendarZoom = zoomCalendar,
-                notesZoom = zoomNotes,
-                giftZoom = zoomGift,
-                onToy = { toy ->
-                    when (toy) {
-                        Toy.Money -> {
-                            zoomMoney.mark()
-                            actions.onMoney()
-                        }
-                        Toy.Habits -> {
-                            zoomHabits.mark()
-                            actions.onHabits()
-                        }
-                        Toy.Calendar -> {
-                            zoomCalendar.mark()
-                            actions.onCalendar()
-                        }
-                        Toy.Notes -> {
-                            zoomNotes.mark()
-                            actions.onNotes()
-                        }
-                        Toy.Gift -> {
-                            zoomGift.mark()
-                            actions.onGift()
-                        }
-                        else -> bubble = CatLines.onToy(toy)
-                    }
-                },
-            )
-            TodayPanel(
-                state = state,
-                modifier = Modifier.weight(1f),
-                onQuick = actions.onQuick,
-                onPin = { t ->
-                    actions.onPin(t)
-                    bubble = if (t.pinned) "Bỏ ghim ${t.label} rồi." else "Ghim ${t.label} ${formatVndShort(t.amount)} lên đầu nha."
-                },
-                addZoom = zoomAdd,
-                onAdd = {
-                    zoomAdd.mark()
-                    actions.onAdd()
-                },
-                onSettings = {
-                    zoomSettings.mark()
-                    actions.onSettings()
-                },
-                onNoSpend = actions.onNoSpend,
-                onPayBill = { paying = it },
-                onSkipBill = actions.onSkipBill,
-                habitActions = actions,
-                onCountEdit = { counting = it },
-            )
-            Spacer(Modifier.height(m.unit * 2))
+            },
+            onCatLongPress = actions.onWardrobe,
+            onPet = purr::start,
+            onPetEnd = purr::stop,
+        )
+        Column(
+            Modifier
+                .fillMaxWidth()
+                .windowInsetsPadding(WindowInsets.statusBars)
+                .padding(horizontal = 12.dp, vertical = 8.dp),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Hud(state.coins, zoomSettings, actions.onSettings, actions.onShop)
+            bubble?.let { SpeechBubble(it, Modifier.padding(top = 10.dp).widthIn(max = 330.dp)) }
         }
+        // today's things on a sheet tucked over the bottom edge of the sky
+        TodayPanel(
+            state = state,
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(top = stageHeight - 20.dp)
+                .clip(RoundedCornerShape(topStart = 22.dp, topEnd = 22.dp))
+                .background(Pal.Canvas),
+            onQuick = actions.onQuick,
+            onPin = { t ->
+                actions.onPin(t)
+                bubble = if (t.pinned) "Bỏ ghim ${t.label} rồi." else "Ghim ${t.label} ${formatVndShort(t.amount)} lên đầu nha."
+            },
+            addZoom = zoomAdd,
+            onAdd = {
+                zoomAdd.mark()
+                actions.onAdd()
+            },
+            onSettings = {
+                zoomSettings.mark()
+                actions.onSettings()
+            },
+            onNoSpend = actions.onNoSpend,
+            onPayBill = { paying = it },
+            onSkipBill = actions.onSkipBill,
+            habitActions = actions,
+            onCountEdit = { counting = it },
+        )
     }
 }
+
+/** Share of the screen height the cat's sky takes on home. */
+private const val STAGE_SHARE = 0.57f
 
 private fun coinsSuffix(coins: Int) = if (coins > 0) " (+$coins xu)" else ""
 
 // ------------------------------------------------------------------ HUD
 
+/** A white pill floating on the sky. */
+@Composable
+private fun Pill(modifier: Modifier = Modifier, content: @Composable androidx.compose.foundation.layout.RowScope.() -> Unit) {
+    val shape = RoundedCornerShape(50)
+    Row(
+        modifier
+            .clip(shape)
+            .background(Pal.Card)
+            .border(1.dp, Pal.Line, shape)
+            .padding(horizontal = 12.dp, vertical = 6.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        content = content,
+    )
+}
+
 @Composable
 private fun Hud(coins: Long, zoom: ZoomSource, onSettings: () -> Unit, onCoins: () -> Unit) {
-    val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     val atlas = LocalSprites.current
-    Row(
-        Modifier.fillMaxWidth().padding(vertical = m.unit * 2),
-        verticalAlignment = Alignment.CenterVertically,
-    ) {
+    Row(Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
         val now = LocalDateTime.now()
-        PixelPanel {
-            PixelText(
-                "${WEEKDAYS[now.dayOfWeek.value - 1]} %02d/%02d".format(now.dayOfMonth, now.monthValue),
-                style = type.bodyBold, color = Pal.Ink,
-            )
+        Pill {
+            PixelText("${WEEKDAYS[now.dayOfWeek.value - 1]} %02d/%02d".format(now.dayOfMonth, now.monthValue), style = type.bodyBold, color = Pal.Ink)
         }
         Spacer(Modifier.weight(1f))
         app.meowney.core.ui.RoundIconButton(
-            androidx.compose.material.icons.Icons.Filled.Settings, "Cài đặt",
+            Icons.Outlined.Settings, "Cài đặt",
             onClick = {
                 zoom.mark()
                 onSettings()
             },
             modifier = Modifier.zoomSource(zoom),
         )
-        Spacer(Modifier.size(m.unit * 3))
-        PixelPanel(Modifier.clickable(onClick = onCoins)) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
-                CoinIcon(atlas)
-                PixelText(" $coins", style = type.bodyBold, color = Pal.Ink)
-            }
+        Spacer(Modifier.size(8.dp))
+        Pill(Modifier.clickable(onClick = onCoins)) {
+            CoinIcon(atlas)
+            PixelText(" $coins", style = type.bodyBold, color = Pal.Ink)
         }
     }
 }
@@ -402,7 +385,8 @@ private fun CoinIcon(atlas: SpriteAtlas) {
             delay(1000L / coin.entry.fps.coerceAtLeast(1))
         }
     }
-    Canvas(Modifier.size(m.dp(coin.width * m.ui), m.dp(coin.height * m.ui))) {
+    val k = (m.ui - 1).coerceAtLeast(2)
+    Canvas(Modifier.size(m.dp(coin.width * k), m.dp(coin.height * k))) {
         drawImage(
             coin.page, coin.srcOffset(coin.frameAt(clock.longValue)), coin.srcSize,
             dstSize = IntSize(size.width.toInt(), size.height.toInt()), filterQuality = FilterQuality.None,
@@ -410,93 +394,13 @@ private fun CoinIcon(atlas: SpriteAtlas) {
     }
 }
 
-// ------------------------------------------------------------------ channels
-
-
-@Composable
-private fun NavRow(
-    calendarCount: Int,
-    diaryDone: Boolean,
-    giftBadge: Boolean,
-    moneyZoom: ZoomSource,
-    habitsZoom: ZoomSource,
-    calendarZoom: ZoomSource,
-    notesZoom: ZoomSource,
-    giftZoom: ZoomSource,
-    onToy: (Toy) -> Unit,
-) {
-    val m = LocalPixelMetrics.current
-    Row(
-        Modifier.fillMaxWidth().padding(vertical = m.unit * 4),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.Top,
-    ) {
-        for (toy in Toy.entries) {
-            val badge = when (toy) {
-                Toy.Calendar -> if (calendarCount > 0) if (calendarCount > 9) "9" else "$calendarCount" else null
-                Toy.Notes -> if (!diaryDone) "!" else null
-                Toy.Gift -> if (giftBadge) "•" else null
-                else -> null
-            }
-            NavButton(
-                toy,
-                badge,
-                modifier = when (toy) {
-                    Toy.Money -> Modifier.zoomSource(moneyZoom)
-                    Toy.Habits -> Modifier.zoomSource(habitsZoom)
-                    Toy.Calendar -> Modifier.zoomSource(calendarZoom)
-                    Toy.Notes -> Modifier.zoomSource(notesZoom)
-                    Toy.Gift -> Modifier.zoomSource(giftZoom)
-                },
-            ) { onToy(toy) }
-        }
-    }
-}
-
-@Composable
-private fun NavButton(toy: Toy, badge: String?, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    val m = LocalPixelMetrics.current
-    val type = LocalPixelType.current
-    val source = remember { MutableInteractionSource() }
-    val pressed by source.collectIsPressedAsState()
-    Column(
-        modifier.clickable(interactionSource = source, indication = null, role = Role.Button, onClick = onClick),
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        Box(contentAlignment = Alignment.Center) {
-            Box(
-                Modifier
-                    .size(m.unit * 30)
-                    .clip(CircleShape)
-                    .background(Pal.GreenTint)
-                    .offset(y = if (pressed) m.unit else m.dp(0)),
-                contentAlignment = Alignment.Center,
-            ) {
-                val tint = Pal.GreenDeep.copy(alpha = if (pressed) 0.7f else 1f)
-                val iconSize = Modifier.size(m.unit * 15)
-                when (toy) {
-                    Toy.Money -> Icon(painterResource(R.drawable.ic_nav_wallet), null, iconSize, tint)
-                    Toy.Habits -> Icon(Icons.Outlined.CheckCircle, null, iconSize, tint)
-                    Toy.Calendar -> Icon(Icons.Outlined.DateRange, null, iconSize, tint)
-                    Toy.Notes -> Icon(painterResource(R.drawable.ic_nav_book), null, iconSize, tint)
-                    Toy.Gift -> Icon(painterResource(R.drawable.ic_nav_gift), null, iconSize, tint)
-                }
-            }
-            if (badge != null) {
-                Box(
-                    Modifier.align(Alignment.TopEnd).offset(x = m.unit, y = -m.unit).size(m.unit * 7).background(Pal.Red, CircleShape),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    PixelText(badge, style = type.caption, color = Pal.Card, align = TextAlign.Center, maxLines = 1)
-                }
-            }
-        }
-        PixelText(toy.label, style = type.caption, color = if (pressed) Pal.GoldDeep else Pal.Ink, align = TextAlign.Center)
-    }
-}
-
 // ------------------------------------------------------------------ today
 
+/**
+ * Under the sky, in this order: bills due, the big "+ Ghi chi tiêu", quick picks, the diary,
+ * the month's challenge, today's habits and calendar, pinned notes, the backup reminder and
+ * the no-spend line (each only when there is something to show).
+ */
 @OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun TodayPanel(
@@ -513,77 +417,66 @@ private fun TodayPanel(
     habitActions: HomeActions,
     onCountEdit: (HabitToday) -> Unit,
 ) {
-    val m = LocalPixelMetrics.current
     val type = LocalPixelType.current
     Column(
-        modifier.fillMaxWidth().verticalScroll(rememberScrollState()).padding(bottom = m.unit * 2),
-        verticalArrangement = Arrangement.spacedBy(m.unit * 4),
+        modifier
+            .verticalScroll(rememberScrollState())
+            .padding(start = 12.dp, end = 12.dp, top = 14.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp),
     ) {
         if (state.billsDue.isNotEmpty()) {
             PixelPanel(Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
                     PixelText("CẦN TRẢ", style = type.caption, color = Pal.Red)
                     for (b in state.billsDue) {
-                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(m.unit * 2)) {
+                        Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                             Column(Modifier.weight(1f)) {
                                 PixelText(b.name, style = type.bodyBold, maxLines = 1)
                                 PixelText(formatVnd(b.amount), style = type.caption, color = Pal.InkSoft)
                             }
-                            PixelButton(onClick = { onPayBill(b) }, padded = true) { PixelText("Đã trả", style = type.caption, color = Pal.OnPrimary) }
-                            PixelButton(onClick = { onSkipBill(b) }, look = ButtonLook.Plain) { PixelText("Bỏ qua", style = type.caption) }
+                            PixelTextButton("Đã trả", onClick = { onPayBill(b) })
+                            PixelTextButton("Bỏ qua", onClick = { onSkipBill(b) }, look = ButtonLook.Plain)
                         }
                     }
                 }
             }
         }
-        PixelPanel(Modifier.fillMaxWidth()) {
-            PixelText(
-                if (state.spentToday == 0L) "Hôm nay chưa tiêu" else "Đã tiêu hôm nay ${formatVnd(state.spentToday)}",
-                style = type.bodyBold,
-            )
+        PixelButton(onClick = onAdd, modifier = Modifier.fillMaxWidth().height(50.dp).zoomSource(addZoom)) {
+            PixelText("+ Ghi chi tiêu", style = type.title, color = Pal.Ink)
+        }
+        if (state.templates.isNotEmpty()) {
+            Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                PixelText("Ghi nhanh · giữ lâu để ghim", style = type.caption, color = Pal.InkSoft)
+                FlowRow(horizontalArrangement = Arrangement.spacedBy(6.dp), verticalArrangement = Arrangement.spacedBy(6.dp)) {
+                    for (t in state.templates) TemplateChip(t, onClick = { onQuick(t) }, onLongClick = { onPin(t) })
+                }
+            }
+        }
+        PixelPanel(Modifier.fillMaxWidth()) { DiaryToday(state, habitActions) }
+        state.challenge?.let { PixelPanel(Modifier.fillMaxWidth()) { ChallengeToday(it, habitActions) } }
+        if (state.habits.isNotEmpty()) {
+            PixelPanel(Modifier.fillMaxWidth()) { HabitsToday(state.habits, habitActions, onCountEdit) }
         }
         if (state.events.isNotEmpty() || state.todos.isNotEmpty() || state.overdue > 0) {
             PixelPanel(Modifier.fillMaxWidth()) { CalendarToday(state, habitActions) }
         }
-        if (state.habits.isNotEmpty()) {
-            PixelPanel(Modifier.fillMaxWidth()) { HabitsToday(state.habits, habitActions, onCountEdit) }
-        }
-        PixelPanel(Modifier.fillMaxWidth()) { DiaryToday(state, habitActions) }
-        state.challenge?.let { PixelPanel(Modifier.fillMaxWidth()) { ChallengeToday(it, habitActions) } }
         if (state.pinned.isNotEmpty()) PixelPanel(Modifier.fillMaxWidth()) { PinnedNotes(state, habitActions) }
-        if (state.templates.isNotEmpty()) {
-            PixelPanel(Modifier.fillMaxWidth()) {
-                Column(verticalArrangement = Arrangement.spacedBy(m.unit * 2)) {
-                    PixelText("Ghi nhanh (giữ lâu để ghim)", style = type.bodyBold)
-                    FlowRow(
-                        horizontalArrangement = Arrangement.spacedBy(m.unit * 2),
-                        verticalArrangement = Arrangement.spacedBy(m.unit * 2),
-                    ) {
-                        for (t in state.templates) {
-                            TemplateChip(t, onClick = { onQuick(t) }, onLongClick = { onPin(t) })
-                        }
-                    }
-                }
-            }
-        }
-        PixelButton(onClick = onAdd, modifier = Modifier.fillMaxWidth().zoomSource(addZoom)) {
-            Icon(Icons.Filled.Add, null, Modifier.size(m.unit * 10), Pal.OnPrimary)
-            Spacer(Modifier.size(m.unit * 2))
-            PixelText("Ghi chi tiêu", style = type.title, color = Pal.OnPrimary)
-        }
         if (state.backupDays > 0) {
-            PixelButton(onClick = onSettings, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Plain) {
-                PixelText("Sao lưu dữ liệu (${state.backupDays} ngày chưa lưu)", style = type.bodyBold, color = Pal.Ink)
-            }
+            PixelTextButton("Sao lưu dữ liệu (${state.backupDays} ngày chưa lưu)", onClick = onSettings, look = ButtonLook.Plain, modifier = Modifier.fillMaxWidth())
         }
-        if (state.canClaimNoSpend) {
-            PixelButton(onClick = onNoSpend, modifier = Modifier.fillMaxWidth(), look = ButtonLook.Plain) {
-                PixelText("Hôm nay Sen không tiêu gì", style = type.bodyBold, color = Pal.Ink)
+        PixelPanel(Modifier.fillMaxWidth()) {
+            Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                PixelText(
+                    if (state.spentToday == 0L) "Hôm nay chưa tiêu" else "Đã tiêu hôm nay ${formatVnd(state.spentToday)}",
+                    style = type.bodyBold, modifier = Modifier.weight(1f),
+                )
+                if (state.canClaimNoSpend) PixelTextButton("Không tiêu gì · nhận xu", onClick = onNoSpend, look = ButtonLook.Tab)
             }
         }
     }
 }
 
+/** A quick pick: one tap logs it, a long press pins it (pinned ones are Golden Dune). */
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun TemplateChip(t: QuickTemplate, onClick: () -> Unit, onLongClick: () -> Unit) {
@@ -708,7 +601,7 @@ private fun ChallengeToday(v: app.meowney.core.data.ChallengeView, actions: Home
                     style = type.caption, color = if (v.done && !v.claimed) Pal.GoldDeep else Pal.InkSoft,
                 )
             }
-            app.meowney.core.ui.PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Gold, heightPx = 4)
+            app.meowney.core.ui.PixelProgress(v.progress, color = if (v.done) Pal.Green else Pal.Mint, heightPx = 4)
         }
     }
 }

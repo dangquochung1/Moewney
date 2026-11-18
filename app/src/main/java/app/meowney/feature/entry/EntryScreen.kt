@@ -75,7 +75,7 @@ fun EntryScreen(vm: EntryViewModel, onBack: () -> Unit, onDone: () -> Unit, onPo
             if (s.editing == null) {
                 SegmentedTabs(listOf("Chi", "Thu", "Chuyển"), s.mode.ordinal) { vm.mode(EntryMode.entries[it]) }
             }
-            PixelPanel(Modifier.fillMaxWidth(), sprite = "ui/wood/nine_path_panel_3") {
+            PixelPanel(Modifier.fillMaxWidth()) {
                 PixelText(
                     (if (s.mode == EntryMode.INCOME) "+" else if (s.mode == EntryMode.EXPENSE) "-" else "") + formatVnd(s.amount.value),
                     style = type.display,

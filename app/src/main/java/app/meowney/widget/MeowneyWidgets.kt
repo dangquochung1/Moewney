@@ -60,7 +60,7 @@ const val EXTRA_HABIT = "habit"
 private fun entryIntent(context: Context) =
     Intent(context, MainActivity::class.java).putExtra(EXTRA_OPEN, OPEN_ENTRY).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP)
 
-/** 2×2: a look into the cat's room; tap opens the entry screen. */
+/** 2×2: the cat on its planet; tap opens the entry screen. */
 class MeowneySmallWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
 
@@ -83,7 +83,7 @@ class MeowneySmallWidget : GlanceAppWidget() {
         val d = context.resources.displayMetrics.density
         val w = size.width - PAD * 2
         val h = size.height - PAD * 2
-        val art = WidgetArt.scene(c.sprites, c.room, s, (w.value * d).toInt(), (h.value * d).toInt(), LocalTime.now().hour, radius = 16 * d, plus = true)
+        val art = WidgetArt.scene(c.sprites, c.skies, s, (w.value * d).toInt(), (h.value * d).toInt(), LocalTime.now().hour, radius = 16 * d, plus = true)
         Box(
             GlanceModifier.fillMaxSize().background(ImageProvider(R.drawable.widget_bg)).padding(PAD)
                 .clickable(actionStartActivity(entryIntent(context))),
@@ -93,7 +93,7 @@ class MeowneySmallWidget : GlanceAppWidget() {
     }
 }
 
-/** 4×2: the cat's room + 3 one-tap expenses + "+". */
+/** 4×2: the cat on its planet + 3 one-tap expenses + "+". */
 class MeowneyWideWidget : GlanceAppWidget() {
     override val sizeMode = SizeMode.Exact
 
@@ -119,7 +119,7 @@ class MeowneyWideWidget : GlanceAppWidget() {
         val inner = size.width - PAD * 2
         val sceneH = (size.height - PAD * 2 - rowH - gap).coerceAtLeast(48.dp)
         val px = { dp: Float -> (dp * d).toInt() }
-        val art = WidgetArt.scene(c.sprites, c.roomWide, s, px(inner.value), px(sceneH.value), LocalTime.now().hour, radius = 16 * d)
+        val art = WidgetArt.scene(c.sprites, c.skies, s, px(inner.value), px(sceneH.value), LocalTime.now().hour, radius = 16 * d)
         val plusW = if (s.templates.isEmpty()) inner else 48.dp
         val chipW = if (s.templates.isEmpty()) 0.dp else (inner - plusW) / s.templates.size - gap
         Column(GlanceModifier.fillMaxSize().background(ImageProvider(R.drawable.widget_bg)).padding(PAD)) {
